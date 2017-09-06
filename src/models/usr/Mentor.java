@@ -20,10 +20,8 @@ public class Mentor extends User {
         this("Not Available", "Not Available", "Not Available", "Not Available");
     }
 
-    public Student(String firstName, String lastName) {
+    public Mentor(String firstName, String lastName) {
 
         this(firstName, lastName, "Not Available", "Not Available");
     }
-
-    public
 }
