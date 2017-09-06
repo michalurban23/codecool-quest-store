@@ -1,3 +1,4 @@
+import java.util.UUID;
 import models.usr.*;
 
 public class Test {
@@ -12,8 +13,7 @@ public class Test {
         User mentor2 = new Mentor();
         User mentor3 = new Mentor("George", "Michael", "ohohoho", "uahhaha");
 
-        User admin1 = new Admin("Kazimierz", "Wielki", "drewno", "cegła");
-        User admin2 = new Admin();
+        User admin1 = new Admin("Kazimierz", "Wielki", "drewno", "cegła", UUID.randomUUID().toString());
 
         System.out.println(student1);
         System.out.println(student1.getFullName());
@@ -25,6 +25,5 @@ public class Test {
         System.out.println(mentor2 + "\n");
         System.out.println(mentor3 + "\n");
         System.out.println(admin1 + "\n");
-        System.out.println(admin2 + "\n");
     }
 }
