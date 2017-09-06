@@ -8,7 +8,7 @@ public abstract class User {
     protected String lastName;
     protected String email;
     protected String address;
-    protected final UUID id = UUID.randomUUID();
+    protected UUID id;
     protected ACCESS_LEVEL status;
 
     protected enum ACCESS_LEVEL {

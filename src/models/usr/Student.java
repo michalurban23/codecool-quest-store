@@ -1,5 +1,6 @@
 package models.usr;
 
+import java.util.UUID;
 import java.util.ArrayList;
 import models.Cart;
 import models.quest.Quest;
@@ -16,6 +17,7 @@ public class Student extends User implements Holder {
         this.lastName = lastName;
         this.email = email;
         this.address = address;
+        this.id = UUID.randomUUID();
         this.status = ACCESS_LEVEL.STUDENT;
     }
 
@@ -29,8 +31,11 @@ public class Student extends User implements Holder {
         this(firstName, lastName, "Not Available", "Not Available");
     }
 
-    // from database
-    // public Student() {;}
+    public Student(String firstName, String lastName, String email, String address, String id) {
+
+        this(firstName, lastName, email, address);
+        this.id = UUID.fromString(id);
+    }
 
     public Cart getCart() {
 
