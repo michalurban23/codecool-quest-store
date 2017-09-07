@@ -26,6 +26,7 @@ public class Student extends User implements Holder {
         lastName = userInfo[1];
         email = userInfo[2];
         address = userInfo[3];
+
         this.id = UUID.randomUUID();
         this.status = ACCESS_LEVEL.STUDENT;
     }
@@ -56,7 +57,7 @@ public class Student extends User implements Holder {
         this.myCart = cart;
     }
 
-    public Quest getQuest() {return null;}
+    public Quest getQuest() {return null;} // ---------------------IMPLEMENT---------------------------------
     public void createQuest() {;}
 
 }

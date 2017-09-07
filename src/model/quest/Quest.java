@@ -18,7 +18,7 @@ public class Quest {
 
         this.id = UUID.randomUUID();
         this.owner = owner;
-        this.start = LocalDateTime.now();
+        this.startTime = LocalDateTime.now();
         this.category = CATEGORY.BASIC;
         questList.add(this);
     }
@@ -38,7 +38,7 @@ public class Quest {
         return this.category;
     }
 
-    public void setCategory(Holder owner) {
+    public void setCategory(CATEGORY category) {
 
         this.category = category;
     }

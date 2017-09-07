@@ -1,9 +1,10 @@
 package controller;
 
-import model.usr.User;
 import java.util.Scanner;
+import model.usr.User;
+import model.usr.User.ACCESS_LEVEL;
 
-public abstract class UserController{
+public abstract class UserController {
 
     protected User user;
     protected UserConsoleView userView;
@@ -36,5 +37,10 @@ public abstract class UserController{
 
     public void editUserAddress(){
         ;
+    }
+
+    public ACCESS_LEVEL getUserType() {
+
+        return this.user.getStatus();
     }
 }
