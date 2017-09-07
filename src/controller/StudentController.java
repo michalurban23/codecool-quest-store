@@ -28,7 +28,7 @@ public class StudentController extends UserController {
             view.showShortInfo(user);
             Integer choice = view.handleMainMenu();
             if (choice == 1) {
-                editUserData();
+                editUserData(user);
             } else if (choice == 2) {
                 QuestController questController = new QuestController();
                 questController.start(user);
