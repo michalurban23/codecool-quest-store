@@ -3,21 +3,17 @@ package controller;
 import model.usr.Student;
 import view.UserView;
 
-public class MentorController extends UserController{
+public class MentorController extends UserController {
 
     private UserView userView = new UserView();
 
     public MentorController() {;}
 
-    // public MentorController(User newUser){
-    //
-    //     user = newUser;
-    // }
-    //
-    // public MentorController(QuestTemplate template){
-    //
-    //     questTemplate = template;
-    // }
+    public void start (User mentor) {
+        
+    }
+
+
 
     public Student createNewStudent() {
 

@@ -7,16 +7,21 @@ import model.usr.User.ACCESS_LEVEL;
 public abstract class UserController {
 
     protected User user;
-    Scanner in;
 
-    public void start(User user) {;} // --------------------IMPLEMENT--------------------------
+    protected UserConsoleView userView;
 
-    public void editUserData(){
+    public void editUserData() {
+        String[] newData = userView.getNewUserData();
 
-        editUserName();
-        editUserSurname();
-        editUserEmail();
-        editUserAddress();
+        if (!newData[0] == null) {
+            user.setFirstName(newData[0]);
+        } else if (!newData[1] == null) {
+            user.setLastName(newData[1]);
+        } else if (!newData[2] == null) {
+            user.setEmail(newData[2]);
+        } else if (!newData[3] == null) {
+            user.setAddress(newData[3]);
+        }
     }
 
     public void editUserName(){
