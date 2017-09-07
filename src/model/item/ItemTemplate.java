@@ -1,22 +1,25 @@
-package models.item;
+package model.item;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class ItemTemplate {
 
+    private UUID id;
     private Integer price;
     private String description;
-    private ArrayList<Item> itemList;
+    private static ArrayList<ItemTemplate> itemList;
 
-    private enum CATEGORY {
+    private static enum CATEGORY {
         BASIC,
         MAGIC;
     }
 
-    public ItemTemplate(Integer price, String description, ) {
+    public ItemTemplate(Integer price, String description) {
 
         this.price = price;
         this.description = description;
+        this.id = UUID.randomUUID();
         itemList.add(this);
     }
 
@@ -38,5 +41,10 @@ public class ItemTemplate {
     public void setDescription(String description) {
 
         this.description = description;
+    }
+
+    public CATEGORY getCategory() {
+
+        return CATEGORY.BASIC;
     }
 }
