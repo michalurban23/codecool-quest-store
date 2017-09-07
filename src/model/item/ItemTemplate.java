@@ -8,9 +8,9 @@ public class ItemTemplate {
     private UUID id;
     private Integer price;
     private String description;
-    private static ArrayList<ItemTemplate> itemList;
+    private static ArrayList<ItemTemplate> itemList = new ArrayList<>();
 
-    private static enum CATEGORY {
+    static enum CATEGORY {
         BASIC,
         MAGIC;
     }
@@ -41,10 +41,5 @@ public class ItemTemplate {
     public void setDescription(String description) {
 
         this.description = description;
-    }
-
-    public CATEGORY getCategory() {
-
-        return CATEGORY.BASIC;
     }
 }
