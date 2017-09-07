@@ -1,4 +1,4 @@
-import controllers.Main;
+import controller.Main;
 
 public class App {
 

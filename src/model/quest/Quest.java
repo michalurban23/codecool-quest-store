@@ -1,4 +1,4 @@
-package models.quest;
+package model.quest;
 
 public class Quest {
 

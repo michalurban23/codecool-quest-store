@@ -1,5 +1,5 @@
 import java.util.UUID;
-import models.usr.*;
+import model.usr.*;
 
 public class Test {
 

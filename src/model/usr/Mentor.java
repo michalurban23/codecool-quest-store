@@ -1,7 +1,6 @@
-package models.usr;
+package model.usr;
 
 import java.util.UUID;
-import models.usr.Class;
 
 public class Mentor extends User {
 

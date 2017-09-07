@@ -1,9 +1,9 @@
-package models.usr;
+package model.usr;
 
 import java.util.UUID;
 import java.util.ArrayList;
-import models.Cart;
-import models.quest.Quest;
+import model.Cart;
+import model.quest.Quest;
 
 public class Student extends User implements Holder {
 
