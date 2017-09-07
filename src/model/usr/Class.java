@@ -1,4 +1,4 @@
-package models.usr;
+package model.usr;
 
 public class Class {
     ;

@@ -1,7 +1,7 @@
-package models.usr;
+package model.usr;
 
-import models.Cart;
-import models.quest.Quest;
+import model.Cart;
+import model.quest.Quest;
 
 public interface Holder {
 
