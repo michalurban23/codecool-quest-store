@@ -14,7 +14,7 @@ public class MentorController extends UserController{
         questTemplate = template;
     }
 
-    public User createNewUser(){
+    public User createNewStudent(){
 
         String[] str = userView.getUserData("Student");
         return new Student(str);
