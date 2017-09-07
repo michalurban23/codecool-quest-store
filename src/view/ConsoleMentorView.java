@@ -9,7 +9,7 @@ public class ConsoleMentorView extends ConsoleUserView{
         return handleMenu(createMainMenu());
     }
 
-    private LinkedHashMap<String,Integer> createMainMenu(){
+    protected LinkedHashMap<String,Integer> createMainMenu(){
 
         LinkedHashMap<String,Integer> mainMenu = new LinkedHashMap<>();
         mainMenu.put("Edit account data", 1);
@@ -22,7 +22,7 @@ public class ConsoleMentorView extends ConsoleUserView{
         return mainMenu;
     }
 
-    public Integer handleStudentMenu(){
+    public Integer handleStudentOption(){
         return handleMenu(createStudentMenu());
     }
 
@@ -30,8 +30,7 @@ public class ConsoleMentorView extends ConsoleUserView{
 
         LinkedHashMap<String,Integer> studentMenu = new LinkedHashMap<>();
         studentMenu.put("Add new student", 1);
-        studentMenu.put("Remove student", 2);
-        studentMenu.put("Edit student data", 3);
+        studentMenu.put("Choose student", 2);
         studentMenu.put("Back", 0);
         return studentMenu;
     }

@@ -28,7 +28,7 @@ public class Student extends User implements Holder {
         lastName = userInfo[1];
         email = userInfo[2];
         address = userInfo[3];
-
+        students.add(this);
         this.id = UUID.randomUUID();
         this.status = ACCESS_LEVEL.STUDENT;
     }

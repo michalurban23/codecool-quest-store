@@ -15,7 +15,7 @@ public abstract class ConsoleView {
         if (choice.equals(0)) {
             return options.get(options.size() - 1);
         } else {
-            return options.get(choice -1);
+            return options.get(choice - 1);
         }
     }
 
