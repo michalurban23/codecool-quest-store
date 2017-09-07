@@ -20,7 +20,7 @@ public class MentorController extends UserController {
 
         Integer choice = userView.handleMainMenu();
         if(choice == 1){
-            editAccountData(mentor);
+            editUserData();
         } else if(choice == 2){
             ;
         } else if(choice == 3){
@@ -34,11 +34,6 @@ public class MentorController extends UserController {
         } else if(choice == 0){
             ;
         }
-    }
-
-    private void editAccountData(User mentor){
-
-        ;
     }
 
 
