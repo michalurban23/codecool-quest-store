@@ -1,13 +1,15 @@
+package view;
+
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
 
-public class MentorConsoleView extends UserConsoleView implements UserView{
+public class MentorConsoleView extends ConsoleUserView{
 
     public MentorConsoleView(){
         ;
     }
 
-    private static LinkedHashMap<String,Integer> createMainMenu(){
+    public LinkedHashMap<String,Integer> createMainMenu(){
 
         LinkedHashMap<String,Integer> mainMenu = new LinkedHashMap<>();
         mainMenu.put("Edit account data", 1);
@@ -18,7 +20,5 @@ public class MentorConsoleView extends UserConsoleView implements UserView{
         mainMenu.put("Show item templates", 6);
         mainMenu.put("Log out", 0);
         return mainMenu;
-    }
-
     }
 }
