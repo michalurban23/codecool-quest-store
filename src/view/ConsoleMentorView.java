@@ -13,11 +13,11 @@ public class ConsoleMentorView extends ConsoleUserView{
 
         LinkedHashMap<String,Integer> mainMenu = new LinkedHashMap<>();
         mainMenu.put("Edit account data", 1);
-        mainMenu.put("Show students", 2);
-        mainMenu.put("Show groups", 3);
-        mainMenu.put("Show classes", 4);
-        mainMenu.put("Show quest templates", 5);
-        mainMenu.put("Show item templates", 6);
+        mainMenu.put("Students", 2);
+        mainMenu.put("Groups", 3);
+        mainMenu.put("Classes", 4);
+        mainMenu.put("Quest templates", 5);
+        mainMenu.put("Item templates", 6);
         mainMenu.put("Log out", 0);
         return mainMenu;
     }
@@ -33,5 +33,18 @@ public class ConsoleMentorView extends ConsoleUserView{
         studentMenu.put("Choose student", 2);
         studentMenu.put("Back", 0);
         return studentMenu;
+    }
+
+    public Integer getManageStudentOption(){
+        return handleMenu(manageStudentsMenu());
+    }
+
+    private LinkedHashMap<String,Integer> manageStudentsMenu(){
+
+        LinkedHashMap<String,Integer> addOrRemoveMenu = new LinkedHashMap<>();
+        addOrRemoveMenu.put("Edit student's data", 1);
+        addOrRemoveMenu.put("Remove student", 2);
+        addOrRemoveMenu.put("Back", 0);
+        return addOrRemoveMenu;
     }
 }
