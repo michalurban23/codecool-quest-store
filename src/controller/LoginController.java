@@ -63,7 +63,6 @@ public class LoginController {
 
         String userType = userInfo.getUserTypeByLogin(userLogin);
         UserController userController = provider.getByUserType(userType);
-        System.out.println(userLogin);
         userController.start(userInfo.getUserByLogin(userLogin));
     }
 }

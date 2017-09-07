@@ -3,7 +3,6 @@ package controller;
 import java.util.Scanner;
 import model.usr.*;
 import view.*;
-import model.usr.User.ACCESS_LEVEL;
 
 public abstract class UserController {
 
@@ -19,6 +18,7 @@ public abstract class UserController {
     public void editUserData() {
         view.showFullInfo(user);
         String[] newData = view.getNewUserData();
+
         if (!(newData[0] == null)) {
             user.setFirstName(newData[0]);
         }

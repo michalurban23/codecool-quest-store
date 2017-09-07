@@ -11,7 +11,8 @@ public class MentorController extends UserController {
 
     public MentorController() {
 
-        view = new ConsoleMentorView();
+        this.view = new ConsoleMentorView();
+        super.view = new ConsoleMentorView();
     }
 
     public String getUserType() {
@@ -23,12 +24,13 @@ public class MentorController extends UserController {
     public void start(User mentor){
         setUser(mentor);
         boolean isBrowsed = true;
+
         while(isBrowsed){
 
             Integer choice = view.handleMainMenu();
             if(choice == 1){
                 // userView.showFullInfo(mentor);
-                editUserData(mentor);
+                editUserData();
             } else if(choice == 2){
                 handleStudentOption();
             } else if(choice == 3){
