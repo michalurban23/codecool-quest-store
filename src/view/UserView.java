@@ -1,6 +1,11 @@
-public interface UserView{
+package view;
 
-    public void handleMainMenu();
+import model.usr.*;
 
-    public String[] getNewUserData(String whatever);
+public interface UserView {
+
+    public Integer handleMainMenu();
+    public void showShortInfo(User user);
+    public void showFullInfo(User user);
+    public String[] getNewUserData();
 }

@@ -5,10 +5,12 @@ import java.util.ArrayList;
 
 public class ConsoleStudentView extends ConsoleUserView {
 
-
-    public ConsoleStudentView() {}
+    public Integer handleMainMenu() {
+        return handleMenu(createMainMenu())
+    }
 
     public LinkedHashMap<String, Integer> createMainMenu() {
+
         LinkedHashMap<String, Integer> mainMenu = new LinkedHashMap<>();
         mainMenu.put("Edit account data", 1);
         mainMenu.put("Quests", 2);

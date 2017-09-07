@@ -13,9 +13,9 @@ public abstract class ConsoleView {
             choice = getInteger("Choose index: ");
         } while (choice < 0 || choice > options.size() - 1);
         if (choice.equals(0)) {
-            return options.get(options.size());
+            return options.get(options.size() - 1);
         } else {
-            return options.get(choice);
+            return options.get(choice - 1);
         }
     }
 

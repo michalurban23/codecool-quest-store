@@ -7,18 +7,18 @@ public class MentorController extends UserController {
 
     public MentorController() {
 
-        userView = new MentorConsoleView();
+        view = new MentorConsoleView();
     }
 
     public Student createNewStudent() {
 
-        String[] str = userView.getNewUserData();
+        String[] str = view.getNewUserData();
         return new Student(str);
     }
 
     public void start(User mentor){
 
-        Integer choice = userView.handleMainMenu();
+        Integer choice = view.handleMainMenu();
         if(choice == 1){
             editUserData();
         } else if(choice == 2){

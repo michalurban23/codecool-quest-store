@@ -11,22 +11,28 @@ public class StudentController extends UserController {
     }
 
     public StudentController() {
-        userView = new ConsoleStudentView();
+        view = new ConsoleStudentView();
     }
 
     public void start (User student) {
+        setUser(student);
+        handleMainMenu();
+    }
 
+    public void handleMainMenu() {
         boolean isBrowsed = true;
         while (isBrowsed) {
-            Integer choice = userView.handleMainMenu();
+            view.clearScrean();
+            view.showShortInfo(user);
+            Integer choice = view.handleMainMenu();
             if (choice == 1) {
                 editUserData();
             } else if (choice == 2) {
                 QuestController questController = new QuestController();
-                questController.start(student);
+                questController.start(user);
             } else if (choice == 3) {
                 ShoppingController shoper = new ShoppingController();
-                shoper.start(student);
+                shoper.start(user);
             } else if (choice == 0) {
                 isBrowsed = false;
             }

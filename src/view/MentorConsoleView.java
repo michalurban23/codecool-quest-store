@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class MentorConsoleView extends ConsoleUserView{
 
-    public MentorConsoleView(){
-        ;
+    public Integer handleMainMenu() {
+        return handleMenu(createMainMenu())
     }
 
     public LinkedHashMap<String,Integer> createMainMenu(){

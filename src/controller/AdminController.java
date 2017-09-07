@@ -18,7 +18,7 @@ public class AdminController extends UserController {
 
   public User createNewMentor() {
 
-    String[] info = userView.getNewUserData();
+    String[] info = view.getNewUserData();
     return new Mentor();
   }
 
