@@ -5,6 +5,11 @@ import view.*;
 
 public class StudentController extends UserController {
 
+    public String getUserType() {
+
+        return "Student";
+    }
+
     public StudentController() {
         userView = new ConsoleStudentView();
     }

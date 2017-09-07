@@ -16,7 +16,6 @@ public class UserControllerProvider {
     public UserController getByUserType(String userType) {
 
         for (UserController controller : userControllers) {
-
             if (controller.getUserType().equals(userType)) {
                 return controller;
             }

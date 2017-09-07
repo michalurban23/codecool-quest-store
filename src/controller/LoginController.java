@@ -7,6 +7,7 @@ import view.ConsoleLoginView;
 import view.UserView;
 import view.LoginView;
 import dao.CSVLoginDAO;
+import dao.CSVUserInfoDAO;
 import dao.LoginDAO;
 
 public class LoginController {
@@ -20,6 +21,7 @@ public class LoginController {
     public LoginController() {}
 
     public void start() {
+
         provider = new UserControllerProvider();
         view = new ConsoleLoginView();
         dataAccess = new CSVLoginDAO();
@@ -29,7 +31,8 @@ public class LoginController {
     }
 
     private String[] logIn() {
-        String[] loginInfo = view.LoginScreen();
+
+        loginInfo = view.LoginScreen();
         while (!checkPassword()) {
             view.showWrongDataMessage();
             loginInfo = view.LoginScreen();
@@ -38,7 +41,8 @@ public class LoginController {
     }
 
     private boolean checkLogin(String login) {
-        if (loginDatabase.containsKey(login))    {
+
+        if (loginDatabase.containsKey(login)) {
             return true;
         } else {
             return false;
@@ -46,6 +50,7 @@ public class LoginController {
     }
 
     private boolean checkPassword() {
+
         if (!checkLogin(loginInfo[0])) {
             return false;
         } else if (!loginDatabase.get(loginInfo[0]).equals(loginInfo[1])) {
@@ -56,8 +61,12 @@ public class LoginController {
     }
 
     private void startUserController(String userLogin) {
-        String userType = dataAccess.getUserTypeByLogin(userLogin);
+
+        CSVUserInfoDAO userInfo = new CSVUserInfoDAO();
+
+        String userType = userInfo.getUserTypeByLogin(userLogin);
         UserController userController = provider.getByUserType(userType);
-        userController.start(dataAccess.getUserByLogin(userLogin));
+        System.out.println(userLogin);
+        userController.start(userInfo.getUserByLogin(userLogin));
     }
 }
