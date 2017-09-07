@@ -2,7 +2,7 @@ package view;
 
 public class ConsoleLoginView extends ConsoleView implements LoginView {
 
-    public String[2] LoginScreen() {
+    public String[] LoginScreen() {
         String[] loginData = new String[2];
         clearScrean();
         loginData[0] = getString("Enter login: ");

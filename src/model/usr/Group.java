@@ -1,6 +1,10 @@
 package model.usr;
 
 import java.util.UUID;
+import java.util.ArrayList;
+import model.Cart;
+import model.quest.Quest;
+
 
 public class Group implements Holder {
   private UUID groupID;
@@ -28,7 +32,7 @@ public class Group implements Holder {
     this.ourCart = cart;
   }
 
-  public Quest getQuest() {;}
+  public Quest getQuest() {return new Quest();}
 
   public void createQuest() {;}
 

@@ -1,3 +1,7 @@
+package controller;
+
+import java.util.Scanner;
+
 public abstract class UserController{
 
     protected User user;
@@ -26,3 +30,4 @@ public abstract class UserController{
     public void editUserAddress(){
         ;
     }
+}

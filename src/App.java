@@ -1,10 +1,10 @@
-import controller.Main;
+import controller.LoginController;
 
 public class App {
 
     public static void main(String[] args) {
 
-        Main mainController = new Main();
-        mainController.start();
+        LoginController controller = new LoginController();
+        controller.start();
     }
 }
