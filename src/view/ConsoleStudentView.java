@@ -8,7 +8,7 @@ public class ConsoleStudentView extends ConsoleUserView {
 
     public ConsoleStudentView() {}
 
-    private LinkedHashMap<String, Integer> createMainMenu() {
+    public LinkedHashMap<String, Integer> createMainMenu() {
         LinkedHashMap<String, Integer> mainMenu = new LinkedHashMap<>();
         mainMenu.put("Edit account data", 1);
         mainMenu.put("Quests", 2);

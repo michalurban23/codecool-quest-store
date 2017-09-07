@@ -11,9 +11,7 @@ public class AdminController extends UserController{
 
   public AdminController() {;}
 
-  public AdminController(User newUser) {
-    user = newUser;
-  }
+  public void start (User admin) {}
 
   public Class createClass() {
     Class newClass = new Class();

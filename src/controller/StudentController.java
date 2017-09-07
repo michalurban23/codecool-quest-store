@@ -1,16 +1,17 @@
 package controller;
 
-import model.usr.Student;
+import model.usr.*;
 import view.*;
 
 public class StudentController extends UserController {
 
     public StudentController() {
-        userView = new StudentConsoleView();
+        userView = new ConsoleStudentView();
     }
 
     public void start (User student) {
 
+        boolean isBrowsed = true;
         while (isBrowsed) {
             Integer choice = userView.handleMainMenu();
             if (choice == 1) {
