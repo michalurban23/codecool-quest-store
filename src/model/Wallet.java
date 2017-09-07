@@ -1,5 +1,7 @@
 package model;
 
+import java.util.*;
+
 public class Wallet {
   private int coins;
   private int level;
