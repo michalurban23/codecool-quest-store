@@ -2,6 +2,8 @@ package view;
 
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import model.usr.Student;
+
 
 public class ConsoleStudentView extends ConsoleUserView {
 
@@ -17,6 +19,32 @@ public class ConsoleStudentView extends ConsoleUserView {
         mainMenu.put("Artifacts", 3);
         mainMenu.put("Log out", 0);
         return mainMenu;
+    }
+
+    public <E> Integer handleSupervisorMenu(ArrayList<E> students){
+        showEnumeratedList(students);
+        return handleMenu(createSupervisorMenu());
+    }
+
+    private LinkedHashMap<String,Integer> createSupervisorMenu(){
+        LinkedHashMap<String,Integer> studentMenu = new LinkedHashMap<>();
+        studentMenu.put("Choose student", 1);
+        studentMenu.put("Add new student", 2);
+        studentMenu.put("Back", 0);
+        return studentMenu;
+    }
+
+    public Integer handleDetailsMenu(Student student) {
+        showShortInfo(student);
+        return handleMenu(createDetailsMenu());
+    }
+
+    private LinkedHashMap<String,Integer> createDetailsMenu(){
+        LinkedHashMap<String,Integer> studentMenu = new LinkedHashMap<>();
+        studentMenu.put("Edit student data", 1);
+        studentMenu.put("Remove student", 2);
+        studentMenu.put("Back", 0);
+        return studentMenu;
     }
 
 }

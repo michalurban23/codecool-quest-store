@@ -8,6 +8,7 @@ import view.*;
 public class AdminController extends UserController {
 
     ConsoleAdminView view;
+    User user;
 
     public AdminController() {
         view = new ConsoleAdminView();
@@ -27,8 +28,8 @@ public class AdminController extends UserController {
             if (choice == 1) {
                 editUserData(user);
             } else if (choice == 2) {
-                GroupController groupController = new GroupController();
-                groupController.start(user);
+                ClassController classController = new ClassController();
+                classController.start(user);
             } else if (choice == 3) {
                 MentorController mentorController = new MentorController();
                 mentorController.start(user);
@@ -37,21 +38,6 @@ public class AdminController extends UserController {
             }
         }
     }
-
-    public void createClass() {
-        String className = view.showCreatingClass();
-        if (className != null) {
-            Class newClass = new Class();
-            newClass.setName(className);
-        }
-    }
-
-    public User createNewMentor() {
-        String[] info = view.getNewUserData();
-        return new Mentor();
-    }
-
-    public void removeMentor(Mentor mentor) {;}
 
     public String getUserType() {
         return "Admin";

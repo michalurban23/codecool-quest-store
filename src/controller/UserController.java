@@ -7,14 +7,23 @@ import model.usr.User.ACCESS_LEVEL;
 
 public abstract class UserController {
 
-    protected User user;
-    protected ConsoleUserView view;
+    User user;
+    ConsoleUserView view;
+
 
     public abstract void start(User user);
+
+    // public void setView(ConsoleUserView view) {
+    //     this.view = view;
+    // }
 
     public void setUser(User user) {
         this.user = user;
     }
+
+    // public ConsoleUserView getView() {
+    //     return view;
+    // }
 
     public void editUserData(User user) {
         view.showFullInfo(user);
@@ -31,22 +40,6 @@ public abstract class UserController {
         if (!(newData[3] == null)) {
             user.setAddress(newData[3]);
         }
-    }
-
-    public void editUserName(){
-        ;
-    }
-
-    public void editUserSurname(){
-        ;
-    }
-
-    public void editUserEmail(){
-        ;
-    }
-
-    public void editUserAddress(){
-        ;
     }
 
     public abstract String getUserType();

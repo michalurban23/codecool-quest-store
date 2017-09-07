@@ -1,10 +1,11 @@
 package model.usr;
 
 import java.util.UUID;
+import java.util.ArrayList;
 
 public class Mentor extends User {
 
-    private Class myClass;
+    private static ArrayList<Mentor> objects = new ArrayList<Mentor>();
 
     public Mentor(String firstName, String lastName, String email, String address) {
 
@@ -14,6 +15,7 @@ public class Mentor extends User {
         this.address = address;
         this.id = UUID.randomUUID();
         this.status = ACCESS_LEVEL.MENTOR;
+        objects.add(this);
     }
 
     public Mentor() {
@@ -30,5 +32,9 @@ public class Mentor extends User {
 
         this(firstName, lastName, email, address);
         this.id = UUID.fromString(id);
+    }
+
+    public static ArrayList<Mentor> getObjects(){
+        return objects;
     }
 }

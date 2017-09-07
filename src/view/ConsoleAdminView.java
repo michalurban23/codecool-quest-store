@@ -19,9 +19,4 @@ public class ConsoleAdminView extends ConsoleUserView {
         return mainMenu;
     }
 
-    public String showCreatingClass() {
-        System.out.println("Creating new class\n");
-        return getString("Enter name for class: ");
-    }
-
 }

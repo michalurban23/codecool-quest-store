@@ -10,11 +10,18 @@ public class Group implements Holder {
     private ArrayList<User> usersList;
     private Cart ourCart;
     private String name;
+    private static ArrayList<Group> objects = new ArrayList<>();
 
     public Group(ArrayList<User> usersList) {
 
         this.groupID = UUID.randomUUID();
         this.usersList = usersList;
+        objects.add(this);
+    }
+
+    public Group() {
+
+        this(new ArrayList<User>());
     }
 
     public void setName(String name) {
@@ -23,11 +30,6 @@ public class Group implements Holder {
 
     public String getName() {
         return name;
-    }
-
-    public Group() {
-
-        this(new ArrayList<User>());
     }
 
     public UUID getID() {
@@ -44,6 +46,11 @@ public class Group implements Holder {
 
     public void setCart(Cart cart) {
         this.ourCart = cart;
+    }
+
+    public static ArrayList<Group> getObjects(){
+
+        return objects;
     }
 
     public Quest getQuest() {return null;} // ---------------------IMPLEMENT---------------------------------

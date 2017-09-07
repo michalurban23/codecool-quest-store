@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class MentorController extends UserController {
 
-    private Student student = new Student();
     ConsoleMentorView view;
 
     public MentorController() {
@@ -20,51 +19,74 @@ public class MentorController extends UserController {
     }
 
 
-    public void start(User mentor){
-        setUser(mentor);
+    public void start (User user) {
+        if (user.getClass().getSimpleName().equals("Mentor")) {
+            setUser(user);
+            handleMainMenu();
+        } else {
+            handleSupervisorMenu();
+        }
+    }
+
+    private void handleMainMenu() {
         boolean isBrowsed = true;
         while(isBrowsed){
-
+            view.clearScrean();
+            view.showShortInfo(user);
             Integer choice = view.handleMainMenu();
             if(choice == 1){
-                // userView.showFullInfo(mentor);
-                editUserData(mentor);
-            } else if(choice == 2){
-                handleStudentOption();
-            } else if(choice == 3){
-                ;
-            } else if(choice == 4){
-                ;
-            } else if(choice == 5){
-                ;
-            } else if(choice == 6){
-                ;
-            } else if(choice == 0){
+                editUserData(user);
+            } else if(choice == 2) {
+                StudentController studentController = new StudentController();
+                studentController.start(user);
+            } else if(choice == 3) {
+                GroupController groupController = new GroupController();
+                groupController.start(user);
+            } else if(choice == 4) {
+                ClassController classController = new ClassController();
+                classController.start(user);
+            } else if(choice == 5) {
+                QuestController questController = new QuestController();
+                questController.start(user);
+            } else if(choice == 6) {
+                ArtifactController artifactController = new ArtifactController();
+                artifactController.start(user);
+            } else if(choice == 0) {
                 isBrowsed = false;
             }
         }
     }
 
-    private void handleStudentOption(){
-
+    private void handleSupervisorMenu() {
         boolean isBrowsed = true;
         while(isBrowsed){
-            view.showEnumeratedList(student.getStudentsList());
-            Integer choice = view.handleStudentOption();
+            view.clearScrean();
+            ArrayList<Mentor> mentors = Mentor.getObjects();
+            Integer choice = view.handleSupervisorMenu(mentors);
             if(choice == 1){
-                Student newStudent = createNewStudent();
+                Mentor mentor = view.getListChoice(mentors);
+                handleDetails(mentor);
             } else if(choice == 2){
-                ;
+                Mentor newMentor = new Mentor();
+                editUserData(newMentor);
             } else if(choice == 0){
                 isBrowsed = false;
             }
         }
     }
 
-    public Student createNewStudent() {
-
-        String[] str = view.getNewUserData();
-        return new Student(str);
+    private void handleDetails(Mentor mentor) {
+        boolean isBrowsed = true;
+        while(isBrowsed){
+            Integer choice = view.handleDetailsMenu(mentor);
+            if(choice == 1){
+                editUserData(mentor);
+            } else if(choice == 2){
+                isBrowsed = Mentor.remove(mentor);
+            } else if(choice == 0){
+                isBrowsed = false;
+            }
+        }
     }
 
 }

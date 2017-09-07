@@ -11,6 +11,8 @@ public abstract class User {
     protected String address;
     protected UUID id;
     protected ACCESS_LEVEL status;
+    private static ArrayList<? extends User> objects;
+
 
     public enum ACCESS_LEVEL {
         ADMIN,
@@ -73,12 +75,18 @@ public abstract class User {
         return this.status;
     }
 
+    public static boolean remove(User user) {
+        if (objects.contains(user)) {
+            objects.remove(user);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public String toString() {
 
-        return this.id + "\n"
-                + this.firstName + " " + this.lastName
-                + "\nEmail address: " + this.email
-                + "\nHome address: " + this.address;
+        return this.firstName + " " + this.lastName;
     }
 
     // public ArrayList<String> getUserInfo(){

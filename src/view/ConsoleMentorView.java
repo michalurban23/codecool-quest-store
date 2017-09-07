@@ -2,8 +2,9 @@ package view;
 
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import model.usr.Mentor;
 
-public class ConsoleMentorView extends ConsoleUserView{
+public class ConsoleMentorView extends ConsoleUserView {
 
     public Integer handleMainMenu(){
         return handleMenu(createMainMenu());
@@ -13,24 +14,38 @@ public class ConsoleMentorView extends ConsoleUserView{
 
         LinkedHashMap<String,Integer> mainMenu = new LinkedHashMap<>();
         mainMenu.put("Edit account data", 1);
-        mainMenu.put("Show students", 2);
-        mainMenu.put("Show groups", 3);
-        mainMenu.put("Show classes", 4);
-        mainMenu.put("Show quest templates", 5);
-        mainMenu.put("Show item templates", 6);
+        mainMenu.put("Students", 2);
+        mainMenu.put("Groups", 3);
+        mainMenu.put("My Classes", 4);
+        mainMenu.put("Quests", 5);
+        mainMenu.put("Artifacts", 6);
         mainMenu.put("Log out", 0);
         return mainMenu;
     }
 
-    public Integer handleStudentOption(){
-        return handleMenu(createStudentMenu());
+    public <E> Integer handleSupervisorMenu(ArrayList<E> mentors) {
+        showEnumeratedList(mentors);
+        return handleMenu(createSupervisorMenu());
     }
 
-    private LinkedHashMap<String,Integer> createStudentMenu(){
+    private LinkedHashMap<String,Integer> createSupervisorMenu(){
 
         LinkedHashMap<String,Integer> studentMenu = new LinkedHashMap<>();
-        studentMenu.put("Add new student", 1);
-        studentMenu.put("Choose student", 2);
+        studentMenu.put("Choose mentor", 1);
+        studentMenu.put("Add mentor", 2);
+        studentMenu.put("Back", 0);
+        return studentMenu;
+    }
+
+    public Integer handleDetailsMenu(Mentor mentor) {
+        showShortInfo(mentor);
+        return handleMenu(createDetailsMenu());
+    }
+
+    private LinkedHashMap<String,Integer> createDetailsMenu(){
+        LinkedHashMap<String,Integer> studentMenu = new LinkedHashMap<>();
+        studentMenu.put("Edit student data", 1);
+        studentMenu.put("Remove student", 2);
         studentMenu.put("Back", 0);
         return studentMenu;
     }
