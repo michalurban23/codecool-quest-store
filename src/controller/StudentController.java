@@ -13,7 +13,9 @@ public class StudentController extends UserController {
     }
 
     public StudentController() {
-        view = new ConsoleStudentView();
+
+        this.view = new ConsoleStudentView();
+        super.view = new ConsoleStudentView();
     }
 
     public void start (User student) {
