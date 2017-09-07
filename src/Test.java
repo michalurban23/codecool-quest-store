@@ -1,13 +1,13 @@
-import java.util.UUID;
-import model.usr.*;
-import controller.*;
+import view.*;
+import java.util.TreeMap;
+import java.util.ArrayList;
 
 
 public class Test {
 
     public static void main(String[] args) {
-
-        MentorController menCon = new MentorController();
-        menCon.createNewStudent();
+        Dupa test = new Dupa();
+        TreeMap<String, Integer> menu = test.createMainMenu();
+        test.showMenu(new ArrayList<String>(menu.keySet()));
     }
 }
