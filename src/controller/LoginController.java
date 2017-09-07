@@ -1,6 +1,6 @@
 package controller;
 
-public class Main {
+public class LoginController {
 
     public void start() {;}
 }

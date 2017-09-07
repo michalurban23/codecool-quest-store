@@ -1,8 +1,8 @@
 package model.quest;
 
 import java.util.ArrayList;
-import java.util.LocalDateTime;
 import java.util.UUID;
+import java.time.LocalDateTime;
 import model.usr.Holder;
 
 public class QuestTemplate {
@@ -27,11 +27,33 @@ public class QuestTemplate {
 
     public QuestTemplate(ArrayList<String> data) {
 
-        Integer value = data.get(0);
-        String description = data.get(0);
-        String value = data.get(0);
-        String value = data.get(0);
+        Integer value = Integer.parseInt(data.get(0));
+        String description = data.get(1);
+        UUID id = UUID.fromString(data.get(2));
 
+        this.value = value;
+        this.description = description;
+        this.id = id;
+        questList.add(this);
     }
 
+    public Integer getValue() {
+
+        return this.value;
+    }
+
+    public void setValue(Integer value) {
+
+        this.value = value;
+    }
+
+    public String getDescription() {
+
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+
+        this.description = description;
+    }
 }
