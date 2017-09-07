@@ -7,25 +7,25 @@ import view.*;
 
 public class AdminController extends UserController {
 
-  public AdminController() {;}
+    public AdminController() {;}
 
-  public void start (User admin) {}
+    public void start (User admin) {}
 
-  public Class createClass() {
-    Class newClass = new Class();
-    return newClass;
-  }
+    public Class createClass() {
+        Class newClass = new Class();
+        return newClass;
+    }
 
-  public User createNewMentor() {
+    public User createNewMentor() {
 
-    String[] info = userView.getNewUserData();
-    return new Mentor();
-  }
+        String[] info = userView.getNewUserData();
+        return new Mentor();
+    }
 
-  public void removeMentor(Mentor mentor) {;}
+    public void removeMentor(Mentor mentor) {;}
 
-  public String getUserType() {
+    public String getUserType() {
 
-      return "Admin";
-  }
+        return "Admin";
+    }
 }
