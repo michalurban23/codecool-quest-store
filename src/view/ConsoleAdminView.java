@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class ConsoleAdminView extends ConsoleUserView {
 
     public Integer handleMainMenu() {
-        return handleMenu(createMainMenu());    
+        return handleMenu(createMainMenu());
     }
 
     public LinkedHashMap<String, Integer> createMainMenu() {
@@ -17,6 +17,11 @@ public class ConsoleAdminView extends ConsoleUserView {
         mainMenu.put("Mentors", 3);
         mainMenu.put("Log out", 0);
         return mainMenu;
+    }
+
+    public String showCreatingClass() {
+        System.out.println("Creating new class\n");
+        return getString("Enter name for class: ");
     }
 
 }

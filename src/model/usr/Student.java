@@ -10,6 +10,7 @@ public class Student extends User implements Holder {
     private ArrayList<Group> myGroups;
     private Class myClass;
     private Cart myCart;
+    private static ArrayList<Student> students = new ArrayList<>();
 
     public Student(String firstName, String lastName, String email, String address) {
 
@@ -19,6 +20,7 @@ public class Student extends User implements Holder {
         this.address = address;
         this.id = UUID.randomUUID();
         this.status = ACCESS_LEVEL.STUDENT;
+        students.add(this);
     }
 
     public Student(String[] userInfo){
@@ -26,7 +28,7 @@ public class Student extends User implements Holder {
         lastName = userInfo[1];
         email = userInfo[2];
         address = userInfo[3];
-
+        students.add(this);
         this.id = UUID.randomUUID();
         this.status = ACCESS_LEVEL.STUDENT;
     }
@@ -45,6 +47,11 @@ public class Student extends User implements Holder {
 
         this(firstName, lastName, email, address);
         this.id = UUID.fromString(id);
+    }
+
+    public ArrayList<Student> getStudentsList(){
+
+        return students;
     }
 
     public Cart getCart() {

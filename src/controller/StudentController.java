@@ -5,6 +5,8 @@ import view.*;
 
 public class StudentController extends UserController {
 
+    ConsoleStudentView view;
+
     public String getUserType() {
 
         return "Student";
@@ -28,7 +30,7 @@ public class StudentController extends UserController {
         while (isBrowsed) {
             view.clearScrean();
             view.showShortInfo(user);
-            Integer choice = view.handleStudentMenu();
+            Integer choice = view.handleMainMenu();
             if (choice == 1) {
                 editUserData(user);
             } else if (choice == 2) {

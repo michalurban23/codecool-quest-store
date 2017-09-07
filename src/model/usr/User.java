@@ -1,6 +1,7 @@
 package model.usr;
 
 import java.util.UUID;
+import java.util.ArrayList;
 
 public abstract class User {
 
@@ -79,4 +80,14 @@ public abstract class User {
                 + "\nEmail address: " + this.email
                 + "\nHome address: " + this.address;
     }
+
+    // public ArrayList<String> getUserInfo(){
+    //
+    //     ArrayList<String> userInfo = new ArrayList<>();
+    //     userInfo.add("First name: " + firstName);
+    //     userInfo.add("Last name: " + lastName);
+    //     userInfo.add("Email: " + email);
+    //     userInfo.add("Address: " + address);
+    //     return userInfo;
+    // }
 }

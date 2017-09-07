@@ -6,7 +6,7 @@ import model.usr.*;
 
 public abstract class ConsoleUserView extends ConsoleView implements UserView {
 
-    public Integer handleMenu(LinkedHashMap<String, Integer> menu) {
+    public Integer handleMenu(LinkedHashMap<String,Integer> menu) {
         ArrayList<String> options = new ArrayList<String>(menu.keySet());
         showMenu(options);
         String choice = getMenuChoice(options);
@@ -35,5 +35,5 @@ public abstract class ConsoleUserView extends ConsoleView implements UserView {
         return newUserData;
     }
 
-    public abstract LinkedHashMap<String, Integer> createMainMenu();
+    protected abstract LinkedHashMap<String, Integer> createMainMenu();
 }

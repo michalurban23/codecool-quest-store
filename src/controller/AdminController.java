@@ -7,6 +7,8 @@ import view.*;
 
 public class AdminController extends UserController {
 
+    ConsoleAdminView view;
+
     public AdminController() {
         view = new ConsoleAdminView();
     }
@@ -23,26 +25,25 @@ public class AdminController extends UserController {
             view.showShortInfo(user);
             Integer choice = view.handleMainMenu();
             if (choice == 1) {
-                editUserData();
+                editUserData(user);
             } else if (choice == 2) {
                 GroupController groupController = new GroupController();
                 groupController.start(user);
             } else if (choice == 3) {
                 MentorController mentorController = new MentorController();
-                shoper.start(user);
+                mentorController.start(user);
             } else if (choice == 0) {
                 isBrowsed = false;
             }
         }
     }
 
-    public Class createClass() {
+    public void createClass() {
         String className = view.showCreatingClass();
         if (className != null) {
             Class newClass = new Class();
             newClass.setName(className);
         }
-        return newClass;
     }
 
     public User createNewMentor() {
