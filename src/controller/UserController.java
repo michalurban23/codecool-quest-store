@@ -1,8 +1,6 @@
 package controller;
 
-import model.usr.*;
 import java.util.Scanner;
-
 
 public abstract class UserController{
 
