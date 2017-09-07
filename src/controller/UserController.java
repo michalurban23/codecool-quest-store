@@ -1,4 +1,5 @@
 package controller;
+
 import model.usr.User;
 import java.util.Scanner;
 
