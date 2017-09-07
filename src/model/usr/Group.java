@@ -1,6 +1,9 @@
 package model.usr;
 
-import java.util.UUID;
+import java.util.*;
+import model.quest.*;
+import model.*;
+
 
 public class Group implements Holder {
   private UUID groupID;
