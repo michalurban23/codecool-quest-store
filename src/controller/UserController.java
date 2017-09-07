@@ -16,7 +16,7 @@ public abstract class UserController {
         this.user = user;
     }
 
-    public void editUserData() {
+    public void editUserData(User user) {
         view.showFullInfo(user);
         String[] newData = view.getNewUserData();
         if (!(newData[0] == null)) {
