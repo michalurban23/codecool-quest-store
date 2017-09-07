@@ -13,12 +13,8 @@ public class AdminController extends UserController {
 
   public void start (User admin) {}
 
-  public void start(User user) {
-      System.out.println("Oscylator harmoniczny");
-  }
-
   public Class createClass() {
-    Class newClass = new Class();
+    Class newClass = new Class();   
     return newClass;
   }
 
