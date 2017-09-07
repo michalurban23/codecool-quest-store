@@ -9,7 +9,7 @@ public abstract class UserController {
     protected User user;
     Scanner in;
 
-    public void start(String noIdeaWhyYouWantStringHere) {;} // --------------------IMPLEMENT--------------------------
+    public void start(User user) {;} // --------------------IMPLEMENT--------------------------
 
     public void editUserData(){
 
@@ -35,8 +35,6 @@ public abstract class UserController {
         ;
     }
 
-    public ACCESS_LEVEL getUserType() {
+    public abstract String getUserType();
 
-        return this.user.getStatus();
-    }
 }

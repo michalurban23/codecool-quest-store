@@ -5,7 +5,7 @@ import model.usr.Mentor;
 import model.usr.Class;
 import view.UserView;
 
-public class AdminController extends UserController{
+public class AdminController extends UserController {
 
   private UserView userView = new UserView();
 
@@ -13,6 +13,10 @@ public class AdminController extends UserController{
 
   public AdminController(User newUser) {
     user = newUser;
+  }
+
+  public void start(User user) {
+      System.out.println("Oscylator harmoniczny");
   }
 
   public Class createClass() {
@@ -28,4 +32,8 @@ public class AdminController extends UserController{
 
   public void removeMentor(Mentor mentor) {;}
 
+  public String getUserType() {
+
+      return "Admin";
+  }
 }

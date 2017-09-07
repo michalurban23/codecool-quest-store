@@ -23,7 +23,10 @@ public class MentorController extends UserController{
 
         String[] str = userView.getStudentInfo("Creating new Student");
         return new Student(str);
-
     }
 
+    public String getUserType() {
+
+        return "Mentor";
+    }
 }
