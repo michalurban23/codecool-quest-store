@@ -11,6 +11,8 @@ public abstract class User {
     protected String address;
     protected UUID id;
     protected ACCESS_LEVEL status;
+    private static ArrayList<? extends User> objects;
+
 
     public enum ACCESS_LEVEL {
         ADMIN,
@@ -75,10 +77,7 @@ public abstract class User {
 
     public String toString() {
 
-        return this.id + "\n"
-                + this.firstName + " " + this.lastName
-                + "\nEmail address: " + this.email
-                + "\nHome address: " + this.address;
+        return this.firstName + " " + this.lastName;
     }
 
     // public ArrayList<String> getUserInfo(){
