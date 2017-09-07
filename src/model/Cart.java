@@ -6,11 +6,11 @@ public class Cart {
   private ArrayList<Object> itemList;
 
   public Cart(ArrayList<Object> itemList) {
-    itemList = itemList;
+    this.itemList = itemList;
   }
 
   private ArrayList<Object> getItemList() {
-    return itemList;
+    return this.itemList;
   }
 
   private void addToCart(Object item) {
