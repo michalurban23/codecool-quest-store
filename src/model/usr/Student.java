@@ -21,6 +21,15 @@ public class Student extends User implements Holder {
         this.status = ACCESS_LEVEL.STUDENT;
     }
 
+    public Student(String[] userInfo){
+        firstName = userInfo[0];
+        lastName = userInfo[1];
+        email = userInfo[2];
+        address = userInfo[3];
+        this.id = UUID.randomUUID();
+        this.status = ACCESS_LEVEL.STUDENT;
+    }
+
     public Student() {
 
         this("Not Available", "Not Available", "Not Available", "Not Available");
