@@ -4,6 +4,8 @@ import java.util.UUID;
 
 public class Admin extends User {
 
+    public Admin() {;}
+
     public Admin(String firstName, String lastName, String email, String address, String id) {
 
         this.firstName = firstName;

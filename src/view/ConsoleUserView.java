@@ -1,5 +1,8 @@
 package view;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
 public abstract class ConsoleUserView extends ConsoleView {
 
     public Integer handleMainMenu() {
@@ -10,8 +13,8 @@ public abstract class ConsoleUserView extends ConsoleView {
         return menu.get(choice);
     }
 
-    public String[] getNewUserData(String message){
-        System.out.println(message);
+    public String[] getNewUserData(){
+        System.out.println("Enter new user data");
         String[] labels = new String[]{"first name", "last name", "email", "address"};
         String[] newUserData = new String[4];
         for(int i = 0; i < 4; i++) {

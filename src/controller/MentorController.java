@@ -1,7 +1,7 @@
 package controller;
 
-import model.usr.Student;
-import view.UserView;
+import model.usr.*;
+import view.*;
 
 public class MentorController extends UserController {
 
@@ -13,7 +13,7 @@ public class MentorController extends UserController {
     }
 
     public void start (User mentor) {
-        
+
     }
 
 
@@ -22,7 +22,6 @@ public class MentorController extends UserController {
 
         String[] str = userView.getNewUserData("Creating new Student");
         return new Student(str);
-
     }
 
     public void start(User mentor){
@@ -50,4 +49,8 @@ public class MentorController extends UserController {
     }
 
 
+    public String getUserType() {
+
+        return "Mentor";
+    }
 }
