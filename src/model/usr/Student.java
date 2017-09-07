@@ -47,7 +47,7 @@ public class Student extends User implements Holder {
         this.myCart = cart;
     }
 
-    public Quest getQuest() {return new Quest();}
+    public Quest getQuest() {return null;}
     public void createQuest() {;}
 
 }
