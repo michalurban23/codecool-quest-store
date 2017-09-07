@@ -75,15 +75,6 @@ public abstract class User {
         return this.status;
     }
 
-    public static boolean remove(User user) {
-        if (objects.contains(user)) {
-            objects.remove(user);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public String toString() {
 
         return this.firstName + " " + this.lastName;

@@ -6,15 +6,16 @@ import java.util.ArrayList;
 
 public class StudentController extends UserController {
 
-    ConsoleStudentView view;
-
     public String getUserType() {
 
         return "Student";
     }
 
+    ConsoleStudentView view;
+
     public StudentController() {
         view = new ConsoleStudentView();
+        super.view = view;
     }
 
     public void start (User user) {
@@ -33,6 +34,7 @@ public class StudentController extends UserController {
             view.showShortInfo(user);
             Integer choice = view.handleMainMenu();
             if (choice == 1) {
+                view.showFullInfo(user);
                 editUserData(user);
             } else if (choice == 2) {
                 QuestController questController = new QuestController();
@@ -54,7 +56,9 @@ public class StudentController extends UserController {
             Integer choice = view.handleSupervisorMenu(students);
             if(choice == 1){
                 Student student = view.getListChoice(students);
-                handleDetails(student);
+                if (student != null) {
+                    handleDetails(student);
+                }
             } else if(choice == 2){
                 Student newStudent = new Student();
                 editUserData(newStudent);
@@ -72,7 +76,7 @@ public class StudentController extends UserController {
             if(choice == 1){
                 editUserData(student);
             } else if(choice == 2){
-                isBrowsed = Student.remove(student);
+                isBrowsed = !Student.remove(student);
             } else if(choice == 0){
                 isBrowsed = false;
             }

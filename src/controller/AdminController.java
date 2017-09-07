@@ -8,10 +8,10 @@ import view.*;
 public class AdminController extends UserController {
 
     ConsoleAdminView view;
-    User user;
 
     public AdminController() {
         view = new ConsoleAdminView();
+        super.view = view;
     }
 
     public void start (User admin) {
@@ -26,6 +26,7 @@ public class AdminController extends UserController {
             view.showShortInfo(user);
             Integer choice = view.handleMainMenu();
             if (choice == 1) {
+                view.showFullInfo(user);
                 editUserData(user);
             } else if (choice == 2) {
                 ClassController classController = new ClassController();

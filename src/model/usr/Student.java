@@ -59,6 +59,15 @@ public class Student extends User implements Holder {
         return myCart;
     }
 
+    public static boolean remove(User user) {
+        if (objects.contains(user)) {
+            objects.remove(user);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void setCart(Cart cart) {
 
         this.myCart = cart;

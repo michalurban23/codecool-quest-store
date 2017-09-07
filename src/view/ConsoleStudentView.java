@@ -23,6 +23,7 @@ public class ConsoleStudentView extends ConsoleUserView {
 
     public <E> Integer handleSupervisorMenu(ArrayList<E> students){
         showEnumeratedList(students);
+        System.out.println("\n");
         return handleMenu(createSupervisorMenu());
     }
 
@@ -36,6 +37,7 @@ public class ConsoleStudentView extends ConsoleUserView {
 
     public Integer handleDetailsMenu(Student student) {
         showShortInfo(student);
+        System.out.println("\n");
         return handleMenu(createDetailsMenu());
     }
 

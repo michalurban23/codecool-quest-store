@@ -11,6 +11,7 @@ public class MentorController extends UserController {
     public MentorController() {
 
         view = new ConsoleMentorView();
+        super.view = view;
     }
 
     public String getUserType() {
@@ -35,6 +36,7 @@ public class MentorController extends UserController {
             view.showShortInfo(user);
             Integer choice = view.handleMainMenu();
             if(choice == 1){
+                view.showFullInfo(user);
                 editUserData(user);
             } else if(choice == 2) {
                 StudentController studentController = new StudentController();
@@ -65,7 +67,9 @@ public class MentorController extends UserController {
             Integer choice = view.handleSupervisorMenu(mentors);
             if(choice == 1){
                 Mentor mentor = view.getListChoice(mentors);
-                handleDetails(mentor);
+                if (mentor != null) {
+                    handleDetails(mentor);
+                }
             } else if(choice == 2){
                 Mentor newMentor = new Mentor();
                 editUserData(newMentor);
@@ -82,7 +86,7 @@ public class MentorController extends UserController {
             if(choice == 1){
                 editUserData(mentor);
             } else if(choice == 2){
-                isBrowsed = Mentor.remove(mentor);
+                isBrowsed = !Mentor.remove(mentor);
             } else if(choice == 0){
                 isBrowsed = false;
             }

@@ -41,4 +41,13 @@ public class Class {
     public static ArrayList<Class> getObjects() {
         return objects;
     }
+
+    public static boolean remove(Class cls) {
+        if (objects.contains(cls)) {
+            objects.remove(cls);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -10,7 +10,6 @@ public abstract class UserController {
     User user;
     ConsoleUserView view;
 
-
     public abstract void start(User user);
 
     // public void setView(ConsoleUserView view) {
@@ -26,7 +25,6 @@ public abstract class UserController {
     // }
 
     public void editUserData(User user) {
-        view.showFullInfo(user);
         String[] newData = view.getNewUserData();
         if (!(newData[0] == null)) {
             user.setFirstName(newData[0]);

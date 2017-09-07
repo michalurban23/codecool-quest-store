@@ -11,7 +11,7 @@ public abstract class ConsoleView {
         Integer choice = null;
         do {
             choice = getInteger("Choose index: ");
-        } while (choice < 0 || choice > options.size() - 1);
+        } while (choice == null || choice < 0 || choice > options.size() - 1);
         if (choice.equals(0)) {
             return options.get(options.size() - 1);
         } else {
@@ -23,18 +23,20 @@ public abstract class ConsoleView {
         Integer choice = null;
         do {
             choice = getInteger("Choose index: ");
+            if (choice == null) {
+                return null;
+            }
         } while (choice < 1 || choice > list.size());
-        if (choice == null) {
-            return null;
-        } else {
-            return list.get(choice + 1);
-        }
+        return list.get(choice - 1);
     }
 
     public String getString(String message) {
         Scanner input = new Scanner(System.in);
         System.out.println(message);
         String enteredString = input.nextLine();
+        if (enteredString.length() == 0) {
+            enteredString = null;
+        }
         return enteredString;
     }
 
@@ -44,7 +46,7 @@ public abstract class ConsoleView {
         do {
             try {
                 String enteredString = getString(message);
-                if (enteredString.equals("")) {
+                if (enteredString == null) {
                     enteredInt = null;
                 } else {
                     enteredInt = new Integer(enteredString);

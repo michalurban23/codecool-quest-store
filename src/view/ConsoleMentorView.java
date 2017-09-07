@@ -25,6 +25,7 @@ public class ConsoleMentorView extends ConsoleUserView {
 
     public <E> Integer handleSupervisorMenu(ArrayList<E> mentors) {
         showEnumeratedList(mentors);
+        System.out.println("\n");
         return handleMenu(createSupervisorMenu());
     }
 
@@ -39,13 +40,14 @@ public class ConsoleMentorView extends ConsoleUserView {
 
     public Integer handleDetailsMenu(Mentor mentor) {
         showShortInfo(mentor);
+        System.out.println("\n");
         return handleMenu(createDetailsMenu());
     }
 
     private LinkedHashMap<String,Integer> createDetailsMenu(){
         LinkedHashMap<String,Integer> studentMenu = new LinkedHashMap<>();
-        studentMenu.put("Edit student data", 1);
-        studentMenu.put("Remove student", 2);
+        studentMenu.put("Edit mentor data", 1);
+        studentMenu.put("Remove mentor", 2);
         studentMenu.put("Back", 0);
         return studentMenu;
     }
