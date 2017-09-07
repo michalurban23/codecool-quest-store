@@ -1,6 +1,7 @@
 package controller;
 
-import model.usr.User;
+import model.usr.Student;
+import view.UserView;
 
 public class MentorController extends UserController{
 
@@ -8,19 +9,19 @@ public class MentorController extends UserController{
 
     public MentorController() {;}
 
-    public MentorController(User newUser){
+    // public MentorController(User newUser){
+    //
+    //     user = newUser;
+    // }
+    //
+    // public MentorController(QuestTemplate template){
+    //
+    //     questTemplate = template;
+    // }
 
-        user = newUser;
-    }
+    public Student createNewStudent() {
 
-    public MentorController(QuestTemplate template){
-
-        questTemplate = template;
-    }
-
-    public User createNewStudent() {
-
-        String[] str = userView.getUserData("Student");
+        String[] str = userView.getStudentInfo("Creating new Student");
         return new Student(str);
 
     }
