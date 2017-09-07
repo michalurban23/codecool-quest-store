@@ -31,6 +31,7 @@ public class MentorController extends UserController {
 
     private void handleMainMenu() {
         boolean isBrowsed = true;
+
         while(isBrowsed){
             view.clearScrean();
             view.showShortInfo(user);
