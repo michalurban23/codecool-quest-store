@@ -2,11 +2,13 @@ package view;
 
 import java.lang.Math;
 import java.util.List;
+import java.lang.Thread;
 import java.util.Scanner;
 
 public abstract class ConsoleView {
-    Integer choice;
+
     public String getMenuChoice(List<String> options) {
+        Integer choice = null;
         do {
             choice = getInteger("Choose index: ");
         } while (choice < 0 || choice > options.size() - 1);
@@ -18,7 +20,7 @@ public abstract class ConsoleView {
     }
 
     public <E> E getListChoice(List<E> list) {
-        Integer choice;
+        Integer choice = null;
         do {
             choice = getInteger("Choose index: ");
         } while (choice < 1 || choice > list.size());
@@ -62,7 +64,7 @@ public abstract class ConsoleView {
 
     }
 
-    public void showEnumeratedList(List<Object> list) {
+    public <E> void showEnumeratedList(List<E> list) {
         int width = 1 + Math.floorDiv(list.size(), 10);
         for (int i = 0; i < list.size(); i++) {
             System.out.println(String.format("%1$" + width + "d. %2$s", i + 1, list.get(i)));
@@ -81,5 +83,11 @@ public abstract class ConsoleView {
     public static void clearScrean () {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    public void pause(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {}
     }
 }
