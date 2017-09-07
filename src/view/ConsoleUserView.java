@@ -5,8 +5,7 @@ import java.util.LinkedHashMap;
 
 public abstract class ConsoleUserView extends ConsoleView {
 
-    public Integer handleMainMenu() {
-        LinkedHashMap<String, Integer> menu = createMainMenu();
+    public Integer handleMenu(LinkedHashMap<String,Integer> menu) {
         ArrayList<String> options = new ArrayList<String>(menu.keySet());
         showMenu(options);
         String choice = getMenuChoice(options);
