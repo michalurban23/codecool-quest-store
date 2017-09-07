@@ -11,7 +11,7 @@ public abstract class User {
     protected UUID id;
     protected ACCESS_LEVEL status;
 
-    protected enum ACCESS_LEVEL {
+    public enum ACCESS_LEVEL {
         ADMIN,
         MENTOR,
         STUDENT

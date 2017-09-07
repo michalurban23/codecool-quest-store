@@ -2,6 +2,8 @@ package controller;
 
 import model.usr.User;
 import model.usr.Mentor;
+import model.usr.Class;
+import view.UserView;
 
 public class AdminController extends UserController{
 
@@ -20,7 +22,7 @@ public class AdminController extends UserController{
 
   public User createNewMentor() {
 
-    String[] info = userView.getUserData("Mentor");
+    String[] info = userView.getNewUserData("Mentor");
     return new Mentor();
   }
 

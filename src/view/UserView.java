@@ -15,4 +15,5 @@ public class UserView extends ConsoleView{
         return newStudentInfo;
     }
 
+    public String[] getNewUserData(String whatever) {return null;} // ------------------IMPLEMENT----------------------
 }

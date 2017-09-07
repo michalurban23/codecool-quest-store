@@ -10,10 +10,16 @@ public class Group implements Holder {
   private ArrayList<User> usersList;
   private Cart ourCart;
 
-  public Group(ArrayList<User> usersList) {
-    this.groupID = UUID.randomUUID();
-    this.usersList = usersList;
-  }
+    public Group(ArrayList<User> usersList) {
+
+        this.groupID = UUID.randomUUID();
+        this.usersList = usersList;
+    }
+
+    public Group() {
+
+        this(new ArrayList<User>());
+    }
 
   public UUID getID() {
     return this.groupID;
@@ -31,7 +37,7 @@ public class Group implements Holder {
     this.ourCart = cart;
   }
 
-  public Quest getQuest() {return new Quest();}
+  public Quest getQuest() {return null;} // ---------------------IMPLEMENT---------------------------------
 
   public void createQuest() {;}
 
