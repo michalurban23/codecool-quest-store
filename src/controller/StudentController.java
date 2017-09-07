@@ -14,19 +14,23 @@ public class StudentController extends UserController {
         view = new ConsoleStudentView();
     }
 
-    public void start (User student) {
-        setUser(student);
-        handleMainMenu();
+    public void start (User user) {
+        if (user.getClass().getSimpleName().equals("Student")) {
+            setUser(user);
+            handleStudentMenu();
+        } else {
+            handleMentorMenu();
+        }
     }
 
-    public void handleMainMenu() {
+    public void handleStudentMenu() {
         boolean isBrowsed = true;
         while (isBrowsed) {
             view.clearScrean();
             view.showShortInfo(user);
-            Integer choice = view.handleMainMenu();
+            Integer choice = view.handleStudentMenu();
             if (choice == 1) {
-                editUserData();
+                editUserData(user);
             } else if (choice == 2) {
                 QuestController questController = new QuestController();
                 questController.start(user);
@@ -37,6 +41,10 @@ public class StudentController extends UserController {
                 isBrowsed = false;
             }
         }
+    }
+
+    public void handleMentorMenu() {
+
     }
 
 }

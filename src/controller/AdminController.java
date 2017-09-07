@@ -7,25 +7,52 @@ import view.*;
 
 public class AdminController extends UserController {
 
-  public AdminController() {;}
+    public AdminController() {
+        view = new ConsoleAdminView();
+    }
 
-  public void start (User admin) {}
+    public void start (User admin) {
+        setUser(admin);
+        handleMainMenu();
+    }
 
-  public Class createClass() {
-    Class newClass = new Class();
-    return newClass;
-  }
+    public void handleMainMenu() {
+        boolean isBrowsed = true;
+        while (isBrowsed) {
+            view.clearScrean();
+            view.showShortInfo(user);
+            Integer choice = view.handleMainMenu();
+            if (choice == 1) {
+                editUserData();
+            } else if (choice == 2) {
+                GroupController groupController = new GroupController();
+                groupController.start(user);
+            } else if (choice == 3) {
+                MentorController mentorController = new MentorController();
+                shoper.start(user);
+            } else if (choice == 0) {
+                isBrowsed = false;
+            }
+        }
+    }
 
-  public User createNewMentor() {
+    public Class createClass() {
+        String className = view.showCreatingClass();
+        if (className != null) {
+            Class newClass = new Class();
+            newClass.setName(className);
+        }
+        return newClass;
+    }
 
-    String[] info = view.getNewUserData();
-    return new Mentor();
-  }
+    public User createNewMentor() {
+        String[] info = view.getNewUserData();
+        return new Mentor();
+    }
 
-  public void removeMentor(Mentor mentor) {;}
+    public void removeMentor(Mentor mentor) {;}
 
-  public String getUserType() {
-
-      return "Admin";
-  }
+    public String getUserType() {
+        return "Admin";
+    }
 }

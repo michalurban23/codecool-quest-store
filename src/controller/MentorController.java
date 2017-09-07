@@ -16,11 +16,11 @@ public class MentorController extends UserController {
         return new Student(str);
     }
 
-    public void start(User mentor){
+    public void start(User user){
 
         Integer choice = view.handleMainMenu();
         if(choice == 1){
-            editUserData();
+            editUserData(user);
         } else if(choice == 2){
             ;
         } else if(choice == 3){

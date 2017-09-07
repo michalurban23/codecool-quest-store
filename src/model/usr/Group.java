@@ -6,9 +6,10 @@ import model.Cart;
 import model.quest.Quest;
 
 public class Group implements Holder {
-  private UUID groupID;
-  private ArrayList<User> usersList;
-  private Cart ourCart;
+    private UUID groupID;
+    private ArrayList<User> usersList;
+    private Cart ourCart;
+    private String name;
 
     public Group(ArrayList<User> usersList) {
 
@@ -16,29 +17,37 @@ public class Group implements Holder {
         this.usersList = usersList;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public Group() {
 
         this(new ArrayList<User>());
     }
 
-  public UUID getID() {
-    return this.groupID;
-  }
+    public UUID getID() {
+        return this.groupID;
+    }
 
-  public ArrayList<User> getUsersList() {
-    return this.usersList;
-  }
+    public ArrayList<User> getUsersList() {
+        return this.usersList;
+    }
 
-  public Cart getCart() {
-    return this.ourCart;
-  }
+    public Cart getCart() {
+        return this.ourCart;
+    }
 
-  public void setCart(Cart cart) {
-    this.ourCart = cart;
-  }
+    public void setCart(Cart cart) {
+        this.ourCart = cart;
+    }
 
-  public Quest getQuest() {return null;} // ---------------------IMPLEMENT---------------------------------
+    public Quest getQuest() {return null;} // ---------------------IMPLEMENT---------------------------------
 
-  public void createQuest() {;}
+    public void createQuest() {;}
 
 }
