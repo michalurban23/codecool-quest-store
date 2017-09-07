@@ -1,6 +1,6 @@
-package models.usr;
+package model.usr;
 
-import models.usr.Class;
+import java.util.UUID;
 
 public class Mentor extends User {
 
@@ -12,6 +12,7 @@ public class Mentor extends User {
         this.lastName = lastName;
         this.email = email;
         this.address = address;
+        this.id = UUID.randomUUID();
         this.status = ACCESS_LEVEL.MENTOR;
     }
 
@@ -23,5 +24,11 @@ public class Mentor extends User {
     public Mentor(String firstName, String lastName) {
 
         this(firstName, lastName, "Not Available", "Not Available");
+    }
+
+    public Mentor(String firstName, String lastName, String email, String address, String id) {
+
+        this(firstName, lastName, email, address);
+        this.id = UUID.fromString(id);
     }
 }
