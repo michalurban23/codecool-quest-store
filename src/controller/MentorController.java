@@ -30,7 +30,7 @@ public class MentorController extends UserController {
             Integer choice = view.handleMainMenu();
             if(choice == 1){
                 // userView.showFullInfo(mentor);
-                editUserData();
+                editUserData(mentor);
             } else if(choice == 2){
                 handleStudentOption();
             } else if(choice == 3){
