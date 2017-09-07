@@ -7,6 +7,6 @@ public class ExtraQuest extends Quest {
 
     public ExtraQuest(Holder owner) {
         super(owner);
-        setCategory(CATEGORY.MAGIC);
+        setCategory(CATEGORY.EXTRA);
     }
 }

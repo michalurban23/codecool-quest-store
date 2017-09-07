@@ -1,9 +1,13 @@
 package controller;
 
-import src.view.*;
+import view.*;
 import dao.*;
 import java.util.HashMap;
-
+import view.ConsoleLoginView;
+import view.UserView;
+import view.LoginView;
+import dao.CSVLoginDAO;
+import dao.LoginDAO;
 
 public class LoginController {
 
@@ -12,6 +16,8 @@ public class LoginController {
     private LoginDAO dataAccess;
     private HashMap<String, String> loginDatabase;
     private String[] loginInfo;
+
+    public LoginController() {}
 
     public void start() {
         provider = new UserControllerProvider();

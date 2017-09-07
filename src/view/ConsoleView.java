@@ -57,7 +57,7 @@ public abstract class ConsoleView {
         return enteredInt;
     }
 
-    public void showMenu(List<Object> options) {
+    public void showMenu(List<String> options) {
         int indexWidth = 1 + Math.floorDiv(options.size() - 1, 10);
         showEnumeratedList(options.subList(0, options.size() - 1));
         System.out.println(String.format("%1$" + indexWidth + "d. %2$s", 0, options.get(options.size() - 1)));
