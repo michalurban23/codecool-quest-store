@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class MentorController extends UserController {
 
-    private Student student = new Student();
+    private Student student;
     ConsoleMentorView view;
 
     public MentorController() {
@@ -49,22 +49,35 @@ public class MentorController extends UserController {
 
         boolean isBrowsed = true;
         while(isBrowsed){
-            view.showEnumeratedList(student.getStudentsList());
             Integer choice = view.handleStudentOption();
+            Student newStudent;
             if(choice == 1){
-                Student newStudent = createNewStudent();
+                newStudent = new Student(view.getNewUserData());
             } else if(choice == 2){
-                ;
+                // view.showEnumeratedList(student.getStudentsList());
+                newStudent = view.getListChoice(student.getStudentsList());
+                System.out.println(student);
+                manageStudentOption(student);
             } else if(choice == 0){
                 isBrowsed = false;
             }
         }
     }
 
-    public Student createNewStudent() {
+    private void manageStudentOption(User user){
 
-        String[] str = view.getNewUserData();
-        return new Student(str);
+        boolean isBrowsed = true;
+        while(isBrowsed){
+            Integer choice = view.getManageStudentOption();
+            if(choice == 1){
+                editUserData(student);
+            } else if(choice == 2){
+                student.getStudentsList().remove(student);
+            } else if(choice == 0){
+                isBrowsed = false;
+            }
+        }
     }
+
 
 }
