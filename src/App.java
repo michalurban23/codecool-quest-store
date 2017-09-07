@@ -1,4 +1,4 @@
-import src.controllers.main;
+import controller.Main;
 
 public class App {
 
