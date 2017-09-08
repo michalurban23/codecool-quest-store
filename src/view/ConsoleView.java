@@ -92,11 +92,7 @@ public abstract class ConsoleView {
 
         String enteredString = getString(question + " (Y/y)? ");
 
-        if (enteredString.toUpperCase().equals("Y")) {
-            return true;
-        } else {
-            return false;
-        }
+        return enteredString.toUpperCase().equals("Y");
     }
 
     public static void clearScreen() {
