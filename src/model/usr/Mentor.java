@@ -39,11 +39,7 @@ public class Mentor extends User {
     }
 
     public static boolean remove(User user) {
-        if (objects.contains(user)) {
-            objects.remove(user);
-            return true;
-        } else {
-            return false;
-        }
+
+        return objects.remove(user);
     }
 }

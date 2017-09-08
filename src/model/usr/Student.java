@@ -60,12 +60,8 @@ public class Student extends User implements Holder {
     }
 
     public static boolean remove(User user) {
-        if (objects.contains(user)) {
-            objects.remove(user);
-            return true;
-        } else {
-            return false;
-        }
+
+        return objects.remove(user);
     }
 
     public void setCart(Cart cart) {

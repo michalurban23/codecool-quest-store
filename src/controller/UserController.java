@@ -35,4 +35,6 @@ public abstract class UserController {
 
     public abstract String getUserType();
 
+    public abstract void start(User user);
+
 }

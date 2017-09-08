@@ -8,10 +8,6 @@ public class CSVLoginDAO implements LoginDAO {
 
     String filepath = "./src/data/logins.csv";
 
-    public String getUserByLogin(String login) {return null;} //----------------IMPLEMENT-----------------
-
-    public String getUserTypeByLogin(String login) {return null;} //----------------IMPLEMENT-----------------
-
     public HashMap<String, String> load() {
 
         String login;
@@ -31,4 +27,9 @@ public class CSVLoginDAO implements LoginDAO {
         }
         return logins;
     }
+
+    public String getUserByLogin(String login) {return null;} //----------------IMPLEMENT-----------------
+
+    public String getUserTypeByLogin(String login) {return null;} //----------------IMPLEMENT-----------------
+
 }
