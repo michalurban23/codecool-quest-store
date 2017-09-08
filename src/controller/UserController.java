@@ -9,19 +9,9 @@ public abstract class UserController {
     User user;
     ConsoleUserView view;
 
-    public abstract void start(User user);
-
-    // public void setView(ConsoleUserView view) {
-    //     this.view = view;
-    // }
-
     public void setUser(User user) {
         this.user = user;
     }
-
-    // public ConsoleUserView getView() {
-    //     return view;
-    // }
 
     public void editUserData(User user) {
         String[] newData = view.getNewUserData();
@@ -41,5 +31,7 @@ public abstract class UserController {
     }
 
     public abstract String getUserType();
+
+    public abstract void start(User user);
 
 }
