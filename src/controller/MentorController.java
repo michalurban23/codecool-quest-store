@@ -6,13 +6,12 @@ import java.util.ArrayList;
 
 public class MentorController extends UserController {
 
-    private Student student;
     ConsoleMentorView view;
 
     public MentorController() {
 
-        this.view = new ConsoleMentorView();
-        super.view = new ConsoleMentorView();
+        view = new ConsoleMentorView();
+        super.view = view;
     }
 
     public String getUserType() {
@@ -21,60 +20,74 @@ public class MentorController extends UserController {
     }
 
 
-    public void start(User mentor){
-        setUser(mentor);
+    public void start (User user) {
+        if (user.getClass().getSimpleName().equals("Mentor")) {
+            setUser(user);
+            handleMainMenu();
+        } else {
+            handleSupervisorMenu();
+        }
+    }
+
+    private void handleMainMenu() {
         boolean isBrowsed = true;
 
         while(isBrowsed){
-
+            view.clearScrean();
+            view.showShortInfo(user);
             Integer choice = view.handleMainMenu();
             if(choice == 1){
-                // userView.showFullInfo(mentor);
+                view.showFullInfo(user);
+                editUserData(user);
+            } else if(choice == 2) {
+                StudentController studentController = new StudentController();
+                studentController.start(user);
+            } else if(choice == 3) {
+                GroupController groupController = new GroupController();
+                groupController.start(user);
+            } else if(choice == 4) {
+                ClassController classController = new ClassController();
+                classController.start(user);
+            } else if(choice == 5) {
+                QuestController questController = new QuestController();
+                questController.start(user);
+            } else if(choice == 6) {
+                ArtifactController artifactController = new ArtifactController();
+                artifactController.start(user);
+            } else if(choice == 0) {
+                isBrowsed = false;
+            }
+        }
+    }
+
+    private void handleSupervisorMenu() {
+        boolean isBrowsed = true;
+        while(isBrowsed){
+            view.clearScrean();
+            ArrayList<Mentor> mentors = Mentor.getObjects();
+            Integer choice = view.handleSupervisorMenu(mentors);
+            if(choice == 1){
+                Mentor mentor = view.getListChoice(mentors);
+                if (mentor != null) {
+                    handleDetails(mentor);
+                }
+            } else if(choice == 2){
+                Mentor newMentor = new Mentor();
+                editUserData(newMentor);
+            } else if(choice == 0){
+                isBrowsed = false;
+            }
+        }
+    }
+
+    private void handleDetails(Mentor mentor) {
+        boolean isBrowsed = true;
+        while(isBrowsed){
+            Integer choice = view.handleDetailsMenu(mentor);
+            if(choice == 1){
                 editUserData(mentor);
             } else if(choice == 2){
-                handleStudentOption();
-            } else if(choice == 3){
-                ;
-            } else if(choice == 4){
-                ;
-            } else if(choice == 5){
-                ;
-            } else if(choice == 6){
-                ;
-            } else if(choice == 0){
-                isBrowsed = false;
-            }
-        }
-    }
-
-    private void handleStudentOption(){
-
-        boolean isBrowsed = true;
-        while(isBrowsed){
-            Integer choice = view.handleStudentOption();
-            Student newStudent;
-            if(choice == 1){
-                newStudent = new Student(view.getNewUserData());
-            } else if(choice == 2){
-                // view.showEnumeratedList(student.getStudentsList());
-                newStudent = view.getListChoice(student.getStudentsList());
-                System.out.println(student);
-                manageStudentOption(student);
-            } else if(choice == 0){
-                isBrowsed = false;
-            }
-        }
-    }
-
-    private void manageStudentOption(User user){
-
-        boolean isBrowsed = true;
-        while(isBrowsed){
-            Integer choice = view.getManageStudentOption();
-            if(choice == 1){
-                editUserData(student);
-            } else if(choice == 2){
-                student.getStudentsList().remove(student);
+                isBrowsed = !Mentor.remove(mentor);
             } else if(choice == 0){
                 isBrowsed = false;
             }
