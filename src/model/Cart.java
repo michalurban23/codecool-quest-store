@@ -1,29 +1,36 @@
 package model;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class Cart {
-  private ArrayList<Object> itemList;
 
-  public Cart(ArrayList<Object> itemList) {
-    this.itemList = itemList;
-  }
+    private ArrayList<Object> itemList;
 
-  private ArrayList<Object> getItemList() {
-    return this.itemList;
-  }
+    public Cart(ArrayList<Object> itemList) {
 
-  private void addToCart(Object item) {
-    itemList.add(item);
-  }
-
-  private void removeFromCart(Object item) {
-    if(itemList.contains(item)) {
-      itemList.remove(item);
+        this.itemList = itemList;
     }
-  }
 
-  private void flushCart() {
-    itemList.clear();
-  }
+    private ArrayList<Object> getItemList() {
+
+        return this.itemList;
+    }
+
+    private void addToCart(Object item) {
+
+        itemList.add(item);
+    }
+
+    private void removeFromCart(Object item) {
+
+        if(itemList.contains(item)) {
+            itemList.remove(item);
+        }
+    }
+
+    private void flushCart() {
+
+        itemList.clear();
+    }
+
 }

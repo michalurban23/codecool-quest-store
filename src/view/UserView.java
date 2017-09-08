@@ -1,6 +1,6 @@
 package view;
 
-import model.usr.*;
+import model.usr.User;
 import java.util.LinkedHashMap;
 
 public interface UserView {
