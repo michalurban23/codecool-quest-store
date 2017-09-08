@@ -80,13 +80,4 @@ public abstract class User {
         return this.firstName + " " + this.lastName;
     }
 
-    // public ArrayList<String> getUserInfo(){
-    //
-    //     ArrayList<String> userInfo = new ArrayList<>();
-    //     userInfo.add("First name: " + firstName);
-    //     userInfo.add("Last name: " + lastName);
-    //     userInfo.add("Email: " + email);
-    //     userInfo.add("Address: " + address);
-    //     return userInfo;
-    // }
 }
