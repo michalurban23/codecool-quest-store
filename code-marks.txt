@@ -1,0 +1,14 @@
+<file>:<line>, Note: <note>
+/src/dao/CSVLoginDAO.java:26, Note: JA: multiple exit point
+/src/model/usr/Holder.java:6, Note: CC: I'm not convinced by the name
+/src/model/usr/Group.java:61, Note: CC: mark as TODO
+/src/model/usr/Class.java:11, Note: OOP: those objects should be held in DAO
+/src/model/usr/Mentor.java:12, Note: CC&OOP: duplicated code. You should implement basic constructor in User class
+/src/dao/CSVLoginDAO.java:7, Note: OOP: this dao is very similar to UserInfo
+/src/dao/CSVUserInfoDAO.java:79, Note: JA: multiple exit points
+/src/dao/CSVUserInfoDAO.java:15, Note: CC: data in src?
+/src/dao/CSVUserInfoDAO.java:17, Note: JA: separate the construction and loading
+/src/controller/UserControllerProvider.java:7, Note: JA: why not hash-map?
+/src/controller/LoginController.java:15, Note: OOP: dao's responsibility
+/src/controller/LoginController.java:49, Note: OOP: should be in a separate class or in DAO
+
