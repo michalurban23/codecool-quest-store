@@ -33,7 +33,7 @@ public class MentorController extends UserController {
         boolean isBrowsed = true;
 
         while(isBrowsed){
-            view.clearScrean();
+            view.clearScreen();
             view.showShortInfo(user);
             Integer choice = view.handleMainMenu();
             if(choice == 1){
@@ -63,7 +63,7 @@ public class MentorController extends UserController {
     private void handleSupervisorMenu() {
         boolean isBrowsed = true;
         while(isBrowsed){
-            view.clearScrean();
+            view.clearScreen();
             ArrayList<Mentor> mentors = Mentor.getObjects();
             Integer choice = view.handleSupervisorMenu(mentors);
             if(choice == 1){
@@ -83,7 +83,7 @@ public class MentorController extends UserController {
     private void handleDetails(Mentor mentor) {
         boolean isBrowsed = true;
         while(isBrowsed){
-            view.clearScrean();
+            view.clearScreen();
             Integer choice = view.handleDetailsMenu(mentor);
             if(choice == 1){
                 editUserData(mentor);

@@ -22,7 +22,7 @@ public class AdminController extends UserController {
     public void handleMainMenu() {
         boolean isBrowsed = true;
         while (isBrowsed) {
-            view.clearScrean();
+            view.clearScreen();
             view.showShortInfo(user);
             Integer choice = view.handleMainMenu();
             if (choice == 1) {

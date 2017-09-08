@@ -30,7 +30,7 @@ public class StudentController extends UserController {
     public void handleStudentMenu() {
         boolean isBrowsed = true;
         while (isBrowsed) {
-            view.clearScrean();
+            view.clearScreen();
             view.showShortInfo(user);
             Integer choice = view.handleMainMenu();
             if (choice == 1) {
@@ -51,7 +51,7 @@ public class StudentController extends UserController {
     private void handleSupervisorMenu() {
         boolean isBrowsed = true;
         while(isBrowsed){
-            view.clearScrean();
+            view.clearScreen();
             ArrayList<Student> students = Student.getObjects();
             Integer choice = view.handleSupervisorMenu(students);
             if(choice == 1){
@@ -71,7 +71,7 @@ public class StudentController extends UserController {
     private void handleDetails(Student student) {
         boolean isBrowsed = true;
         while(isBrowsed){
-            view.clearScrean();
+            view.clearScreen();
             Integer choice = view.handleDetailsMenu(student);
             if(choice == 1){
                 editUserData(student);
