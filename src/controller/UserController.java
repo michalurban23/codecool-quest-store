@@ -1,7 +1,7 @@
 package controller;
 
 import java.util.Scanner;
-import model.usr.*;
+import model.usr.User;
 import view.ConsoleUserView;
 
 public abstract class UserController {

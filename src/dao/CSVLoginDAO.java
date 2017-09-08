@@ -22,14 +22,10 @@ public class CSVLoginDAO implements LoginDAO {
                 logins.put(login, password);
             }
         } catch (IOException e) {
-            System.out.println("Could not locate csv files.");
+            System.err.println("Could not locate csv files.");
             System.exit(0);
         }
         return logins;
     }
-
-    public String getUserByLogin(String login) {return null;} //----------------IMPLEMENT-----------------
-
-    public String getUserTypeByLogin(String login) {return null;} //----------------IMPLEMENT-----------------
 
 }

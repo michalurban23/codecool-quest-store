@@ -1,8 +1,6 @@
 package controller;
 
-import model.usr.*;
-import view.*;
-    
+import model.usr.User;    
 
 public class ShoppingController {
 

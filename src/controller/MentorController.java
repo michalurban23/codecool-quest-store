@@ -1,8 +1,9 @@
 package controller;
 
-import model.usr.*;
-import view.*;
 import java.util.ArrayList;
+import model.usr.User;
+import model.usr.Mentor;
+import view.ConsoleMentorView;
 
 public class MentorController extends UserController {
 
