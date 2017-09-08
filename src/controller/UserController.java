@@ -2,14 +2,17 @@ package controller;
 
 import java.util.Scanner;
 import model.usr.*;
-import view.*;
+import view.ConsoleUserView;
 
 public abstract class UserController {
 
     User user;
     ConsoleUserView view;
 
+    public abstract void start(User user);
+
     public void setUser(User user) {
+
         this.user = user;
     }
 
@@ -31,7 +34,5 @@ public abstract class UserController {
     }
 
     public abstract String getUserType();
-
-    public abstract void start(User user);
 
 }
