@@ -1,6 +1,7 @@
 package controller;
 
 import model.usr.*;
+import view.*;
 
 
 public class ArtifactController {
