@@ -1,8 +1,9 @@
 package controller;
 
-import model.usr.*;
-import view.*;
 import java.util.ArrayList;
+import model.usr.Student;
+import model.usr.User;
+import view.ConsoleStudentView;
 
 public class StudentController extends UserController {
 

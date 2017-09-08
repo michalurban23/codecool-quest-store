@@ -75,7 +75,7 @@ public class CSVUserInfoDAO {
                 this.users.add(data);
             }
         } catch (IOException e) {
-            System.out.println("Could not locate csv files.");
+            System.err.println("Could not locate csv files.");
             System.exit(0);
         }
     }

@@ -1,8 +1,8 @@
 package controller;
 
-import view.*;
-import dao.*;
 import java.util.HashMap;
+import view.LoginView;
+import view.ConsoleLoginView;
 import dao.CSVLoginDAO;
 import dao.CSVUserInfoDAO;
 import dao.LoginDAO;

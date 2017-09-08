@@ -3,7 +3,7 @@ package controller;
 import model.usr.User;
 import model.usr.Mentor;
 import model.usr.Class;
-import view.*;
+import view.ConsoleAdminView;
 
 public class AdminController extends UserController {
 

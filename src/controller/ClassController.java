@@ -1,7 +1,6 @@
 package controller;
 
-import model.usr.*;
-
+import model.usr.User;
 
 public class ClassController {
 
