@@ -83,6 +83,7 @@ public class MentorController extends UserController {
     private void handleDetails(Mentor mentor) {
         boolean isBrowsed = true;
         while(isBrowsed){
+            view.clearScrean();
             Integer choice = view.handleDetailsMenu(mentor);
             if(choice == 1){
                 editUserData(mentor);
