@@ -8,7 +8,7 @@ public class ConsoleLoginView extends ConsoleView implements LoginView {
 
         String[] loginData = new String[2];
 
-        clearScrean();
+        clearScreen();
         loginData[0] = getString("Enter login: ");
         loginData[1] = getString("Enter password: ");
 

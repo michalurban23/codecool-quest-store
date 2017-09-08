@@ -10,21 +10,26 @@ public class AdminController extends UserController {
     ConsoleAdminView view;
 
     public AdminController() {
+
         view = new ConsoleAdminView();
         super.view = view;
     }
 
     public void start (User admin) {
+
         setUser(admin);
         handleMainMenu();
     }
 
     public void handleMainMenu() {
+
         boolean isBrowsed = true;
+
         while (isBrowsed) {
-            view.clearScrean();
+            view.clearScreen();
             view.showShortInfo(user);
             Integer choice = view.handleMainMenu();
+
             if (choice == 1) {
                 view.showFullInfo(user);
                 editUserData(user);
@@ -41,6 +46,7 @@ public class AdminController extends UserController {
     }
 
     public String getUserType() {
+
         return "Admin";
     }
 }
