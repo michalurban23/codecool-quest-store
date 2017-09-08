@@ -51,17 +51,4 @@ public class ConsoleMentorView extends ConsoleUserView {
         studentMenu.put("Back", 0);
         return studentMenu;
     }
-
-    public Integer getManageStudentOption(){
-        return handleMenu(manageStudentsMenu());
-    }
-
-    private LinkedHashMap<String,Integer> manageStudentsMenu(){
-
-        LinkedHashMap<String,Integer> addOrRemoveMenu = new LinkedHashMap<>();
-        addOrRemoveMenu.put("Edit student's data", 1);
-        addOrRemoveMenu.put("Remove student", 2);
-        addOrRemoveMenu.put("Back", 0);
-        return addOrRemoveMenu;
-    }
 }
