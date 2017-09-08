@@ -54,12 +54,8 @@ public class Group implements Holder {
     }
 
     public static boolean remove(Group group) {
-        if (objects.contains(group)) {
-            objects.remove(group);
-            return true;
-        } else {
-            return false;
-        }
+
+        return objects.remove(group);
     }
 
     public Quest getQuest() {return null;} // ---------------------IMPLEMENT---------------------------------

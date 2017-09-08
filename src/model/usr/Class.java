@@ -43,11 +43,7 @@ public class Class {
     }
 
     public static boolean remove(Class cls) {
-        if (objects.contains(cls)) {
-            objects.remove(cls);
-            return true;
-        } else {
-            return false;
-        }
+
+            return objects.remove(cls);
     }
 }

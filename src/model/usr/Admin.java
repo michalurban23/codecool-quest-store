@@ -15,4 +15,9 @@ public class Admin extends User {
         this.id = UUID.fromString(id);
         this.status = ACCESS_LEVEL.ADMIN;
     }
+
+    public Admin(String firstName, String lastName) {
+
+        this(firstName, lastName, "Not Available", "Not Available", UUID.randomUUID().toString());
+    }
 }
