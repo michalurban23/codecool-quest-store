@@ -1,0 +1,86 @@
+GENERAL :
+- think over design :
+	- data loading at startup vs runtime
+	- loading all data or user specific
+	- instantiating all modules or user specific
+- re-think Holder interface name
+- re-work packages
+- improve scrum, atomize tasks, adjust difficulty scale (20points = 5hours)
+
+GIT :
+- tag project :
+	- currently taged as v0.9
+	- make it v1.0 when it works with SQL
+	- v1.x when applying features
+	- v2.0 with web interface
+- create DEV branch and sub-branch from there, merge dev to master at tag point
+- unify branch names
+- introduce code review with pull request
+- establish pull request rules and acceptance criteria
+
+VIEW :
+- apply thorough estetic improvement :
+	- appropriate clear screens
+	- add whitespaces (empty lines, etc)
+	- remove empty line on top (happens sometimes)
+	- colors?
+- success / failure messages
+- hide password on login
+- tables
+- advanced features (HUD, dashboard)
+
+CONTROLLER :
+- move login process to dao
+- in general, move all data manipulation to model/dao, leave only decision handling
+- work on new controllers :
+	- shop
+	- quest
+	- artifact
+	- group
+	- class
+- add dummy methods and menu choices for all possible functionalities we can think of
+- change ArrayList to Map in UserControllerProvider
+
+MODEL :
+- rework user types from enum to strings
+- move contructors from child classes to User
+- move list of classes from Class to DAO
+- introduce user log :
+	- should contain information (amount, date, description) of all coin gains and purchases
+	- coins calculated from log, not held as int field
+	- user experience calculated from log
+- write all necessary getters and data/statistic methods, so controllers only call those
+
+DAO :
+- create at least few users, different access level, different history
+- create all neccessary csv, later sql tables (have application fully functional on csv alone)
+- logically separate Login from UserInfo
+- fix exit points, make it throw exception handled in controller (?)
+- move database out of src/
+- think over all neccessary data we want to store :
+	- what properties does each model hold
+	- how to avoid multiple entries
+	- how to split data into files/tables, what to use as a key
+- develop interfaces, think about all methods we could use (selection, sorting, filtering)
+
+CLEAN CODE :
+- unify code style (spaces, new lines, tabs, brackets)
+- unify names
+- think about proper collections (where to user lists, where maps)
+- fix import statements
+- fix some logical conditions (shorten, simplify, push out into methods)
+- in controllers, separate handling input from other stuff, split into methods
+- find duplicate code, handle it
+- remove any magic numbers
+- where appropriate, declare variables before assigning, push declaration to method header
+
+PRESENTATION :
+
+- remember to increase font size
+- prepare a plan
+- limit information, do NOT focus on specifics
+- look at people, talk to people, not to board
+- show only things that :
+	- are working
+	- are innovative / not obvious
+	- plans for future
