@@ -4,15 +4,15 @@ GENERAL :
 	- loading all data or user specific
 	- instantiating all modules or user specific
 - re-think Holder interface name
-- re-work packages
++ re-work packages
 - improve scrum, atomize tasks, adjust difficulty scale (20points = 5hours)
 
 GIT :
 - tag project :
 	- currently taged as v0.9
-	- make it v1.0 when it works with SQL
-	- v1.x when applying features
-	- v2.0 with web interface
+	- make it v2.0 when it works with SQL
+	- v1.x, v2.x when applying features
+	- v3.0 with web interface
 - create DEV branch and sub-branch from there, merge dev to master at tag point
 - unify branch names
 - introduce code review with pull request
@@ -43,7 +43,7 @@ CONTROLLER :
 
 MODEL :
 - rework user types from enum to strings
-- move contructors from child classes to User
+- move constructors from child classes to User
 - move list of classes from Class to DAO
 - introduce user log :
 	- should contain information (amount, date, description) of all coin gains and purchases
@@ -53,11 +53,11 @@ MODEL :
 
 DAO :
 - create at least few users, different access level, different history
-- create all neccessary csv, later sql tables (have application fully functional on csv alone)
+- create all necessary csv, later sql tables (have application fully functional on csv alone)
 - logically separate Login from UserInfo
 - fix exit points, make it throw exception handled in controller (?)
 - move database out of src/
-- think over all neccessary data we want to store :
+- think over all necessary data we want to store :
 	- what properties does each model hold
 	- how to avoid multiple entries
 	- how to split data into files/tables, what to use as a key
