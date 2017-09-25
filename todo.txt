@@ -9,7 +9,7 @@ GENERAL :
 
 GIT :
 - tag project :
-	- currently taged as v0.9
+	- currently tagged as v0.9
 	- make it v2.0 when it works with SQL
 	- v1.x, v2.x when applying features
 	- v3.0 with web interface
@@ -19,7 +19,7 @@ GIT :
 - establish pull request rules and acceptance criteria
 
 VIEW :
-- apply thorough estetic improvement :
+- apply thorough aesthetic improvement :
 	- appropriate clear screens
 	- add whitespaces (empty lines, etc)
 	- remove empty line on top (happens sometimes)
