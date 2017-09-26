@@ -8,7 +8,7 @@ public class CSVLoginDAO implements LoginDAO {
 
     String filepath = "./logins.csv";
 
-    public HashMap<String, String> load() {
+    public HashMap<String, String> start() {
 
         String login;
         String password;

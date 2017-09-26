@@ -1,59 +1,39 @@
 package com.codecool.rmbk.controller;
 
-import java.util.HashMap;
 import com.codecool.rmbk.view.LoginView;
 import com.codecool.rmbk.view.ConsoleLoginView;
-import com.codecool.rmbk.dao.CSVLoginDAO;
-import com.codecool.rmbk.dao.CSVUserInfoDAO;
-import com.codecool.rmbk.dao.LoginDAO;
+import com.codecool.rmbk.dao.*;
 
 public class LoginController {
 
     private UserControllerProvider provider;
     private LoginView view;
     private LoginDAO dataAccess;
-    private HashMap<String, String> loginDatabase;
     private String[] loginInfo;
 
-    public LoginController() {}
-
-    public void start() {
+    public LoginController() {
 
         provider = new UserControllerProvider();
         view = new ConsoleLoginView();
+    }
+
+    public void startCSV() {
+
         dataAccess = new CSVLoginDAO();
-        loginDatabase = dataAccess.load();
+        // loginDatabase = dataAccess.start();
         loginInfo = logIn();
         startUserController(loginInfo[0]);
     }
 
-    private String[] logIn() {
+    public void startSQL() {
+
+        dataAccess = new SQLLoginDAO();
+        dataAccess.start();
 
         loginInfo = view.LoginScreen();
-        while (!checkPassword()) {
-            view.showWrongDataMessage();
-            loginInfo = view.LoginScreen();
-        }
-        return loginInfo;
-    }
 
-    private boolean checkLogin(String login) {
-
-        if (loginDatabase.containsKey(login)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean checkPassword() {
-
-        if (!checkLogin(loginInfo[0])) {
-            return false;
-        } else if (!loginDatabase.get(loginInfo[0]).equals(loginInfo[1])) {
-            return false;
-        } else {
-            return true;
+        if (dataAccess.login(loginInfo)) {
+            startUserController(loginInfo[0]);
         }
     }
 

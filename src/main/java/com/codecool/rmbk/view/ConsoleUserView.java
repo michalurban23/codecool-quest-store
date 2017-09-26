@@ -8,7 +8,7 @@ public abstract class ConsoleUserView extends ConsoleView implements UserView {
 
     public Integer handleMenu(LinkedHashMap<String,Integer> menu) {
 
-        ArrayList<String> options = new ArrayList<String>(menu.keySet());
+        ArrayList<String> options = new ArrayList<>(menu.keySet());
         showMenu(options);
         String choice = getMenuChoice(options);
 
