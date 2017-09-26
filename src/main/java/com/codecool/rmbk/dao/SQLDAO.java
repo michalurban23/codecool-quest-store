@@ -7,41 +7,46 @@ public class SQLDAO {
     private Connection conn;
     private Statement stmt;
 
-    public void connect() {
-        String url = "jdbc:sqlite:queststore.db";
+    public void connect() throws SQLException {
+
+        String url = "jdbc:sqlite::resource:queststore.db";
         String driver = "org.sqlite.JDBC";
 
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url);
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     public ResultSet getData(String query) {
-        connect();
-        stmt = conn.createStatement();
-        ResultSet result = stmt.executeQuery(query);
 
-        stmt.close();
-        conn.close();
+        try {
+            connect();
+            stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(query);
 
-        return result;
+            //stmt.close();
+            //conn.close();
+            return result;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
 
     public void updateData(String query) {
-        connect();
-        stmt = conn.createStatement();
-        stmt.executeUpdate(query);
+        try {
+            connect();
+            stmt = conn.createStatement();
+            stmt.executeUpdate(query);
 
-        stmt.close();
-        conn.close();
-
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
 }

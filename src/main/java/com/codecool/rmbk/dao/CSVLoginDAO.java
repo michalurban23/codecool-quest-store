@@ -31,4 +31,6 @@ public class CSVLoginDAO implements LoginDAO {
         return logins;
     }
 
+    public Boolean login(String[] loginInfo) {return null;}
+
 }

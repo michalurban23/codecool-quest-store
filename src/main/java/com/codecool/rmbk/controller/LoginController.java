@@ -21,15 +21,13 @@ public class LoginController {
 
         dataAccess = new CSVLoginDAO();
         // loginDatabase = dataAccess.start();
-        loginInfo = logIn();
+        // loginInfo = logIn();
         startUserController(loginInfo[0]);
     }
 
     public void startSQL() {
 
         dataAccess = new SQLLoginDAO();
-        dataAccess.start();
-
         loginInfo = view.LoginScreen();
 
         if (dataAccess.login(loginInfo)) {
