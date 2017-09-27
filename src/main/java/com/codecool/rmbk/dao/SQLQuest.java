@@ -12,7 +12,7 @@ public class SQLQuest extends SqlDAO {
         processQuery(query);
     }
 
-    public ArrayList<ArrayList<String>> getQuestByOwner(int owner) {
+    public void getQuestByOwner(int owner) {
         String query = "SELECT * FROM quests WHERE owner = '" + owner + "';";
 
         processQuery(query);

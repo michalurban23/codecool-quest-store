@@ -9,7 +9,7 @@ public class SQLBacklog extends SqlDAO {
     public void getAllBacklogs() {
         String query = "SELECT * FROM backlog";
 
-        processQuery(query)
+        processQuery(query);
     }
 
     public void getBackLog(int id) {

@@ -11,7 +11,7 @@ public class SQLUserGroups extends SqlDAO {
         processQuery(query);
     }
 
-    public ArrayList<ArrayList<String>> getUserGroup(int id) {
+    public void getUserGroup(int id) {
         String query = "SELECT * FROM user_groups WHERE group_id = '" + id + "';";
 
         processQuery(query);

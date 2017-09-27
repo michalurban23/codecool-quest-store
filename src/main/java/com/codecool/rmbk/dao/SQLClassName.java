@@ -9,12 +9,12 @@ public class SQLClassName extends SqlDAO {
     public void getAllClasses() {
         String query = "SELECT * FROM class_name";
 
-        processQuery(query)
+        processQuery(query);
     }
 
     public void getClassName(int id) {
         String query = "SELECT * FROM class_name WHERE id = '" + id + "';";
 
-        processQuery(query)
+        processQuery(query);
     }
 }

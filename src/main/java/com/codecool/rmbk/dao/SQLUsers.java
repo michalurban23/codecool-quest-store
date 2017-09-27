@@ -12,7 +12,7 @@ public class SQLUsers extends SqlDAO {
         processQuery(query);
     }
 
-    public ArrayList<ArrayList<String>> getUser(int id) {
+    public void getUser(int id) {
         String query = "SELECT * from users WHERE id = '" + id + "';";
 
         processQuery(query);

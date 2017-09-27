@@ -13,7 +13,7 @@ public class SQLGroups extends SqlDAO {
         processQuery(query);
     }
 
-    public ArrayList<ArrayList<String>> getGroup(String name) {
+    public void getGroup(String name) {
         String query = "SELECT * FROM groups WHERE name = '" + name + "';";
 
         processQuery(query);
