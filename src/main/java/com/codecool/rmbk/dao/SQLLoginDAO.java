@@ -1,32 +1,27 @@
 package com.codecool.rmbk.dao;
 
-import java.sql.*;
+import java.util.ArrayList;
 
-public class SQLLoginDAO extends Login implements LoginDAO {
+public class SQLLoginDAO extends SqlDAO implements LoginDAO {
 
-    public void start() {;}
+    private ArrayList<ArrayList<String>> results;
 
-    public Boolean login(String[] loginInfo) {;}
+    public Boolean login(String[] loginInfo) {
 
-    private String[] logIn() {
+        String user_name = loginInfo[0];
+        String user_pass = loginInfo[1];
+        String password = "";
 
-        while (!checkPassword()) {
-            view.showWrongDataMessage();
-            loginInfo = view.LoginScreen();
+        String query = "SELECT password, login FROM 'login_info' WHERE login = '" + user_name + "';";
+
+        handleQuery(query);
+        results = getResults();
+
+        if (! results.isEmpty()) {
+            password = results.get(0).get(0);
         }
-        return loginInfo;
-    }
 
-
-    private boolean checkPassword() {
-
-        if (!checkLogin(loginInfo[0])) {
-            return false;
-        } else if (!loginDatabase.get(loginInfo[0]).equals(loginInfo[1])) {
-            return false;
-        } else {
-            return true;
-        }
+        return password.equals(user_pass);
     }
 
 }

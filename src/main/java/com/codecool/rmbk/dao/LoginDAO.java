@@ -2,5 +2,5 @@ package com.codecool.rmbk.dao;
 
 public interface LoginDAO {
 
-    void start();
+    Boolean login(String[] loginInfo);
 }
