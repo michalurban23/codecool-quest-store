@@ -14,7 +14,7 @@ public class Mentor extends User {
         this.email = email;
         this.address = address;
         this.id = UUID.randomUUID();
-        this.status = ACCESS_LEVEL.MENTOR;
+        this.status = "Mentor";
         objects.add(this);
     }
 

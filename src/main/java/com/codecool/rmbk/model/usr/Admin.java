@@ -13,7 +13,7 @@ public class Admin extends User {
         this.email = email;
         this.address = address;
         this.id = UUID.fromString(id);
-        this.status = ACCESS_LEVEL.ADMIN;
+        this.status = "Admin";
     }
 
     public Admin(String firstName, String lastName) {

@@ -19,7 +19,7 @@ public class Student extends User implements Holder {
         this.email = email;
         this.address = address;
         this.id = UUID.randomUUID();
-        this.status = ACCESS_LEVEL.STUDENT;
+        this.status = "student";
         objects.add(this);
     }
 
@@ -30,7 +30,7 @@ public class Student extends User implements Holder {
         address = userInfo[3];
         objects.add(this);
         this.id = UUID.randomUUID();
-        this.status = ACCESS_LEVEL.STUDENT;
+        this.status = "student";
     }
 
     public Student() {

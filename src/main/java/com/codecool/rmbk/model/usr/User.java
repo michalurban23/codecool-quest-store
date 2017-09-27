@@ -10,15 +10,8 @@ public abstract class User {
     protected String email;
     protected String address;
     protected UUID id;
-    protected ACCESS_LEVEL status;
+    protected String status;
     private static ArrayList<? extends User> objects;
-
-
-    public enum ACCESS_LEVEL {
-        ADMIN,
-        MENTOR,
-        STUDENT
-    }
 
     public void setFirstName(String firstName) {
 
@@ -70,7 +63,7 @@ public abstract class User {
         return this.firstName + " " + this.lastName;
     }
 
-    public ACCESS_LEVEL getStatus() {
+    public String getStatus() {
 
         return this.status;
     }
