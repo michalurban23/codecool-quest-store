@@ -1,37 +1,26 @@
 package com.codecool.rmbk.model.usr;
 
-import java.util.UUID;
 import java.util.ArrayList;
 
 public class Mentor extends User {
 
     private static ArrayList<Mentor> objects = new ArrayList<Mentor>();
 
-    public Mentor(String firstName, String lastName, String email, String address) {
+    public Mentor(String firstName, String lastName, String email, String address, Integer id) {
 
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.address = address;
-        this.id = UUID.randomUUID();
+        super(firstName, lastName, email, address, id);
         this.status = "Mentor";
         objects.add(this);
     }
 
     public Mentor() {
 
-        this("Not Available", "Not Available", "Not Available", "Not Available");
+        this("Not Available", "Not Available", "Not Available", "Not Available", null);
     }
 
     public Mentor(String firstName, String lastName) {
 
-        this(firstName, lastName, "Not Available", "Not Available");
-    }
-
-    public Mentor(String firstName, String lastName, String email, String address, String id) {
-
-        this(firstName, lastName, email, address);
-        this.id = UUID.fromString(id);
+        this(firstName, lastName, "Not Available", "Not Available", null);
     }
 
     public static ArrayList<Mentor> getObjects(){

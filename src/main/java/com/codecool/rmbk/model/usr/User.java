@@ -9,9 +9,19 @@ public abstract class User {
     protected String lastName;
     protected String email;
     protected String address;
-    protected UUID id;
+
+    protected Integer id;
     protected String status;
-    private static ArrayList<? extends User> objects;
+    protected static ArrayList<? extends User> objects;
+
+    public User(String firstName, String lastName, String email, String address, Integer id) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.id = id;
+    }
 
     public void setFirstName(String firstName) {
 
@@ -53,7 +63,7 @@ public abstract class User {
         return this.address;
     }
 
-    public UUID getID() {
+    public int getID() {
 
         return this.id;
     }
