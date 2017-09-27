@@ -1,8 +1,7 @@
 package com.codecool.rmbk.view;
 
-import java.io.IOException;
-import java.lang.Math;
-import java.lang.Thread;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -96,6 +95,70 @@ public abstract class ConsoleView {
         return enteredString.toUpperCase().equals("Y");
     }
 
+    public Boolean printList(String title, ArrayList<ArrayList<String>> data) {
+
+        if (data.size() <= 1) {
+            printWarning("No matching data in " + title);
+            return false;
+        }
+
+        ArrayList<String> labels = data.get(0);
+        ArrayList<Integer> widths = calculateWidths(data); // last element is a total table width
+
+        String horizontalLine = String.join("", Collections.nCopies(widths.get(widths.size()-1), "-"));
+
+        System.out.printf("%n> > > %s < < <%n%n", title);
+
+        for (int i = 0; i < data.size(); i++) {
+
+            ArrayList<String> entry = data.get(i);
+            String index = i==0 ? "#" : String.valueOf(i);
+
+            if (i == 1) {
+                System.out.println(horizontalLine);
+            }
+            System.out.printf("| %2s |", index);
+
+            for(int column = 0; column < labels.size(); column++) {
+                int width = widths.get(column);
+                System.out.printf(" %" + width + "s |", entry.get(column));
+            } System.out.println();
+        }
+        return true;
+    }
+
+    private ArrayList<Integer> calculateWidths(ArrayList<ArrayList<String>> data) {
+
+        ArrayList<Integer> widths = new ArrayList<>();
+        Integer totalWidth = 0;
+        int columnsNumber = data.get(0).size();
+        int totalOffset = 6 + columnsNumber * 3; // Total padding of all columns + width of index column
+
+        for (int i=0; i < columnsNumber; i++) {
+
+            Integer longest = data.get(0).get(i).length();
+
+            for (ArrayList<String> row : data) {
+
+                Integer currentWidth;
+                String current = row.get(i);
+                if (current != null) {      // This is to account for any entry being literally "null"
+                    currentWidth = current.length();
+                } else {
+                    currentWidth = 4; // "Length" of null
+                }
+
+                if (currentWidth > longest) {
+                    longest = currentWidth;
+                }
+            }
+            widths.add(longest);
+            totalWidth += longest;
+        }
+        widths.add(totalWidth + totalOffset);
+        return widths;
+    }
+
     public static void clearScreen() {
 
         System.out.print("\033[H\033[2J");
@@ -107,6 +170,11 @@ public abstract class ConsoleView {
         try {
             Thread.sleep(seconds * 1000);
         } catch (InterruptedException e) {}
+    }
+
+    public void printWarning(String message) {
+
+        System.err.println(message);
     }
 
 }
