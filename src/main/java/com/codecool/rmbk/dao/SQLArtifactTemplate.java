@@ -6,21 +6,15 @@ public class SQLArtifactTemplate extends SqlDAO {
 
     private ArrayList<ArrayList<String>> results;
 
-    public ArrayList<ArrayList<String>> getAllArtifactTemplates() {
+    public void getAllArtifactTemplates() {
         String query = "SELECT * FROM artifact_template";
 
-        handleQuery(query);
-        results = getResults();
-
-        return results;
+        processQuery(query);
     }
 
-    public ArrayList<ArrayList<String>> getArtifactTemplate(String name) {
+    public void getArtifactTemplate(String name) {
         String query = "SELECT * FROM artifact_template WHERE name = '" + name + "';";
 
-        handleQuery(query);
-        results = getResults();
-
-        return results;
+        processQuery(query);
     }
 }

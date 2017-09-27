@@ -6,21 +6,15 @@ public class SQLArtifact extends SqlDAO {
 
     private ArrayList<ArrayList<String>> results;
 
-    public ArrayList<ArrayList<String>> getAllArtifacts() {
+    public void getAllArtifacts() {
         String query = "SELECT * FROM artifacts";
 
-        handleQuery(query);
-        results = getResults();
-
-        return results;
+        results = processQuery(query);
     }
 
-    public ArrayList<ArrayList<String>> getArtifact(int id) {
+    public void getArtifact(int id) {
         String query = "SELECT * FROM artifacts WHERE id = '" + id + "';";
 
-        handleQuery(query);
-        results = getResults();
-
-        return results;
+        results = processQuery(query);
     }
 }

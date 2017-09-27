@@ -6,21 +6,15 @@ public class SQLQuest extends SqlDAO {
 
     private ArrayList<ArrayList<String>> results;
 
-    public ArrayList<ArrayList<String>> getAllQuests() {
+    public void getAllQuests() {
         String query = "SELECT * FROM quests";
 
-        handleQuery(query);
-        results = getResults();
-
-        return results;
+        processQuery(query);
     }
 
     public ArrayList<ArrayList<String>> getQuestByOwner(int owner) {
         String query = "SELECT * FROM quests WHERE owner = '" + owner + "';";
 
-        handleQuery(query);
-        results = getResults();
-
-        return results;
+        processQuery(query);
     }
 }

@@ -6,12 +6,16 @@ public class SQLBacklog extends SqlDAO {
 
     private ArrayList<ArrayList<String>> results;
 
-    public ArrayList<ArrayList<String>> getBackLog(int id) {
+    public void getAllBacklogs() {
+        String query = "SELECT * FROM backlog";
+
+        processQuery(query)
+    }
+
+    public void getBackLog(int id) {
         String query = "SELECT * from backlog WHERE owner = '" + id + "';";
 
-        handleQuery(query);
-        results = getResults();
-        return results;
+        processQuery(query);
     }
 
 }

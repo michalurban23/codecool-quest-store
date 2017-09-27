@@ -7,21 +7,15 @@ public class SQLGroups extends SqlDAO {
 
     private ArrayList<ArrayList<String>> results;
 
-    public ArrayList<ArrayList<String>> getAllGroups() {
+    public void getAllGroups() {
         String query = "SELECT * FROM groups";
 
-        handleQuery(query);
-        results = getResults();
-
-        return results;
+        processQuery(query);
     }
 
     public ArrayList<ArrayList<String>> getGroup(String name) {
         String query = "SELECT * FROM groups WHERE name = '" + name + "';";
 
-        handleQuery(query);
-        results = getResults();
-
-        return results;
+        processQuery(query);
     }
 }
