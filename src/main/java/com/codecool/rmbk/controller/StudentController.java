@@ -43,9 +43,6 @@ public class StudentController extends UserController {
                 view.showFullInfo(user);
                 editUserData(user);
             } else if (choice == 2) {
-                QuestController questController = new QuestController();
-                questController.start(user);
-            } else if (choice == 3) {
                 ShoppingController shoper = new ShoppingController(user);
                 shoper.startShoppingController();
             } else if (choice == 0) {

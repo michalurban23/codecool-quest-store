@@ -56,8 +56,8 @@ public class MentorController extends UserController {
                 QuestController questController = new QuestController();
                 questController.start(user);
             } else if(choice == 6) {
-                ArtifactController artifactController = new ArtifactController();
-                artifactController.start(user);
+                ArtifactController artifactController = new ArtifactController(user);
+                artifactController.startArtifactController();
             } else if(choice == 0) {
                 isBrowsed = false;
             }

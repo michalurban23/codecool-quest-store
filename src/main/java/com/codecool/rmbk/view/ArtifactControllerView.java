@@ -1,10 +1,8 @@
 package com.codecool.rmbk.view;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-public class ShoppingControllerView extends ConsoleUserView {
-
+public class ArtifactControllerView extends ConsoleUserView {
 
     public Integer handleMainMenu() {
         return handleMenu(createMainMenu());
@@ -14,11 +12,13 @@ public class ShoppingControllerView extends ConsoleUserView {
 
         LinkedHashMap<String, Integer> mainMenu = new LinkedHashMap<>();
 
-        mainMenu.put("Artifacts", 1);
-        mainMenu.put("Quests", 2);
+        mainMenu.put("View available artifacts", 1);
+        mainMenu.put("Buy artifact", 2);
+        mainMenu.put("Buy artifact as group", 3);
         mainMenu.put("Log out", 0);
 
         return mainMenu;
     }
+
 
 }
