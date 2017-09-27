@@ -1,7 +1,6 @@
 package com.codecool.rmbk.view;
 
-import com.codecool.rmbk.model.item.Item;
-
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class ShoppingControllerView extends ConsoleUserView {
@@ -23,22 +22,41 @@ public class ShoppingControllerView extends ConsoleUserView {
         return mainMenu;
     }
 
-    public Integer handleDetailsMenu(Item item) {
+    public void listDetailedArtifacts(ArrayList<ArrayList<String>> artifacts) {
+        String toPrint = "";
 
-        showShortInfo(item);
-        System.out.println("\n");
+        for(ArrayList artifact : artifacts) {
 
-        return handleMenu(createDetailsMenu());
+//            showEnumeratedList(artifact);
+
+            toPrint += String.valueOf(artifacts.indexOf(artifact) + 1);
+            toPrint += ". Artifact name :: " + artifact.get(0) + " ::\n";
+            toPrint += "Description :: " + artifact.get(1) + " ::\n";
+            toPrint += "Cost :: " + artifact.get(2) + " ::\n";
+
+            if(artifact.get(3).equals(1)) {
+                toPrint += ":: SPECIAL QUEST ::";
+            }
+
+            System.out.println(toPrint);
+
+            toPrint = "";
+        }
     }
 
-    private LinkedHashMap<String,Integer> createDetailsMenu() {
+    public void listArtifacts(ArrayList<ArrayList<String>> artifacts) {
+        String toPrint = "";
 
-        LinkedHashMap<String,Integer> artifactMenu = new LinkedHashMap<>();
+        for(ArrayList artifact : artifacts) {
+//            showEnumeratedList(artifact);
 
-        artifactMenu.put("View detailed artifact info", 1);
-        artifactMenu.put("Back", 0);
+            toPrint += String.valueOf(artifacts.indexOf(artifact) + 1) + "Artifact name :: " + artifact.get(0) + " ::\n";
 
-        return artifactMenu;
+            System.out.println(toPrint);
+
+            toPrint = "";
+
+        }
     }
 
 }

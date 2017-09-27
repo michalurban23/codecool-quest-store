@@ -46,8 +46,8 @@ public class StudentController extends UserController {
                 QuestController questController = new QuestController();
                 questController.start(user);
             } else if (choice == 3) {
-                ShoppingController shoper = new ShoppingController();
-                shoper.startShoppingController(user);
+                ShoppingController shoper = new ShoppingController(user);
+                shoper.startShoppingController();
             } else if (choice == 0) {
                 isBrowsed = false;
             }
