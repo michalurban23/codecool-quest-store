@@ -96,6 +96,14 @@ public class SqlDAO {
         }
     }
 
+    public ArrayList<ArrayList<String>> processQuery(String query) {
+
+        handleQuery(query);
+        results = getResults();
+
+        return results;
+    }
+
     // private void getColumnsInfo(int columns) throws SQLException {
     //
     //     resultsInfo = new ArrayList<>();
