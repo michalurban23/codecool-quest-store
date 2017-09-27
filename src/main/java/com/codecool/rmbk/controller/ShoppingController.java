@@ -4,7 +4,23 @@ import com.codecool.rmbk.model.usr.User;
 
 public class ShoppingController {
 
-    public void start (User user) {
+    private User user;
+    private ShoppingControllerView view;
 
+    public ShoppingController(User user) {
+        this.user = user;
+    }
+
+    public void startShoppingController() {
+
+        handleShoppingMenu();
+    }
+
+    public void handleShoppingMenu() {
+
+        boolean isBrowsed = true;
+
+        while(isBrowsed) {
+        }
     }
 }

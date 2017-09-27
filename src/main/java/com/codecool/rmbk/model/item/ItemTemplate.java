@@ -5,12 +5,12 @@ import java.util.UUID;
 
 public class ItemTemplate {
 
-    private UUID id;
+    private int id;
     private Integer price;
     private String description;
     private static ArrayList<ItemTemplate> itemList = new ArrayList<>();
 
-    static enum CATEGORY {
+    enum CATEGORY {
         BASIC,
         MAGIC;
     }
@@ -19,7 +19,7 @@ public class ItemTemplate {
 
         this.price = price;
         this.description = description;
-        this.id = UUID.randomUUID();
+        this.id = id;
         itemList.add(this);
     }
 

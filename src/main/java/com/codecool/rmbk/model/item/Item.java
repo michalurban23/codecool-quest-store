@@ -1,6 +1,5 @@
 package com.codecool.rmbk.model.item;
 
-import java.util.UUID;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import com.codecool.rmbk.model.usr.Holder;
@@ -10,13 +9,13 @@ public class Item {
 
     private Holder owner;
     private LocalDateTime buyTime;
-    private UUID id;
+    private int id;
     private CATEGORY category;
     private static ArrayList<Item> itemList = new ArrayList<>();
 
     public Item(Holder owner) {
 
-        this.id = UUID.randomUUID();
+        this.id = id;
         this.owner = owner;
         this.buyTime = LocalDateTime.now();
         this.category = CATEGORY.BASIC;
