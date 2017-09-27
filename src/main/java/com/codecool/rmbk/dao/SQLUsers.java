@@ -2,9 +2,7 @@ package com.codecool.rmbk.dao;
 
 import java.util.ArrayList;
 
-public class SQLUsers extends SqlDAO {
-
-    private ArrayList<ArrayList<String>> results;
+public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
     public void getAllUsers() {
         String query = "SELECT * FROM users";
