@@ -1,6 +1,7 @@
 package com.codecool.rmbk.controller;
 
 import com.codecool.rmbk.model.usr.User;
+import com.codecool.rmbk.view.ShoppingControllerView;
 
 public class ShoppingController {
 
@@ -21,6 +22,7 @@ public class ShoppingController {
         boolean isBrowsed = true;
 
         while(isBrowsed) {
+
         }
     }
 }
