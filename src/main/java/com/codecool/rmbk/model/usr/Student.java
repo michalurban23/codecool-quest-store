@@ -12,41 +12,27 @@ public class Student extends User implements Holder {
     private Cart myCart;
     private static ArrayList<Student> objects = new ArrayList<Student>();
 
-    public Student(String firstName, String lastName, String email, String address) {
+    public Student(String firstName, String lastName, String email, String address, Integer id) {
 
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.address = address;
-        this.id = UUID.randomUUID();
-        this.status = ACCESS_LEVEL.STUDENT;
+        super(firstName, lastName, email, address, id);
+        this.status = "STUDENT";
         objects.add(this);
     }
 
     public Student(String[] userInfo){
-        firstName = userInfo[0];
-        lastName = userInfo[1];
-        email = userInfo[2];
-        address = userInfo[3];
+        super(userInfo[0], userInfo[1], userInfo[2], userInfo[3], null);
+        this.status = "STUDENT";
         objects.add(this);
-        this.id = UUID.randomUUID();
-        this.status = ACCESS_LEVEL.STUDENT;
     }
 
     public Student() {
 
-        this("Not Available", "Not Available", "Not Available", "Not Available");
+        this("Not Available", "Not Available", "Not Available", "Not Available", null);
     }
 
     public Student(String firstName, String lastName) {
 
-        this(firstName, lastName, "Not Available", "Not Available");
-    }
-
-    public Student(String firstName, String lastName, String email, String address, String id) {
-
-        this(firstName, lastName, email, address);
-        this.id = UUID.fromString(id);
+        this(firstName, lastName, "Not Available", "Not Available", null);
     }
 
     public static ArrayList<Student> getObjects(){
