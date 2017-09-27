@@ -126,7 +126,6 @@ public abstract class ConsoleView {
         return enteredString.toUpperCase().equals("Y");
     }
 
-
     public Boolean printList(String title, ArrayList<ArrayList<String>> data) {
 
         if (data.size() <= 1) {
