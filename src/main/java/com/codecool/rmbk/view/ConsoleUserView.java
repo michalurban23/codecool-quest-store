@@ -41,9 +41,9 @@ public class ConsoleUserView extends ConsoleView implements UserView {
         return newUserData;
     }
 
-    public String handleBrowse(TreeMap<Integer,String> menu, ArrayList users) {
+    public String handleBrowse(TreeMap<Integer,String> menu, ArrayList<ArrayList<String>> users) {
 
-        showEnumeratedList();
+        printList("", users);
         System.out.println("\n");
 
         return handleMenu(menu);

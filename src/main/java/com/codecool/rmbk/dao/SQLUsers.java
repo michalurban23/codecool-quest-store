@@ -15,6 +15,5 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
         processQuery(query);
     }
-
 }
 
