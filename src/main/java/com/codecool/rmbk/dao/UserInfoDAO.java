@@ -16,5 +16,5 @@ public interface UserInfoDAO {
     public Boolean updateUserName(User user, String name); // returns true if successfully finished
     public Boolean updateUserSurname(User user, String surname); // returns true if successfully finished
     public Boolean updateUserEmail(User user, String email); // returns true if successfully finished
-    public Boolean updateUserAdress(User user, String adress); // returns true if successfully finished
+    public Boolean updateUserAddress(User user, String adress); // returns true if successfully finished
 }
