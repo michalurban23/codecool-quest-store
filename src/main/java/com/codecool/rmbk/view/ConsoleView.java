@@ -155,6 +155,8 @@ public abstract class ConsoleView {
                 System.out.printf(" %" + width + "s |", entry.get(column));
             } System.out.println();
         }
+        System.out.println(horizontalLine + "\n");
+
         return true;
     }
 

@@ -18,7 +18,7 @@ public class SqlDAO {
     private ArrayList<String> resultsInfo;
     private String status;
 
-    ArrayList<ArrayList<String>> getResults() {
+    public ArrayList<ArrayList<String>> getResults() {
 
         return this.results;
     }
