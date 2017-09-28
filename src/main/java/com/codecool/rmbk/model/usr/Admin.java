@@ -5,13 +5,11 @@ public class Admin extends User {
     public Admin(String firstName, String lastName, String email, String address, Integer id) {
 
         super(firstName, lastName, email, address, id);
-        this.status = "Admin";
     }
 
     public Admin(String[] userInfo){
 
         super(userInfo);
-        this.status = userInfo[5];
     }
 
     public Admin(String firstName, String lastName) {

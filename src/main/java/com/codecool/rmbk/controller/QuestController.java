@@ -18,7 +18,7 @@ public class QuestController {
 
         this.controllerRunning = true;
 
-        if (user.getStatus().equals("student")) {
+        if (user.getClass().getSimpleName().equals("Student")) {
             runStudentMenu();
         } else {
             runMentorMenu();

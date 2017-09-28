@@ -15,7 +15,6 @@ public class Student extends User implements Holder {
     public Student(String firstName, String lastName, String email, String address, Integer id) {
 
         super(firstName, lastName, email, address, id);
-        this.status = "Student";
         objects.add(this);
     }
 
