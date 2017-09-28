@@ -80,7 +80,7 @@ public abstract class UserController {
                 MentorController mentorController = new MentorController();
                 mentorController.start(user);
             } else if(choice.equals(menu.get(5))) {
-                GroupController groupController = new GroupController();
+                TeamController groupController = new TeamController();
                 groupController.start(user);
             } else if(choice.equals(menu.get(7))) {
                 QuestController questController = new QuestController();

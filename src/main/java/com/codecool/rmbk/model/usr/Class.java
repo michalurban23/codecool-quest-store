@@ -14,7 +14,6 @@ public class Class extends Group {
 
         this.groupID = UUID.randomUUID();
         this.usersList = usersList;
-        objects.add(this);
     }
 
     public Class() {
@@ -24,14 +23,6 @@ public class Class extends Group {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public UUID getID() {
-        return this.groupID;
     }
 
     public ArrayList<Student> getUsersList() {
