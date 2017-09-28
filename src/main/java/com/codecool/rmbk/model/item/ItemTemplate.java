@@ -6,7 +6,7 @@ import static com.codecool.rmbk.model.item.ItemTemplate.CATEGORY.MAGIC;
 public class ItemTemplate {
 
     private String name;
-    private Integer value;
+    private String value;
     private String description;
     private CATEGORY category;
 
@@ -15,24 +15,24 @@ public class ItemTemplate {
         MAGIC;
     }
 
-    public ItemTemplate(String name, String description, int value, int special) {
+    public ItemTemplate(String name, String description, String value, String special) {
 
         this.name = name;
         this.value = value;
         this.description = description;
-        if(special == 1) {
+        if(special == "1") {
             this.category = MAGIC;
-        } else if(special == 0) {
+        } else if(special == "0") {
             this.category = BASIC;
         }
     }
 
-    public Integer getValue() {
+    public String getValue() {
 
         return this.value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

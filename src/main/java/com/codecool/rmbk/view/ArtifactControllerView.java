@@ -1,6 +1,8 @@
 package com.codecool.rmbk.view;
 
-import java.util.LinkedHashMap;
+import com.codecool.rmbk.model.item.Item;
+import com.codecool.rmbk.model.item.ItemTemplate;
+
 import java.util.TreeMap;
 
 public class ArtifactControllerView extends ConsoleUserView {
@@ -35,10 +37,12 @@ public class ArtifactControllerView extends ConsoleUserView {
 
         mainMenu.put(1, "View artifact templates");
         mainMenu.put(2, "Create new template");
+        mainMenu.put(3, "Edit existing template");
         mainMenu.put(0, "Log out");
 
         return mainMenu;
     }
 
-
+    public void viewDetailedTemplate(ItemTemplate template) {
+    }
 }

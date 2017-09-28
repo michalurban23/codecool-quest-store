@@ -19,6 +19,8 @@ public class ArtifactController {
 
     public void start(User user) {
 
+        this.user = user;
+
         if(user.getStatus().equals("Student")) {
             handleStudentMenu();
         }
@@ -56,6 +58,8 @@ public class ArtifactController {
                 listArtifacts();
             } else if(choice.equals("Create new template")) {
                 createArtifactTemplate();
+            } else if(choice.equals("Edit existing template")) {
+                editExistingTemplate();
             } else if(choice.equals("Log out")) {
                 isBrowsed = false;
             }
@@ -70,29 +74,27 @@ public class ArtifactController {
     }
 
     public void buyArtifact() {
-        ItemTemplate template = getNewArtifactTemplate();
-        Item artifact = getNewArtifact(template);
+        ItemTemplate template = getArtifactTemplate();
+        Item artifact = getArtifact(template);
 
-        System.out.println(artifact.getTemplate().getDescription());
+
     }
 
     public void buyAsGroup() {
 
     }
 
-    public ItemTemplate getNewArtifactTemplate() {
+    public ItemTemplate getArtifactTemplate() {
         listArtifacts();
         ArrayList<String> choice = view.getListChoice(getAvailableArtifacts());
 
-        ItemTemplate template = new ItemTemplate(choice.get(0), choice.get(1),
-                                                 Integer.parseInt(choice.get(2)),
-                                                 Integer.parseInt(choice.get(3)));
+        ItemTemplate template = new ItemTemplate(choice.get(0), choice.get(1), choice.get(2), choice.get(3));
 
         return template;
     }
 
-    public Item getNewArtifact(ItemTemplate template) {
-        Item artifact = new Item(template, user.getID());
+    public Item getArtifact(ItemTemplate template) {
+        Item artifact = new Item(template);
 
         return artifact;
     }
@@ -106,8 +108,26 @@ public class ArtifactController {
         return artifacts;
     }
 
-    public void createArtifactTemplate() {
 
+    public void createArtifactTemplate() {
+        String name = view.getInput("Type the name of the artifact: ");
+        String value = view.getInput("Set the value: ");
+        String description = view.getInput("Write a description: ");
+        String special = view.getInput("Is it a special quest: (y/n) ");
+        if(special.equals("y")) {
+            special = "1";
+        } else {
+            special = "0";
+        }
+
+        ItemTemplate newTemplate = new ItemTemplate(name, description, value, special);
+
+        System.out.println(newTemplate.getDescription());
     }
 
+    public void editExistingTemplate() {
+        ItemTemplate toEdit = getArtifactTemplate();
+
+
+    }
 }

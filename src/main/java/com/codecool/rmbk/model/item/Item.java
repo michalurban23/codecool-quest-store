@@ -1,30 +1,28 @@
 package com.codecool.rmbk.model.item;
 
 import java.time.LocalDateTime;
-import com.codecool.rmbk.model.usr.Holder;
-import com.codecool.rmbk.model.item.ItemTemplate.CATEGORY;
 
 public class Item {
 
     private ItemTemplate template;
-    private int owner;
+    private String owner;
     private int id;
     private LocalDateTime buyTime;
 
-    public Item(ItemTemplate template, int owner) {
+    public Item(ItemTemplate template) {
 
         this.id = id;
         this.template = template;
-        this.owner = owner;
+//        this.owner = owner;
         this.buyTime = LocalDateTime.now();
     }
 
-    public int getOwner() {
+    public String getOwner() {
 
         return this.owner;
     }
 
-    public void setOwner(int owner) {
+    public void setOwner(String owner) {
 
         this.owner = owner;
     }
