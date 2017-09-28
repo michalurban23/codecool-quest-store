@@ -51,7 +51,7 @@ public abstract class ConsoleView {
             }
         } while (choice < 1 || choice > list.size());
 
-        return list.get(choice - 1);
+        return list.get(choice);
     }
 
     public String getString(String message) {

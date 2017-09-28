@@ -29,6 +29,12 @@ public class Student extends User implements Holder {
         this("Not Available", "Not Available", "Not Available", "Not Available", null);
     }
 
+    public Student(int id) {
+
+        this();
+        this.id = id;
+    }
+
     public Student(String firstName, String lastName) {
 
         this(firstName, lastName, "Not Available", "Not Available", null);

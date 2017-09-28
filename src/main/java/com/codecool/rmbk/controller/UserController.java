@@ -104,14 +104,15 @@ public abstract class UserController {
             String choice = view.handleBrowse(menu, users);
 
             if(choice.equals(menu.get(1))){
-                ArrayList<String> chosenUserInfo= view.getListChoice(users);
+                ArrayList<String> chosenUserInfo = view.getListChoice(users);
                 if (chosenUserInfo != null) {
+                    System.out.println(choice);
+                    System.out.println(chosenUserInfo);
                     Integer userId = Integer.parseInt(chosenUserInfo.get(0));
                     handleDetailsMenu(userDao.getUserByID(userId));
                 }
             } else if(choice.equals(menu.get(2))){
                 User newUser = userDao.addUser(userType);
-                System.out.println(newUser.getID());
                 editUserData(newUser);
             } else if(choice.equals(menu.get(0))){
                 isBrowsed = false;
