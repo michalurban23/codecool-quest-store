@@ -14,14 +14,16 @@ public class SQLArtifact extends SqlDAO {
         results = processQuery(query);
     }
 
-    public void getArtifact(int id) {
-        String query = "SELECT * FROM artifacts WHERE id = '" + id + "';";
+    public void getArtifact(String name) {
+        String query = "SELECT * FROM artifacts WHERE id = '" + name + "';";
 
         results = processQuery(query);
     }
 
-    public void addArtifact(Item artifact) {
+    public void addArtifact(String info) {
+        String query = "INSERT INTO artifact_template (name, description, value, special) " + info;
 
+        results = processQuery(query);
     }
 
 }
