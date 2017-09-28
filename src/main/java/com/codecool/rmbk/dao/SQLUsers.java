@@ -113,25 +113,25 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     public Boolean updateUserName(User user, String name) {
 
         String query = String.format("UPDATE users SET first_name = '%s' WHERE id = %d;", name, user.getID());
-        return null;
+        return handleQuery(query);
     }
 
     public Boolean updateUserSurname(User user, String surname) {
 
         String query = String.format("UPDATE users SET last_name = '%s' WHERE id = %d;", surname, user.getID());
-        return null;
+        return handleQuery(query);
     }
 
     public Boolean updateUserEmail(User user, String email) {
 
         String query = String.format("UPDATE users SET email = '%s' WHERE id = %d;", email, user.getID());
-        return null;
+        return handleQuery(query);
     }
 
     public Boolean updateUserAddress(User user, String address) {
 
         String query = String.format("UPDATE users SET address = '%s' WHERE id = %d;", address, user.getID());
-        return null;
+        return handleQuery(query);
     }
 
     @Override
@@ -150,12 +150,16 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
         String query = String.format("INSERT INTO users (status) values ('%s');", userType);
         handleQuery(query);
-        ArrayList<ArrayList<String>> queryResult = processQuery("SELECT id FORM users WHERE first_name = 'Not Available';");
-        System.out.println(queryResult.get(1));
-        int newUsersID = Integer.parseInt(queryResult.get(1).get(0));
-        if(userType.equals("Mentor")) return new Mentor();
-        else if(userType.equals("Admin")) return new Admin();
-        else return new Student();
+        query = String.format("SELECT id FROM users WHERE first_name IS NULL;");
+        ArrayList<ArrayList<String>> queryResult = processQuery(query);
+        return getUserByID(Integer.parseInt(queryResult.get(1).get(0)));
+//        return new Student();
+//        ArrayList<ArrayList<String>> queryResult = processQuery("SELECT id FORM users WHERE first_name IS NULL;");
+//        System.out.println(queryResult.get(1));
+//        int newUsersID = Integer.parseInt(queryResult.get(1).get(0));
+//        if(userType.equals("Mentor")) return new Mentor();
+//        else if(userType.equals("Admin")) return new Admin();
+//        else return new Student();
     }
 
 }
