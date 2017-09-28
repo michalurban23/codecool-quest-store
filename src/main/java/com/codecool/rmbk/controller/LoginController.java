@@ -30,6 +30,7 @@ public class LoginController {
 
     public void startSqlLoginService() {
 
+        SQLLoginDAO.setPermission();
         dataAccess = new SQLLoginDAO();
         userDao = new SQLUsers();
 
