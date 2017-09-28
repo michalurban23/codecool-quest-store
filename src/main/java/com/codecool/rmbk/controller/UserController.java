@@ -1,6 +1,7 @@
 package com.codecool.rmbk.controller;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.TreeMap;
 
 import com.codecool.rmbk.dao.MenuDAO;
@@ -63,7 +64,7 @@ public abstract class UserController {
         while(isBrowsed){
             view.clearScreen();
             view.showShortInfo(user);
-            TreeMap<Integer,String> menu = menuDao.getMainMenu(user);
+            LinkedHashMap<Integer,String> menu = menuDao.getMainMenu(user);
             String choice = view.handleMenu(menu);
 
             if(choice.equals(menu.get(1))){
@@ -100,7 +101,7 @@ public abstract class UserController {
         while(isBrowsed){
             view.clearScreen();
             ArrayList<ArrayList<String>> users = userDao.getIdNameList(userType);
-            TreeMap<Integer,String> menu = menuDao.getBrowseMenu();
+            LinkedHashMap<Integer,String> menu = menuDao.getBrowseMenu();
             String choice = view.handleBrowse(menu, users);
 
             if(choice.equals(menu.get(1))){
@@ -125,7 +126,7 @@ public abstract class UserController {
 
         while(isBrowsed){
             view.clearScreen();
-            TreeMap<Integer,String> menu = menuDao.getDetailsMenu();
+            LinkedHashMap<Integer,String> menu = menuDao.getDetailsMenu();
             String choice = view.handleDetails(menu, user);
 
             if (choice.equals(menu.get(1))){
