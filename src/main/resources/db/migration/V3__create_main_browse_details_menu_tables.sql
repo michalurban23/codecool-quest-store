@@ -1,4 +1,3 @@
-BEGIN TRANSACTION;
 CREATE TABLE IF NOT EXISTS `main_menu` (
 	`id`	INTEGER UNIQUE,
 	`option`	TEXT,
@@ -31,4 +30,3 @@ CREATE TABLE IF NOT EXISTS `browse_menu` (
 INSERT INTO `browse_menu` VALUES (0,'Back');
 INSERT INTO `browse_menu` VALUES (1,'Choose from list');
 INSERT INTO `browse_menu` VALUES (2,'Add new');
-COMMIT;

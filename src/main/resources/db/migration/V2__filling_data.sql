@@ -1,4 +1,3 @@
-BEGIN TRANSACTION;
 INSERT INTO `quests` VALUES (1,'Explore a dungeon',4,'2017-09-08','2017-09-08');
 INSERT INTO `quests` VALUES (2,'Solve the magic puzzle',4,'2017-09-20',NULL);
 INSERT INTO `quests` VALUES (3,'Solve the magic puzzle',6,'2017-09-24',NULL);
@@ -75,4 +74,3 @@ INSERT INTO `users` VALUES (13,'Paweł','Kulpa','pabblo@buziaczek.kom','Krakoov'
 INSERT INTO `login_info` VALUES (1,'admin','admin',NULL);
 INSERT INTO `login_info` VALUES (2,'pass','student',NULL);
 INSERT INTO `login_info` VALUES (3,'pass','mentor',NULL);
-COMMIT;

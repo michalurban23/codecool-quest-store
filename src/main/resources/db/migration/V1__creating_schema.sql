@@ -1,4 +1,3 @@
-BEGIN TRANSACTION;
 CREATE TABLE IF NOT EXISTS `quests` (
 	`id`	INTEGER NOT NULL,
 	`template_name`	TEXT DEFAULT NULL,
@@ -74,4 +73,3 @@ CREATE TABLE IF NOT EXISTS `login_info` (
 	`salt`	TEXT,
 	PRIMARY KEY(`id`)
 );
-COMMIT;
