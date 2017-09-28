@@ -5,33 +5,33 @@ import java.util.UUID;
 
 public class ItemTemplate {
 
-    private int id;
-    private Integer price;
+    private String name;
+    private Integer value;
     private String description;
-    private static ArrayList<ItemTemplate> itemList = new ArrayList<>();
+    private CATEGORY category;
 
     enum CATEGORY {
         BASIC,
         MAGIC;
     }
 
-    public ItemTemplate(Integer price, String description) {
+    public ItemTemplate(String name, String description, int value, CATEGORY category) {
 
-        this.price = price;
+        this.name = name;
+        this.value = value;
         this.description = description;
-        this.id = id;
-        itemList.add(this);
+        this.category = category;
     }
 
-    public Integer getPrice() {
+    public Integer getValue() {
 
-        return this.price;
+        return this.value;
     }
 
-    public void setPrice(Integer price) {
-
-        this.price = price;
+    public void setValue(Integer value) {
+        this.value = value;
     }
+
 
     public String getDescription() {
 
@@ -41,5 +41,21 @@ public class ItemTemplate {
     public void setDescription(String description) {
 
         this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public CATEGORY getCategory() {
+        return category;
+    }
+
+    public void setCategory(CATEGORY category) {
+        this.category = category;
     }
 }

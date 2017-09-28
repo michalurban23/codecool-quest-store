@@ -1,6 +1,7 @@
 package com.codecool.rmbk.controller;
 
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
+import com.codecool.rmbk.model.item.ItemTemplate;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ArtifactControllerView;
 
@@ -48,8 +49,9 @@ public class ArtifactController {
         listArtifacts();
         ArrayList<String> choice = view.getListChoice(getAvailableArtifacts());
 
-        String template = choice.get(1);
 
+
+        ItemTemplate template = new ItemTemplate();
 
     }
 
