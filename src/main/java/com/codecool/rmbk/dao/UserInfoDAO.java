@@ -3,7 +3,6 @@ package com.codecool.rmbk.dao;
 import com.codecool.rmbk.model.usr.User;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
 
 public interface UserInfoDAO {
 

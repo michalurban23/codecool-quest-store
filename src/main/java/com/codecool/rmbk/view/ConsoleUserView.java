@@ -9,7 +9,6 @@ import com.codecool.rmbk.model.usr.User;
 public class ConsoleUserView extends ConsoleView implements UserView {
 
     public String handleMenu(TreeMap<Integer,String> menu) {
-
         ArrayList<String> options = new ArrayList<>(menu.values());
         showMenu(options);
         return getMenuChoice(options);
