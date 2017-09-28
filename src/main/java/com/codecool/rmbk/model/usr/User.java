@@ -9,15 +9,24 @@ public abstract class User {
     protected String lastName;
     protected String email;
     protected String address;
-    protected UUID id;
-    protected ACCESS_LEVEL status;
-    private static ArrayList<? extends User> objects;
 
+    protected Integer id;
+    protected String status;
+    protected static ArrayList<? extends User> objects;
 
-    public enum ACCESS_LEVEL {
-        ADMIN,
-        MENTOR,
-        STUDENT
+    public User(String firstName, String lastName, String email, String address, Integer id) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.id = id;
+    }
+
+    public User(String[] fields){
+
+        this(fields[1], fields[2], fields[3], fields[4], Integer.parseInt(fields[0]));
+        this.status = fields[5];
     }
 
     public void setFirstName(String firstName) {
@@ -60,7 +69,7 @@ public abstract class User {
         return this.address;
     }
 
-    public UUID getID() {
+    public int getID() {
 
         return this.id;
     }
@@ -70,7 +79,7 @@ public abstract class User {
         return this.firstName + " " + this.lastName;
     }
 
-    public ACCESS_LEVEL getStatus() {
+    public String getStatus() {
 
         return this.status;
     }

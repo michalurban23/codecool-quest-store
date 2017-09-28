@@ -18,6 +18,6 @@ public class ConsoleLoginView extends ConsoleView implements LoginView {
     public void showWrongDataMessage() {
 
         System.out.println("Invalid username or password");
-        pause(2);
+        pause(1);
     }
 }

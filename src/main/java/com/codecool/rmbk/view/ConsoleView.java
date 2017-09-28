@@ -1,11 +1,23 @@
 package com.codecool.rmbk.view;
 
-import java.lang.Math;
-import java.lang.Thread;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public abstract class ConsoleView {
+
+    private Scanner input = new Scanner(System.in);
+    private static TreeMap<String, String> colors = fillColors();
+
+    private static TreeMap<String, String> fillColors() {
+
+        TreeMap<String,String> colors = new TreeMap<>();
+
+        colors.put("RED", "\033[1;31m");
+        colors.put("GREEN", "\033[0;32m");
+        colors.put("YELLOW", "\033[1;33m");
+        colors.put("RESET", "\033[0;0m");
+
+        return colors;
+    }
 
     public String getMenuChoice(List<String> options) {
 
@@ -20,6 +32,12 @@ public abstract class ConsoleView {
         } else {
             return options.get(choice - 1);
         }
+    }
+
+    public String getInput(String message) {
+
+        System.out.print("\n" + message);
+        return input.nextLine();
     }
 
     public <E> E getListChoice(List<E> list) {
@@ -79,6 +97,19 @@ public abstract class ConsoleView {
 
     }
 
+    public void showMenu(String title, TreeMap<Integer, String> menu) {
+
+        clearScreen();
+        System.out.printf("* * * %s * * *%n%n", title);
+
+        for (Map.Entry<Integer, String> entry : menu.entrySet()) {
+            System.out.printf("%d) %s%n", entry.getKey(), entry.getValue());
+        }
+
+        System.out.println("--");
+        System.out.println("0) Return / Exit");
+    }
+
     public <E> void showEnumeratedList(List<E> list) {
 
         int width = 1 + Math.floorDiv(list.size(), 10);
@@ -95,6 +126,70 @@ public abstract class ConsoleView {
         return enteredString.toUpperCase().equals("Y");
     }
 
+    public Boolean printList(String title, ArrayList<ArrayList<String>> data) {
+
+        if (data.size() <= 1) {
+            printWarning("No matching data in " + title);
+            return false;
+        }
+
+        ArrayList<String> labels = data.get(0);
+        ArrayList<Integer> widths = calculateWidths(data); // last element is a total table width
+
+        String horizontalLine = String.join("", Collections.nCopies(widths.get(widths.size()-1), "-"));
+
+        System.out.printf("%n> > > %s < < <%n%n", title);
+
+        for (int i = 0; i < data.size(); i++) {
+
+            ArrayList<String> entry = data.get(i);
+            String index = i==0 ? "#" : String.valueOf(i);
+
+            if (i == 1) {
+                System.out.println(horizontalLine);
+            }
+            System.out.printf("| %2s |", index);
+
+            for(int column = 0; column < labels.size(); column++) {
+                int width = widths.get(column);
+                System.out.printf(" %" + width + "s |", entry.get(column));
+            } System.out.println();
+        }
+        return true;
+    }
+
+    private ArrayList<Integer> calculateWidths(ArrayList<ArrayList<String>> data) {
+
+        ArrayList<Integer> widths = new ArrayList<>();
+        Integer totalWidth = 0;
+        int columnsNumber = data.get(0).size();
+        int totalOffset = 6 + columnsNumber * 3; // Total padding of all columns + width of index column
+
+        for (int i=0; i < columnsNumber; i++) {
+
+            Integer longest = data.get(0).get(i).length();
+
+            for (ArrayList<String> row : data) {
+
+                Integer currentWidth;
+                String current = row.get(i);
+                if (current != null) {      // This is to account for any entry being literally "null"
+                    currentWidth = current.length();
+                } else {
+                    currentWidth = 4; // "Length" of null
+                }
+
+                if (currentWidth > longest) {
+                    longest = currentWidth;
+                }
+            }
+            widths.add(longest);
+            totalWidth += longest;
+        }
+        widths.add(totalWidth + totalOffset);
+        return widths;
+    }
+
     public static void clearScreen() {
 
         System.out.print("\033[H\033[2J");
@@ -108,4 +203,25 @@ public abstract class ConsoleView {
         } catch (InterruptedException e) {}
     }
 
+    public void pause() {
+
+        System.out.println("\nPress Enter to continue\n");
+        input.nextLine();
+    }
+
+    public void printWarning(String message) {
+
+        String yellow = colors.get("YELLOW");
+        String reset = colors.get("RESET");
+
+        System.out.println("\n" + yellow + message + reset);
+    }
+
+    public void printError(String message) {
+
+        String red = colors.get("RED");
+        String reset = colors.get("RESET");
+
+        System.out.println("\n" + red + message + reset);
+    }
 }

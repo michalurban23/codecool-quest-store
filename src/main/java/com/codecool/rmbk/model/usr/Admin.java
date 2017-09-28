@@ -1,23 +1,21 @@
 package com.codecool.rmbk.model.usr;
 
-import java.util.UUID;
-
 public class Admin extends User {
 
-    public Admin() {;}
+    public Admin(String firstName, String lastName, String email, String address, Integer id) {
 
-    public Admin(String firstName, String lastName, String email, String address, String id) {
+        super(firstName, lastName, email, address, id);
+        this.status = "Admin";
+    }
 
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.address = address;
-        this.id = UUID.fromString(id);
-        this.status = ACCESS_LEVEL.ADMIN;
+    public Admin(String[] userInfo){
+
+        super(userInfo);
+        this.status = userInfo[5];
     }
 
     public Admin(String firstName, String lastName) {
 
-        this(firstName, lastName, "Not Available", "Not Available", UUID.randomUUID().toString());
+        this(firstName, lastName, "Not Available", "Not Available", null);
     }
 }
