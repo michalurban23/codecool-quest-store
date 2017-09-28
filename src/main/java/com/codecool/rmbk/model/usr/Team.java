@@ -4,17 +4,15 @@ import com.codecool.rmbk.model.Cart;
 import com.codecool.rmbk.model.quest.Quest;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class Team extends Group implements Holder {
-    private UUID groupID;
+    private Integer groupID;
     private ArrayList<User> usersList;
     private Cart ourCart;
     private String name;
 
     public Team(ArrayList<User> usersList) {
 
-        this.groupID = UUID.randomUUID();
         this.usersList = usersList;
     }
 
@@ -22,6 +20,13 @@ public class Team extends Group implements Holder {
 
         this(new ArrayList<User>());
     }
+
+    public Team(Integer id, String name) {
+
+        this.groupID = id;
+        this.name = name;
+    }
+
 
     public void setName(String name) {
         this.name = name;
@@ -31,7 +36,7 @@ public class Team extends Group implements Holder {
         return name;
     }
 
-    public UUID getID() {
+    public Integer getID() {
         return this.groupID;
     }
 
