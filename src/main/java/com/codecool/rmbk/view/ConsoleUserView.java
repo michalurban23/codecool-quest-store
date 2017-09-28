@@ -44,7 +44,7 @@ public class ConsoleUserView extends ConsoleView implements UserView {
     public String handleBrowse(LinkedHashMap<Integer,String> menu, ArrayList<ArrayList<String>> users) {
         ArrayList<String> userNames = new ArrayList<>();
         for (int i = 1; i < users.size(); i++) {
-            userNames.add(users.get(i).get(2));
+            userNames.add(users.get(i).get(1));
         }
         showEnumeratedList(userNames);
         System.out.println("\n");

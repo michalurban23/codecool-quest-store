@@ -15,7 +15,7 @@ public class SQLMenuDAO extends SqlDAO implements MenuDAO {
         ArrayList<ArrayList<String>> queryResult = getResults();
         try {
             for (int i=2; i<queryResult.size(); i++) {
-                MenuMap.put(Integer.parseInt(queryResult.get(i).get(0)), queryResult.get(i).get(1));Ko
+                MenuMap.put(Integer.parseInt(queryResult.get(i).get(0)), queryResult.get(i).get(1));
             }
             MenuMap.put(Integer.parseInt(queryResult.get(1).get(0)), queryResult.get(1).get(1));
             return MenuMap;

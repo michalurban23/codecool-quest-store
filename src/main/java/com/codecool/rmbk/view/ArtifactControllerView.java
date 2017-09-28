@@ -3,6 +3,7 @@ package com.codecool.rmbk.view;
 import com.codecool.rmbk.model.item.Item;
 import com.codecool.rmbk.model.item.ItemTemplate;
 
+import java.util.LinkedHashMap;
 import java.util.TreeMap;
 
 public class ArtifactControllerView extends ConsoleUserView {
@@ -19,9 +20,9 @@ public class ArtifactControllerView extends ConsoleUserView {
         return handleMenu(createMentorMenu());
     }
 
-    public TreeMap<Integer, String> createStudentMenu() {
+    public LinkedHashMap<Integer, String> createStudentMenu() {
 
-        TreeMap<Integer, String> mainMenu = new TreeMap<>();
+        LinkedHashMap<Integer, String> mainMenu = new LinkedHashMap<>();
 
         mainMenu.put(1, "View available artifacts");
         mainMenu.put(2, "Buy artifact");
@@ -31,9 +32,9 @@ public class ArtifactControllerView extends ConsoleUserView {
         return mainMenu;
     }
 
-    public TreeMap<Integer, String> createMentorMenu() {
+    public LinkedHashMap<Integer, String> createMentorMenu() {
 
-        TreeMap<Integer, String> mainMenu = new TreeMap<>();
+        LinkedHashMap<Integer, String> mainMenu = new LinkedHashMap<>();
 
         mainMenu.put(1, "View artifact templates");
         mainMenu.put(2, "Create new template");
