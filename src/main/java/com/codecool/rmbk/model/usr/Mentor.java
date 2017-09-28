@@ -17,10 +17,15 @@ public class Mentor extends User {
         super(userInfo);
     }
 
-
     public Mentor() {
 
         this("Not Available", "Not Available", "Not Available", "Not Available", null);
+    }
+
+    public Mentor(int id) {
+
+        this();
+        this.id = id;
     }
 
     public Mentor(String firstName, String lastName) {

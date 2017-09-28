@@ -16,4 +16,16 @@ public class Admin extends User {
 
         this(firstName, lastName, "Not Available", "Not Available", null);
     }
+
+    public Admin() {
+
+        this("Not Available", "Not Available", "Not Available", "Not Available", null);
+    }
+
+    public Admin(int id) {
+
+        this();
+        this.id = id;
+    }
+
 }

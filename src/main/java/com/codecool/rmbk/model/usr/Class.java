@@ -3,7 +3,7 @@ package com.codecool.rmbk.model.usr;
 import java.util.UUID;
 import java.util.ArrayList;
 
-public class Class {
+public class Class extends Group {
 
     private UUID groupID;
     private ArrayList<Student> usersList;

@@ -13,4 +13,5 @@ public class MentorController extends UserController {
     public String getUserType() {
         return "Mentor";
     }
+
 }
