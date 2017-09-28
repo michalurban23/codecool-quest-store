@@ -97,7 +97,8 @@ public abstract class UserController {
 
         boolean isBrowsed = true;
 
-        while(isBrowsed){
+        while(isBrowsed) {
+
             view.clearScreen();
             ArrayList<ArrayList<String>> users = userDao.getIdNameList(userType);
             TreeMap<Integer,String> menu = menuDao.getBrowseMenu();
@@ -105,16 +106,17 @@ public abstract class UserController {
 
             if(choice.equals(menu.get(1))){
                 ArrayList<String> chosenUserInfo = view.getListChoice(users);
+
                 if (chosenUserInfo != null) {
-                    System.out.println(choice);
-                    System.out.println(chosenUserInfo);
                     Integer userId = Integer.parseInt(chosenUserInfo.get(0));
                     handleDetailsMenu(userDao.getUserByID(userId));
                 }
-            } else if(choice.equals(menu.get(2))){
+
+            } else if(choice.equals(menu.get(2))) {
                 User newUser = userDao.addUser(userType);
                 editUserData(newUser);
-            } else if(choice.equals(menu.get(0))){
+
+            } else if(choice.equals(menu.get(0))) {
                 isBrowsed = false;
             }
         }
