@@ -153,13 +153,6 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
         query = String.format("SELECT id FROM users WHERE first_name IS NULL;");
         ArrayList<ArrayList<String>> queryResult = processQuery(query);
         return getUserByID(Integer.parseInt(queryResult.get(1).get(0)));
-//        return new Student();
-//        ArrayList<ArrayList<String>> queryResult = processQuery("SELECT id FORM users WHERE first_name IS NULL;");
-//        System.out.println(queryResult.get(1));
-//        int newUsersID = Integer.parseInt(queryResult.get(1).get(0));
-//        if(userType.equals("Mentor")) return new Mentor();
-//        else if(userType.equals("Admin")) return new Admin();
-//        else return new Student();
     }
 
 }
