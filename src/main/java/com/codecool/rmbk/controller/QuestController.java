@@ -136,7 +136,17 @@ public class QuestController {
         dao.editQuestTemplate(qt.getQuestTemplate());
     }
 
-    private void removeTemplate() {;}
+    private void removeTemplate() {
+
+        display.clearScreen();
+        display.printMessage("Removing template: ");
+
+        showAllTemplates();
+        Integer number = display.getInteger("Which template to remove? ");
+        QuestTemplate qt = new QuestTemplate(dao.getAllQuestTemplates().get(number));
+
+        dao.removeQuestTemplate(qt.getName());
+    }
 
     private void stopController() {
 
