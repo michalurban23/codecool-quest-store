@@ -6,14 +6,14 @@ public class Item {
 
     private ItemTemplate template;
     private String owner;
-    private int id;
+    private Integer id;
     private LocalDateTime buyTime;
 
-    public Item(ItemTemplate template) {
+    public Item(ItemTemplate template, Integer id) {
 
         this.id = id;
         this.template = template;
-//        this.owner = owner;
+        this.owner = owner;
         this.buyTime = LocalDateTime.now();
     }
 

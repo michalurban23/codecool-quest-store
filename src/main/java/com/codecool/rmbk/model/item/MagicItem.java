@@ -7,8 +7,8 @@ public class MagicItem extends Item {
 
     private Double completion;
 
-    public MagicItem(ItemTemplate template, String owner) {
-        super(template);
+    public MagicItem(ItemTemplate template, Integer owner) {
+        super(template, owner);
     }
 
     public Double getCompletion() {
