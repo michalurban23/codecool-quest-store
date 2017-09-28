@@ -211,6 +211,11 @@ public abstract class ConsoleView {
         input.nextLine();
     }
 
+    public void printMessage(String message) {
+
+        System.out.println("\n" + message);
+    }
+
     public void printWarning(String message) {
 
         String yellow = colors.get("YELLOW");
