@@ -71,7 +71,9 @@ public class ArtifactController {
 
     public void buyArtifact() {
         ItemTemplate template = getNewArtifactTemplate();
+        Item artifact = getNewArtifact(template);
 
+        System.out.println(artifact.getTemplate().getDescription());
     }
 
     public void buyAsGroup() {
@@ -89,8 +91,10 @@ public class ArtifactController {
         return template;
     }
 
-    public void getNewArtifact(ItemTemplate template) {
-        ;
+    public Item getNewArtifact(ItemTemplate template) {
+        Item artifact = new Item(template, user.getID());
+
+        return artifact;
     }
 
 

@@ -39,4 +39,7 @@ public class Item {
         this.buyTime = buyTime;
     }
 
+    public ItemTemplate getTemplate() {
+        return template;
+    }
 }
