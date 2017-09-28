@@ -1,0 +1,1 @@
+insert into details_menu(option) values('Back'); 
