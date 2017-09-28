@@ -7,7 +7,6 @@ import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ArtifactControllerView;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
 
 public class ArtifactController {
 
@@ -79,7 +78,7 @@ public class ArtifactController {
 
     }
 
-    public void getNewArtifactTemplate() {
+    public ItemTemplate getNewArtifactTemplate() {
         listArtifacts();
         ArrayList<String> choice = view.getListChoice(getAvailableArtifacts());
 
@@ -87,8 +86,13 @@ public class ArtifactController {
                                                  Integer.parseInt(choice.get(2)),
                                                  Integer.parseInt(choice.get(3)));
 
-        System.out.println(template);
+        return template;
     }
+
+    public Item getNewArtifact(ItemTemplate template) {
+        ;
+    }
+
 
     public ArrayList<ArrayList<String>> getAvailableArtifacts() {
         SQLArtifactTemplate artifactDao = new SQLArtifactTemplate();
