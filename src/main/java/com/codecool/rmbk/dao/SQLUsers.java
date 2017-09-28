@@ -43,7 +43,6 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
         return processQuery(query).get(1).get(typeIndex);
     }
 
-    @Override
     public ArrayList<String> getNameList(String userType) {
         String query = String.format("SELECT (first_name || \" \" || last_name) as full_name FROM users " +
                 "WHERE status = %s;", userType);
