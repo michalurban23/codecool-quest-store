@@ -34,9 +34,11 @@ public class SQLQuestTemplate extends SqlDAO {
         processQuery(query);
     }
 
-    public void removeQuestTemplate() {
+    public void removeQuestTemplate(String name) {
 
-        ;
+        String query = "DELETE FROM quest_template " +
+                       "WHERE `name` = '" + name + "';";
+        processQuery(query);
     }
 
 }

@@ -6,11 +6,11 @@ import com.codecool.rmbk.model.usr.Holder;
 public class QuestTemplate {
 
     private String name;
+
     private String description;
     private Integer value;
     private String special;
     private String active;
-
     public QuestTemplate(String[] data) {
 
         this.name = data[0];
@@ -27,6 +27,11 @@ public class QuestTemplate {
         this.value = Integer.parseInt(data.get(2));
         this.special = data.get(3);
         this.active = data.get(4);
+    }
+
+    public String getName() {
+
+        return this.name;
     }
 
     public Integer getValue() {
