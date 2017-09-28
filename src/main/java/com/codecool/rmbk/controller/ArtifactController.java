@@ -21,7 +21,7 @@ public class ArtifactController {
 
         this.user = user;
 
-        if(user.getStatus().equals("Student")) {
+        if(user.getClass().getSimpleName().equals("Student")) {
             handleStudentMenu();
         }
         else {
@@ -127,7 +127,6 @@ public class ArtifactController {
 
     public void editExistingTemplate() {
         ItemTemplate toEdit = getArtifactTemplate();
-
 
     }
 }
