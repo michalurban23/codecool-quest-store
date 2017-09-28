@@ -1,6 +1,5 @@
 package com.codecool.rmbk.model.usr;
 
-import java.util.UUID;
 import java.util.ArrayList;
 
 public abstract class User {

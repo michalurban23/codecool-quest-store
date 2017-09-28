@@ -1,5 +1,6 @@
 package com.codecool.rmbk.dao;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class SQLLoginDAO extends SqlDAO implements LoginDAO {
@@ -20,9 +21,12 @@ public class SQLLoginDAO extends SqlDAO implements LoginDAO {
         if (results.size() > 1) {
             password = results.get(1).get(0);
         }
-        System.out.println(user_pass);
-        System.out.println(password);
         return password.equals(user_pass);
     }
 
+    public static Boolean setPermission() {
+
+        File file = new File("src/main/resources/queststore.db");
+        return file.setWritable(true, false);
+    }
 }
