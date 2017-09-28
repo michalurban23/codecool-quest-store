@@ -1,10 +1,12 @@
 package com.codecool.rmbk.controller;
 
+import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
 import com.codecool.rmbk.model.item.Item;
 import com.codecool.rmbk.model.item.ItemTemplate;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ArtifactControllerView;
+import sun.awt.windows.ThemeReader;
 
 import java.util.ArrayList;
 
@@ -77,7 +79,7 @@ public class ArtifactController {
         ItemTemplate template = getArtifactTemplate();
         Item artifact = getArtifact(template);
 
-
+        addArtifactToDatabase(artifact);
     }
 
     public void buyAsGroup() {
@@ -94,7 +96,7 @@ public class ArtifactController {
     }
 
     public Item getArtifact(ItemTemplate template) {
-        Item artifact = new Item(template);
+        Item artifact = new Item(template, user.getID());
 
         return artifact;
     }
@@ -121,12 +123,36 @@ public class ArtifactController {
         }
 
         ItemTemplate newTemplate = new ItemTemplate(name, description, value, special);
-
-        System.out.println(newTemplate.getDescription());
+        addArtifactTemplateToDatabase(newTemplate);
     }
 
     public void editExistingTemplate() {
         ItemTemplate toEdit = getArtifactTemplate();
-
+        removeExistingTemplate(toEdit);
+        createArtifactTemplate();
     }
+
+    public void removeExistingTemplate(ItemTemplate template) {
+        SQLArtifactTemplate artifactTemplates = new SQLArtifactTemplate();
+        artifactTemplates.removeArtifactTemplate(template.getName());
+    }
+
+    public void addArtifactToDatabase(Item artifact) {
+        SQLArtifact artifacts = new SQLArtifact();
+        artifacts.addArtifact(getArtifactInfo(artifact));
+    }
+
+    public void addArtifactTemplateToDatabase(ItemTemplate template) {
+        SQLArtifactTemplate artifactTemplates = new SQLArtifactTemplate();
+        artifactTemplates.addArtifactTemplate(getArtifactTemplateInfo(template));
+    }
+
+    public String getArtifactInfo(Item artifact) {
+        return view.getArtifactQuery(artifact);
+    }
+
+    public String getArtifactTemplateInfo(ItemTemplate template) {
+        return view.getArtifactTemplateQuery(template);
+    }
+
 }
