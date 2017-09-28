@@ -13,6 +13,13 @@ public class Mentor extends User {
         objects.add(this);
     }
 
+    public Mentor(String[] userInfo){
+
+        super(userInfo);
+        this.status = userInfo[5];
+    }
+
+
     public Mentor() {
 
         this("Not Available", "Not Available", "Not Available", "Not Available", null);

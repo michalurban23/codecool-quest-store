@@ -20,8 +20,8 @@ public class Student extends User implements Holder {
     }
 
     public Student(String[] userInfo){
-        super(userInfo[0], userInfo[1], userInfo[2], userInfo[3], null);
-        this.status = "Student";
+
+        super(userInfo);
         objects.add(this);
     }
 

@@ -11,7 +11,7 @@ public interface UserInfoDAO {
     public User getUserByName (String name);
     public User getUserByID(Integer id);
     public ArrayList<User> getUserList(String userType);
-    public ArrayList<ArrayList<String>> getIdNameList(String userType); // in row: <ArrayList<String: id, name + surname>>
+    public ArrayList<ArrayList<String>> getIdNameList(String userType); // returns List<String>: name + surname
     public Boolean removeUser(User user); // returns true if successfully finished
     public Boolean updateUser(User user); // returns true if successfully finished
     public User addUser(String userType);
