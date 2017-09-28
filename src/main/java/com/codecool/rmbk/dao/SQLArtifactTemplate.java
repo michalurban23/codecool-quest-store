@@ -1,5 +1,7 @@
 package com.codecool.rmbk.dao;
 
+import com.codecool.rmbk.model.item.ItemTemplate;
+
 import java.util.ArrayList;
 
 public class SQLArtifactTemplate extends SqlDAO {
@@ -18,5 +20,13 @@ public class SQLArtifactTemplate extends SqlDAO {
         String query = "SELECT * FROM artifact_template WHERE name = '" + name + "';";
 
         processQuery(query);
+    }
+
+    public void addArtifactTemplate(ItemTemplate template) {
+
+    }
+
+    public void editArtifactTemplate(ItemTemplate template) {
+
     }
 }

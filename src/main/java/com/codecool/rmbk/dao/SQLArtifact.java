@@ -1,5 +1,7 @@
 package com.codecool.rmbk.dao;
 
+import com.codecool.rmbk.model.item.Item;
+
 import java.util.ArrayList;
 
 public class SQLArtifact extends SqlDAO {
@@ -17,4 +19,9 @@ public class SQLArtifact extends SqlDAO {
 
         results = processQuery(query);
     }
+
+    public void addArtifact(Item artifact) {
+
+    }
+
 }
