@@ -1,7 +1,5 @@
 package com.codecool.rmbk.dao;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.sql.*;
 import java.util.*;
 
