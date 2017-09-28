@@ -106,7 +106,18 @@ public class QuestController {
         display.printList(title, results);
     }
 
-    private void addTemplate() {;}
+    private void addTemplate() {
+
+        display.clearScreen();
+        display.printMessage("Creating new template: ");
+
+        String name = display.getInput("What's the name of template? ");
+        String description = display.getInput("Enter template description: ");
+        Integer value = display.getInteger("How many coins is it worth? ");
+        Boolean special = display.getAnswer("Is the quest special? ");
+
+        dao.addArtifactTemplate(name, description, value, special);
+    }
 
     private void editTemplate() {;}
 
