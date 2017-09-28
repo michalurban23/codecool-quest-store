@@ -17,6 +17,18 @@ public class SQLArtifactTemplate extends SqlDAO {
     public void getArtifactTemplate(String name) {
         String query = "SELECT * FROM artifact_template WHERE name = '" + name + "';";
 
-        processQuery(query);
+        results = processQuery(query);
+    }
+
+    public void addArtifactTemplate(String info) {
+        String query = "INSERT INTO artifact_template (template_name, owner, completion) " + info;
+
+        results = processQuery(query);
+    }
+
+    public void removeArtifactTemplate(String name) {
+        String query = "DELETE FROM artifact_template WHERE name = '" + name + "';";
+
+        results = processQuery(query);
     }
 }

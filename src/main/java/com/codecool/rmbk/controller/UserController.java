@@ -81,10 +81,10 @@ public abstract class UserController {
             } else if(choice.equals(menu.get(5))) {
                 GroupController groupController = new GroupController();
                 groupController.start(user);
-            } else if(choice.equals(menu.get(6))) {
+            } else if(choice.equals(menu.get(7))) {
                 QuestController questController = new QuestController();
                 questController.start(user);
-            } else if(choice.equals(menu.get(7))) {
+            } else if(choice.equals(menu.get(6))) {
                 ArtifactController artifactController = new ArtifactController();
                 artifactController.start(user);
             } else if(choice.equals(menu.get(0))) {
