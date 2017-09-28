@@ -5,24 +5,29 @@ import java.time.LocalDateTime;
 public class Item {
 
     private ItemTemplate template;
-    private String owner;
-    private Integer id;
+    private Integer owner;
     private LocalDateTime buyTime;
+    private String completion;
 
-    public Item(ItemTemplate template, Integer id) {
+    public Item(ItemTemplate template, Integer owner) {
 
-        this.id = id;
         this.template = template;
         this.owner = owner;
         this.buyTime = LocalDateTime.now();
+        if(template.getSpecial().equals("1")) {
+            this.completion = "30";
+        }
+        else {
+            this.completion = "NULL";
+        }
     }
 
-    public String getOwner() {
+    public Integer getOwner() {
 
         return this.owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(Integer owner) {
 
         this.owner = owner;
     }
@@ -39,5 +44,9 @@ public class Item {
 
     public ItemTemplate getTemplate() {
         return template;
+    }
+
+    public String getCompletion() {
+        return completion;
     }
 }
