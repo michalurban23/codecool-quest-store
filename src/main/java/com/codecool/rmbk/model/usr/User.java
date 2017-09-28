@@ -76,7 +76,6 @@ public abstract class User {
         return this.firstName + " " + this.lastName;
     }
 
-
     public String toString() {
 
         return this.firstName + " " + this.lastName;
