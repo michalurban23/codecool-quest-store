@@ -6,15 +6,19 @@ public class SQLQuestTemplate extends SqlDAO {
 
     private ArrayList<ArrayList<String>> results;
 
-    public void getQuestTemplates() {
-        String query = "SELECT * FROM quest_template";
+    public ArrayList<ArrayList<String>> getAllQuestTemplates() {
 
+        String query = "SELECT * FROM quest_template";
         processQuery(query);
+
+        return getResults();
     }
 
-    public void getQuestTemplate(String name) {
-        String query = "SELECT * FROM quest_template WHERE name = '" + name + "';";
+    public void addQuestTemplate(String name, String desc, Integer value, Boolean isSpecial) {
 
+        String special = isSpecial ? "1" : "0";
+        String query = "INSERT INTO quest_template (name, description, value, special) " +
+                       "VALUES ('" + name + "', '" + desc + "', " + value + ", " + special + ");";
         processQuery(query);
     }
 

@@ -1,6 +1,6 @@
 package com.codecool.rmbk.controller;
 
-import com.codecool.rmbk.dao.SQLArtifactTemplate;
+import com.codecool.rmbk.dao.SQLQuestTemplate;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ConsoleQuestView;
 import com.codecool.rmbk.view.ConsoleView;
@@ -11,7 +11,7 @@ import java.util.TreeMap;
 public class QuestController {
 
     private ConsoleView display = new ConsoleQuestView();
-    private SQLArtifactTemplate dao = new SQLArtifactTemplate();
+    private SQLQuestTemplate dao = new SQLQuestTemplate();
     private Boolean controllerRunning;
 
     public void start(User user) {
@@ -101,7 +101,7 @@ public class QuestController {
     private void showAllTemplates() {
 
         String title = "Quest template";
-        ArrayList<ArrayList<String>> results = dao.getAllArtifactTemplates();
+        ArrayList<ArrayList<String>> results = dao.getAllQuestTemplates();
 
         display.printList(title, results);
     }
@@ -116,7 +116,7 @@ public class QuestController {
         Integer value = display.getInteger("How many coins is it worth? ");
         Boolean special = display.getAnswer("Is the quest special? ");
 
-        dao.addArtifactTemplate(name, description, value, special);
+        dao.addQuestTemplate(name, description, value, special);
     }
 
     private void editTemplate() {;}
