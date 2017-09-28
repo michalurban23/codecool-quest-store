@@ -21,7 +21,7 @@ public class SQLArtifactTemplate extends SqlDAO {
     }
 
     public void addArtifactTemplate(String info) {
-        String query = "INSERT INTO artifact_template (name, description, value, special) " + info;
+        String query = "INSERT INTO artifact_template (template_name, owner, completion) " + info;
 
         results = processQuery(query);
     }
