@@ -23,6 +23,12 @@ public abstract class User {
         this.id = id;
     }
 
+    public User(String[] fields){
+
+        this(fields[1], fields[2], fields[3], fields[4], Integer.parseInt(fields[0]));
+        this.status = fields[5];
+    }
+
     public void setFirstName(String firstName) {
 
         this.firstName = firstName;
