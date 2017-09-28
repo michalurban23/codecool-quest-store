@@ -22,7 +22,7 @@ public class Student extends User implements Holder {
     public Student(String[] userInfo){
 
         super(userInfo);
-        this.status = userInfo[5];
+        objects.add(this);
     }
 
     public Student() {

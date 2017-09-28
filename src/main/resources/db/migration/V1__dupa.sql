@@ -1,0 +1,4 @@
+CREATE TABLE dupa2 (
+    id INTEGER,
+    NAME VARCHAR(100)
+);

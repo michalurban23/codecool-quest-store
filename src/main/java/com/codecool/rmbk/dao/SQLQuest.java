@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class SQLQuest extends SqlDAO {
 
-    private ArrayList<ArrayList<String>> results;
-
     public void getAllQuests() {
         String query = "SELECT * FROM quests";
 

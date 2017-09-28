@@ -9,6 +9,7 @@ public abstract class User {
     protected String lastName;
     protected String email;
     protected String address;
+
     protected Integer id;
     protected String status;
     protected static ArrayList<? extends User> objects;

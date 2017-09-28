@@ -1,18 +1,18 @@
 package com.codecool.rmbk.view;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.TreeMap;
+
 import com.codecool.rmbk.model.usr.User;
 
-public abstract class ConsoleUserView extends ConsoleView implements UserView {
 
-    public Integer handleMenu(LinkedHashMap<String,Integer> menu) {
+public class ConsoleUserView extends ConsoleView implements UserView {
 
-        ArrayList<String> options = new ArrayList<>(menu.keySet());
+    public String handleMenu(TreeMap<Integer,String> menu) {
+
+        ArrayList<String> options = new ArrayList<>(menu.values());
         showMenu(options);
-        String choice = getMenuChoice(options);
-
-        return menu.get(choice);
+        return getMenuChoice(options);
     }
 
     public void showShortInfo(User user) {
@@ -41,5 +41,19 @@ public abstract class ConsoleUserView extends ConsoleView implements UserView {
         return newUserData;
     }
 
-    protected abstract LinkedHashMap<String, Integer> createMainMenu();
+    public String handleBrowse(TreeMap<Integer,String> menu, ArrayList<ArrayList<String>> users) {
+
+        printList("", users);
+        System.out.println("\n");
+
+        return handleMenu(menu);
+    }
+
+    public String handleDetails(TreeMap<Integer,String> menu, User user) {
+
+        showShortInfo(user);
+        System.out.println("\n");
+
+        return handleMenu(menu);
+    }
 }

@@ -13,6 +13,7 @@ public class SqlDAO {
     private ResultSet resultSet = null;
 
     private ArrayList<ArrayList<String>> results = new ArrayList<>();
+    private ArrayList<String> resultsInfo;
     private String status;
 
     ArrayList<ArrayList<String>> getResults() {
@@ -74,7 +75,8 @@ public class SqlDAO {
     private void terminateConnection(Exception e) {
 
         this.status = "Query failure. SQL message:\n" + e.getMessage();
-        // plus something else if we need
+        // plus something else if we need like:
+        System.err.println(e.getMessage());
     }
 
     private void saveResults() throws SQLException {
@@ -83,7 +85,7 @@ public class SqlDAO {
         int index = 1;
         results = new ArrayList<>();
 
-        // getColumnsInfo(columnsAmount);
+        getColumnsInfo(columnsAmount);
 
         while (resultSet.next()) {
 
@@ -104,15 +106,15 @@ public class SqlDAO {
         return results;
     }
 
-    // private void getColumnsInfo(int columns) throws SQLException {
-    //
-    //     resultsInfo = new ArrayList<>();
-    //
-    //     for (int i=1; i<=columns; i++) {
-    //         String label = resultSet.getMetaData().getColumnLabel(i);
-    //         resultsInfo.add(label);
-    //     }
-    //     results.add(resultsInfo);
-    // }
+     private void getColumnsInfo(int columns) throws SQLException {
+
+         resultsInfo = new ArrayList<>();
+
+         for (int i=1; i<=columns; i++) {
+             String label = resultSet.getMetaData().getColumnLabel(i);
+             resultsInfo.add(label);
+         }
+         results.add(resultsInfo);
+     }
 
 }

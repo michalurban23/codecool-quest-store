@@ -3,7 +3,8 @@ package com.codecool.rmbk.dao;
 import java.util.ArrayList;
 import com.codecool.rmbk.model.usr.*;
 
-public class SQLUsers extends SqlDAO implements UserInfoDAO{
+
+public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
     private ArrayList<ArrayList<String>> results;
 
@@ -86,39 +87,51 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO{
         return result;
     }
 
+    public ArrayList<ArrayList<String>> getIdNameList(String userType){
+        return null;
+    }
+
+
     @Override
-    public Boolean deleteUser(User user) {
+    public Boolean removeUser(User user) {
 
         String query = String.format("DELETE FROM users WHERE id = %d;", user.getID());
         return null;
     }
 
-    @Override
     public Boolean updateUserName(User user, String name) {
 
         String query = String.format("UPDATE users SET first_name = '%s' WHERE id = %d;", name, user.getID());
         return null;
     }
 
-    @Override
     public Boolean updateUserSurname(User user, String surname) {
 
         String query = String.format("UPDATE users SET last_name = '%s' WHERE id = %d;", surname, user.getID());
         return null;
     }
 
-    @Override
     public Boolean updateUserEmail(User user, String email) {
 
         String query = String.format("UPDATE users SET email = '%s' WHERE id = %d;", email, user.getID());
         return null;
     }
 
-    @Override
     public Boolean updateUserAddress(User user, String address) {
 
         String query = String.format("UPDATE users SET address = '%s' WHERE id = %d;", address, user.getID());
         return null;
     }
+
+    @Override
+    public Boolean updateUser(User user){
+        return true;
+    } // returns true if successfully finished
+
+    @Override
+    public User addUser(String userType) {
+        return null;
+    }
+
 }
 
