@@ -1,20 +1,14 @@
 package com.codecool.rmbk.controller;
 
-import java.util.ArrayList;
-import com.codecool.rmbk.model.usr.Student;
-import com.codecool.rmbk.model.usr.User;
-import com.codecool.rmbk.view.ConsoleStudentView;
 
 public class StudentController extends UserController {
 
     public String getUserType() {
-
         return "Student";
     }
 
-    ConsoleStudentView view;
-
     public StudentController() {
+<<<<<<< HEAD
 
         view = new ConsoleStudentView();
         super.view = view;
@@ -49,47 +43,8 @@ public class StudentController extends UserController {
                 isBrowsed = false;
             }
         }
+=======
+        super();
+>>>>>>> dev
     }
-
-    private void handleSupervisorMenu() {
-
-        boolean isBrowsed = true;
-
-        while(isBrowsed){
-            view.clearScreen();
-            ArrayList<Student> students = Student.getObjects();
-            Integer choice = view.handleSupervisorMenu(students);
-
-            if(choice == 1){
-                Student student = view.getListChoice(students);
-                if (student != null) {
-                    handleDetails(student);
-                }
-            } else if(choice == 2){
-                Student newStudent = new Student();
-                editUserData(newStudent);
-            } else if(choice == 0){
-                isBrowsed = false;
-            }
-        }
-    }
-
-    private void handleDetails(Student student) {
-
-        boolean isBrowsed = true;
-
-        while(isBrowsed){
-            view.clearScreen();
-            Integer choice = view.handleDetailsMenu(student);
-
-            if(choice == 1){
-                editUserData(student);
-            } else if(choice == 2){
-                isBrowsed = !Student.remove(student);
-            } else if(choice == 0){
-                isBrowsed = false;
-            }
-        }
-    }
-
 }

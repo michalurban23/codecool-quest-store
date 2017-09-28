@@ -1,7 +1,7 @@
 package com.codecool.rmbk.model.item;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import static com.codecool.rmbk.model.item.ItemTemplate.CATEGORY.BASIC;
+import static com.codecool.rmbk.model.item.ItemTemplate.CATEGORY.MAGIC;
 
 public class ItemTemplate {
 
@@ -15,12 +15,16 @@ public class ItemTemplate {
         MAGIC;
     }
 
-    public ItemTemplate(String name, String description, int value, CATEGORY category) {
+    public ItemTemplate(String name, String description, int value, int special) {
 
         this.name = name;
         this.value = value;
         this.description = description;
-        this.category = category;
+        if(special == 1) {
+            this.category = MAGIC;
+        } else if(special == 0) {
+            this.category = BASIC;
+        }
     }
 
     public Integer getValue() {

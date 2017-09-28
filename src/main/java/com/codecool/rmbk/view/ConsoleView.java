@@ -1,11 +1,23 @@
 package com.codecool.rmbk.view;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public abstract class ConsoleView {
+
+    private Scanner input = new Scanner(System.in);
+    private static TreeMap<String, String> colors = fillColors();
+
+    private static TreeMap<String, String> fillColors() {
+
+        TreeMap<String,String> colors = new TreeMap<>();
+
+        colors.put("RED", "\033[1;31m");
+        colors.put("GREEN", "\033[0;32m");
+        colors.put("YELLOW", "\033[1;33m");
+        colors.put("RESET", "\033[0;0m");
+
+        return colors;
+    }
 
     public String getMenuChoice(List<String> options) {
 
@@ -20,6 +32,12 @@ public abstract class ConsoleView {
         } else {
             return options.get(choice - 1);
         }
+    }
+
+    public String getInput(String message) {
+
+        System.out.print("\n" + message);
+        return input.nextLine();
     }
 
     public <E> E getListChoice(List<E> list) {
@@ -77,6 +95,19 @@ public abstract class ConsoleView {
         showEnumeratedList(options.subList(0, options.size() - 1));
         System.out.println(String.format("%1$" + indexWidth + "d. %2$s", 0, options.get(options.size() - 1)));
 
+    }
+
+    public void showMenu(String title, TreeMap<Integer, String> menu) {
+
+        clearScreen();
+        System.out.printf("* * * %s * * *%n%n", title);
+
+        for (Map.Entry<Integer, String> entry : menu.entrySet()) {
+            System.out.printf("%d) %s%n", entry.getKey(), entry.getValue());
+        }
+
+        System.out.println("--");
+        System.out.println("0) Return / Exit");
     }
 
     public <E> void showEnumeratedList(List<E> list) {
@@ -174,9 +205,25 @@ public abstract class ConsoleView {
         } catch (InterruptedException e) {}
     }
 
-    public void printWarning(String message) {
+    public void pause() {
 
-        System.err.println(message);
+        System.out.println("\nPress Enter to continue\n");
+        input.nextLine();
     }
 
+    public void printWarning(String message) {
+
+        String yellow = colors.get("YELLOW");
+        String reset = colors.get("RESET");
+
+        System.out.println("\n" + yellow + message + reset);
+    }
+
+    public void printError(String message) {
+
+        String red = colors.get("RED");
+        String reset = colors.get("RESET");
+
+        System.out.println("\n" + red + message + reset);
+    }
 }

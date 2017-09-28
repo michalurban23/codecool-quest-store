@@ -3,22 +3,17 @@ package com.codecool.rmbk.controller;
 import java.util.ArrayList;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.model.usr.Mentor;
-import com.codecool.rmbk.view.ConsoleMentorView;
 
 public class MentorController extends UserController {
 
-    ConsoleMentorView view;
-
     public MentorController() {
-
-        view = new ConsoleMentorView();
-        super.view = view;
+        super();
     }
 
     public String getUserType() {
-
         return "Mentor";
     }
+<<<<<<< HEAD
 
 
     public void start (User user) {
@@ -105,4 +100,6 @@ public class MentorController extends UserController {
         }
     }
 
+=======
+>>>>>>> dev
 }

@@ -6,17 +6,16 @@ import com.codecool.rmbk.model.item.ItemTemplate.CATEGORY;
 
 public class Item {
 
-    private Holder owner;
-    private LocalDateTime buyTime;
+    private ItemTemplate template;
+    private int owner;
     private int id;
-    private CATEGORY category;
+    private LocalDateTime buyTime;
 
-    public Item(Holder owner, ) {
+    public Item(ItemTemplate template, int owner) {
 
         this.id = id;
         this.owner = owner;
         this.buyTime = LocalDateTime.now();
-        this.category = CATEGORY.BASIC;
     }
 
     public Holder getOwner() {
