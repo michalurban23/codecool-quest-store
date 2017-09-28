@@ -1,5 +1,7 @@
 package com.codecool.rmbk.dao;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.sql.*;
 import java.util.*;
 
@@ -27,20 +29,23 @@ public class SqlDAO {
         results.clear();
     }
 
-    void handleQuery(String query) {
+    boolean handleQuery(String query) {
 
+        Boolean isSuccessful = null;
         try {
             openDB();
             if (query.startsWith("SELECT")) {
                 executeQuery(query);
                 saveResults();
+                isSuccessful = results.size() > 1;
             } else {
-                executeUpdate(query);
+                isSuccessful = executeUpdate(query) > 0;
             }
             closeDB();
         } catch (SQLException e) {
             terminateConnection(e);
         }
+        return isSuccessful;
     }
 
     private void openDB() throws SQLException {
@@ -56,9 +61,9 @@ public class SqlDAO {
         }
     }
 
-    private void executeUpdate(String query) throws SQLException {
+    private int executeUpdate(String query) throws SQLException {
 
-        statement.executeUpdate(query);
+        return statement.executeUpdate(query);
     }
 
     private void executeQuery(String query) throws SQLException {

@@ -39,8 +39,7 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     @Override
     public String getUserTypeByLogin(String login) {
         String query = String.format("SELECT status FROM users WHERE login ='%s';", login);
-        int typeIndex = 5;
-        return processQuery(query).get(1).get(typeIndex);
+        return processQuery(query).get(1).get(0);
     }
 
     public ArrayList<String> getNameList(String userType) {
@@ -67,8 +66,7 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     public User getUserByID(Integer id) {
 
         String query = String.format("SELECT * FROM users WHERE id ='%d';", id);
-        ArrayList<ArrayList<String>> result;
-        result = processQuery(query);
+        ArrayList<ArrayList<String>> result = processQuery(query);
         String userType = result.get(1).get(5);
         return getUserFromArray(userType, result.get(1));
     }
@@ -87,7 +85,10 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     }
 
     public ArrayList<ArrayList<String>> getIdNameList(String userType){
-        return null;
+
+        String query = String.format("SELECT id, (first_name || \" \" || last_name) as full_name FROM users " +
+                "WHERE status = '%s';", userType);
+        return processQuery(query);
     }
 
 
@@ -95,7 +96,7 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     public Boolean removeUser(User user) {
 
         String query = String.format("DELETE FROM users WHERE id = %d;", user.getID());
-        return null;
+        return handleQuery(query);
     }
 
     public Boolean updateUserName(User user, String name) {
@@ -124,12 +125,25 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
     @Override
     public Boolean updateUser(User user){
-        return true;
-    } // returns true if successfully finished
+        System.out.println(user);
+        System.out.println(user.getID());
+        String query = String.format("UPDATE users SET first_name = '%s', last_name = '%s', email = '%s', " +
+                "address = '%s' WHERE id = %d;", user.getFirstName(), user.getLastName(), user.getEmail(),
+                user.getAddress(), user.getID());
+        return handleQuery(query);
+    }
 
     @Override
     public User addUser(String userType) {
-        return null;
+
+        String query = String.format("INSERT INTO users (status) values ('%s');", userType);
+        handleQuery(query);
+        ArrayList<ArrayList<String>> queryResult = processQuery("SELECT id FORM users WHERE first_name = 'Not Available';");
+        System.out.println(queryResult.get(1));
+        int newUsersID = Integer.parseInt(queryResult.get(1).get(0));
+        if(userType.equals("Mentor")) return new Mentor();
+        else if(userType.equals("Admin")) return new Admin();
+        else return new Student();
     }
 
 }

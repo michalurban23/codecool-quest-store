@@ -11,7 +11,6 @@ public abstract class User {
     protected String address;
 
     protected Integer id;
-    protected String status;
     protected static ArrayList<? extends User> objects;
 
     public User(String firstName, String lastName, String email, String address, Integer id) {
@@ -26,7 +25,6 @@ public abstract class User {
     public User(String[] fields){
 
         this(fields[1], fields[2], fields[3], fields[4], Integer.parseInt(fields[0]));
-        this.status = fields[5];
     }
 
     public void setFirstName(String firstName) {
@@ -77,11 +75,6 @@ public abstract class User {
     public String getFullName() {
 
         return this.firstName + " " + this.lastName;
-    }
-
-    public String getStatus() {
-
-        return this.status;
     }
 
     public String toString() {
