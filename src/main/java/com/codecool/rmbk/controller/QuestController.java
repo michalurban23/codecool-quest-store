@@ -1,83 +1,106 @@
 package com.codecool.rmbk.controller;
 
+import com.codecool.rmbk.dao.SQLQuest;
 import com.codecool.rmbk.dao.SQLQuestTemplate;
+import com.codecool.rmbk.dao.SqlDAO;
+import com.codecool.rmbk.model.quest.Quest;
 import com.codecool.rmbk.model.quest.QuestTemplate;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ConsoleQuestView;
 import com.codecool.rmbk.view.ConsoleView;
-
 import java.util.ArrayList;
 import java.util.TreeMap;
 
 public class QuestController {
 
     private ConsoleView display = new ConsoleQuestView();
-    private SQLQuestTemplate dao = new SQLQuestTemplate();
+    private SQLQuest questDAO = new SQLQuest();
+    private SQLQuestTemplate templateDAO = new SQLQuestTemplate();
+    private TreeMap<Integer, String> menu = new TreeMap<>();
+    private User user;
     private Boolean controllerRunning;
+    private String accessLevel = "";
 
-    public void start(User user) {
+    void start(User user) {
 
         this.controllerRunning = true;
+        this.user = user;
 
         if (user.getClass().getSimpleName().equals("Student")) {
-            runStudentMenu();
+            createStudentMenu();
+            accessLevel = "Student";
         } else {
-            runMentorMenu();
+            createMentorMenu();
+            accessLevel = "Mentor";
         }
+
+        runMenu();
     }
 
-    private void runStudentMenu() {
-
-        ;
-    }
-
-    private void runMentorMenu() {
+    private void runMenu() {
 
         while (controllerRunning) {
-            display.showMenu("Quest menu", getMentorMenu());
+            display.showMenu("Quest menu", menu);
             handleMenuChoice();
         }
     }
 
-    void handleMenuChoice() {
+    private void handleMenuChoice() {
 
         String userChoice = display.getInput("Select an option: ");
 
         try {
             Integer choice = Integer.parseInt(userChoice);
-            handleMentorMenu(choice);
+            if (accessLevel.equals("Mentor")) {
+                handleMentorMenu(choice);
+            } else {
+                handleStudentMenu(choice);
+            }
         } catch (NumberFormatException e) {
             display.printError("Invalid input! Try again.");
             display.pause();
         }
     }
 
-    private TreeMap<Integer, String> getStudentMenu() {
+    private void createStudentMenu() {
 
-        return null;
+        menu.put(1, "Show my quests");
+        menu.put(2, "Get new quest");
+        menu.put(3, "Submit a quest");
     }
 
-    private TreeMap<Integer, String> getMentorMenu() {
-
-        TreeMap<Integer, String> menu = new TreeMap<>();
+    private void createMentorMenu() {
 
         menu.put(1, "Show all available quest templates");
         menu.put(2, "Add new template");
         menu.put(3, "Edit a template");
         menu.put(4, "Remove a template");
-
-        return menu;
     }
 
     private void handleStudentMenu(Integer choice) {
 
-        ;
+        switch (choice) {
+            case 1:
+                showMyQuests();
+                break;
+            case 2:
+                getNewQuest();
+                break;
+            case 3:
+                submitQuest();
+                break;
+            case 0:
+                stopController();
+                break;
+            default:
+                display.printWarning("No such option available");
+                display.pause();
+        }
     }
 
     private void handleMentorMenu(Integer choice) {
 
         switch (choice) {
-
             case 1:
                 showAllTemplates();
                 break;
@@ -102,7 +125,7 @@ public class QuestController {
     private void showAllTemplates() {
 
         String title = "Quest template";
-        ArrayList<ArrayList<String>> results = dao.getAllQuestTemplates();
+        ArrayList<ArrayList<String>> results = templateDAO.getAllQuestTemplates();
 
         display.printList(title, results);
     }
@@ -117,7 +140,7 @@ public class QuestController {
         Integer value = display.getInteger("How many coins is it worth? ");
         Boolean special = display.getAnswer("Is the quest special? ");
 
-        dao.addQuestTemplate(name, description, value, special);
+        templateDAO.addQuestTemplate(name, description, value, special);
     }
 
     private void editTemplate() {
@@ -127,13 +150,13 @@ public class QuestController {
 
         showAllTemplates();
         Integer number = display.getInteger("Which template to edit? ");
-        QuestTemplate qt = new QuestTemplate(dao.getAllQuestTemplates().get(number));
+        QuestTemplate qt = new QuestTemplate(templateDAO.getAllQuestTemplates().get(number));
 
         String[] labels = {"Description", "Value", "Special", "Active"};
         String[] newData = changeData(labels);
 
         qt.updateData(newData);
-        dao.editQuestTemplate(qt.getQuestTemplate());
+        templateDAO.editQuestTemplate(qt.getQuestTemplate());
     }
 
     private void removeTemplate() {
@@ -143,9 +166,9 @@ public class QuestController {
 
         showAllTemplates();
         Integer number = display.getInteger("Which template to remove? ");
-        QuestTemplate qt = new QuestTemplate(dao.getAllQuestTemplates().get(number));
+        QuestTemplate qt = new QuestTemplate(templateDAO.getAllQuestTemplates().get(number));
 
-        dao.removeQuestTemplate(qt.getName());
+        templateDAO.removeQuestTemplate(qt.getName());
     }
 
     private void stopController() {
@@ -164,5 +187,27 @@ public class QuestController {
         }
         return newData;
     }
+
+    private void showMyQuests() {
+
+        String title = "My Quests";
+        ArrayList<ArrayList<String>> results = questDAO.getMyQuests(user.getID());
+
+        display.printList(title, results);
+    }
+
+    private void getNewQuest() {
+
+        display.clearScreen();
+        display.printMessage("Getting new quest: ");
+
+        showAllTemplates();
+        Integer number = display.getInteger("Which quest do you want take? ");
+        Quest quest = new Quest(templateDAO.getAllQuestTemplates().get(number), user);
+
+        questDAO.getNewQuest(quest);
+    }
+
+    private void submitQuest() {;}
 
 }

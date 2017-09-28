@@ -8,7 +8,8 @@ public class SQLQuestTemplate extends SqlDAO {
 
     public ArrayList<ArrayList<String>> getAllQuestTemplates() {
 
-        String query = "SELECT * FROM quest_template";
+        String query = "SELECT * FROM quest_template " +
+                       "WHERE `active` = 1;";
         processQuery(query);
 
         return getResults();
