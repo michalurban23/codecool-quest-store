@@ -13,71 +13,89 @@ public class QuestController {
 
     private ConsoleView display = new ConsoleQuestView();
     private SQLQuestTemplate dao = new SQLQuestTemplate();
+    private TreeMap<Integer, String> menu = new TreeMap<>();
     private Boolean controllerRunning;
+    private String accessLevel = "";
 
-    public void start(User user) {
+    void start(User user) {
 
         this.controllerRunning = true;
 
         if (user.getClass().getSimpleName().equals("Student")) {
-            runStudentMenu();
+            createStudentMenu();
+            accessLevel = "Student";
         } else {
-            runMentorMenu();
+            createMentorMenu();
+            accessLevel = "Mentor";
         }
+
+        runMenu();
     }
 
-    private void runStudentMenu() {
-
-        ;
-    }
-
-    private void runMentorMenu() {
+    private void runMenu() {
 
         while (controllerRunning) {
-            display.showMenu("Quest menu", getMentorMenu());
+            display.showMenu("Quest menu", menu);
             handleMenuChoice();
         }
     }
 
-    void handleMenuChoice() {
+    private void handleMenuChoice() {
 
         String userChoice = display.getInput("Select an option: ");
 
         try {
             Integer choice = Integer.parseInt(userChoice);
-            handleMentorMenu(choice);
+            if (accessLevel.equals("Mentor")) {
+                handleMentorMenu(choice);
+            } else {
+                handleStudentMenu(choice);
+            }
         } catch (NumberFormatException e) {
             display.printError("Invalid input! Try again.");
             display.pause();
         }
     }
 
-    private TreeMap<Integer, String> getStudentMenu() {
+    private void createStudentMenu() {
 
-        return null;
+        menu.put(1, "Show my quests");
+        menu.put(2, "Get new quest");
+        menu.put(3, "Submit a quest");
     }
 
-    private TreeMap<Integer, String> getMentorMenu() {
-
-        TreeMap<Integer, String> menu = new TreeMap<>();
+    private void createMentorMenu() {
 
         menu.put(1, "Show all available quest templates");
         menu.put(2, "Add new template");
         menu.put(3, "Edit a template");
         menu.put(4, "Remove a template");
-
-        return menu;
     }
 
     private void handleStudentMenu(Integer choice) {
 
-        ;
+        switch (choice) {
+            case 1:
+                showMyQuests();
+                break;
+            case 2:
+                getNewQuest();
+                break;
+            case 3:
+                submitQuest();
+                break;
+            case 0:
+                stopController();
+                break;
+            default:
+                display.printWarning("No such option available");
+                display.pause();
+        }
     }
 
     private void handleMentorMenu(Integer choice) {
 
         switch (choice) {
-
             case 1:
                 showAllTemplates();
                 break;
@@ -164,5 +182,11 @@ public class QuestController {
         }
         return newData;
     }
+
+    private void showMyQuests() {;}
+
+    private void getNewQuest() {;}
+
+    private void submitQuest() {;}
 
 }
