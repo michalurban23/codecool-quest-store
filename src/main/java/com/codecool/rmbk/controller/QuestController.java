@@ -1,6 +1,7 @@
 package com.codecool.rmbk.controller;
 
 import com.codecool.rmbk.dao.SQLQuestTemplate;
+import com.codecool.rmbk.model.quest.QuestTemplate;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ConsoleQuestView;
 import com.codecool.rmbk.view.ConsoleView;
@@ -119,13 +120,39 @@ public class QuestController {
         dao.addQuestTemplate(name, description, value, special);
     }
 
-    private void editTemplate() {;}
+    private void editTemplate() {
+
+        display.clearScreen();
+        display.printMessage("Editing template: ");
+
+        showAllTemplates();
+        Integer number = display.getInteger("Which template to edit? ");
+        QuestTemplate qt = new QuestTemplate(dao.getAllQuestTemplates().get(number));
+
+        String[] labels = {"Description", "Value", "Special", "Active"};
+        String[] newData = changeData(labels);
+
+        qt.updateData(newData);
+        dao.editQuestTemplate(qt.getQuestTemplate());
+    }
 
     private void removeTemplate() {;}
 
     private void stopController() {
 
         controllerRunning = false;
+    }
+
+    private String[] changeData(String[] data) {
+
+        String[] newData = new String[4];
+
+        for (int i=0; i < data.length; i++) {
+            String input = display.getInput("Enter new value for >" + data[i] +
+                                            "<\n(or leave empty for no change) : ");
+            newData[i] = input;
+        }
+        return newData;
     }
 
 }

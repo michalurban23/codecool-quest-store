@@ -22,4 +22,21 @@ public class SQLQuestTemplate extends SqlDAO {
         processQuery(query);
     }
 
+    public void editQuestTemplate(String[] data) {
+
+        String name = data[0];
+        String query = "UPDATE quest_template " +
+                       "SET `description` = '" + data[1] + "', " +
+                       "`value` = " + data[2] + ", " +
+                       "`special` = '" + data[3] + "', " +
+                       "`active` = '" + data[4] + "' " +
+                       "WHERE `name` = '" + name + "';";
+        processQuery(query);
+    }
+
+    public void removeQuestTemplate() {
+
+        ;
+    }
+
 }
