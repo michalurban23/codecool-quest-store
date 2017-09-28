@@ -24,14 +24,14 @@ public class ShoppingController {
         boolean isBrowsed = true;
 
         while(isBrowsed) {
-            Integer choice = view.handleMainMenu();
-            if(choice == 1) {
-                ArtifactController artifactController = new ArtifactController(user);
-                artifactController.handleArtifactController();
-            } else if(choice == 2) {
+            String choice = view.handleMainMenu();
+            if(choice == "Artifacts") {
+                ArtifactController artifactController = new ArtifactController();
+                artifactController.start(user);
+            } else if(choice == "Quests") {
                 QuestController questController = new QuestController();
 //                questController.handleQuestController();
-            } else if(choice == 0) {
+            } else if(choice == "Log out") {
                 isBrowsed = false;
             }
 

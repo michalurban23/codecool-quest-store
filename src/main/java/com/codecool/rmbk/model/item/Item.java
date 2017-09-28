@@ -14,16 +14,17 @@ public class Item {
     public Item(ItemTemplate template, int owner) {
 
         this.id = id;
+        this.template = template;
         this.owner = owner;
         this.buyTime = LocalDateTime.now();
     }
 
-    public Holder getOwner() {
+    public int getOwner() {
 
         return this.owner;
     }
 
-    public void setOwner(Holder owner) {
+    public void setOwner(int owner) {
 
         this.owner = owner;
     }
@@ -38,13 +39,4 @@ public class Item {
         this.buyTime = buyTime;
     }
 
-    public CATEGORY getCategory() {
-
-        return this.category;
-    }
-
-    public void setCategory(CATEGORY category) {
-
-        this.category = category;
-    }
 }

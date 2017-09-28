@@ -2,21 +2,21 @@ package com.codecool.rmbk.view;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 public class ShoppingControllerView extends ConsoleUserView {
 
-
-    public Integer handleMainMenu() {
+    public String handleMainMenu() {
         return handleMenu(createMainMenu());
     }
 
-    public LinkedHashMap<String, Integer> createMainMenu() {
+    public TreeMap<Integer , String> createMainMenu() {
 
-        LinkedHashMap<String, Integer> mainMenu = new LinkedHashMap<>();
+        TreeMap<Integer, String> mainMenu = new TreeMap<>();
 
-        mainMenu.put("Artifacts", 1);
-        mainMenu.put("Quests", 2);
-        mainMenu.put("Log out", 0);
+        mainMenu.put(1, "Artifacts");
+        mainMenu.put(2, "Quests");
+        mainMenu.put(3, "Log out");
 
         return mainMenu;
     }

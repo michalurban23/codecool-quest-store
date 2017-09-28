@@ -13,12 +13,12 @@ public class ArtifactController {
     private User user;
     private ArtifactControllerView view;
 
-    public ArtifactController(User user) {
-        this.user = user;
+    public ArtifactController() {
         this.view = new ArtifactControllerView();
     }
 
-    public void startArtifactController() {
+    public void start(User user) {
+
         if(user.getStatus().equals("Student")) {
             handleStudentMenu();
         }
@@ -32,14 +32,14 @@ public class ArtifactController {
         boolean isBrowsed = true;
 
         while(isBrowsed) {
-            Integer choice = view.handleStudentMenu();
-            if(choice == 1) {
+            String choice = view.handleStudentMenu();
+            if(choice.equals("View available artifacts")) {
                 listArtifacts();
-            } else if(choice == 2) {
+            } else if(choice.equals("Buy artifact")) {
                 buyArtifact();
-            } else if(choice == 3) {
+            } else if(choice.equals("Buy as group")) {
                 buyAsGroup();
-            } else if(choice == 0) {
+            } else if(choice.equals("Log out")) {
                 isBrowsed = false;
             }
 
@@ -51,12 +51,12 @@ public class ArtifactController {
         boolean isBrowsed = true;
 
         while(isBrowsed) {
-            Integer choice = view.handleMentorMenu();
-            if(choice == 1) {
+            String choice = view.handleMentorMenu();
+            if(choice.equals("View artifact templates")) {
                 listArtifacts();
-            } else if(choice == 2) {
+            } else if(choice.equals("Create new template")) {
                 createArtifactTemplate();
-            } else if(choice == 0) {
+            } else if(choice.equals("Log out")) {
                 isBrowsed = false;
             }
 
@@ -89,7 +89,7 @@ public class ArtifactController {
         return template;
     }
 
-    public Item getNewArtifact(ItemTemplate template) {
+    public void getNewArtifact(ItemTemplate template) {
         ;
     }
 
