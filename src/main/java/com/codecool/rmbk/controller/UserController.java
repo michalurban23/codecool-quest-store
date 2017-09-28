@@ -111,6 +111,7 @@ public abstract class UserController {
                 }
             } else if(choice.equals(menu.get(2))){
                 User newUser = userDao.addUser(userType);
+                System.out.println(newUser.getID());
                 editUserData(newUser);
             } else if(choice.equals(menu.get(0))){
                 isBrowsed = false;
