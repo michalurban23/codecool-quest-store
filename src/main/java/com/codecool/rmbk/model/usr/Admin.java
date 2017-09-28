@@ -8,6 +8,12 @@ public class Admin extends User {
         this.status = "Admin";
     }
 
+    public Admin(String[] userInfo){
+
+        super(userInfo);
+        this.status = userInfo[5];
+    }
+
     public Admin(String firstName, String lastName) {
 
         this(firstName, lastName, "Not Available", "Not Available", null);

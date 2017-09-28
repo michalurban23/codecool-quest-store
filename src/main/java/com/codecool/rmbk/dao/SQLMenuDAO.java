@@ -11,10 +11,11 @@ public class SQLMenuDAO extends SqlDAO implements MenuDAO {
 
         TreeMap<Integer,String> MenuMap = new TreeMap<>();
         processQuery(query);
-
-        for (ArrayList<String> row : getResults()) {
+        ArrayList<ArrayList<String>> queryResult = getResults();
+        for (int i=1; i<queryResult.size(); i++) {
+            System.out.println(queryResult.get(i));
             try {
-                MenuMap.put(Integer.parseInt(row.get(0)), row.get(1));
+                MenuMap.put(Integer.parseInt(queryResult.get(i).get(0)), queryResult.get(i).get(1));
             } catch (NumberFormatException e) {
                 return null;
             }
@@ -24,8 +25,10 @@ public class SQLMenuDAO extends SqlDAO implements MenuDAO {
 
     @Override
     public TreeMap<Integer, String> getMainMenu(User user) {
+        System.out.println(user.getClass().getSimpleName());
         String query = String.format("SELECT id, option FROM main_menu WHERE %1$s_access == 1 ORDER BY id;",
                                      user.getClass().getSimpleName().toLowerCase());
+        System.out.println(query);
         return getMenu((query));
     }
 
