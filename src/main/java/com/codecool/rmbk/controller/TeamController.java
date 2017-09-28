@@ -1,8 +1,9 @@
 package com.codecool.rmbk.controller;
 
 import com.codecool.rmbk.dao.MenuDAO;
-import com.codecool.rmbk.dao.SQLGroups;
 import com.codecool.rmbk.dao.SQLMenuDAO;
+import com.codecool.rmbk.dao.SQLTeam;
+import com.codecool.rmbk.dao.TeamDAO;
 import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ConsoleGroupView;

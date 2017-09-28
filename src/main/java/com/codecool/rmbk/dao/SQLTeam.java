@@ -7,7 +7,7 @@ import com.codecool.rmbk.model.usr.User;
 
 import java.util.ArrayList;
 
-public class SQLGroups extends SqlDAO implements TeamDAO{
+public class SQLTeam extends SqlDAO implements TeamDAO{
 
     private ArrayList<ArrayList<String>> results;
 
@@ -23,7 +23,7 @@ public class SQLGroups extends SqlDAO implements TeamDAO{
         processQuery(query);
     }
 
-    public Team getTeamByID(Integer id){
+    public Team getTeamById(Integer id){
 
         Team resultGroup = null;
         String query = String.format("SELECT * FROM groups WHERE id = %d;", id);
@@ -41,11 +41,11 @@ public class SQLGroups extends SqlDAO implements TeamDAO{
         handleQuery(query);
         query = String.format("SELECT * FROM groups ORDER BY id DESC LIMIT 1;");
         ArrayList<ArrayList<String>> queryResult = processQuery(query);
-        return getTeamByID(Integer.parseInt(queryResult.get(1).get(0)));
+        return getTeamById(Integer.parseInt(queryResult.get(1).get(0)));
     }
 
     @Override
-    public Boolean deleteGroup(Team team) {
+    public Boolean removeTeam(Team team) {
 
         String query = String.format("DELETE FROM groups WHERE id = %d;", team.getId());
         return handleQuery(query);
