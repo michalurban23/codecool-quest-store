@@ -6,7 +6,6 @@ import com.codecool.rmbk.model.item.Item;
 import com.codecool.rmbk.model.item.ItemTemplate;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ArtifactControllerView;
-import sun.awt.windows.ThemeReader;
 
 import java.util.ArrayList;
 
