@@ -1,6 +1,5 @@
 package com.codecool.rmbk.model.quest;
 
-import java.util.ArrayList;
 import java.util.UUID;
 import java.time.LocalDateTime;
 import com.codecool.rmbk.model.usr.Holder;

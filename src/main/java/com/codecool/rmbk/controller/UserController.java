@@ -82,10 +82,10 @@ public abstract class UserController {
             } else if(choice.equals(menu.get(5))) {
                 GroupController groupController = new GroupController();
                 groupController.start(user);
-            } else if(choice.equals(menu.get(6))) {
+            } else if(choice.equals(menu.get(7))) {
                 QuestController questController = new QuestController();
                 questController.start(user);
-            } else if(choice.equals(menu.get(7))) {
+            } else if(choice.equals(menu.get(6))) {
                 ArtifactController artifactController = new ArtifactController();
                 artifactController.start(user);
             } else if(choice.equals(menu.get(0))) {
@@ -98,23 +98,26 @@ public abstract class UserController {
 
         boolean isBrowsed = true;
 
-        while(isBrowsed){
+        while(isBrowsed) {
+
             view.clearScreen();
             ArrayList<ArrayList<String>> users = userDao.getIdNameList(userType);
             LinkedHashMap<Integer,String> menu = menuDao.getBrowseMenu();
             String choice = view.handleBrowse(menu, users);
 
             if(choice.equals(menu.get(1))){
-                ArrayList<String> chosenUserInfo= view.getListChoice(users);
+                ArrayList<String> chosenUserInfo = view.getListChoice(users);
+
                 if (chosenUserInfo != null) {
                     Integer userId = Integer.parseInt(chosenUserInfo.get(0));
                     handleDetailsMenu(userDao.getUserByID(userId));
                 }
-            } else if(choice.equals(menu.get(2))){
+
+            } else if(choice.equals(menu.get(2))) {
                 User newUser = userDao.addUser(userType);
-                System.out.println(newUser.getID());
                 editUserData(newUser);
-            } else if(choice.equals(menu.get(0))){
+
+            } else if(choice.equals(menu.get(0))) {
                 isBrowsed = false;
             }
         }

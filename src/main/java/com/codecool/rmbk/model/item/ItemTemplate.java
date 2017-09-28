@@ -1,37 +1,29 @@
 package com.codecool.rmbk.model.item;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
 public class ItemTemplate {
 
-    private UUID id;
-    private Integer price;
+    private String name;
+    private String value;
     private String description;
-    private static ArrayList<ItemTemplate> itemList = new ArrayList<>();
+    private String special;
 
-    static enum CATEGORY {
-        BASIC,
-        MAGIC;
-    }
+    public ItemTemplate(String name, String description, String value, String special) {
 
-    public ItemTemplate(Integer price, String description) {
-
-        this.price = price;
+        this.name = name;
+        this.value = value;
         this.description = description;
-        this.id = UUID.randomUUID();
-        itemList.add(this);
+        this.special = special;
     }
 
-    public Integer getPrice() {
+    public String getValue() {
 
-        return this.price;
+        return this.value;
     }
 
-    public void setPrice(Integer price) {
-
-        this.price = price;
+    public void setValue(String value) {
+        this.value = value;
     }
+
 
     public String getDescription() {
 
@@ -41,5 +33,17 @@ public class ItemTemplate {
     public void setDescription(String description) {
 
         this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSpecial() {
+        return this.special;
     }
 }

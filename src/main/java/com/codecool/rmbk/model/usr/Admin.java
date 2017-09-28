@@ -22,4 +22,10 @@ public class Admin extends User {
         this("Not Available", "Not Available", "Not Available", "Not Available", null);
     }
 
+    public Admin(int id) {
+
+        this();
+        this.id = id;
+    }
+
 }
