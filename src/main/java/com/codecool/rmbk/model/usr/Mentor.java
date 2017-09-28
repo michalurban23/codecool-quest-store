@@ -9,9 +9,16 @@ public class Mentor extends User {
     public Mentor(String firstName, String lastName, String email, String address, Integer id) {
 
         super(firstName, lastName, email, address, id);
-        this.status = "MENTOR";
+        this.status = "Mentor";
         objects.add(this);
     }
+
+    public Mentor(String[] userInfo){
+
+        super(userInfo);
+        this.status = userInfo[5];
+    }
+
 
     public Mentor() {
 

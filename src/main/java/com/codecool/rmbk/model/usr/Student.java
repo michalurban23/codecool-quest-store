@@ -15,14 +15,14 @@ public class Student extends User implements Holder {
     public Student(String firstName, String lastName, String email, String address, Integer id) {
 
         super(firstName, lastName, email, address, id);
-        this.status = "STUDENT";
+        this.status = "Student";
         objects.add(this);
     }
 
     public Student(String[] userInfo){
-        super(userInfo[0], userInfo[1], userInfo[2], userInfo[3], null);
-        this.status = "STUDENT";
-        objects.add(this);
+
+        super(userInfo);
+        this.status = userInfo[5];
     }
 
     public Student() {
