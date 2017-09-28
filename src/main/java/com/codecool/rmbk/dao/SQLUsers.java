@@ -1,6 +1,8 @@
 package com.codecool.rmbk.dao;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.codecool.rmbk.model.usr.*;
 
 
@@ -23,24 +25,29 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     @Override
     public User getUserByLogin(String login){
 
-        String query = String.format("SELECT * FROM users WHERE login ='%s';", login);
-        ArrayList<ArrayList<String>> result = processQuery(query);
-        return getUserFromArray(getUserTypeByLogin(login), result.get(1));
-
+        String query = String.format("SELECT users.id, first_name, last_name, email, address, status FROM users JOIN login_info ON login_info.id == users.id WHERE login ='%s';", login);
+        ArrayList<ArrayList<String>> rw = processQuery(query);
+        return getUserFromArray(rw.get(1).get(5), rw.get(1).subList(0, 5));
     }
 
-    private User getUserFromArray(String type, ArrayList<String> array){
-        if(type.equals("Mentor")) return new Mentor(array.toArray(new String[array.size()]));
-        else if(type.equals("Student")) return new Student(array.toArray(new String[array.size()]));
-        else if(type.equals("Admin")) return new Admin(array.toArray(new String[array.size()]));
-        else return null;
+    private User getUserFromArray(String type, List<String> array){
+        User loged = null;
+        if (type.equals("Mentor")) {
+            loged =  new Mentor(array.toArray(new String[array.size()]));
+        }
+        else if(type.equals("Student")) {
+            loged =  new Student(array.toArray(new String[array.size()]));
+        }
+        else if(type.equals("Admin")) {
+            loged = new Admin(array.toArray(new String[array.size()]));
+        }
+        return loged;
     }
 
     @Override
     public String getUserTypeByLogin(String login) {
-        String query = String.format("SELECT status FROM users WHERE login ='%s';", login);
-        int typeIndex = 5;
-        return processQuery(query).get(1).get(typeIndex);
+        String query = String.format("SELECT status FROM users JOIN login_info ON login_info.id == users.id WHERE login ='%s';", login);
+        return processQuery(query).get(1).get(0);
     }
 
     public ArrayList<String> getNameList(String userType) {
