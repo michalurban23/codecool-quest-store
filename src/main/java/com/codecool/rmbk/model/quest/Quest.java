@@ -1,45 +1,35 @@
 package com.codecool.rmbk.model.quest;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.UUID;
-import java.time.LocalDateTime;
-import com.codecool.rmbk.model.usr.Holder;
-import com.codecool.rmbk.model.quest.QuestTemplate.CATEGORY;
+
+import com.codecool.rmbk.model.usr.User;
 
 public class Quest {
 
-    private Holder owner;
-    private LocalDateTime startTime;
-    private UUID id;
-    private CATEGORY category;
-    private static ArrayList<Quest> questList = new ArrayList<>();
+    private Integer ownerID;
+    private String templateName;
+    private LocalDate startTime;
 
-    public Quest(Holder owner) {
+    public Quest(ArrayList<String> template, User user) {
 
-        this.id = UUID.randomUUID();
-        this.owner = owner;
-        this.startTime = LocalDateTime.now();
-        this.category = CATEGORY.BASIC;
-        questList.add(this);
+        this.ownerID = user.getID();
+        this.templateName = template.get(0);
+        this.startTime = LocalDate.now();
     }
 
-    public Holder getOwner() {
+    public Integer getOwnerID() {
 
-        return this.owner;
+        return ownerID;
     }
 
-    public void setOwner(Holder owner) {
+    public String getTemplateName() {
 
-        this.owner = owner;
+        return templateName;
     }
 
-    public CATEGORY getCategory() {
+    public String getStartTime() {
 
-        return this.category;
-    }
-
-    public void setCategory(CATEGORY category) {
-
-        this.category = category;
+        return startTime.toString();
     }
 }

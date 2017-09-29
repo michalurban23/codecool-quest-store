@@ -1,6 +1,7 @@
 package com.codecool.rmbk.controller;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.TreeMap;
 
 import com.codecool.rmbk.dao.MenuDAO;
@@ -63,7 +64,7 @@ public abstract class UserController {
         while(isBrowsed){
             view.clearScreen();
             view.showShortInfo(user);
-            TreeMap<Integer,String> menu = menuDao.getMainMenu(user);
+            LinkedHashMap<Integer,String> menu = menuDao.getMainMenu(user);
             String choice = view.handleMenu(menu);
 
             if(choice.equals(menu.get(1))){
@@ -79,7 +80,7 @@ public abstract class UserController {
                 MentorController mentorController = new MentorController();
                 mentorController.start(user);
             } else if(choice.equals(menu.get(5))) {
-                GroupController groupController = new GroupController();
+                TeamController groupController = new TeamController();
                 groupController.start(user);
             } else if(choice.equals(menu.get(6))) {
                 QuestController questController = new QuestController();
@@ -97,22 +98,26 @@ public abstract class UserController {
 
         boolean isBrowsed = true;
 
-        while(isBrowsed){
+        while(isBrowsed) {
+
             view.clearScreen();
             ArrayList<ArrayList<String>> users = userDao.getIdNameList(userType);
-            TreeMap<Integer,String> menu = menuDao.getBrowseMenu();
+            LinkedHashMap<Integer,String> menu = menuDao.getBrowseMenu();
             String choice = view.handleBrowse(menu, users);
 
             if(choice.equals(menu.get(1))){
-                ArrayList<String> chosenUserInfo= view.getListChoice(users);
+                ArrayList<String> chosenUserInfo = view.getListChoice(users);
+
                 if (chosenUserInfo != null) {
                     Integer userId = Integer.parseInt(chosenUserInfo.get(0));
                     handleDetailsMenu(userDao.getUserByID(userId));
                 }
-            } else if(choice.equals(menu.get(2))){
+
+            } else if(choice.equals(menu.get(2))) {
                 User newUser = userDao.addUser(userType);
                 editUserData(newUser);
-            } else if(choice.equals(menu.get(0))){
+
+            } else if(choice.equals(menu.get(0))) {
                 isBrowsed = false;
             }
         }
@@ -124,7 +129,7 @@ public abstract class UserController {
 
         while(isBrowsed){
             view.clearScreen();
-            TreeMap<Integer,String> menu = menuDao.getDetailsMenu();
+            LinkedHashMap<Integer,String> menu = menuDao.getDetailsMenu();
             String choice = view.handleDetails(menu, user);
 
             if (choice.equals(menu.get(1))){

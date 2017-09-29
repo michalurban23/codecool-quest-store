@@ -7,7 +7,7 @@ import com.codecool.rmbk.model.quest.Quest;
 
 public class Student extends User implements Holder {
 
-    private ArrayList<Group> myGroups;
+    private ArrayList<Team> myGroups;
     private Class myClass;
     private Cart myCart;
     private static ArrayList<Student> objects = new ArrayList<Student>();
@@ -15,7 +15,6 @@ public class Student extends User implements Holder {
     public Student(String firstName, String lastName, String email, String address, Integer id) {
 
         super(firstName, lastName, email, address, id);
-        this.status = "Student";
         objects.add(this);
     }
 
@@ -28,6 +27,12 @@ public class Student extends User implements Holder {
     public Student() {
 
         this("Not Available", "Not Available", "Not Available", "Not Available", null);
+    }
+
+    public Student(int id) {
+
+        this();
+        this.id = id;
     }
 
     public Student(String firstName, String lastName) {

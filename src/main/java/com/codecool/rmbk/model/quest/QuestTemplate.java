@@ -1,40 +1,37 @@
 package com.codecool.rmbk.model.quest;
 
 import java.util.ArrayList;
-import java.util.UUID;
-import java.time.LocalDateTime;
 import com.codecool.rmbk.model.usr.Holder;
 
 public class QuestTemplate {
 
-    private UUID id;
-    private Integer value;
+    private String name;
+
     private String description;
-    private static ArrayList<QuestTemplate> questList = new ArrayList<>();
+    private Integer value;
+    private String special;
+    private String active;
+    public QuestTemplate(String[] data) {
 
-    static enum CATEGORY {
-        BASIC,
-        EXTRA;
-    }
-
-    public QuestTemplate(Integer value, String description) {
-
-        this.value = value;
-        this.description = description;
-        this.id = UUID.randomUUID();
-        questList.add(this);
+        this.name = data[0];
+        this.description = data[1];
+        this.value = Integer.parseInt(data[2]);
+        this.special = data[3];
+        this.active = data[4];
     }
 
     public QuestTemplate(ArrayList<String> data) {
 
-        Integer value = Integer.parseInt(data.get(0));
-        String description = data.get(1);
-        UUID id = UUID.fromString(data.get(2));
+        this.name = data.get(0);
+        this.description = data.get(1);
+        this.value = Integer.parseInt(data.get(2));
+        this.special = data.get(3);
+        this.active = data.get(4);
+    }
 
-        this.value = value;
-        this.description = description;
-        this.id = id;
-        questList.add(this);
+    public String getName() {
+
+        return this.name;
     }
 
     public Integer getValue() {
@@ -55,5 +52,27 @@ public class QuestTemplate {
     public void setDescription(String description) {
 
         this.description = description;
+    }
+
+    public String[] getQuestTemplate() {
+
+        String[] data = {this.name, this.description, ""+this.value, this.special, this.active};
+        return data;
+    }
+
+    public void updateData(String[] newData) {
+
+        if (newData[0] != null) {
+            this.description = newData[0];
+        }
+        if (newData[1] != null) {
+            this.value = Integer.parseInt(newData[1]);
+        }
+        if (newData[2] != null) {
+            this.special = newData[2];
+        }
+        if (newData[3] != null) {
+            this.active = newData[3];
+        }
     }
 }

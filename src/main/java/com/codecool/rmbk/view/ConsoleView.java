@@ -51,7 +51,7 @@ public abstract class ConsoleView {
             }
         } while (choice < 1 || choice > list.size());
 
-        return list.get(choice - 1);
+        return list.get(choice);
     }
 
     public String getString(String message) {
@@ -155,6 +155,8 @@ public abstract class ConsoleView {
                 System.out.printf(" %" + width + "s |", entry.get(column));
             } System.out.println();
         }
+        System.out.println(horizontalLine + "\n");
+
         return true;
     }
 
@@ -190,7 +192,7 @@ public abstract class ConsoleView {
         return widths;
     }
 
-    public static void clearScreen() {
+    public void clearScreen() {
 
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -207,6 +209,11 @@ public abstract class ConsoleView {
 
         System.out.println("\nPress Enter to continue\n");
         input.nextLine();
+    }
+
+    public void printMessage(String message) {
+
+        System.out.println("\n" + message);
     }
 
     public void printWarning(String message) {

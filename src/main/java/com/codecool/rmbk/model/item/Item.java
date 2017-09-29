@@ -1,34 +1,33 @@
 package com.codecool.rmbk.model.item;
 
-import java.util.UUID;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import com.codecool.rmbk.model.usr.Holder;
-import com.codecool.rmbk.model.item.ItemTemplate.CATEGORY;
 
 public class Item {
 
-    private Holder owner;
+    private ItemTemplate template;
+    private Integer owner;
     private LocalDateTime buyTime;
-    private UUID id;
-    private CATEGORY category;
-    private static ArrayList<Item> itemList = new ArrayList<>();
+    private String completion;
 
-    public Item(Holder owner) {
+    public Item(ItemTemplate template, Integer owner) {
 
-        this.id = UUID.randomUUID();
+        this.template = template;
         this.owner = owner;
         this.buyTime = LocalDateTime.now();
-        this.category = CATEGORY.BASIC;
-        itemList.add(this);
+        if(template.getSpecial().equals("1")) {
+            this.completion = "30";
+        }
+        else {
+            this.completion = "NULL";
+        }
     }
 
-    public Holder getOwner() {
+    public Integer getOwner() {
 
         return this.owner;
     }
 
-    public void setOwner(Holder owner) {
+    public void setOwner(Integer owner) {
 
         this.owner = owner;
     }
@@ -43,13 +42,11 @@ public class Item {
         this.buyTime = buyTime;
     }
 
-    public CATEGORY getCategory() {
-
-        return this.category;
+    public ItemTemplate getTemplate() {
+        return template;
     }
 
-    public void setCategory(CATEGORY category) {
-
-        this.category = category;
+    public String getCompletion() {
+        return completion;
     }
 }
