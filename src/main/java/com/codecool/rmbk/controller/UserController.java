@@ -88,6 +88,9 @@ public abstract class UserController {
             } else if(choice.equals(menu.get(7))) {
                 ArtifactController artifactController = new ArtifactController();
                 artifactController.start(user);
+            } else if(choice.equals(menu.get(8))) {
+                BacklogController backlogController = new BacklogController();
+                backlogController.start(user);
             } else if(choice.equals(menu.get(0))) {
                 isBrowsed = false;
             }

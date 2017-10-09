@@ -25,8 +25,7 @@ public class ArtifactControllerView extends ConsoleUserView {
         LinkedHashMap<Integer, String> mainMenu = new LinkedHashMap<>();
 
         mainMenu.put(1, "View available artifacts");
-        mainMenu.put(2, "Buy artifact");
-        mainMenu.put(3, "Buy as group");
+        mainMenu.put(2, "Go to shopping centre");
         mainMenu.put(0, "Log out");
 
         return mainMenu;
@@ -47,6 +46,8 @@ public class ArtifactControllerView extends ConsoleUserView {
     public void viewDetailedTemplate(ItemTemplate template) {
     }
 
+<<<<<<< HEAD
+=======
     public String getArtifactQuery(Item artifact) {
 
         String template = artifact.getTemplate().getName();
@@ -66,6 +67,7 @@ public class ArtifactControllerView extends ConsoleUserView {
     }
 
 
+>>>>>>> dev
     public String getArtifactTemplateQuery(ItemTemplate template) {
 
         String name = template.getName();

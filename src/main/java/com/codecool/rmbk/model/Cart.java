@@ -1,36 +1,33 @@
 package com.codecool.rmbk.model;
 
+import com.codecool.rmbk.model.item.Item;
+
 import java.util.ArrayList;
 
 public class Cart {
 
-    private ArrayList<Object> itemList;
+    private ArrayList<Item> itemsList = new ArrayList<>();
 
-    public Cart(ArrayList<Object> itemList) {
+    public Cart() {}
 
-        this.itemList = itemList;
+    public ArrayList<Item> getItemsList() {
+        return this.itemsList;
     }
 
-    private ArrayList<Object> getItemList() {
-
-        return this.itemList;
+    public void addToCart(Item item) {
+        this.itemsList.add(item);
     }
 
-    private void addToCart(Object item) {
+    public void removeFromCart(Item item) {
 
-        itemList.add(item);
-    }
-
-    private void removeFromCart(Object item) {
-
-        if(itemList.contains(item)) {
-            itemList.remove(item);
+        if(itemsList.contains(item)) {
+            itemsList.remove(item);
         }
     }
 
-    private void flushCart() {
+    public void flushCart() {
 
-        itemList.clear();
+        itemsList.clear();
     }
 
 }

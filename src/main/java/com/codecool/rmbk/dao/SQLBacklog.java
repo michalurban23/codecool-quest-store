@@ -4,18 +4,30 @@ import java.util.ArrayList;
 
 public class SQLBacklog extends SqlDAO {
 
-    private ArrayList<ArrayList<String>> results;
+    public ArrayList<ArrayList<String>> getAllBacklogs() {
 
-    public void getAllBacklogs() {
-        String query = "SELECT * FROM backlog";
+        String query = "SELECT * FROM backlog ORDER BY `owner` ASC;";
 
-        processQuery(query, null);
+        // processQuery(query, null);
+        return getResults();
     }
 
-    public void getBackLog(int id) {
+    public ArrayList<ArrayList<String>> getBackLog(int id) {
+
         String query = "SELECT * from backlog WHERE owner = ?;";
 
         processQuery(query, new String[] {"" + id});
+        return getResults();
     }
 
+    public String getExperience(int id) {
+
+        String query = "SELECT sum(value)" +
+                       "FROM backlog" +
+                       "WHERE `owner` = ?;";
+        String[] data = {""+id};
+
+        // processQuery(query, null);
+        return getResults().get(1).get(0);
+    }
 }
