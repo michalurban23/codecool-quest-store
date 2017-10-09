@@ -74,13 +74,13 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
     }
 
     @Override
-    public ArrayList<ArrayList<String>> getTeamList(User user) {
+    public ArrayList<Team> getTeamList(User user) {
 
         String query;
         String[] stringSet = null;
 
         if(user.getClass().getSimpleName().equals("Mentor")) {
-            query = "SELECT * FROM groups;";
+            query = "SELECT id_group FROM groups;";
 
         } else {
             query = "SELECT id_group, group_name FROM users " +

@@ -2,6 +2,7 @@ package com.codecool.rmbk.view;
 
 import com.codecool.rmbk.model.usr.Group;
 import com.codecool.rmbk.model.usr.Student;
+import com.codecool.rmbk.model.usr.Team;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -38,10 +39,10 @@ public class ConsoleGroupView extends ConsoleView implements GroupView {
         return handleMenu(menu);
     }
 
-    public String handleBrowse(LinkedHashMap<Integer,String> menu, ArrayList<ArrayList<String>> groups) {
+    public String handleBrowse(LinkedHashMap<Integer,String> menu, ArrayList<Team> groups) {
         ArrayList<String> groupNames = new ArrayList<>();
-        for (int i = 1; i < groups.size(); i++) {
-            groupNames.add(groups.get(i).get(1));
+        for (Team group : groups) {
+            groupNames.add(group.getName());
         }
         showEnumeratedList(groupNames);
         System.out.println("\n");

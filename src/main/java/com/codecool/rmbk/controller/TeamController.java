@@ -49,16 +49,15 @@ public class TeamController {
         while(isBrowsed) {
 
             view.clearScreen();
-            ArrayList<ArrayList<String>> groups = groupDAO.getTeamList(user);
+            ArrayList<Team> groups = groupDAO.getTeamList(user);
             LinkedHashMap<Integer,String> menu = menuDAO.getBrowseMenu("edit");
             String choice = view.handleBrowse(menu, groups);
 
             if(choice.equals(menu.get(1))){
-                ArrayList<String> chosenRow = view.getListChoice(groups);
+                Team chosenTeam = view.getListChoice(groups);
 
-                if (chosenRow != null) {
-                    Integer id = Integer.parseInt(chosenRow.get(0));
-                    handleEditDetailsMenu(user, groupDAO.getTeamById(id));
+                if (chosenTeam != null) {
+                    handleEditDetailsMenu(user, chosenTeam);
                 }
 
             } else if(choice.equals(menu.get(2))) {
@@ -77,16 +76,15 @@ public class TeamController {
         while(isBrowsed) {
 
             view.clearScreen();
-            ArrayList<ArrayList<String>> groups = groupDAO.getTeamList(user);
+            ArrayList<Team> groups = groupDAO.getTeamList(user);
             LinkedHashMap<Integer,String> menu = menuDAO.getBrowseMenu("show");
             String choice = view.handleBrowse(menu, groups);
 
             if(choice.equals(menu.get(1))){
-                ArrayList<String> chosenRow = view.getListChoice(groups);
+                Team chosenTeam = view.getListChoice(groups);
 
-                if (chosenRow != null) {
-                    Integer id = Integer.parseInt(chosenRow.get(0));
-                    handleShowDetailsMenu(groupDAO.getTeamById(id));
+                if (chosenTeam != null) {
+                    handleShowDetailsMenu(chosenTeam);
                 }
 
             } else if(choice.equals(menu.get(0))) {
