@@ -41,7 +41,7 @@ public class SqlDAO {
                 saveResults();
                 isSuccessful = results.size() > 1;
             } else {
-                isSuccessful = executeUpdate(query) > 0;
+                isSuccessful = executeUpdate(query);
             }
             closeDB();
         } catch (SQLException e) {
@@ -62,9 +62,9 @@ public class SqlDAO {
         }
     }
 
-    private int executeUpdate(String query) throws SQLException {
+    private boolean executeUpdate(String query) throws SQLException {
 
-        return statement.executeUpdate(query);
+        return statement.execute();
     }
 
     private void executeQuery(String query) throws SQLException {
@@ -76,9 +76,10 @@ public class SqlDAO {
 
         if(stringSet != null) {
             for(int i=1; i<=stringSet.length; i++) {
-                statement.setString(i, stringSet[i]);
+                statement.setString(i, stringSet[i-1]);
             }
         }
+        System.out.println(statement);
     }
 
     private void closeDB() throws SQLException {

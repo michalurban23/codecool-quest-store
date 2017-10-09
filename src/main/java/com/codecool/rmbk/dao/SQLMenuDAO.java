@@ -10,7 +10,7 @@ public class SQLMenuDAO extends SqlDAO implements MenuDAO {
     public TreeMap<Integer,String> getMenu (String query) {
 
         TreeMap<Integer,String> MenuMap = new TreeMap<>();
-        processQuery(query);
+        processQuery(query, null);
         ArrayList<ArrayList<String>> queryResult = getResults();
         for (int i=1; i<queryResult.size(); i++) {
             try {

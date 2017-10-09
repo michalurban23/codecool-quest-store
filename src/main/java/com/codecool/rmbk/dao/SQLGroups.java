@@ -10,12 +10,12 @@ public class SQLGroups extends SqlDAO {
     public void getAllGroups() {
         String query = "SELECT * FROM groups";
 
-        processQuery(query);
+        processQuery(query, null);
     }
 
     public void getGroup(String name) {
-        String query = "SELECT * FROM groups WHERE name = '" + name + "';";
+        String query = "SELECT * FROM groups WHERE name = ?;";
 
-        processQuery(query);
+        processQuery(query, new String[] {name});
     }
 }

@@ -128,8 +128,8 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
     public Boolean updateUserAddress(User user, String address) {
 
-        String query = String.format("UPDATE users SET address = '%s' WHERE id = %d;", address, user.getID());
-        return handleQuery(query);
+        String query = "UPDATE users SET address = ? WHERE id = ?;";
+        return handleQuery(query, new String[] {address, "" + user.getID()});
     }
 
     @Override
@@ -137,19 +137,19 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
         System.out.println(user);
         System.out.println(user.getID());
-        String query = String.format("UPDATE users SET first_name = '%s', last_name = '%s', email = '%s', " +
-                "address = '%s' WHERE id = %d;", user.getFirstName(), user.getLastName(), user.getEmail(),
-                user.getAddress(), user.getID());
-        return handleQuery(query);
+        String query = "UPDATE users SET first_name = ?, last_name = ?, email = ?, " +
+                "address = ? WHERE id = ?;";
+        return handleQuery(query, new String[] {user.getFirstName(), user.getLastName(), user.getEmail(),
+                                                user.getAddress(), "" + user.getID()});
     }
 
     @Override
     public User addUser(String userType) {
 
-        String query = String.format("INSERT INTO users (status) values ('%s');", userType);
-        processQuery(query);
+        String query = "INSERT INTO users (status) values (?);";
+        processQuery(query, new String[] {userType});
         query = String.format("SELECT id FROM users WHERE first_name IS NULL;");
-        ArrayList<ArrayList<String>> queryResult = processQuery(query);
+        ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
         return getUserByID(Integer.parseInt(queryResult.get(1).get(0)));
     }
 
