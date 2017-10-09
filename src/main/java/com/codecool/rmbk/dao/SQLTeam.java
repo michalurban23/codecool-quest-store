@@ -74,10 +74,11 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
     }
 
     @Override
-    public ArrayList<ArrayList<String>> getTeamList(User user) {
+    public ArrayList<Team> getTeamList(User user) {
 
         String query;
         String[] stringSet = null;
+        ArrayList<Team> result = new ArrayList<>();
 
         if(user.getClass().getSimpleName().equals("Mentor")) {
             query = "SELECT * FROM groups;";
@@ -85,13 +86,17 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
         } else {
             query = "SELECT id_group, group_name FROM users " +
                     "LEFT JOIN (SELECT name AS group_name, user_id, id AS id_group FROM groups " +
-                    "LEFT JOIN user_groups " +
-                    "ON group_id = id) " +
+                               "LEFT JOIN user_groups " +
+                               "ON group_id = id) " +
                     "ON user_id = id " +
                     "WHERE status = 'Student' AND id = ?;";
             stringSet = new String[] {"" + user.getID()};
         }
-        return processQuery(query, stringSet);
+
+        for(ArrayList<String> arr : processQuery(query, stringSet)) {
+            result.add(new Team(Integer.parseInt(arr.get(0)), arr.get(1)));
+        }
+        return result;
     }
 
     @Override

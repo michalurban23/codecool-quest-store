@@ -15,7 +15,7 @@ public interface TeamDAO {
     public Boolean renameGroup(Team group, String newName);
     public Boolean addStudentToGroup(Team group, User student);
     public Boolean removeStudentFromGroup(Team group, User student);
-    public ArrayList<ArrayList<String>> getTeamList(User user);
+    public ArrayList<Team> getTeamList(User user);
     public ArrayList<Student> getUsersList(Team group);
 
 
