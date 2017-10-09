@@ -1,5 +1,7 @@
 package com.codecool.rmbk.view;
 
+import com.codecool.rmbk.model.item.Item;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.TreeMap;
@@ -14,11 +16,52 @@ public class ShoppingControllerView extends ConsoleUserView {
 
         LinkedHashMap<Integer, String> mainMenu = new LinkedHashMap<>();
 
-        mainMenu.put(1, "Artifacts");
-        mainMenu.put(2, "Quests");
-        mainMenu.put(3, "Log out");
+        mainMenu.put(1, "Add artifact to cart");
+        mainMenu.put(2, "Remove artifact from cart");
+        mainMenu.put(3, "List cart");
+        mainMenu.put(4, "Flush cart");
+        mainMenu.put(5, "Check wallet");
+        mainMenu.put(0, "Log out");
 
         return mainMenu;
     }
 
+    public ArrayList<ArrayList<String>> getDataFromCart(ArrayList<Item> itemsList) {
+        ArrayList<ArrayList<String>> toReturn = new ArrayList<>();
+        ArrayList<String> title = new ArrayList<>();
+
+        title.add("Name");
+        title.add("Value (CC)");
+        toReturn.add(title);
+
+        for(Item item : itemsList) {
+            ArrayList<String> toAdd = new ArrayList<>();
+            toAdd.add(item.getTemplate().getName());
+            toAdd.add(item.getTemplate().getValue());
+            toReturn.add(toAdd);
+        }
+        return toReturn;
+    }
+
+    public Item getItemsListChoice(ArrayList<Item> itemsList) {
+        Integer choice = null;
+
+        do {
+            choice = getInteger("Choose index: ");
+            if (choice == null) {
+                return null;
+            }
+        } while (choice < 1 || choice > itemsList.size());
+
+        return itemsList.get(choice - 1);
+    }
+
+    public String getArtifactQuery(Item artifact) {
+
+        String template = artifact.getTemplate().getName();
+        String owner = artifact.getOwner().toString();
+        String completion = artifact.getCompletion();
+
+        return "VALUES ('"+template+"', '"+owner+"', '"+completion+"')";
+    }
 }
