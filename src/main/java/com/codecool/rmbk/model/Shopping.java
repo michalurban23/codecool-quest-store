@@ -13,4 +13,8 @@ public class Shopping {
     private void buyItem() {
         ;
     }
+
+    private void checkWallet() {
+        ;
+    }
 }
