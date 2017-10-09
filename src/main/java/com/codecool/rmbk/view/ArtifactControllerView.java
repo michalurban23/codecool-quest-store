@@ -46,8 +46,6 @@ public class ArtifactControllerView extends ConsoleUserView {
     public void viewDetailedTemplate(ItemTemplate template) {
     }
 
-<<<<<<< HEAD
-=======
     public String getArtifactQuery(Item artifact) {
 
         String template = artifact.getTemplate().getName();
@@ -67,7 +65,6 @@ public class ArtifactControllerView extends ConsoleUserView {
     }
 
 
->>>>>>> dev
     public String getArtifactTemplateQuery(ItemTemplate template) {
 
         String name = template.getName();
