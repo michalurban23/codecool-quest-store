@@ -108,16 +108,17 @@ public class ShoppingController {
         view.printList("Artifacts", artifacts);
     }
 
-    public void addArtifactToDatabase(Item artifact) {
-        SQLArtifact artifacts = new SQLArtifact();
-        artifacts.addArtifact(getArtifactInfo(artifact));
-    }
+    // public void addArtifactToDatabase(Item artifact) {
+    //
+    //     SQLArtifact artifacts = new SQLArtifact();
+        // artifacts.addArtifact(getArtifactInfo(artifact));
+    // }
 
-    public void addArtifactsAfterPayment(ArrayList<Item> itemsList) {
-        for(Item item : itemsList) {
-            addArtifactToDatabase(item);
-        }
-    }
+    // public void addArtifactsAfterPayment(ArrayList<Item> itemsList) {
+    //     for(Item item : itemsList) {
+    //         addArtifactToDatabase(item);
+    //     }
+    // }
 
 
     public Item getNewArtifact(ItemTemplate template) {

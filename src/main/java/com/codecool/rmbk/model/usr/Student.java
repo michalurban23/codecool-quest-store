@@ -18,18 +18,21 @@ public class Student extends User implements Holder {
     public Student(String firstName, String lastName, String email, String address, Integer id) {
 
         super(firstName, lastName, email, address, id);
+        this.myCart = new Cart();
         objects.add(this);
     }
 
     public Student(String[] userInfo){
 
         super(userInfo);
+        this.myCart = new Cart();
         objects.add(this);
     }
 
     public Student() {
 
         this("Not Available", "Not Available", "Not Available", "Not Available", null);
+        this.myCart = new Cart();
     }
 
     public Student(int id) {
