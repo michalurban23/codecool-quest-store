@@ -56,7 +56,7 @@ public class ShoppingController {
 
     private void removeFromCart() {
         listCart();
-        Item item = view.getListChoice(shop.getItemsList());
+        Item item = view.getItemsListChoice(shop.getItemsList());
 
         shop.removeFromCart(item);
     }
@@ -96,7 +96,8 @@ public class ShoppingController {
 
     public ItemTemplate getArtifactTemplate() {
         listArtifacts();
-        ArrayList<String> choice = view.getListChoice(new ArrayList<>(getAvailableArtifacts().subList(1, getAvailableArtifacts().size())));
+        ArrayList<String> choice = view.getListChoice(getAvailableArtifacts());
+
         ItemTemplate template = new ItemTemplate(choice.get(0), choice.get(1), choice.get(2), choice.get(3));
 
         return template;
