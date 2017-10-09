@@ -10,9 +10,9 @@ public class ShoppingControllerView extends ConsoleUserView {
         return handleMenu(createMainMenu());
     }
 
-    public TreeMap<Integer , String> createMainMenu() {
+    public LinkedHashMap<Integer , String> createMainMenu() {
 
-        TreeMap<Integer, String> mainMenu = new TreeMap<>();
+        LinkedHashMap<Integer, String> mainMenu = new LinkedHashMap<>();
 
         mainMenu.put(1, "Artifacts");
         mainMenu.put(2, "Quests");

@@ -23,11 +23,11 @@ public class TeamController {
         groupDAO = new SQLTeam();
     }
 
-//    public void start (User user) {
-//        handleBrowseMenu(user);
-//    }
+    public void start (User user) {
+        handleBrowseMenu(user);
+    }
 
-/*
+
     public void editGroupName(Team team) {
         String newName = view.getNewGroupName();
         if (newName != null) {
@@ -36,9 +36,6 @@ public class TeamController {
             }
         }
     }
-*/
-
-/*
     public void handleBrowseMenu(User user) {
         boolean isBrowsed = true;
 
@@ -66,9 +63,7 @@ public class TeamController {
             }
         }
     }
-*/
 
-/*
     private void handleDetailsMenu(Team team) {
 
         boolean isBrowsed = true;
@@ -87,6 +82,5 @@ public class TeamController {
             }
         }
     }
-*/
 
 }

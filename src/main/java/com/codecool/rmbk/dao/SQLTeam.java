@@ -1,4 +1,3 @@
-
 package com.codecool.rmbk.dao;
 
 
@@ -90,4 +89,3 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
         return processQuery(query, stringSet);
     }
 }
-

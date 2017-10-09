@@ -7,7 +7,7 @@ import com.codecool.rmbk.model.quest.Quest;
 
 public class Student extends User implements Holder {
 
-    private ArrayList<Group> myGroups;
+    private ArrayList<Team> myGroups;
     private Class myClass;
     private Cart myCart;
     private static ArrayList<Student> objects = new ArrayList<Student>();

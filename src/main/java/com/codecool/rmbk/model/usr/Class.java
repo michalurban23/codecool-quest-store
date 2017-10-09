@@ -3,7 +3,7 @@ package com.codecool.rmbk.model.usr;
 import java.util.UUID;
 import java.util.ArrayList;
 
-public class Class {
+public class Class extends Group {
 
     private UUID groupID;
     private ArrayList<Student> usersList;
@@ -14,7 +14,6 @@ public class Class {
 
         this.groupID = UUID.randomUUID();
         this.usersList = usersList;
-        objects.add(this);
     }
 
     public Class() {
@@ -24,14 +23,6 @@ public class Class {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public UUID getID() {
-        return this.groupID;
     }
 
     public ArrayList<Student> getUsersList() {
