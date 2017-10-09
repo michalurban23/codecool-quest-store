@@ -2,8 +2,11 @@ package com.codecool.rmbk.controller;
 
 import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
+import com.codecool.rmbk.model.Cart;
+import com.codecool.rmbk.model.Shop;
 import com.codecool.rmbk.model.item.Item;
 import com.codecool.rmbk.model.item.ItemTemplate;
+import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ArtifactControllerView;
 
@@ -38,10 +41,8 @@ public class ArtifactController {
             String choice = view.handleStudentMenu();
             if(choice.equals("View available artifacts")) {
                 listArtifacts();
-            } else if(choice.equals("Buy artifact")) {
-                buyArtifact();
-            } else if(choice.equals("Buy as group")) {
-                buyAsGroup();
+            } else if(choice.equals("Go to shopping centre")) {
+                goToShoppingController();
             } else if(choice.equals("Log out")) {
                 isBrowsed = false;
             }
@@ -74,15 +75,13 @@ public class ArtifactController {
         view.printList("Artifacts", artifacts);
     }
 
-    public void buyArtifact() {
-        ItemTemplate template = getArtifactTemplate();
-        Item artifact = getArtifact(template);
+    public void goToShoppingController() {
+        Student student = (Student) this.user;
+        student.setCart(student.getCart());
+        Shop shop = new Shop(student.getCart(), user.getID());
 
-        addArtifactToDatabase(artifact);
-    }
-
-    public void buyAsGroup() {
-
+        ShoppingController shopControl = new ShoppingController(shop);
+        shopControl.startShoppingController();
     }
 
     public ItemTemplate getArtifactTemplate() {
@@ -93,13 +92,6 @@ public class ArtifactController {
 
         return template;
     }
-
-    public Item getArtifact(ItemTemplate template) {
-        Item artifact = new Item(template, user.getID());
-
-        return artifact;
-    }
-
 
     public ArrayList<ArrayList<String>> getAvailableArtifacts() {
         SQLArtifactTemplate artifactDao = new SQLArtifactTemplate();
@@ -138,20 +130,29 @@ public class ArtifactController {
 
     public void addArtifactToDatabase(Item artifact) {
         SQLArtifact artifacts = new SQLArtifact();
-        artifacts.addArtifact(getArtifactInfo(artifact));
+        artifacts.addArtifact(getArtifactInfoArray(artifact));
     }
+
 
     public void addArtifactTemplateToDatabase(ItemTemplate template) {
         SQLArtifactTemplate artifactTemplates = new SQLArtifactTemplate();
-        artifactTemplates.addArtifactTemplate(getArtifactTemplateInfo(template));
+        artifactTemplates.addArtifactTemplate(getArtifactTemplateInfoArray(template));
     }
-
+    
     public String getArtifactInfo(Item artifact) {
         return view.getArtifactQuery(artifact);
     }
 
+    public String[] getArtifactInfoArray(Item artifact) { return view.getArtifactQueryArray(artifact); }
+
     public String getArtifactTemplateInfo(ItemTemplate template) {
+
         return view.getArtifactTemplateQuery(template);
+    }
+
+    public String[] getArtifactTemplateInfoArray(ItemTemplate template) {
+
+        return view.getArtifactTemplateQueryArray(template);
     }
 
 }

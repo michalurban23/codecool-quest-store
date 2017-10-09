@@ -4,17 +4,16 @@ import java.util.ArrayList;
 
 public class SQLExperience extends SqlDAO {
 
-    private ArrayList<ArrayList<String>> results;
-
-    public void getExperienceLevels() {
+    public ArrayList<ArrayList<String>> getExperienceLevels() {
         String query = "SELECT * FROM experience";
 
-        processQuery(query);
+        processQuery(query, null);
+        return getResults();
     }
 
     public void getExperienceInfo(String level) {
-        String query = "SELECT * FROM experience WHERE level = '" + level + "';";
+        String query = "SELECT * FROM experience WHERE level = ?;";
 
-        processQuery(query);
+        processQuery(query, new String[] {level});
     }
 }

@@ -25,8 +25,7 @@ public class ArtifactControllerView extends ConsoleUserView {
         LinkedHashMap<Integer, String> mainMenu = new LinkedHashMap<>();
 
         mainMenu.put(1, "View available artifacts");
-        mainMenu.put(2, "Buy artifact");
-        mainMenu.put(3, "Buy as group");
+        mainMenu.put(2, "Go to shopping centre");
         mainMenu.put(0, "Log out");
 
         return mainMenu;
@@ -56,6 +55,16 @@ public class ArtifactControllerView extends ConsoleUserView {
         return "VALUES ('"+template+"', '"+owner+"', '"+completion+"')";
     }
 
+    public String[] getArtifactQueryArray(Item artifact) {
+
+        String template = artifact.getTemplate().getName();
+        String owner = artifact.getOwner().toString();
+        String completion = artifact.getCompletion();
+
+        return new String[]{template, owner, completion};
+    }
+
+
     public String getArtifactTemplateQuery(ItemTemplate template) {
 
         String name = template.getName();
@@ -64,5 +73,15 @@ public class ArtifactControllerView extends ConsoleUserView {
         String special = template.getSpecial();
 
         return "VALUES ('"+name+"', '"+description+"', '"+value+"', '"+special+"')";
+    }
+
+    public String[] getArtifactTemplateQueryArray(ItemTemplate template) {
+
+        String name = template.getName();
+        String description = template.getDescription();
+        String value = template.getValue();
+        String special = template.getSpecial();
+
+        return new String[] {name, description, value, special};
     }
 }

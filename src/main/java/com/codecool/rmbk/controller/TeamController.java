@@ -32,6 +32,7 @@ public class TeamController {
         }
     }
 
+
     public void editGroupName(Team team) {
         String newName = view.getNewGroupName();
         if (newName != null) {
@@ -42,6 +43,7 @@ public class TeamController {
     }
 
     public void handleCRUDMenu(Mentor user) {
+
         boolean isBrowsed = true;
 
         while(isBrowsed) {

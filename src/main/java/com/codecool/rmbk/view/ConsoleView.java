@@ -231,4 +231,12 @@ public abstract class ConsoleView {
 
         System.out.println("\n" + red + message + reset);
     }
+
+    public void printSuccess(String message) {
+
+        String green = colors.get("GREEN");
+        String reset = colors.get("RESET");
+
+        System.out.println("\n" + green + message + reset);
+    }
 }
