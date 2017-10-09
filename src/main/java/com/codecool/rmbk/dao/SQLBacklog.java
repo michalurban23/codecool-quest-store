@@ -6,7 +6,7 @@ public class SQLBacklog extends SqlDAO {
 
     public ArrayList<ArrayList<String>> getAllBacklogs() {
 
-        String query = "SELECT * FROM backlog";
+        String query = "SELECT * FROM backlog ORDER BY `owner` ASC;";
 
         // processQuery(query, null);
         return getResults();
@@ -29,7 +29,7 @@ public class SQLBacklog extends SqlDAO {
                        "WHERE `owner` = ?;";
         String[] data = {""+id};
 
-        processQuery(query, null);
+        // processQuery(query, null);
         return getResults().get(1).get(0);
     }
 }

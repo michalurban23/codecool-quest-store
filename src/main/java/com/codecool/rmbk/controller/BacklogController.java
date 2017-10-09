@@ -95,13 +95,10 @@ public class BacklogController {
 
         switch (choice) {
             case 1:
-                System.out.println("d1");
+                showMyHistory();
                 break;
             case 2:
-                System.out.println("d1");
-                break;
-            case 3:
-                System.out.println("d1");
+                showAllHistory();
                 break;
             case 0:
                 stopController();
@@ -120,6 +117,14 @@ public class BacklogController {
         display.printList(title, history);
     }
 
+    private void showAllHistory() {
+
+        String title = "All students history";
+        ArrayList<ArrayList<String>> history = backlogDao.getAllBacklogs();
+
+        display.printList(title, history);
+    }
+
     private void showExperienceLevels() {
 
         String title = "Current experience levels";
@@ -133,12 +138,20 @@ public class BacklogController {
 
     private Integer findNextLevel(String coins, ArrayList<ArrayList<String>> levels) {
 
+        Integer missingExp = 0;
+
         for (ArrayList<String> level : levels) {
-            if (Integer.parseInt(level.get(1)) < Integer.parseInt(coins)) {
-                System.out.println(level.get(0));
+            Integer threshold = Integer.parseInt(level.get(1));
+            Integer current = Integer.parseInt(coins);
+
+            if (threshold < current) {
+                break;
+            }
+            else {
+                missingExp = threshold - current;
             }
         }
-        return 1;
+        return missingExp;
     }
 
     private void stopController() {
