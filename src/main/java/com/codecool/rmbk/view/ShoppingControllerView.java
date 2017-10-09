@@ -14,8 +14,8 @@ public class ShoppingControllerView extends ConsoleUserView {
 
         LinkedHashMap<Integer, String> mainMenu = new LinkedHashMap<>();
 
-        mainMenu.put(1, "Artifacts");
-        mainMenu.put(2, "Quests");
+        mainMenu.put(1, "Buy artifact");
+        mainMenu.put(2, "Check wallet");
         mainMenu.put(3, "Log out");
 
         return mainMenu;
