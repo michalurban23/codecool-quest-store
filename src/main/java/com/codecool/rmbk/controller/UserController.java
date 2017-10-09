@@ -123,7 +123,7 @@ public abstract class UserController {
         }
     }
 
-    private void handleDetailsMenu(User user) {
+    public void handleDetailsMenu(User user) {
 
         boolean isBrowsed = true;
 

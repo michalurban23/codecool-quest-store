@@ -55,5 +55,4 @@ public class Team extends Group implements Holder {
     public Quest getQuest() {return null;} // ---------------------IMPLEMENT---------------------------------
 
     public void createQuest() {;}
-
 }

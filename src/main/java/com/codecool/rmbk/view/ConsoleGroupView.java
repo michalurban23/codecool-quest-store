@@ -1,6 +1,7 @@
 package com.codecool.rmbk.view;
 
 import com.codecool.rmbk.model.usr.Group;
+import com.codecool.rmbk.model.usr.Student;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -29,6 +30,12 @@ public class ConsoleGroupView extends ConsoleView implements GroupView {
     public String getNewGroupName() {
 
         return getString("Enter new group name: ");
+    }
+
+    @Override
+    public String MemberScreen(LinkedHashMap<Integer, String> menu, Student student) {
+        printMessage(student.getFullName());
+        return handleMenu(menu);
     }
 
     public String handleBrowse(LinkedHashMap<Integer,String> menu, ArrayList<ArrayList<String>> groups) {

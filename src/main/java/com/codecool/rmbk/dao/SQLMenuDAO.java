@@ -4,7 +4,6 @@ import com.codecool.rmbk.model.usr.User;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 
 public class SQLMenuDAO extends SqlDAO implements MenuDAO {
 
@@ -23,9 +22,6 @@ public class SQLMenuDAO extends SqlDAO implements MenuDAO {
         } catch (NumberFormatException e) {
             return null;
         }
-
-
-
     }
 
     @Override
@@ -36,14 +32,30 @@ public class SQLMenuDAO extends SqlDAO implements MenuDAO {
     }
 
     @Override
-    public LinkedHashMap<Integer, String> getBrowseMenu() {
-        String query = "SELECT id, option FROM browse_menu ORDER BY id;";
+    public LinkedHashMap<Integer, String> getBrowseMenu(String option) {
+        String query;
+        if (option.equals("edit")) {
+            query = "SELECT id, option FROM browse_menu ORDER BY id;";
+        } else {
+            query = "SELECT id, option FROM browse_menu WHERE show_only = 1 ORDER BY id;";
+        }
         return getMenu(query);
     }
 
     @Override
-    public LinkedHashMap<Integer, String> getDetailsMenu() {
-        String query = "SELECT id, option FROM details_menu ORDER BY id;";
+    public LinkedHashMap<Integer, String> getDetailsMenu(String option) {
+        String query;
+        if (option.equals("edit")) {
+            query = "SELECT id, option FROM details_menu ORDER BY id;";
+        } else {
+            query = "SELECT id, option FROM details_menu WHERE show_only = 1 ORDER BY id;";
+        }
+        return getMenu(query);
+    }
+
+    @Override
+    public LinkedHashMap<Integer, String> getMemberMenu() {
+        String query = "SELECT id, option FROM member_menu ORDER BY id;";
         return getMenu(query);
     }
 }
