@@ -43,6 +43,19 @@ public class ShoppingControllerView extends ConsoleUserView {
         return toReturn;
     }
 
+    public Item getItemsListChoice(ArrayList<Item> itemsList) {
+        Integer choice = null;
+
+        do {
+            choice = getInteger("Choose index: ");
+            if (choice == null) {
+                return null;
+            }
+        } while (choice < 1 || choice > itemsList.size());
+
+        return itemsList.get(choice - 1);
+    }
+
     public String getArtifactQuery(Item artifact) {
 
         String template = artifact.getTemplate().getName();
