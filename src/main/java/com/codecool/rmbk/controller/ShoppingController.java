@@ -1,21 +1,20 @@
 package com.codecool.rmbk.controller;
 
+import com.codecool.rmbk.model.Shopping;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ShoppingControllerView;
 
-
 public class ShoppingController {
 
-    private User user;
+    private Shopping shop;
     private ShoppingControllerView view;
 
-    public ShoppingController(User user) {
+    public ShoppingController(User user, Shopping shop) {
         this.view = new ShoppingControllerView();
-        this.user = user;
+        this.shop = shop;
     }
 
     public void startShoppingController() {
-
         handleShoppingMenu();
     }
 
@@ -25,18 +24,13 @@ public class ShoppingController {
 
         while(isBrowsed) {
             String choice = view.handleMainMenu();
-            if(choice == "Artifacts") {
-                ArtifactController artifactController = new ArtifactController();
-                artifactController.start(user);
-            } else if(choice == "Quests") {
-                QuestController questController = new QuestController();
-//                questController.handleQuestController();
-            } else if(choice == "Log out") {
+            if(choice.equals("Buy artifact")) {
+                shop.buyItem();
+            } else if(choice.equals("Check wallet")) {
+                shop.checkWallet();
+            } else if(choice.equals("Log out")) {
                 isBrowsed = false;
             }
-
         }
     }
-
-
 }
