@@ -14,9 +14,9 @@ public class SQLLoginDAO extends SqlDAO implements LoginDAO {
         String password = "";
         String salt = "";
 
-        String query = "SELECT password, login, salt FROM 'login_info' WHERE login = '" + user_name + "';";
+        String query = "SELECT password, login, salt FROM 'login_info' WHERE login = ?;";
 
-        handleQuery(query);
+        handleQuery(query, new String[] {user_name});
         results = getResults();
 
         if (results.size() > 1) {

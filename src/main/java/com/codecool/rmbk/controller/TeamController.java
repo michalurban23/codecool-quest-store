@@ -27,6 +27,7 @@ public class TeamController {
         handleBrowseMenu(user);
     }
 
+
     public void editGroupName(Team team) {
         String newName = view.getNewGroupName();
         if (newName != null) {
@@ -35,7 +36,6 @@ public class TeamController {
             }
         }
     }
-
     public void handleBrowseMenu(User user) {
         boolean isBrowsed = true;
 

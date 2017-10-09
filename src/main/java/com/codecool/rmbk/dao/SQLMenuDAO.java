@@ -11,7 +11,7 @@ public class SQLMenuDAO extends SqlDAO implements MenuDAO {
     public LinkedHashMap<Integer,String> getMenu (String query) {
 
         LinkedHashMap<Integer,String> MenuMap = new LinkedHashMap<>();
-        processQuery(query);
+        processQuery(query, null);
         ArrayList<ArrayList<String>> queryResult = getResults();
         try {
             for (int i=2; i<queryResult.size(); i++) {
