@@ -129,26 +129,29 @@ public class BacklogController {
 
         String title = "Current experience levels";
         ArrayList<ArrayList<String>> expLevels = experienceDao.getExperienceLevels();
-        String coinsEarned = ((Student) user).getExperience();
 
-        Integer missingExp = findNextLevel(coinsEarned, expLevels);
         display.printList(title, expLevels);
-        display.printSuccess("You need to earn" + missingExp + "more CC for next level");
+
+        String coinsEarned = ((Student) user).getExperience();
+        Integer missingExp = findNextLevel(coinsEarned, expLevels);
+        String rankName = experienceDao.getExperienceInfo(coinsEarned);
+
+        display.printSuccess("You earned total of > " + coinsEarned + " < CoolCoins! Your rank is " + rankName + "!");
+        display.printSuccess("You need to earn > " + missingExp + " < more CC for next level\n");
     }
 
     private Integer findNextLevel(String coins, ArrayList<ArrayList<String>> levels) {
 
         Integer missingExp = 0;
+        Integer current = Integer.parseInt(coins);
 
-        for (ArrayList<String> level : levels) {
-            Integer threshold = Integer.parseInt(level.get(1));
-            Integer current = Integer.parseInt(coins);
+        for (int i=1; i < levels.size(); i++) {
 
-            if (threshold < current) {
+            Integer threshold = Integer.parseInt(levels.get(i).get(1));
+            missingExp = threshold - current;
+
+            if (threshold > current) {
                 break;
-            }
-            else {
-                missingExp = threshold - current;
             }
         }
         return missingExp;
