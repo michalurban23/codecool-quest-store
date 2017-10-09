@@ -7,14 +7,13 @@ public class SQLExperience extends SqlDAO {
     public ArrayList<ArrayList<String>> getExperienceLevels() {
         String query = "SELECT * FROM experience";
 
-        processQuery(query);
-
+        processQuery(query, null);
         return getResults();
     }
 
     public void getExperienceInfo(String level) {
-        String query = "SELECT * FROM experience WHERE level = '" + level + "';";
+        String query = "SELECT * FROM experience WHERE level = ?;";
 
-        processQuery(query);
+        processQuery(query, new String[] {level});
     }
 }

@@ -46,6 +46,28 @@ public class ArtifactControllerView extends ConsoleUserView {
     public void viewDetailedTemplate(ItemTemplate template) {
     }
 
+<<<<<<< HEAD
+=======
+    public String getArtifactQuery(Item artifact) {
+
+        String template = artifact.getTemplate().getName();
+        String owner = artifact.getOwner().toString();
+        String completion = artifact.getCompletion();
+
+        return "VALUES ('"+template+"', '"+owner+"', '"+completion+"')";
+    }
+
+    public String[] getArtifactQueryArray(Item artifact) {
+
+        String template = artifact.getTemplate().getName();
+        String owner = artifact.getOwner().toString();
+        String completion = artifact.getCompletion();
+
+        return new String[]{template, owner, completion};
+    }
+
+
+>>>>>>> dev
     public String getArtifactTemplateQuery(ItemTemplate template) {
 
         String name = template.getName();
@@ -54,5 +76,15 @@ public class ArtifactControllerView extends ConsoleUserView {
         String special = template.getSpecial();
 
         return "VALUES ('"+name+"', '"+description+"', '"+value+"', '"+special+"')";
+    }
+
+    public String[] getArtifactTemplateQueryArray(ItemTemplate template) {
+
+        String name = template.getName();
+        String description = template.getDescription();
+        String value = template.getValue();
+        String special = template.getSpecial();
+
+        return new String[] {name, description, value, special};
     }
 }

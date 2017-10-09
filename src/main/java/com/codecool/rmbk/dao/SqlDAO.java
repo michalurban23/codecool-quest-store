@@ -5,11 +5,11 @@ import java.util.*;
 
 public class SqlDAO {
 
-    private final String databaseURL = "jdbc:sqlite::resource:queststore.db";
+    private final String databaseURL = "jdbc:sqlite:src/main/resources/queststore.db";
     private final String driver = "org.sqlite.JDBC";
 
     private Connection connection = null;
-    private Statement statement = null;
+    private PreparedStatement statement = null;
     private ResultSet resultSet = null;
 
     private ArrayList<ArrayList<String>> results = new ArrayList<>();
@@ -27,17 +27,19 @@ public class SqlDAO {
         results.clear();
     }
 
-    boolean handleQuery(String query) {
+    boolean handleQuery(String query, String[] stringSet) {
 
         Boolean isSuccessful = null;
         try {
             openDB();
+            statement = connection.prepareStatement(query);
+            buildQuery(statement, stringSet);
             if (query.startsWith("SELECT")) {
-                executeQuery(query);
+                resultSet = statement.executeQuery();
                 saveResults();
                 isSuccessful = results.size() > 1;
             } else {
-                isSuccessful = executeUpdate(query) > 0;
+                isSuccessful = executeUpdate(query);
             }
             closeDB();
         } catch (SQLException e) {
@@ -53,20 +55,29 @@ public class SqlDAO {
         try {
             Class.forName(driver);
             connection = DriverManager.getConnection(databaseURL);
-            statement = connection.createStatement();
         } catch (ClassNotFoundException e) {
             terminateConnection(e);
         }
     }
 
-    private int executeUpdate(String query) throws SQLException {
+    private boolean executeUpdate(String query) throws SQLException {
 
-        return statement.executeUpdate(query);
+        return statement.execute();
     }
 
     private void executeQuery(String query) throws SQLException {
 
         resultSet = statement.executeQuery(query);
+    }
+
+    private void buildQuery(PreparedStatement statement, String[] stringSet) throws SQLException {
+
+        if(stringSet != null) {
+            for(int i=1; i<=stringSet.length; i++) {
+                statement.setString(i, stringSet[i-1]);
+            }
+        }
+        System.out.println(statement);
     }
 
     private void closeDB() throws SQLException {
@@ -101,9 +112,9 @@ public class SqlDAO {
         }
     }
 
-    public ArrayList<ArrayList<String>> processQuery(String query) {
+    public ArrayList<ArrayList<String>> processQuery(String query, String[] stringSet) {
 
-        handleQuery(query);
+        handleQuery(query, stringSet);
         results = getResults();
 
         return results;

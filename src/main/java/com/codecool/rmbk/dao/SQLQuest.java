@@ -8,19 +8,15 @@ public class SQLQuest extends SqlDAO {
 
     public ArrayList<ArrayList<String>> getMyQuests(Integer id) {
 
-        String query = "SELECT * FROM quests " +
-                       "WHERE owner = " + id + ";";
-        processQuery(query);
-
+        String query = "SELECT * FROM quests WHERE owner = ?;";
+        processQuery(query, new String[] {"" + id});
         return getResults();
     }
 
     public void getNewQuest(Quest quest) {
 
-        String query = "INSERT INTO quests(template_name, owner, accept_date) " +
-                       "VALUES('" + quest.getTemplateName() + "', " + quest.getOwnerID() +
-                       ", '" + quest.getStartTime() + "');";
-        processQuery(query);
+        String query = "INSERT INTO quests(template_name, owner, accept_date) VALUES(?, ?, ?);";
+        processQuery(query, new String[] {quest.getTemplateName(), "" + quest.getOwnerID(), quest.getStartTime()});
     }
 
 }

@@ -126,13 +126,27 @@ public class ArtifactController {
         artifactTemplates.removeArtifactTemplate(template.getName());
     }
 
+    public void addArtifactToDatabase(Item artifact) {
+        SQLArtifact artifacts = new SQLArtifact();
+        artifacts.addArtifact(getArtifactInfoArray(artifact));
+    }
+
+
     public void addArtifactTemplateToDatabase(ItemTemplate template) {
         SQLArtifactTemplate artifactTemplates = new SQLArtifactTemplate();
-        artifactTemplates.addArtifactTemplate(getArtifactTemplateInfo(template));
+        artifactTemplates.addArtifactTemplate(getArtifactTemplateInfoArray(template));
     }
+    
+    public String getArtifactInfo(Item artifact) {
+        return view.getArtifactQuery(artifact);
+    }
+
+    public String[] getArtifactInfoArray(Item artifact) { return view.getArtifactQueryArray(artifact); }
 
     public String getArtifactTemplateInfo(ItemTemplate template) {
         return view.getArtifactTemplateQuery(template);
     }
+
+    public String[] getArtifactTemplateInfoArray(ItemTemplate template) { return view.getArtifactTemplateQueryArray(template);}
 
 }

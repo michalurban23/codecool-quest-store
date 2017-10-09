@@ -1,6 +1,7 @@
 package com.codecool.rmbk.dao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SQLQuestTemplate extends SqlDAO {
 
@@ -8,9 +9,8 @@ public class SQLQuestTemplate extends SqlDAO {
 
     public ArrayList<ArrayList<String>> getAllQuestTemplates() {
 
-        String query = "SELECT * FROM quest_template " +
-                       "WHERE `active` = 1;";
-        processQuery(query);
+        String query = "SELECT * FROM quest_template";
+        processQuery(query, null);
 
         return getResults();
     }
@@ -18,28 +18,23 @@ public class SQLQuestTemplate extends SqlDAO {
     public void addQuestTemplate(String name, String desc, Integer value, Boolean isSpecial) {
 
         String special = isSpecial ? "1" : "0";
-        String query = "INSERT INTO quest_template (name, description, value, special) " +
-                       "VALUES ('" + name + "', '" + desc + "', " + value + ", " + special + ");";
-        processQuery(query);
+        String query = "INSERT INTO quest_template (name, description, value, special) VALUES (?, ?, ?, ?)";
+        processQuery(query, new String[] {name, desc, "" + value, special});
     }
 
     public void editQuestTemplate(String[] data) {
 
         String name = data[0];
         String query = "UPDATE quest_template " +
-                       "SET `description` = '" + data[1] + "', " +
-                       "`value` = " + data[2] + ", " +
-                       "`special` = '" + data[3] + "', " +
-                       "`active` = '" + data[4] + "' " +
+                       "SET `description` = ?, `value` = ?, `special` = ?, `active` = ? " +
                        "WHERE `name` = '" + name + "';";
-        processQuery(query);
+        processQuery(query, Arrays.copyOfRange(data, 1, 4));
     }
 
     public void removeQuestTemplate(String name) {
 
-        String query = "DELETE FROM quest_template " +
-                       "WHERE `name` = '" + name + "';";
-        processQuery(query);
+        String query = "DELETE FROM quest_template WHERE `name` = ?;";
+        processQuery(query, new String[] {name});
     }
 
 }
