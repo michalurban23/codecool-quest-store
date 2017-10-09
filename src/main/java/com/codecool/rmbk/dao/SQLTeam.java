@@ -79,7 +79,7 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
                     "LEFT JOIN user_groups " +
                     "ON group_id = id) " +
                     "ON user_id = id " +
-                    "WHERE status = 'Student' AND id = 8;";
+                    "WHERE status = 'Student' AND id = " + user.getID() + ";";
         }
         return processQuery(query);
     }
