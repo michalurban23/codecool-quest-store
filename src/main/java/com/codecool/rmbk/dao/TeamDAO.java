@@ -1,6 +1,7 @@
 package com.codecool.rmbk.dao;
 
 import com.codecool.rmbk.model.usr.Group;
+import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
 
@@ -15,6 +16,7 @@ public interface TeamDAO {
     public Boolean addStudentToGroup(Team group, User student);
     public Boolean removeStudentFromGroup(Team group, User student);
     public ArrayList<ArrayList<String>> getTeamList(User user);
+    public ArrayList<Student> getUsersList(Team group);
 
 
 }

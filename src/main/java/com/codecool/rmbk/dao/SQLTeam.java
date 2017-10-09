@@ -2,6 +2,7 @@ package com.codecool.rmbk.dao;
 
 
 import com.codecool.rmbk.model.usr.Group;
+import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
 
@@ -60,14 +61,19 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
 
     @Override
     public Boolean addStudentToGroup(Team group, User student) {
-        return null;
+
+        String query = "INSERT INTO user_groups VALUES(?, ?);";
+        return handleQuery(query, new String[] {"" + student.getID(), "" + group.getID()});
     }
 
     @Override
     public Boolean removeStudentFromGroup(Team group, User student) {
-        return null;
+
+        String query = "DELETE FROM user_groups WHERE user_id = ? AND group_id = ?;";
+        return handleQuery(query, new String[] {"" + student.getID(), "" + group.getID()});
     }
 
+    @Override
     public ArrayList<ArrayList<String>> getTeamList(User user) {
 
         String query;
@@ -86,5 +92,22 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
             stringSet = new String[] {"" + user.getID()};
         }
         return processQuery(query, stringSet);
+    }
+
+    @Override
+    public ArrayList<Student> getUsersList(Team group) {
+
+        String query = "SELECT * FROM users " +
+                       "INNER JOIN user_groups ON user_groups.user_id = users.id " +
+                       "WHERE user_groups.group_id = ?;";
+        ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {"" + group.getID()});
+
+        ArrayList<Student> result = new ArrayList<>();
+        SQLUsers sqlUsers = new SQLUsers();
+
+        for(ArrayList<String> ar : queryResult) {
+            result.add((Student) sqlUsers.getUserByID(Integer.parseInt(ar.get(0))));
+        }
+        return result;
     }
 }
