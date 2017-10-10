@@ -1,10 +1,7 @@
 package com.codecool.rmbk.controller;
 
-import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
-import com.codecool.rmbk.model.Cart;
 import com.codecool.rmbk.model.Shop;
-import com.codecool.rmbk.model.item.Item;
 import com.codecool.rmbk.model.item.ItemTemplate;
 import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.User;
