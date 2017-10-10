@@ -8,8 +8,6 @@ import com.codecool.rmbk.model.usr.*;
 
 public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
-    private ArrayList<ArrayList<String>> results;
-
     public void getAllUsers() {
 
         String query = "SELECT * FROM users;";

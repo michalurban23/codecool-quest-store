@@ -1,19 +1,19 @@
 package com.codecool.rmbk.model.item;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Item {
 
     private ItemTemplate template;
     private Integer owner;
-    private LocalDateTime buyTime;
+    private LocalDate buyTime;
     private String completion;
 
     public Item(ItemTemplate template, Integer owner) {
 
         this.template = template;
         this.owner = owner;
-        this.buyTime = LocalDateTime.now();
+        this.buyTime = LocalDate.now();
         if(template.getSpecial().equals("1")) {
             this.completion = "30";
         }
@@ -32,14 +32,9 @@ public class Item {
         this.owner = owner;
     }
 
-    public LocalDateTime getBuyTime() {
+    public String getBuyTime() {
 
-        return this.buyTime;
-    }
-
-    public void setBuyTime(LocalDateTime buyTime) {
-
-        this.buyTime = buyTime;
+        return this.buyTime.toString();
     }
 
     public ItemTemplate getTemplate() {
