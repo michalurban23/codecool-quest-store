@@ -81,7 +81,7 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
         ArrayList<Team> result = new ArrayList<>();
 
         if(user.getClass().getSimpleName().equals("Mentor")) {
-            query = "SELECT * FROM groups;";
+            query = "SELECT id_group FROM groups;";
 
         } else {
             query = "SELECT id_group, group_name FROM users " +
@@ -100,7 +100,7 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
     }
 
     @Override
-    public ArrayList<Student> getUsersList(Team group) {
+    public ArrayList<Student> getStudentsList(Team group) {
 
         String query = "SELECT * FROM users " +
                        "INNER JOIN user_groups ON user_groups.user_id = users.id " +

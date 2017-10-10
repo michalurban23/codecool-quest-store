@@ -16,7 +16,7 @@ public interface TeamDAO {
     public Boolean addStudentToGroup(Team group, User student);
     public Boolean removeStudentFromGroup(Team group, User student);
     public ArrayList<Team> getTeamList(User user);
-    public ArrayList<Student> getUsersList(Team group);
+    public ArrayList<Student> getStudentsList(Team group);
 
 
 }
