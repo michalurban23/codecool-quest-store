@@ -131,12 +131,23 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
                 "WHERE user_groups.group_id = ?;";
         ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {"" + team.getID()});
 
-        ArrayList<Student> result = new ArrayList<>();
         SQLUsers sqlUsers = new SQLUsers();
         team.clearMembersList();
 
         for(ArrayList<String> ar : queryResult.subList(1, queryResult.size())) {
             team.addMember((Student) sqlUsers.getUserByID(Integer.parseInt(ar.get(0))));
         }
+    }
+
+    public ArrayList<ArrayList<String>> getUserGroups(User user) {
+
+        String query = "SELECT name FROM users " +
+                       "JOIN groups, user_groups " +
+                       "WHERE user_groups.user_id = ? AND user_groups.group_id = groups.id";
+        String[] data = {""+user.getID()};
+
+        processQuery(query, data);
+
+        return getResults();
     }
 }
