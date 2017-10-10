@@ -21,6 +21,11 @@ public class Klass extends Group {
         this(new ArrayList<Student>());
     }
 
+    public Klass(Integer id, String name) {
+
+        super(id, name);
+    }
+
     public void setName(String name) {
         this.name = name;
     }

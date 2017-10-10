@@ -1,48 +1,23 @@
 package com.codecool.rmbk.model;
 
-import java.util.ArrayList;
+import com.codecool.rmbk.dao.SQLBacklog;
 
 public class Wallet {
 
-    private int coins;
-    private int level;
-    private ArrayList<String> log;
+    private int id;
+    private SQLBacklog sqlBacklog = new SQLBacklog();
 
-    public Wallet(int coins, int level, ArrayList<String> log) {
-
-        this.coins = coins;
-        this.level = level;
-        this.log = log;
+    public Wallet(Integer id) {
+        this.id = id;
     }
 
     public int getCoins() {
 
-        return this.coins;
+        return sqlBacklog.getCurrentCoins(id);
     }
 
-    public int getLevel() {
+    public void updateWallet(String[] data) {
 
-        return this.level;
+        sqlBacklog.saveToBacklog(data);
     }
-
-    public ArrayList<String> getLog() {
-
-        return this.log;
-    }
-
-    public void setCoins(int coins) {
-
-        this.coins = coins;
-    }
-
-    public void setLevel(int level) {
-
-        this.level = level;
-    }
-
-    public void setLog(ArrayList<String> log) {
-
-        this.log = log;
-    }
-
 }

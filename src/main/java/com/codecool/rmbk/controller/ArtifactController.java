@@ -76,9 +76,9 @@ public class ArtifactController {
     }
 
     public void goToShoppingController() {
+
         Student student = (Student) this.user;
-        student.setCart(student.getCart());
-        Shop shop = new Shop(student.getCart(), user.getID());
+        Shop shop = new Shop(student.getCart(), student.getID());
 
         ShoppingController shopControl = new ShoppingController(shop);
         shopControl.startShoppingController();

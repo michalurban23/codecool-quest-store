@@ -95,7 +95,6 @@ public class SqlDAO {
     private void saveResults() throws SQLException {
 
         int columnsAmount = resultSet.getMetaData().getColumnCount();
-        int index = 1;
         results = new ArrayList<>();
 
         getColumnsInfo(columnsAmount);

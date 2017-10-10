@@ -1,29 +1,29 @@
 package com.codecool.rmbk.dao;
 
-import com.codecool.rmbk.model.item.Item;
-
-import java.util.ArrayList;
-
 public class SQLArtifact extends SqlDAO {
 
-    private ArrayList<ArrayList<String>> results;
+    private SQLBacklog backlog = new SQLBacklog();
 
     public void getAllArtifacts() {
+
         String query = "SELECT * FROM artifacts";
 
-        results = processQuery(query, null);
+        processQuery(query, null);
     }
 
     public void getArtifact(String name) {
+
         String query = "SELECT * FROM artifacts WHERE id = ?;";
 
-        results = processQuery(query, new String[] {name});
+        processQuery(query, new String[] {name});
     }
 
     public void addArtifact(String[] info) {
-        String query = "INSERT INTO artifacts (template_name, owner, completion) VALUES (?, ?, ?);" + info;
 
-        results = processQuery(query, info);
+        String query = "INSERT INTO artifacts (template_name, owner, completion) " +
+                       "VALUES (?, ?, ?);" + info;
+
+        processQuery(query, info);
     }
 
 }

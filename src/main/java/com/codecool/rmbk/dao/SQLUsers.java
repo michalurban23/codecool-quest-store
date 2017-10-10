@@ -8,8 +8,6 @@ import com.codecool.rmbk.model.usr.*;
 
 public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
-    private ArrayList<ArrayList<String>> results;
-
     public void getAllUsers() {
 
         String query = "SELECT * FROM users;";
@@ -137,23 +135,47 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     @Override
     public Boolean updateUser(User user) {
 
-        System.out.println(user);
-        System.out.println(user.getID());
+        updateLoginDB(user);
+
         String query = "UPDATE users SET first_name = ?, last_name = ?, email = ?, " +
                 "address = ? WHERE id = ?;";
         return handleQuery(query, new String[] {user.getFirstName(), user.getLastName(), user.getEmail(),
                                                 user.getAddress(), "" + user.getID()});
     }
 
+    private void updateLoginDB(User user) {
+
+        String name = user.getLastName();
+
+        String query = "UPDATE login_info SET login = ? WHERE login = 'new_user';";
+        String[] data = {name};
+
+        processQuery(query, data);
+    }
+
     @Override
     public User addUser(String userType) {
 
+        addNewLogin();
+
         String query = "INSERT INTO users (status) values (?);";
         processQuery(query, new String[] {userType});
-        query = String.format("SELECT id FROM users WHERE first_name IS NULL;");
+
+        query = "SELECT id FROM users WHERE first_name IS NULL;";
         ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
         return getUserByID(Integer.parseInt(queryResult.get(1).get(0)));
     }
 
+    private void addNewLogin() {
+
+        String salt = PasswordHash.getSalt();
+        String pass = PasswordHash.hash("pass", salt);
+
+        String loginQuery = "INSERT INTO login_info (password, login, salt) " +
+                            "VALUES (?, 'new_user', ?)";
+        String[] data = {pass, salt};
+
+        processQuery(loginQuery, data);
+    }
 }
 

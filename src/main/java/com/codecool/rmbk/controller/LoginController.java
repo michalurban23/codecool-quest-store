@@ -19,15 +19,6 @@ public class LoginController {
         view = new ConsoleLoginView();
     }
 
-    public void startCSV() {
-
-        dataAccess = new CSVLoginDAO();
-//        userDao = new CSVUserInfoDAO();
-        // loginDatabase = dataAccess.start();
-        // loginInfo = logIn();
-        startUserController(loginInfo[0]);
-    }
-
     public void startSqlLoginService() {
 
         SQLLoginDAO.setPermission();

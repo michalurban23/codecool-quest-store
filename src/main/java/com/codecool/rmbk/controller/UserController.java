@@ -135,11 +135,11 @@ public abstract class UserController {
             LinkedHashMap<Integer,String> menu = menuDao.getDetailsMenu("edit");
             String choice = view.handleDetails(menu, user);
 
-            if (choice.equals(menu.get(1))){
+            if (choice.equals(menu.get(1))) {
                 editUserData(user);
-            } else if(choice.equals(menu.get(2))){
+            } else if(choice.equals(menu.get(2))) {
                 isBrowsed = !userDao.removeUser(user);
-            } else if(choice.equals(menu.get(0))){
+            } else if(choice.equals(menu.get(0))) {
                 isBrowsed = false;
             }
         }
