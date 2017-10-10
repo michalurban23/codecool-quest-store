@@ -2,6 +2,7 @@ package com.codecool.rmbk.dao;
 
 
 import com.codecool.rmbk.model.usr.Group;
+import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
 
@@ -60,18 +61,24 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
 
     @Override
     public Boolean addStudentToGroup(Team group, User student) {
-        return null;
+
+        String query = "INSERT INTO user_groups VALUES(?, ?);";
+        return handleQuery(query, new String[] {"" + student.getID(), "" + group.getID()});
     }
 
     @Override
     public Boolean removeStudentFromGroup(Team group, User student) {
-        return null;
+
+        String query = "DELETE FROM user_groups WHERE user_id = ? AND group_id = ?;";
+        return handleQuery(query, new String[] {"" + student.getID(), "" + group.getID()});
     }
 
-    public ArrayList<ArrayList<String>> getTeamList(User user) {
+    @Override
+    public ArrayList<Team> getTeamList(User user) {
 
         String query;
         String[] stringSet = null;
+        ArrayList<Team> result = new ArrayList<>();
 
         if(user.getClass().getSimpleName().equals("Mentor")) {
             query = "SELECT * FROM groups;";
@@ -79,12 +86,34 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
         } else {
             query = "SELECT id_group, group_name FROM users " +
                     "LEFT JOIN (SELECT name AS group_name, user_id, id AS id_group FROM groups " +
-                    "LEFT JOIN user_groups " +
-                    "ON group_id = id) " +
+                               "LEFT JOIN user_groups " +
+                               "ON group_id = id) " +
                     "ON user_id = id " +
                     "WHERE status = 'Student' AND id = ?;";
             stringSet = new String[] {"" + user.getID()};
         }
-        return processQuery(query, stringSet);
+
+        ArrayList<ArrayList<String>> queryResult = processQuery(query,stringSet);
+        for(int i=1; i<queryResult.size(); i++) {
+            result.add(new Team(Integer.parseInt(queryResult.get(i).get(0)), queryResult.get(i).get(1)));
+        }
+        return result;
+    }
+
+    @Override
+    public ArrayList<Student> getStudentsList(Team group) {
+
+        String query = "SELECT * FROM users " +
+                       "INNER JOIN user_groups ON user_groups.user_id = users.id " +
+                       "WHERE user_groups.group_id = ?;";
+        ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {"" + group.getID()});
+
+        ArrayList<Student> result = new ArrayList<>();
+        SQLUsers sqlUsers = new SQLUsers();
+
+        for(ArrayList<String> ar : queryResult) {
+            result.add((Student) sqlUsers.getUserByID(Integer.parseInt(ar.get(0))));
+        }
+        return result;
     }
 }
