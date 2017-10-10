@@ -56,6 +56,17 @@ public class ShoppingControllerView extends ConsoleUserView {
         return itemsList.get(choice - 1);
     }
 
+    public void printWalletInfo(Integer coins) {
+        if(coins <= 0) {
+            String message = "You're broke buddy. Your current balance is: " + coins.toString();
+            printError(message);
+        }
+        else {
+            String message =  "You're current balance is: " + coins.toString();
+            printSuccess(message);
+        }
+    }
+
     public String getArtifactQuery(Item artifact) {
 
         String template = artifact.getTemplate().getName();

@@ -82,7 +82,7 @@ public class ShoppingController {
     }
 
     private void checkWallet() {
-        ;
+        view.printWalletInfo(shop.checkWallet());
     }
 
     private Item getArtifact() {
