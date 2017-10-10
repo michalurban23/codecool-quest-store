@@ -35,14 +35,16 @@ public class SQLBacklog extends SqlDAO {
 
         processQuery(query, data);
         Integer earned = Integer.parseInt(getResults().get(1).get(0));
+        coins += earned;
 
         query = "SELECT SUM(value) AS balance " +
                 "FROM backlog WHERE owner = ? AND status = 'bought';";
 
         processQuery(query, data);
         Integer spent = Integer.parseInt(getResults().get(1).get(0));
+        coins -= spent;
 
-        return earned - spent;
+        return coins;
     }
 
     public String getExperience(int id) {
