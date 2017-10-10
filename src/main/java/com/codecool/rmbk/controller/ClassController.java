@@ -22,7 +22,8 @@ public class ClassController extends GroupController {
         }
     }
 
-    private void handleDetailsMenu(User user, Group team) {
+    @Override
+    public void handleDetails(User user, Group team) {
 
         boolean isBrowsed = true;
 

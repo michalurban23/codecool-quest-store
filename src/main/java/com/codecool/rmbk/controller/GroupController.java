@@ -85,7 +85,7 @@ public abstract class GroupController {
         }
     }
 
-    protected abstract void handleDetails(User user, Group chosenTeam);
+    public abstract void handleDetails(User user, Group chosenTeam);
 
     void addUser(Group team) {
         boolean isBrowsed = true;
