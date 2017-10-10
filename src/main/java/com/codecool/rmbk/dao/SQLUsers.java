@@ -8,8 +8,6 @@ import com.codecool.rmbk.model.usr.*;
 
 public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
-    private ArrayList<ArrayList<String>> results;
-
     public void getAllUsers() {
 
         String query = "SELECT * FROM users;";
@@ -97,15 +95,17 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     public ArrayList<ArrayList<String>> getIdNameList(String userType) {
 
         String query = "SELECT id, (first_name || \" \" || last_name) as full_name FROM users WHERE status = ?;";
-        return processQuery(query, new String[] {userType});
+        ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {userType});
+        return new ArrayList<>(queryResult.subList(1, queryResult.size()));
     }
 
 
     @Override
     public Boolean removeUser(User user) {
 
-        String query = "DELETE FROM users WHERE id = ?;";
-        return handleQuery(query, new String[] {"" + user.getID()});
+        String query = "DELETE FROM users WHERE id = ?;" +
+                       "DELETE FROM user_groups WHERE user_id = ?;";
+        return handleQuery(query, new String[] {"" + user.getID(), "" + user.getID()});
     }
 
     public Boolean updateUserName(User user, String name) {
@@ -135,23 +135,47 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     @Override
     public Boolean updateUser(User user) {
 
-        System.out.println(user);
-        System.out.println(user.getID());
+        updateLoginDB(user);
+
         String query = "UPDATE users SET first_name = ?, last_name = ?, email = ?, " +
                 "address = ? WHERE id = ?;";
         return handleQuery(query, new String[] {user.getFirstName(), user.getLastName(), user.getEmail(),
                                                 user.getAddress(), "" + user.getID()});
     }
 
+    private void updateLoginDB(User user) {
+
+        String name = user.getLastName();
+
+        String query = "UPDATE login_info SET login = ? WHERE login = 'new_user';";
+        String[] data = {name};
+
+        processQuery(query, data);
+    }
+
     @Override
     public User addUser(String userType) {
 
+        addNewLogin();
+
         String query = "INSERT INTO users (status) values (?);";
         processQuery(query, new String[] {userType});
-        query = String.format("SELECT id FROM users WHERE first_name IS NULL;");
+
+        query = "SELECT id FROM users WHERE first_name IS NULL;";
         ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
         return getUserByID(Integer.parseInt(queryResult.get(1).get(0)));
     }
 
+    private void addNewLogin() {
+
+        String salt = PasswordHash.getSalt();
+        String pass = PasswordHash.hash("pass", salt);
+
+        String loginQuery = "INSERT INTO login_info (password, login, salt) " +
+                            "VALUES (?, 'new_user', ?)";
+        String[] data = {pass, salt};
+
+        processQuery(loginQuery, data);
+    }
 }
 

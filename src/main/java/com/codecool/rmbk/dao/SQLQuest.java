@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class SQLQuest extends SqlDAO {
 
+    private SQLBacklog backlog = new SQLBacklog();
+
     public ArrayList<ArrayList<String>> getMyQuests(Integer id) {
 
         String query = "SELECT * FROM quests WHERE owner = ?;";
@@ -15,8 +17,15 @@ public class SQLQuest extends SqlDAO {
 
     public void getNewQuest(Quest quest) {
 
+        String name = quest.getTemplateName();
+        String owner = quest.getOwnerID().toString();
+        String today = quest.getStartTime();
+        String value = quest.getValue();
+
         String query = "INSERT INTO quests(template_name, owner, accept_date) VALUES(?, ?, ?);";
-        processQuery(query, new String[] {quest.getTemplateName(), "" + quest.getOwnerID(), quest.getStartTime()});
+
+        backlog.saveToBacklog(new String[] {today, name, "used", value, owner});
+        processQuery(query, new String[] {name, owner, today});
     }
 
 }
