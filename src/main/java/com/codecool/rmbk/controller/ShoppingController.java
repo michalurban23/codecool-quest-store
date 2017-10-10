@@ -56,9 +56,10 @@ public class ShoppingController {
 
     private void removeFromCart() {
         listCart();
-        Item item = view.getItemsListChoice(shop.getItemsList());
-
-        shop.removeFromCart(item);
+        if(shop.getItemsList().size() != 0) {
+            Item item = view.getItemsListChoice(shop.getItemsList());
+            shop.removeFromCart(item);
+        }
     }
 
     private void listCart() {
@@ -72,7 +73,12 @@ public class ShoppingController {
     }
 
     private void flushCart() {
-        shop.flushCart();
+        if(shop.getItemsList().size() != 0) {
+            shop.flushCart();
+        }
+        else {
+            view.printWarning("No matching data in Cart");
+        }
     }
 
     private void checkWallet() {
