@@ -17,11 +17,10 @@ public class SQLTeam extends SQLGroups {
         this.tableName = "groups";
     }
 
-    @Override
-    public Boolean addStudentToGroup(Group group, Student student) {
+    public void addUserToGroup(Group group, User user) {
 
         String query = "INSERT INTO user_groups VALUES(?, ?);";
-        return handleQuery(query, new String[] {"" + student.getID(), "" + group.getID()});
+        handleQuery(query, new String[] {"" + user.getID(), "" + group.getID()});
     }
 
     @Override
@@ -67,7 +66,7 @@ public class SQLTeam extends SQLGroups {
         return getUsers(group, query);
     }
 
-    public Boolean isInGroup(Student user, Group group) {
+    public Boolean isInGroup(User user, Group group) {
 
         String query = "SELECT * FROM user_groups WHERE user_id = ? and group_id = ?;";
         return processQuery(query, new String[] {"" + user.getID(), "" + group.getID()}).size() > 1;

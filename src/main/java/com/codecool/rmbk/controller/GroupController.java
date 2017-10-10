@@ -14,7 +14,7 @@ public abstract class GroupController {
 
     MenuDAO menuDAO;
     ConsoleGroupView view;
-    TeamDAO groupDAO;
+    GroupDAO groupDAO;
     UserInfoDAO userDAO;
 
     public GroupController () {
@@ -41,7 +41,7 @@ public abstract class GroupController {
         while(isBrowsed) {
 
             view.clearScreen();
-            ArrayList<Group> groups = groupDAO.getTeamList(user);
+            ArrayList<Group> groups = groupDAO.getGroupList(user);
             LinkedHashMap<Integer,String> menu = menuDAO.getBrowseMenu("edit");
             String choice = view.handleBrowse(menu, groups);
 
@@ -68,12 +68,12 @@ public abstract class GroupController {
         while(isBrowsed) {
 
             view.clearScreen();
-            ArrayList<Team> groups = groupDAO.getTeamList(user);
+            ArrayList<Group> groups = groupDAO.getGroupList(user);
             LinkedHashMap<Integer,String> menu = menuDAO.getBrowseMenu("show");
             String choice = view.handleBrowse(menu, groups);
 
             if(choice.equals(menu.get(1))){
-                Team chosenTeam = view.getListChoice(groups);
+                Group chosenTeam = view.getListChoice(groups);
 
                 if (chosenTeam != null) {
                     handleDetails(user, chosenTeam);
@@ -103,9 +103,9 @@ public abstract class GroupController {
 
                 if (chosenUserInfo != null) {
                     Integer userId = Integer.parseInt(chosenUserInfo.get(0));
-                    Student chosenStudent = (Student) userDAO.getUserByID(userId);
+                    User chosenStudent = userDAO.getUserByID(userId);
                     if (!groupDAO.isInGroup(chosenStudent, team)) {
-                        groupDAO.addStudentToGroup(team, chosenStudent);
+                        groupDAO.addUserToGroup(team, chosenStudent);
                         isBrowsed = false;
                     } else {
                         view.printMessage("Already in group!");

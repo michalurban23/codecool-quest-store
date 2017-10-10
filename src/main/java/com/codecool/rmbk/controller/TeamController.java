@@ -9,7 +9,7 @@ public class TeamController extends GroupController {
 
     public TeamController() {
         super();
-        groupDAO = new SQLUsers();
+        groupDAO = new SQLTeam();
     }
 
     public void start (User user) {
@@ -26,6 +26,7 @@ public class TeamController extends GroupController {
         } else {
             handleShowDetailsMenu(team);
         }
+    }
 
     private void handleShowDetailsMenu(Group team) {
 
@@ -56,14 +57,14 @@ public class TeamController extends GroupController {
             if (choice.equals(menu.get(1))) {
                 editGroupName(team);
             } else if (choice.equals(menu.get(2))) {
-                Student student = view.getListChoice(groupDAO.getStudentsList(team));
+                Student student = (Student) view.getListChoice(groupDAO.getStudentsList(team));
                 if (student != null) {
                     handleMembership(student, team);
                 }
             } else if (choice.equals(menu.get(3))) {
                 addUser(team);
             } else if (choice.equals(menu.get(4))) {
-                isBrowsed = !groupDAO.removeTeam(team);
+                isBrowsed = !groupDAO.removeGroup(team);
             } else if (choice.equals(menu.get(0))) {
                 isBrowsed = false;
             }

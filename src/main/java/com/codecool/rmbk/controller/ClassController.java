@@ -1,5 +1,6 @@
 package com.codecool.rmbk.controller;
 
+import com.codecool.rmbk.dao.SQLClass;
 import com.codecool.rmbk.dao.SQLTeam;
 import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.model.usr.*;
@@ -37,7 +38,7 @@ public class ClassController extends GroupController {
             if (choice.equals(menu.get(1))) {
                 editGroupName(team);
             } else if (choice.equals(menu.get(2))) {
-                Student student = view.getListChoice(groupDAO.getStudentsList(team));
+                Student student = (Student) view.getListChoice(groupDAO.getStudentsList(team));
                 if (student != null) {
                     handleMembership(student, team);
                 }
@@ -46,7 +47,7 @@ public class ClassController extends GroupController {
             } else if (choice.equals(menu.get(4))) {
                 assignMentor(team);
             } else if (choice.equals(menu.get(5))) {
-                isBrowsed = !groupDAO.removeTeam(team);
+                isBrowsed = !groupDAO.removeGroup(team);
             } else if (choice.equals(menu.get(0))) {
                 isBrowsed = false;
             }
@@ -71,7 +72,7 @@ public class ClassController extends GroupController {
                     Integer userId = Integer.parseInt(chosenUserInfo.get(0));
                     Mentor chosenMentor = (Mentor) userDAO.getUserByID(userId);
                     if (!groupDAO.isInGroup(chosenMentor, team)) {
-                        groupDAO.addMentorToGroup( (Klass) team, chosenMentor);
+                        groupDAO.addUserToGroup(team, chosenMentor);
                         isBrowsed = false;
                     } else {
                         view.printMessage("Already assigned!");

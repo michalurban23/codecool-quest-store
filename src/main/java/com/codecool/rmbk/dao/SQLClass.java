@@ -30,14 +30,14 @@ public class SQLClass extends SQLGroups {
     public ArrayList<User> getStudentsList(Group group) {
 
         String query = "SELECT * FROM users WHERE status = 'Student' AND " +
-                       "class_name = (SELECT name FROM class_name WHERE id = ?);";
+                       "class_name = (SELECT name FROM " + tableName + " WHERE id = ?);";
         return getUsers(group, query);
     }
 
     public ArrayList<User> getMentorsList(Group group) {
 
         String query = "SELECT * FROM users WHERE status = 'Mentor' AND " +
-                "class_name = (SELECT name FROM class_name WHERE id = ?);";
+                "class_name = (SELECT name FROM " + tableName + " WHERE id = ?);";
         return getUsers(group, query);
     }
 
@@ -55,4 +55,19 @@ public class SQLClass extends SQLGroups {
                 "WHERE user_groups.group_id = ?;";
         super.updateUsers(group, query);
     }
+
+    @Override
+    public Boolean removeStudentFromGroup(Group group, Student student) {
+
+        String query = "UPDATE users SET class_name = null WHERE id = ?;";
+        return handleQuery(query, new String[] {"" + student.getID()});
+    }
+
+    public void addUserToGroup(Group group, User user) {
+
+        String query = "UPDATE users SET class_name = ? WHERE id = ?;";
+        handleQuery(query, new String[] {group.getName(), "" + user.getID()});
+    }
+
+
 }

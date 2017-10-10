@@ -41,7 +41,7 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
 
     public Boolean removeGroup(Group group) {
 
-        String query = "DELETE FROM " + tableName + " groups WHERE id = ?;";
+        String query = "DELETE FROM " + tableName + " WHERE id = ?;";
         return handleQuery(query, new String[] {"" + group.getID()});
     }
 

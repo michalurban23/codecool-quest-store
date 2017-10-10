@@ -51,9 +51,9 @@ public class ConsoleGroupView extends ConsoleView implements GroupView {
         return handleMenu(menu);
     }
 
-    public String handleBrowse(LinkedHashMap<Integer,String> menu, ArrayList<Team> groups) {
+    public String handleBrowse(LinkedHashMap<Integer,String> menu, ArrayList<Group> groups) {
         ArrayList<String> groupNames = new ArrayList<>();
-        for (Team group : groups) {
+        for (Group group : groups) {
             groupNames.add(group.getName());
         }
         showEnumeratedList(groupNames);
