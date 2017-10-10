@@ -18,10 +18,15 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
         processQuery(query, null);
     }
 
-    public void getGroupByName(String name) {
+    public Group getTeamByName(String name){
 
+        Team resultGroup = null;
         String query = "SELECT * FROM groups WHERE name = ?;";
-        processQuery(query, new String[] {name});
+        ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {name});
+        if(queryResult.size() > 1) {
+            resultGroup = new Team(Integer.parseInt(queryResult.get(1).get(0)), name);
+        }
+        return resultGroup;
     }
 
     public Group getTeamById(Integer id){
@@ -141,7 +146,7 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
 
     public ArrayList<ArrayList<String>> getUserGroups(User user) {
 
-        String query = "SELECT name FROM users " +
+        String query = "SELECT DISTINCT name FROM users " +
                        "JOIN groups, user_groups " +
                        "WHERE user_groups.user_id = ? AND user_groups.group_id = groups.id";
         String[] data = {""+user.getID()};
