@@ -5,10 +5,10 @@ import com.codecool.rmbk.dao.SQLBacklog;
 public class Wallet {
 
     private int coins;
-    private SQLBacklog = new SQLBacklog();
+    private SQLBacklog sqlBacklog = new SQLBacklog();
 
     public Wallet(int coins) {
-        this.coins = SQLBacklog.getCurrentCoins();
+        this.coins = sqlBacklog.getCurrentCoins();
     }
 
     public int getCoins() {
