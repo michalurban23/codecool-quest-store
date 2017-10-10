@@ -1,25 +1,38 @@
 package com.codecool.rmbk.dao;
 
+import com.codecool.rmbk.model.usr.Group;
+import com.codecool.rmbk.model.usr.Student;
+import com.codecool.rmbk.model.usr.User;
+import com.codecool.rmbk.model.usr.Klass;
+
 import java.util.ArrayList;
 
-public class SQLClassName extends SQLGroups {
+public class SQLClass extends SQLGroups {
 
     private ArrayList<ArrayList<String>> results;
 
-    public SQLClassName() {
+    public SQLClass() {
 
-        this.
+        this.tableName = "class_name";
     }
 
-    public void getAllClasses() {
-        String query = "SELECT * FROM class_name";
+    @Override
+    public ArrayList<Group> getGroupList(User user) {
 
-        processQuery(query, null);
+        String query = "SELECT * FROM " + tableName + ";";
+        ArrayList<Group> result = new ArrayList<>();
+        ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
+
+        for(ArrayList<String> arr : queryResult.subList(1, queryResult.size())) {
+            result.add(new Klass(Integer.parseInt(arr.get(0)), arr.get(1)));
+        }
+        return result;
     }
 
-    public void getClassName(int id) {
-        String query = "SELECT * FROM class_name WHERE id = ?;";
+    @Override
+    public ArrayList<Student> getStudentsList(Group group) {
 
-        processQuery(query, new String[] {"" + id});
+        String query = "SELECT * FROM users WHERE status = 'Student' AND class_name = ?;";
+        return getStudents(group, query);
     }
 }
