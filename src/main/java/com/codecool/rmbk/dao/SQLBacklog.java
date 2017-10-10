@@ -6,9 +6,14 @@ public class SQLBacklog extends SqlDAO {
 
     public ArrayList<ArrayList<String>> getAllBacklogs() {
 
-        String query = "SELECT * FROM backlog ORDER BY `owner` ASC;";
+        String query = "SELECT action_date, description, backlog.status, value," +
+                       "       (first_name || ' ' || last_name) as full_name " +
+                       "FROM backlog " +
+                       "JOIN users " +
+                       "ON backlog.owner = users.id " +
+                       "ORDER BY `owner` ASC, `action_date`;";
 
-        // processQuery(query, null);
+        processQuery(query, null);
         return getResults();
     }
 
@@ -20,14 +25,43 @@ public class SQLBacklog extends SqlDAO {
         return getResults();
     }
 
-    public String getExperience(int id) {
+    public Integer getCurrentCoins(int id) {
 
-        String query = "SELECT sum(value)" +
-                       "FROM backlog" +
-                       "WHERE `owner` = ?;";
+        Integer coins = 0;
         String[] data = {""+id};
 
-        // processQuery(query, null);
+        String query = "SELECT SUM(value) AS balance " +
+                       "FROM backlog WHERE owner = ? AND status = 'used';";
+
+        processQuery(query, data);
+        Integer earned = Integer.parseInt(getResults().get(1).get(0));
+
+        query = "SELECT SUM(value) AS balance " +
+                "FROM backlog WHERE owner = ? AND status = 'bought';";
+
+        processQuery(query, data);
+        Integer spent = Integer.parseInt(getResults().get(1).get(0));
+
+        return earned - spent;
+    }
+
+    public String getExperience(int id) {
+
+        String query = "SELECT sum(value) " +
+                       "FROM backlog " +
+                       "WHERE `owner` = ? ";
+        String[] data = {""+id};
+
+        processQuery(query, data);
         return getResults().get(1).get(0);
     }
+
+    public void saveToBacklog(String[] data) {
+
+        String query = "INSERT INTO backlog(action_date, description, status, value, owner) " +
+                       "VALUES (?, ?, ?, ?, ?);";
+
+        processQuery(query, data);
+    }
+
 }
