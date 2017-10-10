@@ -99,7 +99,7 @@ public class TeamController {
 
         while (isBrowsed) {
             view.clearScreen();
-            LinkedHashMap<Integer, String> menu = menuDAO.getDetailsMenu("edit");
+            LinkedHashMap<Integer, String> menu = menuDAO.getTeamDetailsMenu("edit");
             String choice = view.handleDetails(menu, team);
 
             if (choice.equals(menu.get(1))) {
@@ -108,9 +108,9 @@ public class TeamController {
                 Student student = view.getListChoice(groupDAO.getStudentsList(team));
                 if (student != null) {
                     handleMembership(student, team);
-                } else if (choice.equals(menu.get(2))) {
+                } else if (choice.equals(menu.get(3))) {
                     groupDAO.addStudentToGroup(team, student);
-                } else if (choice.equals(menu.get(2))) {
+                } else if (choice.equals(menu.get(4))) {
                     isBrowsed = !groupDAO.removeTeam(team);
                 } else if (choice.equals(menu.get(0))) {
                     isBrowsed = false;
@@ -141,7 +141,7 @@ public class TeamController {
 
         while(isBrowsed){
             view.clearScreen();
-            LinkedHashMap<Integer,String> menu = menuDAO.getDetailsMenu("show");
+            LinkedHashMap<Integer,String> menu = menuDAO.getTeamDetailsMenu("show");
             String choice = view.handleDetails(menu, team);
 
             if(choice.equals(menu.get(0))){

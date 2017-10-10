@@ -58,4 +58,15 @@ public class SQLMenuDAO extends SqlDAO implements MenuDAO {
         String query = "SELECT id, option FROM member_menu ORDER BY id;";
         return getMenu(query);
     }
+
+    @Override
+    public LinkedHashMap<Integer, String> getTeamDetailsMenu(String option) {
+        String query;
+        if (option.equals("edit")) {
+            query = "SELECT id, option FROM team_details_menu ORDER BY id;";
+        } else {
+            query = "SELECT id, option FROM team_details_menu WHERE show_only = 1 ORDER BY id;";
+        }
+        return getMenu(query);
+    }
 }

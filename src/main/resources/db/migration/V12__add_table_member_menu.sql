@@ -1,4 +1,3 @@
-BEGIN TRANSACTION;
 CREATE TABLE IF NOT EXISTS `member_menu` (
 	`id`	INTEGER UNIQUE,
 	`option`	TEXT,
@@ -6,4 +5,3 @@ CREATE TABLE IF NOT EXISTS `member_menu` (
 );
 INSERT INTO `member_menu` VALUES (0,'Back');
 INSERT INTO `member_menu` VALUES (1,'Remove student from Team');
-COMMIT;
