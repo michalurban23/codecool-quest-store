@@ -108,13 +108,37 @@ public class TeamController {
                 Student student = view.getListChoice(groupDAO.getStudentsList(team));
                 if (student != null) {
                     handleMembership(student, team);
-                } else if (choice.equals(menu.get(3))) {
-                    groupDAO.addStudentToGroup(team, student);
-                } else if (choice.equals(menu.get(4))) {
-                    isBrowsed = !groupDAO.removeTeam(team);
-                } else if (choice.equals(menu.get(0))) {
-                    isBrowsed = false;
                 }
+            } else if (choice.equals(menu.get(3))) {
+                addUser(team);
+            } else if (choice.equals(menu.get(4))) {
+                isBrowsed = !groupDAO.removeTeam(team);
+            } else if (choice.equals(menu.get(0))) {
+                isBrowsed = false;
+            }
+        }
+    }
+
+    private void addUser(Team team) {
+        boolean isBrowsed = true;
+
+        while(isBrowsed) {
+
+            view.clearScreen();
+            ArrayList<ArrayList<String>> users = userDAO.getIdNameList("Student");
+            LinkedHashMap<Integer,String> menu = menuDAO.getBrowseMenu("show");
+            String choice = view.handleAddStudent(menu, users);
+
+            if(choice.equals(menu.get(1))){
+                ArrayList<String> chosenUserInfo = view.getListChoice(users);
+
+                if (chosenUserInfo != null) {
+                    Integer userId = Integer.parseInt(chosenUserInfo.get(0));
+                    groupDAO.addStudentToGroup(team, userDAO.getUserByID(userId));
+                }
+
+            } else if(choice.equals(menu.get(0))) {
+                isBrowsed = false;
             }
         }
     }
