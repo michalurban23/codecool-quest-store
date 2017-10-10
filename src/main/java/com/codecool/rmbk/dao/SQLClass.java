@@ -46,4 +46,13 @@ public class SQLClass extends SQLGroups {
         String query = "SELECT * FROM users WHERE id = ? AND class_name = ?;";
         return processQuery(query, new String[] {"" + user.getID(), group.getName()}).size() > 1;
     }
+
+    @Override
+    public void updateMembers(Group group) {
+
+        String query = "SELECT * FROM users " +
+                "INNER JOIN user_groups ON user_groups.user_id = users.id " +
+                "WHERE user_groups.group_id = ?;";
+        super.updateUsers(group, query);
+    }
 }
