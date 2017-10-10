@@ -104,8 +104,9 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     @Override
     public Boolean removeUser(User user) {
 
-        String query = "DELETE FROM users WHERE id = ?;";
-        return handleQuery(query, new String[] {"" + user.getID()});
+        String query = "DELETE FROM users WHERE id = ?;" +
+                       "DELETE FROM user_groups WHERE user_id = ?;";
+        return handleQuery(query, new String[] {"" + user.getID(), "" + user.getID()});
     }
 
     public Boolean updateUserName(User user, String name) {

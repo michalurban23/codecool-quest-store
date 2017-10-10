@@ -77,7 +77,6 @@ public class SqlDAO {
                 statement.setString(i, stringSet[i-1]);
             }
         }
-        System.out.println(statement);
     }
 
     private void closeDB() throws SQLException {

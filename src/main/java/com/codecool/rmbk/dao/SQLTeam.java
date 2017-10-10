@@ -111,7 +111,7 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
         ArrayList<Student> result = new ArrayList<>();
         SQLUsers sqlUsers = new SQLUsers();
 
-        for(ArrayList<String> ar : queryResult) {
+        for(ArrayList<String> ar : queryResult.subList(1, queryResult.size())) {
             result.add((Student) sqlUsers.getUserByID(Integer.parseInt(ar.get(0))));
         }
         return result;
