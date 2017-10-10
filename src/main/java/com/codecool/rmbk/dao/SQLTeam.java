@@ -1,7 +1,6 @@
 package com.codecool.rmbk.dao;
 
 
-import com.codecool.rmbk.model.usr.Group;
 import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
@@ -38,7 +37,7 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
     @Override
     public Team createGroup() {
 
-        String query = "INSERT INTO groups";
+        String query = "INSERT INTO groups (name) VALUES (null);";
         handleQuery(query, null);
         query = String.format("SELECT * FROM groups ORDER BY id DESC LIMIT 1;");
         ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
@@ -115,5 +114,11 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
             result.add((Student) sqlUsers.getUserByID(Integer.parseInt(ar.get(0))));
         }
         return result;
+    }
+
+    public Boolean isInGroup(Student user, Team group) {
+
+        String query = "SELECT * FROM user_groups WHERE user_id = ? and group_id = ?;";
+        return processQuery(query, new String[] {"" + user.getID(), "" + group.getID()}).size() > 1;
     }
 }

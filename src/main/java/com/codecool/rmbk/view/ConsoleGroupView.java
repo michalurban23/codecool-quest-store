@@ -42,7 +42,7 @@ public class ConsoleGroupView extends ConsoleView implements GroupView {
     @Override
     public String handleAddStudent(LinkedHashMap<Integer, String> menu, ArrayList<ArrayList<String>> users) {
         ArrayList<String> userNames = new ArrayList<>();
-        for (int i = 1; i < users.size(); i++) {
+        for (int i = 0; i < users.size(); i++) {
             userNames.add(users.get(i).get(1));
         }
         showEnumeratedList(userNames);

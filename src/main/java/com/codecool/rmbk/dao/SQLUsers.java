@@ -97,7 +97,8 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     public ArrayList<ArrayList<String>> getIdNameList(String userType) {
 
         String query = "SELECT id, (first_name || \" \" || last_name) as full_name FROM users WHERE status = ?;";
-        return processQuery(query, new String[] {userType});
+        ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {userType});
+        return new ArrayList<>(queryResult.subList(1, queryResult.size()));
     }
 
 
