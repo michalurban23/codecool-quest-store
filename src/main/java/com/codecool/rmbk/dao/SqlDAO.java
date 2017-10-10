@@ -39,7 +39,7 @@ public class SqlDAO {
                 saveResults();
                 isSuccessful = results.size() > 1;
             } else {
-                isSuccessful = executeUpdate(query);
+                isSuccessful = executeUpdate(query) == 1;
             }
             closeDB();
         } catch (SQLException e) {
@@ -60,9 +60,9 @@ public class SqlDAO {
         }
     }
 
-    private boolean executeUpdate(String query) throws SQLException {
+    private int executeUpdate(String query) throws SQLException {
 
-        return statement.execute();
+        return statement.executeUpdate();
     }
 
     private void executeQuery(String query) throws SQLException {
