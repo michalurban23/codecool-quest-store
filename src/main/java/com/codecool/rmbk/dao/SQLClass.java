@@ -2,9 +2,14 @@ package com.codecool.rmbk.dao;
 
 import java.util.ArrayList;
 
-public class SQLClassName extends SqlDAO {
+public class SQLClassName extends SQLGroups {
 
     private ArrayList<ArrayList<String>> results;
+
+    public SQLClassName() {
+
+        this.
+    }
 
     public void getAllClasses() {
         String query = "SELECT * FROM class_name";
