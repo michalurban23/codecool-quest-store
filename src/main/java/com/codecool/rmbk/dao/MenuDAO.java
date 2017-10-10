@@ -11,4 +11,5 @@ public interface MenuDAO {
     public LinkedHashMap<Integer,String> getDetailsMenu(String option);
     public LinkedHashMap<Integer,String> getMemberMenu();
     LinkedHashMap<Integer,String> getTeamDetailsMenu(String show);
+    LinkedHashMap<Integer,String> getClassDetailsMenu(User user);
 }
