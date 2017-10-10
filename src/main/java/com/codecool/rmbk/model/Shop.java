@@ -7,15 +7,17 @@ import java.util.ArrayList;
 public class Shop {
 
     private Cart cart;
+    private Wallet wallet;
     private Integer id;
 
     public Shop(Cart cart, Integer id) {
         this.cart = cart;
         this.id = id;
+        this.wallet = new Wallet(id);
     }
 
-    public void checkWallet() {
-        ;
+    public Integer checkWallet() {
+        return this.wallet.getCoins();
     }
 
     public void addToCart(Item item) {
@@ -33,10 +35,12 @@ public class Shop {
     }
 
     public void flushCart() {
+
         cart.flushCart();
     }
 
     public Integer getId() {
+
         return id;
     }
 }
