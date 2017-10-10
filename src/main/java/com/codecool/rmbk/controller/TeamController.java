@@ -58,7 +58,7 @@ public class TeamController {
                 }
 
             } else if(choice.equals(menu.get(2))) {
-                Team newTeam = groupDAO.createGroup();
+                Group newTeam = groupDAO.createGroup();
                 editGroupName(newTeam);
 
             } else if(choice.equals(menu.get(0))) {
@@ -96,8 +96,9 @@ public class TeamController {
 
         while (isBrowsed) {
             view.clearScreen();
+            groupDAO.updateMembers(team);
             LinkedHashMap<Integer, String> menu = menuDAO.getTeamDetailsMenu("edit");
-            
+
             String choice = view.handleDetails(menu, team);
 
             if (choice.equals(menu.get(1))) {
@@ -123,6 +124,7 @@ public class TeamController {
         while(isBrowsed) {
 
             view.clearScreen();
+            groupDAO.updateMembers(team);
             ArrayList<ArrayList<String>> users = userDAO.getIdNameList("Student");
             LinkedHashMap<Integer,String> menu = menuDAO.getBrowseMenu("show");
             String choice = view.handleAddStudent(menu, users);
@@ -132,9 +134,14 @@ public class TeamController {
 
                 if (chosenUserInfo != null) {
                     Integer userId = Integer.parseInt(chosenUserInfo.get(0));
-                    groupDAO.addStudentToGroup(team, userDAO.getUserByID(userId));
+                    Student chosenStudent = (Student) userDAO.getUserByID(userId);
+                    if (!groupDAO.isInGroup(chosenStudent, team)) {
+                        groupDAO.addStudentToGroup(team, chosenStudent);
+                        isBrowsed = false;
+                    } else {
+                        view.printMessage("Already in group!");
+                    }
                 }
-
             } else if(choice.equals(menu.get(0))) {
                 isBrowsed = false;
             }

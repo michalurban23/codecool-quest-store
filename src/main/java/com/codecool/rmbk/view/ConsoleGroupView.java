@@ -65,6 +65,7 @@ public class ConsoleGroupView extends ConsoleView implements GroupView {
     public String handleDetails(LinkedHashMap<Integer,String> menu, Group group) {
 
         showShortInfo(group);
+        showEnumeratedList(group.getMembers());
 
         System.out.println("\n");
 

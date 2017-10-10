@@ -1,6 +1,7 @@
 package com.codecool.rmbk.dao;
 
 
+import com.codecool.rmbk.model.usr.Group;
 import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
@@ -23,7 +24,7 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
         processQuery(query, new String[] {name});
     }
 
-    public Team getTeamById(Integer id){
+    public Group getTeamById(Integer id){
 
         Team resultGroup = null;
         String query = "SELECT * FROM groups WHERE id = ?;";
@@ -35,7 +36,7 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
     }
 
     @Override
-    public Team createGroup() {
+    public Group createGroup() {
 
         String query = "INSERT INTO groups (name) VALUES (null);";
         handleQuery(query, null);
@@ -45,28 +46,28 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
     }
 
     @Override
-    public Boolean removeTeam(Team team) {
+    public Boolean removeTeam(Group team) {
 
         String query = "DELETE FROM groups WHERE id = ?;";
         return handleQuery(query, new String[] {"" + team.getID()});
     }
 
     @Override
-    public Boolean renameGroup(Team team, String newName) {
+    public Boolean renameGroup(Group team, String newName) {
 
         String query = "UPDATE groups SET name = ? WHERE id = ?;";
         return handleQuery(query, new String[] {newName, "" + team.getID()});
     }
 
     @Override
-    public Boolean addStudentToGroup(Team group, User student) {
+    public Boolean addStudentToGroup(Group group, Student student) {
 
         String query = "INSERT INTO user_groups VALUES(?, ?);";
         return handleQuery(query, new String[] {"" + student.getID(), "" + group.getID()});
     }
 
     @Override
-    public Boolean removeStudentFromGroup(Team group, User student) {
+    public Boolean removeStudentFromGroup(Group group, Student student) {
 
         String query = "DELETE FROM user_groups WHERE user_id = ? AND group_id = ?;";
         return handleQuery(query, new String[] {"" + student.getID(), "" + group.getID()});
@@ -100,7 +101,7 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
     }
 
     @Override
-    public ArrayList<Student> getStudentsList(Team group) {
+    public ArrayList<Student> getStudentsList(Group group) {
 
         String query = "SELECT * FROM users " +
                        "INNER JOIN user_groups ON user_groups.user_id = users.id " +
@@ -116,9 +117,26 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
         return result;
     }
 
-    public Boolean isInGroup(Student user, Team group) {
+    public Boolean isInGroup(Student user, Group group) {
 
         String query = "SELECT * FROM user_groups WHERE user_id = ? and group_id = ?;";
         return processQuery(query, new String[] {"" + user.getID(), "" + group.getID()}).size() > 1;
+    }
+
+    @Override
+    public void updateMembers(Group team) {
+
+        String query = "SELECT * FROM users " +
+                "INNER JOIN user_groups ON user_groups.user_id = users.id " +
+                "WHERE user_groups.group_id = ?;";
+        ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {"" + team.getID()});
+
+        ArrayList<Student> result = new ArrayList<>();
+        SQLUsers sqlUsers = new SQLUsers();
+        team.clearMembersList();
+
+        for(ArrayList<String> ar : queryResult.subList(1, queryResult.size())) {
+            team.addMember((Student) sqlUsers.getUserByID(Integer.parseInt(ar.get(0))));
+        }
     }
 }

@@ -6,25 +6,19 @@ import com.codecool.rmbk.model.quest.Quest;
 import java.util.ArrayList;
 
 public class Team extends Group implements Holder {
-    private Integer groupID;
-    private ArrayList<User> usersList;
     private Cart ourCart;
-    private String name;
 
-    public Team(ArrayList<User> usersList) {
+    public Team(ArrayList<Student> usersList) {
 
-        this.usersList = usersList;
+        super(usersList);
     }
 
     public Team() {
-
-        this(new ArrayList<User>());
+        super();
     }
 
     public Team(Integer id, String name) {
-
-        this.groupID = id;
-        this.name = name;
+        super(id, name);
     }
 
 
@@ -37,11 +31,11 @@ public class Team extends Group implements Holder {
     }
 
     public Integer getID() {
-        return this.groupID;
+        return this.id;
     }
 
-    public ArrayList<User> getUsersList() {
-        return this.usersList;
+    public ArrayList<Student> getUsersList() {
+        return this.members;
     }
 
     public Cart getCart() {
