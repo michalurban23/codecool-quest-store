@@ -28,20 +28,30 @@ public class SQLBacklog extends SqlDAO {
     public Integer getCurrentCoins(int id) {
 
         Integer coins = 0;
+        Integer earned;
+        Integer spent;
         String[] data = {""+id};
 
         String query = "SELECT SUM(value) AS balance " +
                        "FROM backlog WHERE owner = ? AND status = 'used';";
 
         processQuery(query, data);
-        Integer earned = Integer.parseInt(getResults().get(1).get(0));
+        try {
+            earned = Integer.parseInt(getResults().get(1).get(0));
+        } catch (NumberFormatException e) {
+            earned = 0;
+        }
         coins += earned;
 
         query = "SELECT SUM(value) AS balance " +
                 "FROM backlog WHERE owner = ? AND status = 'bought';";
 
         processQuery(query, data);
-        Integer spent = Integer.parseInt(getResults().get(1).get(0));
+        try {
+            spent = Integer.parseInt(getResults().get(1).get(0));
+        } catch (NumberFormatException e) {
+            spent = 0;
+        }
         coins -= spent;
 
         return coins;
