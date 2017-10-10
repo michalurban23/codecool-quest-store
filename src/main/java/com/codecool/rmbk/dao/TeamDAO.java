@@ -9,14 +9,14 @@ import java.util.ArrayList;
 
 public interface TeamDAO {
 
-    public Team createGroup();
-    public Team getTeamById(Integer id);
-    public Boolean removeTeam(Team group);
-    public Boolean renameGroup(Team group, String newName);
-    public Boolean addStudentToGroup(Team group, User student);
-    public Boolean removeStudentFromGroup(Team group, User student);
+    public Group createGroup();
+    public Group getTeamById(Integer id);
+    public Boolean removeTeam(Group group);
+    public Boolean renameGroup(Group group, String newName);
+    public Boolean addStudentToGroup(Group group, Student student);
+    public Boolean removeStudentFromGroup(Group group, Student student);
     public ArrayList<Team> getTeamList(User user);
-    public ArrayList<Student> getStudentsList(Team group);
-
-
+    public ArrayList<Student> getStudentsList(Group group);
+    public Boolean isInGroup(Student user, Group group);
+    void updateMembers(Group team);
 }
