@@ -105,7 +105,7 @@ public abstract class UserController {
 
             view.clearScreen();
             ArrayList<ArrayList<String>> users = userDao.getIdNameList(userType);
-            LinkedHashMap<Integer,String> menu = menuDao.getBrowseMenu();
+            LinkedHashMap<Integer,String> menu = menuDao.getBrowseMenu("edit");
             String choice = view.handleBrowse(menu, users);
 
             if(choice.equals(menu.get(1))){
@@ -126,20 +126,20 @@ public abstract class UserController {
         }
     }
 
-    private void handleDetailsMenu(User user) {
+    public void handleDetailsMenu(User user) {
 
         boolean isBrowsed = true;
 
         while(isBrowsed){
             view.clearScreen();
-            LinkedHashMap<Integer,String> menu = menuDao.getDetailsMenu();
+            LinkedHashMap<Integer,String> menu = menuDao.getDetailsMenu("edit");
             String choice = view.handleDetails(menu, user);
 
-            if (choice.equals(menu.get(1))){
+            if (choice.equals(menu.get(1))) {
                 editUserData(user);
-            } else if(choice.equals(menu.get(2))){
+            } else if(choice.equals(menu.get(2))) {
                 isBrowsed = !userDao.removeUser(user);
-            } else if(choice.equals(menu.get(0))){
+            } else if(choice.equals(menu.get(0))) {
                 isBrowsed = false;
             }
         }
