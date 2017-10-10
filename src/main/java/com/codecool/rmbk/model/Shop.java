@@ -17,7 +17,7 @@ public class Shop {
     }
 
     public Integer checkWallet() {
-        return this.wallet.getCoins();
+        return wallet.getCoins();
     }
 
     public void addToCart(Item item) {
@@ -29,6 +29,27 @@ public class Shop {
 
         return itemsList;
     }
+
+    public Integer getTotalPrice() {
+        Integer totalPrice = 0;
+        for(Item item : cart.getItemsList()) {
+            Integer price = Integer.parseInt(item.getTemplate().getValue());
+            totalPrice += price;
+        }
+        return totalPrice;
+    }
+
+    public void payForCart() {
+        for(Item item : cart.getItemsList()) {
+            String[] data = new String[5];
+            data[0] = item.getBuyTime();
+            data[1] = item.getTemplate().getName();
+            data[2] = "bought";
+            data[3] = item.getTemplate().getValue();
+            data[4] = this.id.toString();
+            wallet.updateWallet(data);
+            }
+        }
 
     public void removeFromCart(Item item) {
         cart.removeFromCart(item);
