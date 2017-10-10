@@ -16,7 +16,7 @@ public interface GroupDAO {
     Boolean addStudentToGroup(Group group, Student student);
     Boolean removeStudentFromGroup(Group group, Student student);
     ArrayList<Group> getGroupList(User user);
-    ArrayList<Student> getStudentsList(Group group);
+    ArrayList<User> getStudentsList(Group group);
     Boolean isInGroup(Student user, Group group);
     void updateMembers(Group team);
 }

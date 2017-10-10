@@ -1,9 +1,6 @@
 package com.codecool.rmbk.dao;
 
-import com.codecool.rmbk.model.usr.Group;
-import com.codecool.rmbk.model.usr.Student;
-import com.codecool.rmbk.model.usr.User;
-import com.codecool.rmbk.model.usr.Klass;
+import com.codecool.rmbk.model.usr.*;
 
 import java.util.ArrayList;
 
@@ -30,9 +27,23 @@ public class SQLClass extends SQLGroups {
     }
 
     @Override
-    public ArrayList<Student> getStudentsList(Group group) {
+    public ArrayList<User> getStudentsList(Group group) {
 
-        String query = "SELECT * FROM users WHERE status = 'Student' AND class_name = ?;";
-        return getStudents(group, query);
+        String query = "SELECT * FROM users WHERE status = 'Student' AND " +
+                       "class_name = (SELECT name FROM class_name WHERE id = ?);";
+        return getUsers(group, query);
+    }
+
+    public ArrayList<User> getMentorsList(Group group) {
+
+        String query = "SELECT * FROM users WHERE status = 'Mentor' AND " +
+                "class_name = (SELECT name FROM class_name WHERE id = ?);";
+        return getUsers(group, query);
+    }
+
+    public Boolean isInGroup(User user, Group group) {
+
+        String query = "SELECT * FROM users WHERE id = ? AND class_name = ?;";
+        return processQuery(query, new String[] {"" + user.getID(), group.getName()}).size() > 1;
     }
 }

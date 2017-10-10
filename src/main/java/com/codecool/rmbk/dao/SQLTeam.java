@@ -59,12 +59,12 @@ public class SQLTeam extends SQLGroups {
     }
 
     @Override
-    public ArrayList<Student> getStudentsList(Group group) {
+    public ArrayList<User> getStudentsList(Group group) {
 
         String query = "SELECT * FROM " + tableName +
                        " INNER JOIN user_groups ON user_groups.user_id = users.id " +
                        "WHERE user_groups.group_id = ?;";
-        return getStudents(group, query);
+        return getUsers(group, query);
     }
 
     public Boolean isInGroup(Student user, Group group) {

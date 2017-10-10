@@ -51,15 +51,15 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
         return handleQuery(query, new String[] {newName, "" + group.getID()});
     }
 
-    public ArrayList<Student> getStudents(Group group, String query) {
+    public ArrayList<User> getUsers(Group group, String query) {
 
         ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {"" + group.getID()});
 
-        ArrayList<Student> result = new ArrayList<>();
+        ArrayList<User> result = new ArrayList<>();
         SQLUsers sqlUsers = new SQLUsers();
 
         for(ArrayList<String> ar : queryResult.subList(1, queryResult.size())) {
-            result.add((Student) sqlUsers.getUserByID(Integer.parseInt(ar.get(0))));
+            result.add(sqlUsers.getUserByID(Integer.parseInt(ar.get(0))));
         }
         return result;
 
