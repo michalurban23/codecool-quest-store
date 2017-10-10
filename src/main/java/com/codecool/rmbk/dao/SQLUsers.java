@@ -97,15 +97,17 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     public ArrayList<ArrayList<String>> getIdNameList(String userType) {
 
         String query = "SELECT id, (first_name || \" \" || last_name) as full_name FROM users WHERE status = ?;";
-        return processQuery(query, new String[] {userType});
+        ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {userType});
+        return new ArrayList<>(queryResult.subList(1, queryResult.size()));
     }
 
 
     @Override
     public Boolean removeUser(User user) {
 
-        String query = "DELETE FROM users WHERE id = ?;";
-        return handleQuery(query, new String[] {"" + user.getID()});
+        String query = "DELETE FROM users WHERE id = ?;" +
+                       "DELETE FROM user_groups WHERE user_id = ?;";
+        return handleQuery(query, new String[] {"" + user.getID(), "" + user.getID()});
     }
 
     public Boolean updateUserName(User user, String name) {
