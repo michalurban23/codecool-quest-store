@@ -1,10 +1,8 @@
 package com.codecool.rmbk.view;
 
-import com.codecool.rmbk.model.item.Item;
 import com.codecool.rmbk.model.item.ItemTemplate;
 
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 
 public class ArtifactControllerView extends ConsoleUserView {
 
@@ -41,38 +39,6 @@ public class ArtifactControllerView extends ConsoleUserView {
         mainMenu.put(0, "Log out");
 
         return mainMenu;
-    }
-
-    public void viewDetailedTemplate(ItemTemplate template) {
-    }
-
-    public String getArtifactQuery(Item artifact) {
-
-        String template = artifact.getTemplate().getName();
-        String owner = artifact.getOwner().toString();
-        String completion = artifact.getCompletion();
-
-        return "VALUES ('"+template+"', '"+owner+"', '"+completion+"')";
-    }
-
-    public String[] getArtifactQueryArray(Item artifact) {
-
-        String template = artifact.getTemplate().getName();
-        String owner = artifact.getOwner().toString();
-        String completion = artifact.getCompletion();
-
-        return new String[]{template, owner, completion};
-    }
-
-
-    public String getArtifactTemplateQuery(ItemTemplate template) {
-
-        String name = template.getName();
-        String description = template.getDescription();
-        String value = template.getValue();
-        String special = template.getSpecial();
-
-        return "VALUES ('"+name+"', '"+description+"', '"+value+"', '"+special+"')";
     }
 
     public String[] getArtifactTemplateQueryArray(ItemTemplate template) {

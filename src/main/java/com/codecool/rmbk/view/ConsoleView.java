@@ -130,7 +130,6 @@ public abstract class ConsoleView {
 
         if (data.size() <= 1) {
             printWarning("No matching data in " + title);
-            return false;
         }
 
         ArrayList<String> labels = data.get(0);
@@ -156,8 +155,6 @@ public abstract class ConsoleView {
             } System.out.println();
         }
         System.out.println(horizontalLine + "\n");
-
-        return true;
     }
 
     private ArrayList<Integer> calculateWidths(ArrayList<ArrayList<String>> data) {
