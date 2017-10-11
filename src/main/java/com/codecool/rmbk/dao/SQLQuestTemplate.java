@@ -5,8 +5,6 @@ import java.util.Arrays;
 
 public class SQLQuestTemplate extends SqlDAO {
 
-    private ArrayList<ArrayList<String>> results;
-
     public ArrayList<ArrayList<String>> getAllQuestTemplates() {
 
         String query = "SELECT * FROM quest_template";

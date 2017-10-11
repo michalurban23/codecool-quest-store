@@ -14,7 +14,6 @@ public class SqlDAO {
 
     private ArrayList<ArrayList<String>> results = new ArrayList<>();
     private ArrayList<String> resultsInfo;
-    private String status;
 
     public ArrayList<ArrayList<String>> getResults() {
 
@@ -30,16 +29,18 @@ public class SqlDAO {
     boolean handleQuery(String query, String[] stringSet) {
 
         Boolean isSuccessful = null;
+
         try {
             openDB();
             statement = connection.prepareStatement(query);
             buildQuery(statement, stringSet);
+
             if (query.startsWith("SELECT")) {
                 resultSet = statement.executeQuery();
                 saveResults();
                 isSuccessful = results.size() > 1;
             } else {
-                isSuccessful = executeUpdate(query) == 1;
+                isSuccessful = executeUpdate() == 1;
             }
             closeDB();
         } catch (SQLException e) {
@@ -60,20 +61,16 @@ public class SqlDAO {
         }
     }
 
-    private int executeUpdate(String query) throws SQLException {
+    private int executeUpdate() throws SQLException {
 
         return statement.executeUpdate();
     }
 
-    private void executeQuery(String query) throws SQLException {
-
-        resultSet = statement.executeQuery(query);
-    }
-
     private void buildQuery(PreparedStatement statement, String[] stringSet) throws SQLException {
 
-        if(stringSet != null) {
-            for(int i=1; i<=stringSet.length; i++) {
+        if (stringSet != null) {
+
+            for (int i=1; i<=stringSet.length; i++) {
                 statement.setString(i, stringSet[i-1]);
             }
         }
@@ -88,7 +85,6 @@ public class SqlDAO {
     private void terminateConnection(Exception e) {
 
         this.status = "Query failure. SQL message:\n" + e.getMessage();
-        // plus something else if we need like:
         System.err.println(e.getMessage());
     }
 

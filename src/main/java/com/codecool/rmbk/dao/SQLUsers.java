@@ -2,9 +2,7 @@ package com.codecool.rmbk.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.codecool.rmbk.model.usr.*;
-
 
 public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
@@ -23,24 +21,32 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     @Override
     public User getUserByLogin(String login){
 
-        String query = "SELECT users.id, first_name, last_name, email, address, status FROM users JOIN login_info ON login_info.id == users.id WHERE login = ?;";
+        String query = "SELECT users.id, first_name, last_name, email, address, status " +
+                       "FROM users " +
+                       "JOIN login_info " +
+                       "ON login_info.id == users.id " +
+                       "WHERE login = ?;";
         ArrayList<ArrayList<String>> rw = processQuery(query, new String[] {login});
+
         return getUserFromArray(rw.get(1).get(5), rw.get(1).subList(0, 5));
     }
 
     private User getUserFromArray(String type, List<String> array) {
 
-        User loged = null;
-        if (type.equals("Mentor")) {
-            loged =  new Mentor(array.toArray(new String[array.size()]));
+        User logged = null;
+
+        switch (type) {
+            case "Mentor":
+                logged = new Mentor(array.toArray(new String[array.size()]));
+                break;
+            case "Student":
+                logged = new Student(array.toArray(new String[array.size()]));
+                break;
+            case "Admin":
+                logged = new Admin(array.toArray(new String[array.size()]));
+                break;
         }
-        else if(type.equals("Student")) {
-            loged =  new Student(array.toArray(new String[array.size()]));
-        }
-        else if(type.equals("Admin")) {
-            loged = new Admin(array.toArray(new String[array.size()]));
-        }
-        return loged;
+        return logged;
     }
 
     @Override
@@ -55,7 +61,8 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
         String query = "SELECT (first_name || \" \" || last_name) as full_name FROM users WHERE status = ?;";
         ArrayList<String> result = new ArrayList<>();
         ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {userType});
-        for(int i=1; i<queryResult.size(); i++){
+
+        for (int i=1; i<queryResult.size(); i++){
             result.add(queryResult.get(i).get(0));
         }
         return result;
@@ -67,6 +74,7 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
         String query = "SELECT * FROM users WHERE first_name = ?;";
         ArrayList<ArrayList<String>> result = processQuery(query, new String[] {name});
         String userType = result.get(1).get(5);
+
         return getUserFromArray(userType, result.get(1));
     }
 
@@ -76,6 +84,7 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
         String query = "SELECT * FROM users WHERE id = ?;";
         ArrayList<ArrayList<String>> result = processQuery(query, new String[] {"" + id});
         String userType = result.get(1).get(5);
+
         return getUserFromArray(userType, result.get(1));
     }
 
@@ -83,10 +92,10 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     public ArrayList<User> getUserList(String userType) {
 
         String query = "SELECT * FROM users WHERE status = ?;";
-        // we can use WordUtils.capitalizeFully(userType) to ensure that it will mach our record in database
         ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {userType});
         ArrayList<User> result = new ArrayList<>();
-        for(int i=1; i<queryResult.size(); i++){
+
+        for (int i=1; i<queryResult.size(); i++){
             result.add(getUserFromArray(userType, queryResult.get(i)));
         }
         return result;
@@ -96,6 +105,7 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
         String query = "SELECT id, (first_name || \" \" || last_name) as full_name FROM users WHERE status = ?;";
         ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {userType});
+
         return new ArrayList<>(queryResult.subList(1, queryResult.size()));
     }
 
@@ -105,6 +115,7 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
         String query = "DELETE FROM users WHERE id = ?;" +
                        "DELETE FROM user_groups WHERE user_id = ?;";
+
         return handleQuery(query, new String[] {"" + user.getID(), "" + user.getID()});
     }
 
@@ -122,7 +133,7 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
     public Boolean updateUserEmail(User user, String email) {
 
-        String query = String.format("UPDATE users SET email = ? WHERE id = ?;", email, user.getID());
+        String query = "UPDATE users SET email = ? WHERE id = ?;";
         return handleQuery(query, new String[] {email, "" + user.getID()});
     }
 
