@@ -26,4 +26,9 @@ class ItemTest {
     void testGetOwner() {
         assertEquals(1, (int) item.getOwner());
     }
+
+    @Test
+    void testGetTemplate() {
+        assertNotNull(item.getTemplate());
+    }
 }
