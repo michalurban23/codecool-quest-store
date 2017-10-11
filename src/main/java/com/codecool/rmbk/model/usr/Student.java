@@ -3,9 +3,7 @@ package com.codecool.rmbk.model.usr;
 import java.util.ArrayList;
 
 import com.codecool.rmbk.dao.SQLBacklog;
-import com.codecool.rmbk.dao.SQLExperience;
 import com.codecool.rmbk.model.Cart;
-import com.codecool.rmbk.model.quest.Quest;
 
 public class Student extends User implements Holder {
 
@@ -41,11 +39,6 @@ public class Student extends User implements Holder {
     public Student(String firstName, String lastName) {
 
         this(firstName, lastName, "Not Available", "Not Available", null);
-    }
-
-    public static ArrayList<Student> getObjects(){
-
-        return objects;
     }
 
     public Cart getCart() {
