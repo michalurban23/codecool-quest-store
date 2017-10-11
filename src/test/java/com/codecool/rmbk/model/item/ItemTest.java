@@ -17,6 +17,13 @@ class ItemTest {
         Item item = new Item(itemTemplate, 1);
     }
 
+    @Test
+    void testCreateItem() {
+        assertNotNull(item);
+    }
+
+
+
 
 
 }
