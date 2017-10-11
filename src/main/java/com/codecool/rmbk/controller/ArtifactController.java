@@ -1,24 +1,24 @@
 package com.codecool.rmbk.controller;
 
+import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
 import com.codecool.rmbk.model.Shop;
 import com.codecool.rmbk.model.item.ItemTemplate;
 import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ArtifactControllerView;
-
 import java.util.ArrayList;
 
-public class ArtifactController {
+class ArtifactController {
 
     private User user;
     private ArtifactControllerView view;
 
-    public ArtifactController() {
+    ArtifactController() {
         this.view = new ArtifactControllerView();
     }
 
-    public void start(User user) {
+    void start(User user) {
 
         this.user = user;
 
@@ -30,49 +30,60 @@ public class ArtifactController {
         }
     }
 
-    public void handleStudentMenu() {
+    private void handleStudentMenu() {
 
         boolean isBrowsed = true;
 
         while(isBrowsed) {
             String choice = view.handleStudentMenu();
-            if(choice.equals("View available artifacts")) {
-                listArtifacts();
-            } else if(choice.equals("Go to shopping centre")) {
-                goToShoppingController();
-            } else if(choice.equals("Log out")) {
-                isBrowsed = false;
-            }
 
+            switch (choice) {
+                case "View available artifacts":
+                    listArtifacts();
+                    break;
+                case "Go to shopping centre":
+                    goToShoppingController();
+                    break;
+                case "Log out":
+                    isBrowsed = false;
+                    break;
+            }
         }
     }
 
-    public void handleMentorMenu() {
+    private void handleMentorMenu() {
 
         boolean isBrowsed = true;
 
         while(isBrowsed) {
             String choice = view.handleMentorMenu();
-            if(choice.equals("View artifact templates")) {
-                listArtifacts();
-            } else if(choice.equals("Create new template")) {
-                createArtifactTemplate();
-            } else if(choice.equals("Edit existing template")) {
-                editExistingTemplate();
-            } else if(choice.equals("Log out")) {
-                isBrowsed = false;
+
+            switch (choice) {
+                case "View artifact templates":
+                    listArtifacts();
+                    break;
+                case "Create new template":
+                    createArtifactTemplate();
+                    break;
+                case "Edit existing template":
+                    editExistingTemplate();
+                    break;
+                case "Log out":
+                    isBrowsed = false;
+                    break;
             }
-
         }
-
     }
 
-    public void listArtifacts() {
+    private void listArtifacts() {
+
         ArrayList<ArrayList<String>> artifacts = getAvailableArtifacts();
         view.printList("Artifacts", artifacts);
     }
 
-    public void goToShoppingController() {
+
+    private void goToShoppingController() {
+
 
         Student student = (Student) this.user;
         Shop shop = new Shop(student.getCart(), student.getID());
@@ -81,7 +92,8 @@ public class ArtifactController {
         shopControl.startShoppingController();
     }
 
-    public ItemTemplate getArtifactTemplate() {
+    private ItemTemplate getArtifactTemplate() {
+
         listArtifacts();
         ArrayList<String> choice = view.getListChoice(getAvailableArtifacts());
 
@@ -90,20 +102,30 @@ public class ArtifactController {
         return template;
     }
 
-    public ArrayList<ArrayList<String>> getAvailableArtifacts() {
+    private ArrayList<ArrayList<String>> getAvailableArtifacts() {
+
         SQLArtifactTemplate artifactDao = new SQLArtifactTemplate();
         artifactDao.getAllArtifactTemplates();
+
         ArrayList<ArrayList<String>> artifacts = artifactDao.getResults();
 
         return artifacts;
     }
 
+    public ArrayList<ArrayList<String>> getMyArtifacts() {
+        SQLArtifact artifactDao = new SQLArtifact();
+        artifactDao.getArtifact(String.valueOf(user.getID()));
+        ArrayList<ArrayList<String>> myArtifacts = artifactDao.getResults();
+        return myArtifacts;
+    }
 
-    public void createArtifactTemplate() {
+    private void createArtifactTemplate() {
+
         String name = view.getInput("Type the name of the artifact: ");
         String value = view.getInput("Set the value: ");
         String description = view.getInput("Write a description: ");
         String special = view.getInput("Is it a special quest: (y/n) ");
+
         if(special.equals("y")) {
             special = "1";
         } else {
@@ -114,24 +136,28 @@ public class ArtifactController {
         addArtifactTemplateToDatabase(newTemplate);
     }
 
-    public void editExistingTemplate() {
+    private void editExistingTemplate() {
+
         ItemTemplate toEdit = getArtifactTemplate();
+
         removeExistingTemplate(toEdit);
         createArtifactTemplate();
     }
 
-    public void removeExistingTemplate(ItemTemplate template) {
+    private void removeExistingTemplate(ItemTemplate template) {
+
         SQLArtifactTemplate artifactTemplates = new SQLArtifactTemplate();
         artifactTemplates.removeArtifactTemplate(template.getName());
     }
 
 
-    public void addArtifactTemplateToDatabase(ItemTemplate template) {
+    private void addArtifactTemplateToDatabase(ItemTemplate template) {
+
         SQLArtifactTemplate artifactTemplates = new SQLArtifactTemplate();
         artifactTemplates.addArtifactTemplate(getArtifactTemplateInfoArray(template));
     }
 
-    public String[] getArtifactTemplateInfoArray(ItemTemplate template) {
+    private String[] getArtifactTemplateInfoArray(ItemTemplate template) {
 
         return view.getArtifactTemplateQueryArray(template);
     }

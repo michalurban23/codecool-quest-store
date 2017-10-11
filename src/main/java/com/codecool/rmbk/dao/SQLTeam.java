@@ -1,16 +1,12 @@
 package com.codecool.rmbk.dao;
 
-
 import com.codecool.rmbk.model.usr.Group;
 import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
-
 import java.util.ArrayList;
 
 public class SQLTeam extends SQLGroups {
-
-    private ArrayList<ArrayList<String>> results;
 
     public SQLTeam() {
 
@@ -51,7 +47,8 @@ public class SQLTeam extends SQLGroups {
         }
 
         ArrayList<ArrayList<String>> queryResult = processQuery(query,stringSet);
-        for(int i=1; i<queryResult.size(); i++) {
+
+        for (int i=1; i<queryResult.size(); i++) {
             result.add(new Team(Integer.parseInt(queryResult.get(i).get(0)), queryResult.get(i).get(1)));
         }
         return result;
@@ -80,7 +77,6 @@ public class SQLTeam extends SQLGroups {
                 "WHERE user_groups.group_id = ?;";
 
         updateUsers(team, query);
-
     }
 
     public ArrayList<ArrayList<String>> getUserGroups(User user) {

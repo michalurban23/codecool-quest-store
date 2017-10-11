@@ -8,13 +8,13 @@ import java.util.LinkedHashMap;
 
 public interface GroupView {
 
-    public String handleMenu(LinkedHashMap<Integer, String> menu);
+    String handleMenu(LinkedHashMap<Integer, String> menu);
 
-    public void showShortInfo(Group user);
+    void showShortInfo(Group user);
 
-    public void showFullInfo(Group user);
+    void showFullInfo(Group user);
 
-    public String getNewGroupName();
+    String getNewGroupName();
 
     String MemberScreen(LinkedHashMap<Integer, String> menu, Student student);
 

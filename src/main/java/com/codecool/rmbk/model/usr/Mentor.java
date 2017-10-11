@@ -32,13 +32,4 @@ public class Mentor extends User {
 
         this(firstName, lastName, "Not Available", "Not Available", null);
     }
-
-    public static ArrayList<Mentor> getObjects(){
-        return objects;
-    }
-
-    public static boolean remove(User user) {
-
-        return objects.remove(user);
-    }
 }

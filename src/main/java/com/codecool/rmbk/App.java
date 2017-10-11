@@ -7,7 +7,6 @@ public class App {
     public static void main(String[] args) {
 
         LoginController controller = new LoginController();
-        // controller.startCSV();
         controller.startSqlLoginService();
     }
 }

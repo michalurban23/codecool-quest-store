@@ -41,11 +41,6 @@ public class Student extends User implements Holder {
         this(firstName, lastName, "Not Available", "Not Available", null);
     }
 
-    public static ArrayList<Student> getObjects(){
-
-        return objects;
-    }
-
     public Cart getCart() {
 
         return myCart;

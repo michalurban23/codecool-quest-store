@@ -25,9 +25,8 @@ public class Shop {
     }
 
     public ArrayList<Item> getItemsList() {
-        ArrayList<Item> itemsList = cart.getItemsList();
 
-        return itemsList;
+        return cart.getItemsList();
     }
 
     public Integer getTotalPrice() {

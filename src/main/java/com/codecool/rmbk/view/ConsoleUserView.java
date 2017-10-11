@@ -2,7 +2,6 @@ package com.codecool.rmbk.view;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 
 import com.codecool.rmbk.model.usr.User;
 

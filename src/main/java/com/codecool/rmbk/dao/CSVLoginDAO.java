@@ -17,8 +17,8 @@ public class CSVLoginDAO implements LoginDAO {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource(filepath).getFile());
 
-        try(Scanner reader = new Scanner(file)) {
-            while(reader.hasNext()) {
+        try (Scanner reader = new Scanner(file)) {
+            while (reader.hasNext()) {
                 String[] data = reader.nextLine().split(",");
                 login = data[0];
                 password = data[1];
@@ -31,6 +31,9 @@ public class CSVLoginDAO implements LoginDAO {
         return logins;
     }
 
-    public Boolean login(String[] loginInfo) {return null;}
+    public Boolean login(String[] loginInfo) {
+
+        return null;
+    }
 
 }

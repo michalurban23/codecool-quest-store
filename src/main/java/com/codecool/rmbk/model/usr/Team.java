@@ -1,11 +1,11 @@
 package com.codecool.rmbk.model.usr;
 
 import com.codecool.rmbk.model.Cart;
-import com.codecool.rmbk.model.quest.Quest;
 
 import java.util.ArrayList;
 
 public class Team extends Group implements Holder {
+
     private Cart ourCart;
 
     public Team(ArrayList<Student> usersList) {
@@ -21,7 +21,6 @@ public class Team extends Group implements Holder {
         super(id, name);
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
@@ -34,10 +33,6 @@ public class Team extends Group implements Holder {
         return this.id;
     }
 
-    public ArrayList<Student> getUsersList() {
-        return this.members;
-    }
-
     public Cart getCart() {
         return this.ourCart;
     }
@@ -46,7 +41,4 @@ public class Team extends Group implements Holder {
         this.ourCart = cart;
     }
 
-    public Quest getQuest() {return null;} // ---------------------IMPLEMENT---------------------------------
-
-    public void createQuest() {;}
 }

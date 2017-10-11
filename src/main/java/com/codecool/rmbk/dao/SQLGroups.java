@@ -1,11 +1,9 @@
 package com.codecool.rmbk.dao;
 
-
 import com.codecool.rmbk.model.usr.Group;
 import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
-
 import java.util.ArrayList;
 
 public abstract class SQLGroups extends SqlDAO implements GroupDAO{
@@ -51,7 +49,7 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
         return handleQuery(query, new String[] {newName, "" + group.getID()});
     }
 
-    public ArrayList<User> getUsers(Group group, String query) {
+    ArrayList<User> getUsers(Group group, String query) {
 
         ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {"" + group.getID()});
 
@@ -65,7 +63,7 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
 
     }
 
-    public void updateUsers(Group group, String query) {
+    void updateUsers(Group group, String query) {
 
         ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {"" + group.getID()});
 

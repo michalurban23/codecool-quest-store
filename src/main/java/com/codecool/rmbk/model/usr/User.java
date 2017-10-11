@@ -1,7 +1,5 @@
 package com.codecool.rmbk.model.usr;
 
-import java.util.ArrayList;
-
 public abstract class User {
 
     protected String firstName;
@@ -10,7 +8,6 @@ public abstract class User {
     protected String address;
 
     protected Integer id;
-    protected static ArrayList<? extends User> objects;
 
     public User(String firstName, String lastName, String email, String address, Integer id) {
 

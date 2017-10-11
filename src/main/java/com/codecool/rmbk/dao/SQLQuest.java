@@ -1,7 +1,6 @@
 package com.codecool.rmbk.dao;
 
 import com.codecool.rmbk.model.quest.Quest;
-
 import java.util.ArrayList;
 
 public class SQLQuest extends SqlDAO {

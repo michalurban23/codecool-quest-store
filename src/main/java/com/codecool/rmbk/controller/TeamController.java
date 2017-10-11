@@ -2,17 +2,18 @@ package com.codecool.rmbk.controller;
 
 import com.codecool.rmbk.dao.*;
 import com.codecool.rmbk.model.usr.*;
-
 import java.util.LinkedHashMap;
 
 public class TeamController extends GroupController {
 
-    public TeamController() {
+    TeamController() {
+
         super();
         groupDAO = new SQLTeam();
     }
 
-    public void start (User user) {
+    public void start(User user) {
+
         if (user.getClass().getSimpleName().equals("Mentor")) {
             handleCRUDMenu(user);
         } else {
@@ -48,6 +49,7 @@ public class TeamController extends GroupController {
         boolean isBrowsed = true;
 
         while (isBrowsed) {
+
             view.clearScreen();
             groupDAO.updateMembers(team);
             LinkedHashMap<Integer, String> menu = menuDAO.getTeamDetailsMenu("edit");
@@ -58,6 +60,7 @@ public class TeamController extends GroupController {
                 editGroupName(team);
             } else if (choice.equals(menu.get(2))) {
                 Student student = (Student) view.getListChoice(groupDAO.getStudentsList(team));
+
                 if (student != null) {
                     handleMembership(student, team);
                 }
@@ -70,4 +73,5 @@ public class TeamController extends GroupController {
             }
         }
     }
+
 }
