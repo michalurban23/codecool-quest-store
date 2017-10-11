@@ -78,6 +78,20 @@ public class SQLTeam extends SQLGroups {
         String query = "SELECT * FROM users " +
                 "INNER JOIN user_groups ON user_groups.user_id = users.id " +
                 "WHERE user_groups.group_id = ?;";
+
         updateUsers(team, query);
+
+    }
+
+    public ArrayList<ArrayList<String>> getUserGroups(User user) {
+
+        String query = "SELECT name FROM users " +
+                       "JOIN groups, user_groups " +
+                       "WHERE user_groups.user_id = ? AND user_groups.group_id = groups.id";
+        String[] data = {""+user.getID()};
+
+        processQuery(query, data);
+
+        return getResults();
     }
 }

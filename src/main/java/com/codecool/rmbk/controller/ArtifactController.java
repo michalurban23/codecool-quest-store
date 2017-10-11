@@ -1,10 +1,7 @@
 package com.codecool.rmbk.controller;
 
-import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
-import com.codecool.rmbk.model.Cart;
 import com.codecool.rmbk.model.Shop;
-import com.codecool.rmbk.model.item.Item;
 import com.codecool.rmbk.model.item.ItemTemplate;
 import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.User;
@@ -128,26 +125,10 @@ public class ArtifactController {
         artifactTemplates.removeArtifactTemplate(template.getName());
     }
 
-    public void addArtifactToDatabase(Item artifact) {
-        SQLArtifact artifacts = new SQLArtifact();
-        artifacts.addArtifact(getArtifactInfoArray(artifact));
-    }
-
 
     public void addArtifactTemplateToDatabase(ItemTemplate template) {
         SQLArtifactTemplate artifactTemplates = new SQLArtifactTemplate();
         artifactTemplates.addArtifactTemplate(getArtifactTemplateInfoArray(template));
-    }
-    
-    public String getArtifactInfo(Item artifact) {
-        return view.getArtifactQuery(artifact);
-    }
-
-    public String[] getArtifactInfoArray(Item artifact) { return view.getArtifactQueryArray(artifact); }
-
-    public String getArtifactTemplateInfo(ItemTemplate template) {
-
-        return view.getArtifactTemplateQuery(template);
     }
 
     public String[] getArtifactTemplateInfoArray(ItemTemplate template) {

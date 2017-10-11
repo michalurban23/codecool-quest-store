@@ -57,7 +57,7 @@ public class ShoppingController {
     private void removeFromCart() {
         listCart();
         if(shop.getItemsList().size() != 0) {
-            Item item = view.getItemsListChoice(shop.getItemsList());
+            Item item = view.getListChoice(shop.getItemsList());
             shop.removeFromCart(item);
         }
     }
@@ -70,7 +70,7 @@ public class ShoppingController {
 
     private void checkout() {
         if(shop.checkWallet() <= shop.getTotalPrice()) {
-            view.printError("Sorry. You dont have enough coins. Try removing some items from the cart.");
+            view.printError("Sorry. You don't have enough coins. Try removing some items from the cart.");
         }
         else {
             listCart();
@@ -117,7 +117,8 @@ public class ShoppingController {
 
     public ItemTemplate getArtifactTemplate() {
         listArtifacts();
-        ArrayList<String> choice = view.getListChoice(getAvailableArtifacts());
+        ArrayList<ArrayList<String>> queryResults = getAvailableArtifacts();
+        ArrayList<String> choice = view.getListChoice(queryResults.subList(1, queryResults.size()));
 
         ItemTemplate template = new ItemTemplate(choice.get(0), choice.get(1), choice.get(2), choice.get(3));
 
