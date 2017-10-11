@@ -2,8 +2,6 @@ package com.codecool.rmbk.dao;
 
 public class SQLArtifact extends SqlDAO {
 
-    private SQLBacklog backlog = new SQLBacklog();
-
     public void getAllArtifacts() {
 
         String query = "SELECT * FROM artifacts";

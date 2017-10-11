@@ -13,7 +13,7 @@ public class UserControllerProvider {
         userControllers.add(new AdminController());
     }
 
-    public UserController getByUserType(String userType) {
+    UserController getByUserType(String userType) {
 
         for (UserController controller : userControllers) {
             if (controller.getUserType().equals(userType)) {

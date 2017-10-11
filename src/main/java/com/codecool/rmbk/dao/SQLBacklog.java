@@ -30,12 +30,12 @@ public class SQLBacklog extends SqlDAO {
         Integer coins = 0;
         Integer earned;
         Integer spent;
-        String[] data = {""+id};
+        String[] data = {"" + id};
 
         String query = "SELECT SUM(value) AS balance " +
                 "FROM backlog WHERE owner = ? AND status = 'used';";
-
         processQuery(query, data);
+
         try {
             earned = Integer.parseInt(getResults().get(1).get(0));
         } catch (NumberFormatException e) {
@@ -45,8 +45,8 @@ public class SQLBacklog extends SqlDAO {
 
         query = "SELECT SUM(value) AS balance " +
                 "FROM backlog WHERE owner = ? AND status = 'bought';";
-
         processQuery(query, data);
+
         try {
             spent = Integer.parseInt(getResults().get(1).get(0));
         } catch (NumberFormatException e) {
@@ -62,7 +62,7 @@ public class SQLBacklog extends SqlDAO {
         String query = "SELECT sum(value) " +
                        "FROM backlog " +
                        "WHERE `owner` = ? ";
-        String[] data = {""+id};
+        String[] data = {"" + id};
 
         processQuery(query, data);
         return getResults().get(1).get(0);
