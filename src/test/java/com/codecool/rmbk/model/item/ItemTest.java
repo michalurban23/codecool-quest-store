@@ -22,8 +22,8 @@ class ItemTest {
         assertNotNull(item);
     }
 
-
-
-
-
+    @Test
+    void testGetOwner() {
+        assertEquals(1, (int) item.getOwner());
+    }
 }
