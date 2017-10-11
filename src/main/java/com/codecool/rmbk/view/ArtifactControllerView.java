@@ -24,7 +24,7 @@ public class ArtifactControllerView extends ConsoleUserView {
 
         LinkedHashMap<Integer, String> mainMenu = new LinkedHashMap<>();
 
-        mainMenu.put(1, "View available artifacts");
+        mainMenu.put(1, "Show my artifacts");
         mainMenu.put(2, "Go to shopping centre");
         mainMenu.put(0, "Log out");
 

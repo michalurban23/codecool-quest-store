@@ -1,5 +1,6 @@
 package com.codecool.rmbk.controller;
 
+import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
 import com.codecool.rmbk.model.Shop;
 import com.codecool.rmbk.model.item.ItemTemplate;
@@ -36,8 +37,8 @@ public class ArtifactController {
 
         while(isBrowsed) {
             String choice = view.handleStudentMenu();
-            if(choice.equals("View available artifacts")) {
-                listArtifacts();
+            if(choice.equals("Show my artifacts")) {
+                listMyArtifacts();
             } else if(choice.equals("Go to shopping centre")) {
                 goToShoppingController();
             } else if(choice.equals("Log out")) {
@@ -54,7 +55,7 @@ public class ArtifactController {
         while(isBrowsed) {
             String choice = view.handleMentorMenu();
             if(choice.equals("View artifact templates")) {
-                listArtifacts();
+                listMyArtifacts();
             } else if(choice.equals("Create new template")) {
                 createArtifactTemplate();
             } else if(choice.equals("Edit existing template")) {
@@ -72,12 +73,17 @@ public class ArtifactController {
         view.printList("Artifacts", artifacts);
     }
 
+    public void listMyArtifacts() {
+        ArrayList<ArrayList<String>> myArtifacts = getMyArtifacts();
+        view.printList("My artifacts", myArtifacts);
+    }
+
     public void goToShoppingController() {
 
         Student student = (Student) this.user;
         Shop shop = new Shop(student.getCart(), student.getID());
 
-        ShoppingController shopControl = new ShoppingController(shop);
+        ShoppingController shopControl = new ShoppingController(shop, student);
         shopControl.startShoppingController();
     }
 
@@ -98,6 +104,12 @@ public class ArtifactController {
         return artifacts;
     }
 
+    public ArrayList<ArrayList<String>> getMyArtifacts() {
+        SQLArtifact artifactDao = new SQLArtifact();
+        artifactDao.getArtifact(String.valueOf(user.getID()));
+        ArrayList<ArrayList<String>> myArtifacts = artifactDao.getResults();
+        return myArtifacts;
+    }
 
     public void createArtifactTemplate() {
         String name = view.getInput("Type the name of the artifact: ");
