@@ -18,6 +18,7 @@ public class SQLExperience extends SqlDAO {
 
         processQuery(query, new String[] {level});
 
-        return getResults().get(1).get(0);
+        String levelName = getResults().get(1).get(0);
+        return levelName;
     }
 }

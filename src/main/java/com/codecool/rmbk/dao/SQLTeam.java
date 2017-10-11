@@ -1,16 +1,12 @@
 package com.codecool.rmbk.dao;
 
-
 import com.codecool.rmbk.model.usr.Group;
 import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
-
 import java.util.ArrayList;
 
-public class SQLTeam extends SqlDAO implements TeamDAO{
-
-    private ArrayList<ArrayList<String>> results;
+public class SQLTeam extends SqlDAO implements TeamDAO {
 
     public void getAllGroups() {
 
@@ -29,7 +25,8 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
         Team resultGroup = null;
         String query = "SELECT * FROM groups WHERE id = ?;";
         ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {"" + id});
-        if(queryResult.size() > 1) {
+
+        if (queryResult.size() > 1) {
             resultGroup = new Team(id, queryResult.get(1).get(1));
         }
         return resultGroup;
@@ -40,8 +37,10 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
 
         String query = "INSERT INTO groups (name) VALUES (null);";
         handleQuery(query, null);
-        query = String.format("SELECT * FROM groups ORDER BY id DESC LIMIT 1;");
+
+        query = "SELECT * FROM groups ORDER BY id DESC LIMIT 1;";
         ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
+
         return getTeamById(Integer.parseInt(queryResult.get(1).get(0)));
     }
 
@@ -80,7 +79,7 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
         String[] stringSet = null;
         ArrayList<Team> result = new ArrayList<>();
 
-        if(user.getClass().getSimpleName().equals("Mentor")) {
+        if (user.getClass().getSimpleName().equals("Mentor")) {
             query = "SELECT * FROM groups;";
 
         } else {
@@ -94,7 +93,8 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
         }
 
         ArrayList<ArrayList<String>> queryResult = processQuery(query,stringSet);
-        for(int i=1; i<queryResult.size(); i++) {
+
+        for (int i=1; i<queryResult.size(); i++) {
             result.add(new Team(Integer.parseInt(queryResult.get(i).get(0)), queryResult.get(i).get(1)));
         }
         return result;
@@ -111,7 +111,7 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
         ArrayList<Student> result = new ArrayList<>();
         SQLUsers sqlUsers = new SQLUsers();
 
-        for(ArrayList<String> ar : queryResult.subList(1, queryResult.size())) {
+        for (ArrayList<String> ar : queryResult.subList(1, queryResult.size())) {
             result.add((Student) sqlUsers.getUserByID(Integer.parseInt(ar.get(0))));
         }
         return result;
@@ -134,7 +134,7 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
         SQLUsers sqlUsers = new SQLUsers();
         team.clearMembersList();
 
-        for(ArrayList<String> ar : queryResult.subList(1, queryResult.size())) {
+        for (ArrayList<String> ar : queryResult.subList(1, queryResult.size())) {
             team.addMember((Student) sqlUsers.getUserByID(Integer.parseInt(ar.get(0))));
         }
     }
