@@ -4,7 +4,6 @@ import com.codecool.rmbk.model.item.Item;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 
 public class ShoppingControllerView extends ConsoleUserView {
 
@@ -12,7 +11,7 @@ public class ShoppingControllerView extends ConsoleUserView {
         return handleMenu(createMainMenu());
     }
 
-    public LinkedHashMap<Integer , String> createMainMenu() {
+    private LinkedHashMap<Integer , String> createMainMenu() {
 
         LinkedHashMap<Integer, String> mainMenu = new LinkedHashMap<>();
 
@@ -43,19 +42,6 @@ public class ShoppingControllerView extends ConsoleUserView {
         }
         return toReturn;
     }
-
-    // public Item getItemsListChoice(ArrayList<Item> itemsList) {
-    //     Integer choice = null;
-    //
-    //     do {
-    //         choice = getInteger("Choose index: ");
-    //         if (choice == null) {
-    //             return null;
-    //         }
-    //     } while (choice < 1 || choice > itemsList.size());
-    //
-    //     return itemsList.get(choice - 1);
-    // }
 
     public void printWalletInfo(Integer coins) {
         if(coins <= 0) {
