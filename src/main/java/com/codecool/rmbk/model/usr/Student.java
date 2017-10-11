@@ -3,14 +3,12 @@ package com.codecool.rmbk.model.usr;
 import java.util.ArrayList;
 
 import com.codecool.rmbk.dao.SQLBacklog;
-import com.codecool.rmbk.dao.SQLExperience;
 import com.codecool.rmbk.model.Cart;
-import com.codecool.rmbk.model.quest.Quest;
 
 public class Student extends User implements Holder {
 
     private ArrayList<Team> myGroups;
-    private Class myClass;
+    private Klass myClass;
     private Cart myCart = new Cart();
     private SQLBacklog backlogDao = new SQLBacklog();
     private static ArrayList<Student> objects = new ArrayList<Student>();
