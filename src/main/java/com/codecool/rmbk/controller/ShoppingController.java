@@ -3,9 +3,11 @@ package com.codecool.rmbk.controller;
 import java.util.ArrayList;
 import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
+import com.codecool.rmbk.dao.SQLTeam;
 import com.codecool.rmbk.model.Shop;
 import com.codecool.rmbk.model.item.Item;
 import com.codecool.rmbk.model.item.ItemTemplate;
+import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ShoppingControllerView;
 
 class ShoppingController {
@@ -60,8 +62,12 @@ class ShoppingController {
     private void addToCart() {
 
         Item artifact = getArtifact();
-
-        shop.addToCart(artifact);
+        if(artifact.getTemplate().getSpecial().equals("1")) {
+            view.printError("Sorry, group buying not available yet!");
+        }
+        else {
+            shop.addToCart(artifact);
+        }
     }
 
     private void removeFromCart() {

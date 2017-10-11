@@ -1,5 +1,6 @@
 package com.codecool.rmbk.controller;
 
+import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
 import com.codecool.rmbk.model.Shop;
 import com.codecool.rmbk.model.item.ItemTemplate;
@@ -80,12 +81,14 @@ class ArtifactController {
         view.printList("Artifacts", artifacts);
     }
 
+
     private void goToShoppingController() {
+
 
         Student student = (Student) this.user;
         Shop shop = new Shop(student.getCart(), student.getID());
 
-        ShoppingController shopControl = new ShoppingController(shop);
+        ShoppingController shopControl = new ShoppingController(shop, student);
         shopControl.startShoppingController();
     }
 
@@ -109,6 +112,12 @@ class ArtifactController {
         return artifacts;
     }
 
+    public ArrayList<ArrayList<String>> getMyArtifacts() {
+        SQLArtifact artifactDao = new SQLArtifact();
+        artifactDao.getArtifact(String.valueOf(user.getID()));
+        ArrayList<ArrayList<String>> myArtifacts = artifactDao.getResults();
+        return myArtifacts;
+    }
 
     private void createArtifactTemplate() {
 
