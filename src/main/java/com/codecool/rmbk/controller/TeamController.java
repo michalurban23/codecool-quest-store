@@ -3,25 +3,26 @@ package com.codecool.rmbk.controller;
 import com.codecool.rmbk.dao.*;
 import com.codecool.rmbk.model.usr.*;
 import com.codecool.rmbk.view.ConsoleGroupView;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-public class TeamController {
+class TeamController {
 
-    MenuDAO menuDAO;
-    ConsoleGroupView view;
-    TeamDAO groupDAO;
-    UserInfoDAO userDAO;
+    private MenuDAO menuDAO;
+    private ConsoleGroupView view;
+    private TeamDAO groupDAO;
+    private UserInfoDAO userDAO;
 
-    public TeamController() {
+    TeamController() {
+
         menuDAO = new SQLMenuDAO();
         view = new ConsoleGroupView();
         groupDAO = new SQLTeam();
         userDAO = new SQLUsers();
     }
 
-    public void start (User user) {
+    void start(User user) {
+
         if (user.getClass().getSimpleName().equals("Mentor")) {
             handleCRUDMenu(user);
         } else {
@@ -29,9 +30,10 @@ public class TeamController {
         }
     }
 
+    private void editGroupName(Group team) {
 
-    public void editGroupName(Group team) {
         String newName = view.getNewGroupName();
+
         if (newName != null) {
             if (groupDAO.renameGroup(team, newName)) {
                 team.setName(newName);
@@ -39,7 +41,7 @@ public class TeamController {
         }
     }
 
-    public void handleCRUDMenu(User user) {
+    private void handleCRUDMenu(User user) {
 
         boolean isBrowsed = true;
 
@@ -67,7 +69,8 @@ public class TeamController {
         }
     }
 
-    public void handleBrowseMenu(User user) {
+    private void handleBrowseMenu(User user) {
+
         boolean isBrowsed = true;
 
         while(isBrowsed) {
@@ -95,6 +98,7 @@ public class TeamController {
         boolean isBrowsed = true;
 
         while (isBrowsed) {
+
             view.clearScreen();
             groupDAO.updateMembers(team);
             LinkedHashMap<Integer, String> menu = menuDAO.getTeamDetailsMenu("edit");
@@ -104,7 +108,9 @@ public class TeamController {
             if (choice.equals(menu.get(1))) {
                 editGroupName(team);
             } else if (choice.equals(menu.get(2))) {
+
                 Student student = view.getListChoice(groupDAO.getStudentsList(team));
+
                 if (student != null) {
                     handleMembership(student, team);
                 }
@@ -119,12 +125,14 @@ public class TeamController {
     }
 
     private void addUser(Group team) {
+
         boolean isBrowsed = true;
 
         while(isBrowsed) {
 
             view.clearScreen();
             groupDAO.updateMembers(team);
+
             ArrayList<ArrayList<String>> users = userDAO.getIdNameList("Student");
             LinkedHashMap<Integer,String> menu = menuDAO.getBrowseMenu("show");
             String choice = view.handleAddStudent(menu, users);
@@ -135,6 +143,7 @@ public class TeamController {
                 if (chosenUserInfo != null) {
                     Integer userId = Integer.parseInt(chosenUserInfo.get(0));
                     Student chosenStudent = (Student) userDAO.getUserByID(userId);
+
                     if (!groupDAO.isInGroup(chosenStudent, team)) {
                         groupDAO.addStudentToGroup(team, chosenStudent);
                         isBrowsed = false;
@@ -149,6 +158,7 @@ public class TeamController {
     }
 
     private void handleMembership(Student student, Group team) {
+
         boolean isBrowsed = true;
 
         while(isBrowsed){

@@ -2,7 +2,6 @@ package com.codecool.rmbk.controller;
 
 import com.codecool.rmbk.dao.SQLQuest;
 import com.codecool.rmbk.dao.SQLQuestTemplate;
-import com.codecool.rmbk.dao.SqlDAO;
 import com.codecool.rmbk.model.quest.Quest;
 import com.codecool.rmbk.model.quest.QuestTemplate;
 import com.codecool.rmbk.model.usr.User;
@@ -11,7 +10,7 @@ import com.codecool.rmbk.view.ConsoleView;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class QuestController {
+class QuestController {
 
     private ConsoleView display = new ConsoleQuestView();
     private SQLQuest questDAO = new SQLQuest();

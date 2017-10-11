@@ -1,5 +1,6 @@
 package com.codecool.rmbk.controller;
 
+import java.util.ArrayList;
 import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
 import com.codecool.rmbk.dao.SQLTeam;
@@ -9,49 +10,57 @@ import com.codecool.rmbk.model.item.ItemTemplate;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ShoppingControllerView;
 
-import java.util.ArrayList;
-
-public class ShoppingController {
+class ShoppingController {
 
     private Shop shop;
     private ShoppingControllerView view;
-    private User user;
+    private boolean isBrowsed;
 
-    public ShoppingController(Shop shop, User user) {
+    ShoppingController(Shop shop) {
+
         this.view = new ShoppingControllerView();
         this.shop = shop;
-        this.user = user;
     }
 
-    public void startShoppingController() {
-        handleShoppingMenu();
-    }
+    void startShoppingController() {
 
-    public void handleShoppingMenu() {
+        isBrowsed = true;
 
-        boolean isBrowsed = true;
-
-        while(isBrowsed) {
+        while (isBrowsed) {
             String choice = view.handleMainMenu();
-            if(choice.equals("Add artifact to cart")) {
+            handleShoppingMenu(choice);
+        }
+    }
+
+    private void handleShoppingMenu(String choice) {
+
+        switch (choice) {
+            case "Add artifact to cart":
                 addToCart();
-            } else if(choice.equals("Remove artifact from cart")) {
+                break;
+            case "Remove artifact from cart":
                 removeFromCart();
-            }else if(choice.equals("Flush cart")) {
+                break;
+            case "Flush cart":
                 flushCart();
-            } else if(choice.equals("List cart")) {
+                break;
+            case "List cart":
                 listCart();
-            }else if(choice.equals("Checkout")) {
+                break;
+            case "Checkout":
                 checkout();
-            }else if(choice.equals("Check wallet")) {
+                break;
+            case "Check wallet":
                 checkWallet();
-            }else if(choice.equals("Log out")) {
+                break;
+            case "Log out":
                 isBrowsed = false;
-            }
+                break;
         }
     }
 
     private void addToCart() {
+
         Item artifact = getArtifact();
         if(artifact.getTemplate().getSpecial().equals("1")) {
             view.printError("Sorry, group buying not available yet!");
@@ -62,67 +71,80 @@ public class ShoppingController {
     }
 
     private void removeFromCart() {
+
         listCart();
-        if(shop.getItemsList().size() != 0) {
+        Boolean cartIsEmpty = shop.getItemsList().size() == 0;
+
+        if (!cartIsEmpty) {
             Item item = view.getListChoice(shop.getItemsList());
             shop.removeFromCart(item);
         }
     }
 
     private void listCart() {
+
         ArrayList<Item> itemsList = shop.getItemsList();
         ArrayList<ArrayList<String>> cartList = view.getDataFromCart(itemsList);
+
         view.printList("Cart", cartList);
     }
 
     private void checkout() {
-        if(shop.checkWallet() <= shop.getTotalPrice()) {
+
+        Boolean notEnoughCoins = shop.checkWallet() <= shop.getTotalPrice();
+
+        if (notEnoughCoins) {
             view.printError("Sorry. You don't have enough coins. Try removing some items from the cart.");
-        }
-        else {
+        } else {
             listCart();
-            view.printError("Total price > " + shop.getTotalPrice().toString() + " <");
-            if(view.getInput("Are you sure you want to pay for those items?\n").equals("y")) {
-                view.printSuccess("Congratulations! You've succesfully paid for your items.");
+            view.printWarning("Total price > " + shop.getTotalPrice().toString() + " <");
+
+            if (view.getInput("Are you sure you want to pay for those items?\n").equals("y")) {
+                view.printSuccess("Congratulations! You've successfully paid for your items.");
 
                 addArtifactsAfterPayment(shop.getItemsList());
                 shop.payForCart();
                 flushCart();
 
-                view.printSuccess("You're current balance is " + shop.checkWallet().toString() + ".");
+                view.printSuccess("Your current balance is " + shop.checkWallet().toString() + ".");
             }
         }
     }
 
     private void flushCart() {
-        if(shop.getItemsList().size() != 0) {
-            shop.flushCart();
-        }
-        else {
+
+        Boolean cartIsEmpty = shop.getItemsList().size() == 0;
+
+        if (cartIsEmpty) {
             view.printWarning("No matching data in Cart");
+        } else {
+            shop.flushCart();
         }
     }
 
     private void checkWallet() {
+
         view.printWalletInfo(shop.checkWallet());
     }
 
     private Item getArtifact() {
+
         ItemTemplate template = getArtifactTemplate();
         Item artifact = getNewArtifact(template);
 
         return artifact;
     }
 
-    public ArrayList<ArrayList<String>> getAvailableArtifacts() {
+    private ArrayList<ArrayList<String>> getAvailableArtifacts() {
+
         SQLArtifactTemplate artifactDao = new SQLArtifactTemplate();
         artifactDao.getAllArtifactTemplates();
-        ArrayList<ArrayList<String>> artifacts = artifactDao.getResults();
 
-        return artifacts;
+        return artifactDao.getResults();
     }
 
-    public ItemTemplate getArtifactTemplate() {
+    private ItemTemplate getArtifactTemplate() {
+
         listArtifacts();
         ArrayList<ArrayList<String>> queryResults = getAvailableArtifacts();
         ArrayList<String> choice = view.getListChoice(queryResults.subList(1, queryResults.size()));
@@ -132,32 +154,35 @@ public class ShoppingController {
         return template;
     }
 
-    public void listArtifacts() {
+    private void listArtifacts() {
+
         ArrayList<ArrayList<String>> artifacts = getAvailableArtifacts();
         view.printList("Artifacts", artifacts);
     }
 
-     public void addArtifactToDatabase(Item artifact) {
+     private void addArtifactToDatabase(Item artifact) {
 
          SQLArtifact artifacts = new SQLArtifact();
          artifacts.addArtifact(getArtifactInfo(artifact));
      }
 
-     public void addArtifactsAfterPayment(ArrayList<Item> itemsList) {
+     private void addArtifactsAfterPayment(ArrayList<Item> itemsList) {
+
          for(Item item : itemsList) {
              addArtifactToDatabase(item);
          }
      }
 
 
-    public Item getNewArtifact(ItemTemplate template) {
-        Item artifact = new Item(template, shop.getId());
+    private Item getNewArtifact(ItemTemplate template) {
 
-        return artifact;
+        return new Item(template, shop.getId());
     }
 
-    public String[] getArtifactInfo(Item artifact) {
+    private String[] getArtifactInfo(Item artifact) {
+
        String[] info  = new String[3];
+
        info[0] = artifact.getTemplate().getName();
        info[1] = artifact.getOwner().toString();
        info[2] = artifact.getCompletion();

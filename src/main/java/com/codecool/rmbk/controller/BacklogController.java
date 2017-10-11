@@ -6,11 +6,10 @@ import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ConsoleBacklogView;
 import com.codecool.rmbk.view.ConsoleView;
-
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class BacklogController {
+class BacklogController {
 
     private ConsoleView display = new ConsoleBacklogView();
     private SQLBacklog backlogDao = new SQLBacklog();
