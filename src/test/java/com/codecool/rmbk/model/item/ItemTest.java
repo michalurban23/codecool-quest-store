@@ -31,4 +31,10 @@ class ItemTest {
     void testGetTemplate() {
         assertNotNull(item.getTemplate());
     }
+
+    @Test
+    void testGetBuyTime() {
+        assertNotNull(item.getBuyTime());
+    }
+
 }
