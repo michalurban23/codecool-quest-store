@@ -48,4 +48,11 @@ class QuestTest {
         Quest quest = new Quest(template, user);
         assertEquals("Explore a dungeon", quest.getTemplateName());
     }
+
+    @Test
+    public void testGetValue() {
+
+        Quest quest = new Quest(template, user);
+        assertEquals("100", quest.getValue());
+    }
 }
