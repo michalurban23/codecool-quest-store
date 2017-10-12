@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class ItemTest {
@@ -42,5 +43,14 @@ class ItemTest {
         Item item = new Item(itemTemplate, 1);
         assertNotNull(item.getBuyTime());
     }
+
+    @Test
+    void testGetCompletion() {
+        ItemTemplate itemTemplate = mock(ItemTemplate.class);
+        when(itemTemplate.getSpecial()).thenReturn("1");
+        Item item = new Item(itemTemplate, 1);
+        assertEquals("30", item.getCompletion());
+    }
+
 
 }
