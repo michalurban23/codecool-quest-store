@@ -60,7 +60,10 @@ class ItemTest {
         assertEquals("NULL", item.getCompletion());
     }
 
-
-
-
+    @Test
+    void testSetRightOwner() {
+        ItemTemplate itemTemplate = mock(ItemTemplate.class);
+        when(itemTemplate.getSpecial()).thenReturn("0");
+        assertThrows(IllegalArgumentException.class, () -> new Item(itemTemplate, -1));
+    }
 }
