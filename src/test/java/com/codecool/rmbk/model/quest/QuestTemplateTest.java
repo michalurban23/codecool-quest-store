@@ -102,4 +102,17 @@ class QuestTemplateTest {
 
         assertArrayEquals(expected, questTemplate.getQuestTemplate());
     }
+
+    @Test
+    public void testUpdateData() {
+
+        QuestTemplate questTemplate = new QuestTemplate(data);
+
+        String [] newData = {"Test description", "50", "0", "1"};
+        questTemplate.updateData(newData);
+
+        String[] expected = {"Explore a dungeon", "Test description", "50", "0", "1"};
+
+        assertArrayEquals(expected, questTemplate.getQuestTemplate());
+    }
 }
