@@ -19,6 +19,13 @@ class ItemTemplateTest {
         assertEquals("value", itemTemplate.getValue());
     }
 
+    @Test
+    void testSetValue() {
+        itemTemplate.setValue("newValue")
+        assertEquals("newValue", itemTemplate.getValue());
+    }
+
+
 
 
 }
