@@ -42,4 +42,14 @@ class CartTest {
         assertEquals(0, cart.getItemsList().size());
     }
 
+    @Test
+    public void testFlushCart() {
+
+        cart.addToCart(item);
+        cart.addToCart(item);
+
+        cart.flushCart();
+
+        assertEquals(0, cart.getItemsList().size());
+    }
 }
