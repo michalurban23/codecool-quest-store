@@ -36,5 +36,11 @@ class ItemTemplateTest {
         assertEquals("description", itemTemplate.getDescription());
     }
 
+    @Test
+    void testGetName() {
+        assertEquals("name", itemTemplate.getName());
+    }
+
+}
 
 }
