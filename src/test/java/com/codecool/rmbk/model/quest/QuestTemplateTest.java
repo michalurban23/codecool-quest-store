@@ -76,4 +76,13 @@ class QuestTemplateTest {
         assertEquals(expected, questTemplate.getName());
 
     }
+
+    @Test
+    public void testSetValueNegativeValue() {
+
+        QuestTemplate questTemplate = new QuestTemplate(data);
+        assertThrows(IllegalArgumentException.class, () -> {
+            questTemplate.setValue(-100);
+        });
+    }
 }
