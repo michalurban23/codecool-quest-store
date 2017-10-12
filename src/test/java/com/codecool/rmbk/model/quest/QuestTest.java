@@ -33,4 +33,12 @@ class QuestTest {
         Quest quest = new Quest(template, user);
         assertNotNull(quest.getOwnerID());
     }
+
+    @Test
+    public void testGetOwnerID() {
+
+        Quest quest = new Quest(template, user);
+        int questID = quest.getOwnerID();
+        assertEquals(1, questID);
+    }
 }
