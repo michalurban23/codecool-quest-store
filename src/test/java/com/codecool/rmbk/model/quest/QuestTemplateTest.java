@@ -65,4 +65,15 @@ class QuestTemplateTest {
             QuestTemplate questTemplate = new QuestTemplate(listData);
         });
     }
+
+    @Test
+    public void testGetName() {
+
+        QuestTemplate questTemplate = new QuestTemplate(data);
+
+        String expected = "Explore a dungeon";
+
+        assertEquals(expected, questTemplate.getName());
+
+    }
 }
