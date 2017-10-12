@@ -1,5 +1,6 @@
 package com.codecool.rmbk.model.item;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +19,12 @@ class ItemTest {
     }
 
     @Test
-    void testGetOwner() {
+    void testGetSetOwner() {
         ItemTemplate itemTemplate = mock(ItemTemplate.class);
         when(itemTemplate.getSpecial()).thenReturn("1");
         Item item = new Item(itemTemplate, 1);
-        assertEquals(1, (int) item.getOwner());
+        item.setOwner(2);
+        assertEquals(2, (int) item.getOwner());
     }
 
     @Test
