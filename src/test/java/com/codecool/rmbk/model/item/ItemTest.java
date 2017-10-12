@@ -52,5 +52,15 @@ class ItemTest {
         assertEquals("30", item.getCompletion());
     }
 
+    @Test
+    void testSetRightCompletion() {
+        ItemTemplate itemTemplate = mock(ItemTemplate.class);
+        when(itemTemplate.getSpecial()).thenReturn("0");
+        Item item = new Item(itemTemplate, 1);
+        assertEquals("NULL", item.getCompletion());
+    }
+
+
+
 
 }
