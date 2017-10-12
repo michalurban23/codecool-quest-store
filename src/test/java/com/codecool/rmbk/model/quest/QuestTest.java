@@ -41,4 +41,11 @@ class QuestTest {
         int questID = quest.getOwnerID();
         assertEquals(1, questID);
     }
+
+    @Test
+    public void testGetTemplateName() {
+
+        Quest quest = new Quest(template, user);
+        assertEquals("Explore a dungeon", quest.getTemplateName());
+    }
 }
