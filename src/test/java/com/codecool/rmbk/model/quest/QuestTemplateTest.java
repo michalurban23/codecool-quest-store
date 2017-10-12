@@ -85,4 +85,12 @@ class QuestTemplateTest {
             questTemplate.setValue(-100);
         });
     }
+
+    @Test
+    public void testSetGetDescription() {
+
+        QuestTemplate questTemplate = new QuestTemplate(data);
+        questTemplate.setDescription("test description");
+        assertEquals("test description", questTemplate.getDescription());
+    }
 }
