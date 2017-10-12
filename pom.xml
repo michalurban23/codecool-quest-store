@@ -108,7 +108,7 @@
     <dependency>
       <groupId>org.junit.vintage</groupId>
       <artifactId>junit-vintage-engine</artifactId>
-      <version>4.12.0-RC3</version>
+      <version>4.12.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -128,6 +128,5 @@
       <artifactId>junit-jupiter-api</artifactId>
       <version>5.0.1</version>
     </dependency>
->>>>>>> 05a7bb07060ed40bea0831728c49bc5b5d9afa3d
   </dependencies>
 </project>
