@@ -11,7 +11,7 @@ class ItemTemplateTest {
 
     @BeforeEach
     void setup() {
-        this.itemTemplate = new ItemTemplate("name", "description", "value", "special"));
+        this.itemTemplate = new ItemTemplate("name", "description", "value", "special");
     }
 
     @Test
@@ -21,7 +21,7 @@ class ItemTemplateTest {
 
     @Test
     void testSetValue() {
-        itemTemplate.setValue("newValue")
+        itemTemplate.setValue("newValue");
         assertEquals("newValue", itemTemplate.getValue());
     }
 
@@ -41,7 +41,9 @@ class ItemTemplateTest {
         assertEquals("name", itemTemplate.getName());
     }
 
+    @Test
+    void testSetName() {
+        itemTemplate.setName("newName");
+        assertEquals("newName", itemTemplate.getName());
+    }
 }
-
-
-
