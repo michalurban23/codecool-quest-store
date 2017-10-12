@@ -25,6 +25,12 @@ class ItemTemplateTest {
         assertEquals("newValue", itemTemplate.getValue());
     }
 
+    @Test
+    void testSetDescription() {
+        itemTemplate.setValue("newDescription");
+        assertEquals("newDescription", itemTemplate.getDescription());
+    }
+
 
 
 
