@@ -34,4 +34,13 @@ class QuestTemplateTest {
         QuestTemplate questTemplate = new QuestTemplate(data);
         assertNotNull(questTemplate.getName());
     }
+
+    @Test
+    public void testParameterizedConstuctior1WithNegativeValue() {
+
+        String[] data = {"Explore a dungeon", "Finishing a Teamwork week", "-100", "0", "1"};
+        assertThrows(IllegalArgumentException.class, () -> {
+            QuestTemplate questTemplate = new QuestTemplate(data);
+        });
+    }
 }
