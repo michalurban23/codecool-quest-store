@@ -32,4 +32,14 @@ class CartTest {
 
         assertEquals(1, cart.getItemsList().size());
     }
+
+    @Test
+    public void testRemoveCart() {
+
+        cart.addToCart(item);
+        cart.removeFromCart(item);
+
+        assertEquals(0, cart.getItemsList().size());
+    }
+
 }
