@@ -43,4 +43,11 @@ class QuestTemplateTest {
             QuestTemplate questTemplate = new QuestTemplate(data);
         });
     }
+
+    @Test
+    public void testParameterizedConstuctor2() {
+
+        QuestTemplate questTemplate = new QuestTemplate(listData);
+        assertNotNull(questTemplate.getName());
+    }
 }
