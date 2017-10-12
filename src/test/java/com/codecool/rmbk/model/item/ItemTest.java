@@ -3,7 +3,8 @@ package com.codecool.rmbk.model.item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -14,6 +15,7 @@ class ItemTest {
     @BeforeEach
     void setup() {
         ItemTemplate itemTemplate = mock(ItemTemplate.class);
+        when(itemTemplate.getSpecial()).thenReturn("1");
         Item item = new Item(itemTemplate, 1);
     }
 
