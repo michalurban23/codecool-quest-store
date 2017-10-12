@@ -93,4 +93,13 @@ class QuestTemplateTest {
         questTemplate.setDescription("test description");
         assertEquals("test description", questTemplate.getDescription());
     }
+
+    @Test
+    public void testGetQuestTemplate() {
+
+        QuestTemplate questTemplate = new QuestTemplate(data);
+        String[] expected = {"Explore a dungeon", "Finishing a Teamwork week", "100", "0", "1"};
+
+        assertArrayEquals(expected, questTemplate.getQuestTemplate());
+    }
 }
