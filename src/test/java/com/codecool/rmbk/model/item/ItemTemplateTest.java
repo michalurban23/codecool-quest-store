@@ -27,7 +27,7 @@ class ItemTemplateTest {
 
     @Test
     void testSetDescription() {
-        itemTemplate.setValue("newDescription");
+        itemTemplate.setDescription("newDescription");
         assertEquals("newDescription", itemTemplate.getDescription());
     }
 
@@ -43,4 +43,5 @@ class ItemTemplateTest {
 
 }
 
-}
+
+
