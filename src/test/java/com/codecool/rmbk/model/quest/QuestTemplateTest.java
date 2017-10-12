@@ -50,4 +50,19 @@ class QuestTemplateTest {
         QuestTemplate questTemplate = new QuestTemplate(listData);
         assertNotNull(questTemplate.getName());
     }
+
+    @Test
+    public void testParameterizedConstuctor2WithNegativeValue() {
+
+        ArrayList<String> listData = new ArrayList<>();
+        listData.add("Explore a dungeon");
+        listData.add("Finishing a Teamwork week");
+        listData.add("-100");
+        listData.add("0");
+        listData.add("1");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            QuestTemplate questTemplate = new QuestTemplate(listData);
+        });
+    }
 }
