@@ -43,5 +43,22 @@ class UserTest {
     public void testIfConstructorMakesPropperIdValue(){
         assertEquals(15, user.getID());
     }
+    @Test
+    public void testIfFirstNameSetterSetsPropperValue(){
+        user.setFirstName("Maria");
+        assertEquals("Maria", user.getFirstName());
+    }
+
+    @Test
+    public void testIfLastNameSetterSetsPropperValue(){
+        user.setLastName("Nowak");
+        assertEquals("Nowak", user.getLastName());
+    }
+
+    @Test
+    public void testIfEmailSetterSetsPropperValue(){
+        user.setEmail("maria.nowak@o2.pl");
+        assertEquals("maria.nowak@o2.pl", user.getEmail());
+    }
 
 }
