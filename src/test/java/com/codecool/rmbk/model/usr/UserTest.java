@@ -61,4 +61,14 @@ class UserTest {
         assertEquals("maria.nowak@o2.pl", user.getEmail());
     }
 
+    @Test
+    public void testIfEmailSetterThrowsExceptionWhenMialhasInappriopirateFormat() {
+        assertAll(
+                () -> assertThrows(IllegalArgumentException.class, () -> user.setEmail("maria.nowak")),
+                () -> assertThrows(IllegalArgumentException.class, () -> user.setEmail("maria")),
+                () -> assertThrows(IllegalArgumentException.class, () -> user.setEmail("@ow.pl")),
+                () -> assertThrows(IllegalArgumentException.class, () -> user.setEmail("maria@pl")),
+                () -> assertThrows(IllegalArgumentException.class, () -> user.setEmail(""))
+        );
+    }
 }
