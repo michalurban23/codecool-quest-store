@@ -6,7 +6,6 @@ public abstract class User {
     protected String lastName;
     protected String email;
     protected String address;
-
     protected Integer id;
 
     public User(String firstName, String lastName, String email, String address, Integer id) {
@@ -72,10 +71,4 @@ public abstract class User {
 
         return this.firstName + " " + this.lastName;
     }
-
-    public String toString() {
-
-        return this.firstName + " " + this.lastName;
-    }
-
 }
