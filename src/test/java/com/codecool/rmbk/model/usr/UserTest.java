@@ -8,5 +8,40 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserTest {
 
     private static User user;
+    @BeforeAll
+    public static void userConstructor(){
+        if(user == null){
+            user = new Student("Jan", "Kowalski", "jan.kowalski@o2.pl", "Kraków", 15);
+        }
+    }
+
+    @Test
+    public void testIfConstructorCreateObject(){
+        assertNotNull(user);
+    }
+    @Test
+    public void testIfConstructorMakesPropperFirstNameValue(){
+        assertEquals("Jan", user.getFirstName());
+    }
+
+    @Test
+    public void testIfConstructorMakesPropperLastNameValue(){
+        assertEquals("Kowalski", user.getLastName());
+    }
+
+    @Test
+    public void testIfConstructorMakesPropperEmailValue(){
+        assertEquals("jan.kowalski@o2.pl", user.getEmail());
+    }
+
+    @Test
+    public void testIfConstructorMakesPropperAdressValue(){
+        assertEquals("Kraków", user.getAddress());
+    }
+
+    @Test
+    public void testIfConstructorMakesPropperIdValue(){
+        assertEquals(15, user.getID());
+    }
 
 }
