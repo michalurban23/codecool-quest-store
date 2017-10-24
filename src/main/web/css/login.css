@@ -1,0 +1,45 @@
+body {
+    background-image: url("../assets/backdrop-21534_1280.jpg");
+    background-attachment: fixed;
+    background-size: cover
+}
+
+div.login {
+    background-image: url("../assets/sky-232000_640.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    border: 5px solid black;
+    border-radius: 250px;
+    width: 50%;
+    padding: 50px 50px;
+    margin: 200px auto;
+}
+
+p.login-title {
+    color: indigo;
+    text-align: center;
+    margin-top: -15px;
+    font-size: 23pt;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+div.login-button-container {
+    background-color: transparent;
+    text-align: center;
+}
+
+<div style="display:flex;justify-content:center;align-items:flex-end;">
+div.login-button {
+    display:block;
+    float: left;
+    padding: 10px 20px;
+    margin: auto;
+}
+
+div.login-button > a {
+    color: indigo;
+    padding: 0px;
+    text-decoration: none;
+    font-size: 12pt;
+}
