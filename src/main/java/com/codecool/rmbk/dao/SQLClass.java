@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 public class SQLClass extends SQLGroups {
 
-    private ArrayList<ArrayList<String>> results;
-
     public SQLClass() {
 
         this.tableName = "class_name";
