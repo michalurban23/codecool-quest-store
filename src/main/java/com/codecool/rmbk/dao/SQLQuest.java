@@ -7,10 +7,20 @@ public class SQLQuest extends SqlDAO {
 
     private SQLBacklog backlog = new SQLBacklog();
 
-    public ArrayList<ArrayList<String>> getMyQuests(Integer id) {
+    public ArrayList<ArrayList<String>> getMyQuests(Integer id, String teamName) {
 
-        String query = "SELECT * FROM quests WHERE owner = ?;";
-        processQuery(query, new String[] {"" + id});
+        String query;
+
+        if (teamName.equals("solo")) {
+            query = "SELECT * FROM quests WHERE owner = ?;";
+            processQuery(query, new String[] {"" + id});
+        } else {
+            query = "SELECT * FROM quests JOIN groups, user_groups " +
+                    "ON quests.owner = user_groups.user_id AND groups.id = user_groups.group_id " +
+                    "WHERE groups.name = ?;";
+            processQuery(query, new String[] {teamName});
+        }
+
         return getResults();
     }
 

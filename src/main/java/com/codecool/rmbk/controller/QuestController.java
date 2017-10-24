@@ -2,8 +2,10 @@ package com.codecool.rmbk.controller;
 
 import com.codecool.rmbk.dao.SQLQuest;
 import com.codecool.rmbk.dao.SQLQuestTemplate;
+import com.codecool.rmbk.dao.SQLTeam;
 import com.codecool.rmbk.model.quest.Quest;
 import com.codecool.rmbk.model.quest.QuestTemplate;
+import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.ConsoleQuestView;
 import com.codecool.rmbk.view.ConsoleView;
@@ -15,10 +17,12 @@ class QuestController {
     private ConsoleView display = new ConsoleQuestView();
     private SQLQuest questDAO = new SQLQuest();
     private SQLQuestTemplate templateDAO = new SQLQuestTemplate();
+    private SQLTeam teamDAO = new SQLTeam();
     private TreeMap<Integer, String> menu = new TreeMap<>();
     private User user;
-    private Boolean controllerRunning;
+    private Team team = null;
     private String accessLevel = "";
+    private Boolean controllerRunning;
 
     void start(User user) {
 
@@ -27,7 +31,7 @@ class QuestController {
 
         if (user.getClass().getSimpleName().equals("Student")) {
             createStudentMenu();
-            accessLevel = "Student";
+            handleIsGroup();
         } else {
             createMentorMenu();
             accessLevel = "Mentor";
@@ -58,6 +62,29 @@ class QuestController {
         } catch (NumberFormatException e) {
             display.printError("Invalid input! Try again.");
             display.pause();
+        }
+    }
+
+    private void handleIsGroup() {
+
+        Boolean decisionMade = false;
+        String choice = display.getInput("Do you want to proceed solo or as a team? (s/t) ");
+
+        while (!decisionMade) {
+            switch (choice) {
+                case "s":
+                    accessLevel = "StudentSolo";
+                    decisionMade = true;
+                    break;
+                case "t":
+                    accessLevel = "StudentTeam";
+                    selectTeam();
+                    decisionMade = true;
+                    break;
+                default:
+                    choice = display.getInput("No such choice. Type 's' or 't': ");
+                    break;
+            }
         }
     }
 
@@ -119,6 +146,15 @@ class QuestController {
                 display.printWarning("No such option available");
                 display.pause();
         }
+    }
+
+    private void selectTeam() {
+
+        ArrayList<ArrayList<String>> results = teamDAO.getUserGroups(user);
+        display.printList("Your teams", results);
+
+        ArrayList<String> teams = display.getListChoice(results.subList(1, results.size()));
+        this.team = (Team) teamDAO.getTeamByName(teams.get(0));
     }
 
     private void showAllTemplates() {
@@ -189,8 +225,9 @@ class QuestController {
 
     private void showMyQuests() {
 
+        String teamName = team != null ? team.getName() : "solo";
         String title = "My Quests";
-        ArrayList<ArrayList<String>> results = questDAO.getMyQuests(user.getID());
+        ArrayList<ArrayList<String>> results = questDAO.getMyQuests(user.getID(), teamName);
 
         display.printList(title, results);
     }
@@ -207,6 +244,9 @@ class QuestController {
         questDAO.getNewQuest(quest);
     }
 
-    private void submitQuest() {;}
+    private void submitQuest() {
+
+        display.printWarning("Not Implemented Yet. Soon.");
+    }
 
 }
