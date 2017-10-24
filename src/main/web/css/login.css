@@ -26,20 +26,27 @@ p.login-title {
 
 div.login-button-container {
     background-color: transparent;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-<div style="display:flex;justify-content:center;align-items:flex-end;">
 div.login-button {
-    display:block;
-    float: left;
-    padding: 10px 20px;
-    margin: auto;
+    display: grid;
+    padding: 0 20px;
+    border: 2px dotted black;
+    border-radius: 20px;
 }
 
-div.login-button > a {
+div.login-button-container > a {
     color: indigo;
-    padding: 0px;
+    padding: 10px 30px;
     text-decoration: none;
-    font-size: 12pt;
+    font-size: 21pt;
+}
+
+div.login-button-container > a:hover {
+    color: silver;
+    padding: 10px 30px;
+    text-decoration: none;
 }
