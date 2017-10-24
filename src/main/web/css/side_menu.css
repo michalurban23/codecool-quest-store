@@ -1,0 +1,6 @@
+.side_container {
+    display: flex;
+    align-content: flex-start;
+    flex-direction: column;
+    padding: 2px;
+}
