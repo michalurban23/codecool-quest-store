@@ -1,0 +1,15 @@
+Areas we covered with tests:
+
+- package View -> all classes
+- package model -> all classes
+- package dao -> admin, artifact, codecooler, connectionProvider
+
+Line coverage :
+
+In a choosen scope we covered
+- 100% classes
+- 91% lines
+
+Overall opinion :
+
+Project is decent, however we found at least 3-4 spots, where code could be improved. All suggestions are detailed in the CodeReview.txt file we uploaded into other team repository.

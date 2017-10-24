@@ -2,8 +2,6 @@ package com.codecool.rmbk.controller;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
-
 import com.codecool.rmbk.dao.MenuDAO;
 import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.SQLUsers;
@@ -13,12 +11,13 @@ import com.codecool.rmbk.view.ConsoleUserView;
 
 public abstract class UserController {
 
-    User user;
-    ConsoleUserView view;
-    UserInfoDAO userDao;
-    MenuDAO menuDao;
+    private User user;
+    private ConsoleUserView view;
+    private UserInfoDAO userDao;
+    private MenuDAO menuDao;
 
-    public UserController() {
+    UserController() {
+
         view = new ConsoleUserView();
         userDao = new SQLUsers();
         menuDao = new SQLMenuDAO();
@@ -29,7 +28,7 @@ public abstract class UserController {
         this.user = user;
     }
 
-    public void start (User user) {
+    void start(User user) {
 
         if (user.getClass().getSimpleName().equals(getUserType())) {
             setUser(user);
@@ -39,56 +38,57 @@ public abstract class UserController {
         }
     }
 
-    public void editUserData(User user) {
+    private void editUserData(User user) {
+
         String[] newData = view.getNewUserData();
 
         if (newData[0] != null) {
             user.setFirstName(newData[0]);
-        }
-        if (newData[1] != null) {
+        } if (newData[1] != null) {
             user.setLastName(newData[1]);
-        }
-        if (newData[2] != null) {
+        } if (newData[2] != null) {
             user.setEmail(newData[2]);
-        }
-        if (newData[3] != null) {
+        } if (newData[3] != null) {
             user.setAddress(newData[3]);
         }
         userDao.updateUser(user);
     }
 
-    public void handleMainMenu() {
+    private void handleMainMenu() {
 
         boolean isBrowsed = true;
 
-        while(isBrowsed){
+        while (isBrowsed){
             view.clearScreen();
             view.showShortInfo(user);
             LinkedHashMap<Integer,String> menu = menuDao.getMainMenu(user);
             String choice = view.handleMenu(menu);
 
-            if(choice.equals(menu.get(1))){
+            if (choice.equals(menu.get(1))){
                 view.showFullInfo(user);
                 editUserData(user);
-            } else if(choice.equals(menu.get(2))) {
+            } else if (choice.equals(menu.get(2))) {
                 ClassController classController = new ClassController();
                 classController.start(user);
-            } else if(choice.equals(menu.get(3))) {
+            } else if (choice.equals(menu.get(3))) {
                 StudentController studentController = new StudentController();
                 studentController.start(user);
-            } else if(choice.equals(menu.get(4))) {
+            } else if (choice.equals(menu.get(4))) {
                 MentorController mentorController = new MentorController();
                 mentorController.start(user);
-            } else if(choice.equals(menu.get(5))) {
+            } else if (choice.equals(menu.get(5))) {
                 TeamController groupController = new TeamController();
                 groupController.start(user);
-            } else if(choice.equals(menu.get(6))) {
+            } else if (choice.equals(menu.get(6))) {
                 QuestController questController = new QuestController();
                 questController.start(user);
-            } else if(choice.equals(menu.get(7))) {
+            } else if (choice.equals(menu.get(7))) {
                 ArtifactController artifactController = new ArtifactController();
                 artifactController.start(user);
-            } else if(choice.equals(menu.get(0))) {
+            } else if (choice.equals(menu.get(8))) {
+                BacklogController backlogController = new BacklogController();
+                backlogController.start(user);
+            } else if (choice.equals(menu.get(0))) {
                 isBrowsed = false;
             }
         }
@@ -98,14 +98,14 @@ public abstract class UserController {
 
         boolean isBrowsed = true;
 
-        while(isBrowsed) {
+        while (isBrowsed) {
 
             view.clearScreen();
             ArrayList<ArrayList<String>> users = userDao.getIdNameList(userType);
-            LinkedHashMap<Integer,String> menu = menuDao.getBrowseMenu();
+            LinkedHashMap<Integer,String> menu = menuDao.getBrowseMenu("edit");
             String choice = view.handleBrowse(menu, users);
 
-            if(choice.equals(menu.get(1))){
+            if (choice.equals(menu.get(1))){
                 ArrayList<String> chosenUserInfo = view.getListChoice(users);
 
                 if (chosenUserInfo != null) {
@@ -113,11 +113,11 @@ public abstract class UserController {
                     handleDetailsMenu(userDao.getUserByID(userId));
                 }
 
-            } else if(choice.equals(menu.get(2))) {
+            } else if (choice.equals(menu.get(2))) {
                 User newUser = userDao.addUser(userType);
                 editUserData(newUser);
 
-            } else if(choice.equals(menu.get(0))) {
+            } else if (choice.equals(menu.get(0))) {
                 isBrowsed = false;
             }
         }
@@ -127,16 +127,17 @@ public abstract class UserController {
 
         boolean isBrowsed = true;
 
-        while(isBrowsed){
+        while (isBrowsed){
+
             view.clearScreen();
-            LinkedHashMap<Integer,String> menu = menuDao.getDetailsMenu();
+            LinkedHashMap<Integer,String> menu = menuDao.getDetailsMenu("edit");
             String choice = view.handleDetails(menu, user);
 
-            if (choice.equals(menu.get(1))){
+            if (choice.equals(menu.get(1))) {
                 editUserData(user);
-            } else if(choice.equals(menu.get(2))){
+            } else if (choice.equals(menu.get(2))) {
                 isBrowsed = !userDao.removeUser(user);
-            } else if(choice.equals(menu.get(0))){
+            } else if (choice.equals(menu.get(0))) {
                 isBrowsed = false;
             }
         }

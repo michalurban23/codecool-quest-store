@@ -51,7 +51,7 @@ public abstract class ConsoleView {
             }
         } while (choice < 1 || choice > list.size());
 
-        return list.get(choice);
+        return list.get(choice - 1);
     }
 
     public String getString(String message) {
@@ -126,11 +126,10 @@ public abstract class ConsoleView {
         return enteredString.toUpperCase().equals("Y");
     }
 
-    public Boolean printList(String title, ArrayList<ArrayList<String>> data) {
+    public void printList(String title, ArrayList<ArrayList<String>> data) {
 
         if (data.size() <= 1) {
             printWarning("No matching data in " + title);
-            return false;
         }
 
         ArrayList<String> labels = data.get(0);
@@ -156,8 +155,6 @@ public abstract class ConsoleView {
             } System.out.println();
         }
         System.out.println(horizontalLine + "\n");
-
-        return true;
     }
 
     private ArrayList<Integer> calculateWidths(ArrayList<ArrayList<String>> data) {
@@ -230,5 +227,13 @@ public abstract class ConsoleView {
         String reset = colors.get("RESET");
 
         System.out.println("\n" + red + message + reset);
+    }
+
+    public void printSuccess(String message) {
+
+        String green = colors.get("GREEN");
+        String reset = colors.get("RESET");
+
+        System.out.println("\n" + green + message + reset);
     }
 }

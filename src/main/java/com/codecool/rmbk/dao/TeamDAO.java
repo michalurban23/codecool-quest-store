@@ -1,20 +1,21 @@
 package com.codecool.rmbk.dao;
 
 import com.codecool.rmbk.model.usr.Group;
+import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
-
 import java.util.ArrayList;
 
 public interface TeamDAO {
 
-    public Team createGroup();
-    public Team getTeamById(Integer id);
-    public Boolean removeTeam(Team group);
-    public Boolean renameGroup(Team group, String newName);
-    public Boolean addStudentToGroup(Team group, User student);
-    public Boolean removeStudentFromGroup(Team group, User student);
-    public ArrayList<ArrayList<String>> getTeamList(User user);
-
-
+    Group createGroup();
+    Group getTeamById(Integer id);
+    Boolean removeTeam(Group group);
+    Boolean renameGroup(Group group, String newName);
+    Boolean addStudentToGroup(Group group, Student student);
+    Boolean removeStudentFromGroup(Group group, Student student);
+    ArrayList<Team> getTeamList(User user);
+    ArrayList<Student> getStudentsList(Group group);
+    Boolean isInGroup(Student user, Group group);
+    void updateMembers(Group team);
 }

@@ -1,6 +1,8 @@
 package com.codecool.rmbk.view;
 
 import com.codecool.rmbk.model.usr.Group;
+import com.codecool.rmbk.model.usr.Student;
+import com.codecool.rmbk.model.usr.Team;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -31,10 +33,28 @@ public class ConsoleGroupView extends ConsoleView implements GroupView {
         return getString("Enter new group name: ");
     }
 
-    public String handleBrowse(LinkedHashMap<Integer,String> menu, ArrayList<ArrayList<String>> groups) {
+    @Override
+    public String MemberScreen(LinkedHashMap<Integer, String> menu, Student student) {
+        printMessage(student.getFullName());
+        return handleMenu(menu);
+    }
+
+    @Override
+    public String handleAddStudent(LinkedHashMap<Integer, String> menu, ArrayList<ArrayList<String>> users) {
+        ArrayList<String> userNames = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            userNames.add(users.get(i).get(1));
+        }
+        showEnumeratedList(userNames);
+        System.out.println("\n");
+
+        return handleMenu(menu);
+    }
+
+    public String handleBrowse(LinkedHashMap<Integer,String> menu, ArrayList<Group> groups) {
         ArrayList<String> groupNames = new ArrayList<>();
-        for (int i = 1; i < groups.size(); i++) {
-            groupNames.add(groups.get(i).get(1));
+        for (Group group : groups) {
+            groupNames.add(group.getName());
         }
         showEnumeratedList(groupNames);
         System.out.println("\n");
@@ -45,6 +65,8 @@ public class ConsoleGroupView extends ConsoleView implements GroupView {
     public String handleDetails(LinkedHashMap<Integer,String> menu, Group group) {
 
         showShortInfo(group);
+        showEnumeratedList(group.getMembers());
+
         System.out.println("\n");
 
         return handleMenu(menu);

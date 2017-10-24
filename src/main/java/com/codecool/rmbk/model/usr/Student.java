@@ -1,15 +1,16 @@
 package com.codecool.rmbk.model.usr;
 
-import java.util.UUID;
 import java.util.ArrayList;
+
+import com.codecool.rmbk.dao.SQLBacklog;
 import com.codecool.rmbk.model.Cart;
-import com.codecool.rmbk.model.quest.Quest;
 
 public class Student extends User implements Holder {
 
     private ArrayList<Team> myGroups;
-    private Class myClass;
-    private Cart myCart;
+    private Klass myClass;
+    private Cart myCart = new Cart();
+    private SQLBacklog backlogDao = new SQLBacklog();
     private static ArrayList<Student> objects = new ArrayList<Student>();
 
     public Student(String firstName, String lastName, String email, String address, Integer id) {
@@ -40,19 +41,9 @@ public class Student extends User implements Holder {
         this(firstName, lastName, "Not Available", "Not Available", null);
     }
 
-    public static ArrayList<Student> getObjects(){
-
-        return objects;
-    }
-
     public Cart getCart() {
 
         return myCart;
-    }
-
-    public static boolean remove(User user) {
-
-        return objects.remove(user);
     }
 
     public void setCart(Cart cart) {
@@ -60,7 +51,9 @@ public class Student extends User implements Holder {
         this.myCart = cart;
     }
 
-    public Quest getQuest() {return null;} // ---------------------IMPLEMENT---------------------------------
-    public void createQuest() {;}
+    public String getExperience() {
+
+        return backlogDao.getExperience(this.id);
+    }
 
 }

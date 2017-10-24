@@ -8,10 +8,8 @@ public class LoginController {
 
     private UserControllerProvider provider;
     private LoginView view;
-    private LoginDAO dataAccess;
     private UserInfoDAO userDao;
-    private String[] loginInfo;
-    private Boolean appRunning = false;
+    private Boolean mainAppStarted = false;
 
     public LoginController() {
 
@@ -19,23 +17,15 @@ public class LoginController {
         view = new ConsoleLoginView();
     }
 
-    public void startCSV() {
-
-        dataAccess = new CSVLoginDAO();
-//        userDao = new CSVUserInfoDAO();
-        // loginDatabase = dataAccess.start();
-        // loginInfo = logIn();
-        startUserController(loginInfo[0]);
-    }
-
     public void startSqlLoginService() {
 
         SQLLoginDAO.setPermission();
-        dataAccess = new SQLLoginDAO();
+        LoginDAO dataAccess = new SQLLoginDAO();
         userDao = new SQLUsers();
 
-        while (!appRunning) {
-            loginInfo = view.LoginScreen();
+        while (!mainAppStarted) {
+            String[] loginInfo = view.LoginScreen();
+
             if (dataAccess.login(loginInfo)) {
                 startUserController(loginInfo[0]);
             } else {
@@ -46,7 +36,7 @@ public class LoginController {
 
     private void startUserController(String userLogin) {
 
-        appRunning = true;
+        mainAppStarted = true;
 
         String userType = userDao.getUserTypeByLogin(userLogin);
         UserController userController = provider.getByUserType(userType);

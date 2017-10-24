@@ -33,9 +33,11 @@ public class CSVUserInfoDAO {
 
     public String getUserTypeByLogin(String login) {
 
-        for(String user : this.users) {
+        for (String user : this.users) {
+
             String userLogin = user.split(",")[0];
             String userStatus = user.split(",")[1];
+
             if (login.equals(userLogin)) {
                 return userStatus;
             }
@@ -45,9 +47,11 @@ public class CSVUserInfoDAO {
 
     private String getUserFirstName(String login) {
 
-        for(String user : this.users) {
+        for (String user : this.users) {
+
             String userLogin = user.split(",")[0];
             String userName = user.split(",")[2];
+
             if (login.equals(userLogin)) {
                 return userName;
             }
@@ -57,9 +61,11 @@ public class CSVUserInfoDAO {
 
     private String getUserLastName(String login) {
 
-        for(String user : this.users) {
+        for (String user : this.users) {
+
             String userLogin = user.split(",")[0];
             String userName = user.split(",")[3];
+
             if (login.equals(userLogin)) {
                 return userName;
             }
@@ -72,8 +78,8 @@ public class CSVUserInfoDAO {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource(filepath).getFile());
 
-        try(Scanner reader = new Scanner(file)) {
-            while(reader.hasNext()) {
+        try (Scanner reader = new Scanner(file)) {
+            while (reader.hasNext()) {
                 String data = reader.nextLine();
                 this.users.add(data);
             }
