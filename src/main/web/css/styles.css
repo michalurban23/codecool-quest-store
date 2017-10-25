@@ -24,3 +24,44 @@ div.main {
     margin: auto;
     padding: 1%;
 }
+
+div.data_edition {
+    font-size: larger;
+    background-color: lightblue;
+    display: table;
+    margin: 0 auto;
+    padding: 12px 8px;
+    border: 1pt solid black;
+}
+
+input[type=text] {
+    background-color: white;
+    color: black;
+    font-size: larger;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1pt solid black;
+    margin: 0 auto;
+    margin-bottom: 5%;
+    justify-content: center;
+}
+
+input[type=submit] {
+    background-color: darkcyan;
+    color: white;
+    font-size: large;
+    padding: 4px 2px;
+    text-decoration: none;
+    justify-content: center;
+    border: 1pt solid black;
+    display: table;
+    margin: 0 auto;
+}
+
+label {
+    border: none;
+    color: black;
+    justify-content: center;
+    display: table;
+    margin: 0 auto;
+}
