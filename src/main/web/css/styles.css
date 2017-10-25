@@ -67,3 +67,38 @@ label {
     display: table;
     margin: 0 auto;
 }
+
+iframe {
+    overflow: hidden;
+}
+
+iframe.header {
+    width: 100%;
+    height: auto;
+    border: none;
+    border: 1px solid black;
+    border-radius: 50px;
+}
+
+iframe.sidebar {
+    width: 20%;
+    height: 500px;
+    border: none;
+    border: 1px solid black;
+    border-radius: 50px;
+}
+
+iframe.main {
+    width: 79%;
+    height: 500px;
+    border: none;
+    border: 1px solid black;
+    border-radius: 50px;
+}
+
+iframe.footer {
+    width: 100%;
+    border: none;
+    border: 1px solid black;
+    border-radius: 50px;
+}
