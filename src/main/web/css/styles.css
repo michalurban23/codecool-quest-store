@@ -16,6 +16,8 @@ div.sidebar {
     border: 1pt solid black;
     margin: auto;
     padding: 1%;
+    justify-content: center;
+    align-items: center;
 }
 
 div.main {
