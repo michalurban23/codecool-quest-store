@@ -28,9 +28,9 @@ public abstract class GroupController {
     public void editGroupName(Group team) {
         String newName = view.getNewGroupName();
         if (newName != null) {
-            if (groupDAO.renameGroup(team, newName)) {
+//            if (groupDAO.renameGroup(team, newName)) {
                 team.setName(newName);
-            }
+//            }
         }
     }
 

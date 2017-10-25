@@ -1,0 +1,28 @@
+body {
+    background-color: lightblue;
+}
+
+div.content {
+    background-color: lightblue;
+    width: 100%;
+    border: 1pt solid black;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+div.sidebar {
+    width: 10%;
+    border: 1pt solid black;
+    margin: auto;
+    padding: 1%;
+    justify-content: center;
+    align-items: center;
+}
+
+div.main {
+    width: 90%;
+    border: 1pt solid black;
+    margin: auto;
+    padding: 1%;
+}

@@ -1,0 +1,30 @@
+@font-face {
+    font-family: lato;
+    src: url("//fonts/Lato-Light.ttf");
+}
+
+.side_container {
+    color: aliceblue;
+}
+
+.menu {
+    display: flex;
+    align-content: flex-start;
+    flex-direction: column;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.menu-button {
+    border-radius: 5px;
+    border: 1px solid black;
+    text-align: left;
+    width: 100%;
+    color: black;
+    font-size: large;
+    font-family: lato;
+    padding: 10pt;
+    margin: 3pt;
+}
