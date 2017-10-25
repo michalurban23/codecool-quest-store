@@ -1,0 +1,33 @@
+div.admin-header {
+    color: black;
+    border: none;
+    font-size: larger;
+    padding: 4px 2px;
+    background-color: darkcyan;
+}
+
+div.admin-name {
+    margin: auto;
+    padding: inherit;
+}
+
+div.date {
+    float: right;
+    color: black;
+    font-size: larger;
+}
+
+input[type=button] {
+    background-color: lightseagreen;
+    color: white;
+    font-size: large;
+    padding: 4x 4px;
+    text-decoration: none;
+    cursor: pointer;
+    margin: 4px 2px;
+    align-self: center;
+}
+
+input[type=button]:hover {
+    background-color: cyan;
+}
