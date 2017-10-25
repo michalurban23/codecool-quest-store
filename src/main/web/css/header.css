@@ -1,4 +1,4 @@
-div.admin-header {
+div.header {
     color: black;
     border: none;
     font-size: larger;
@@ -6,7 +6,7 @@ div.admin-header {
     background-color: darkcyan;
 }
 
-div.admin-name {
+div.name {
     margin: auto;
     padding: inherit;
 }
