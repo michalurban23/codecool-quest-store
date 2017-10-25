@@ -1,0 +1,22 @@
+footer div {
+    position: static;
+}
+
+footer div ul {
+    float: right;
+    font-size: 25px;
+}
+
+footer div ul li {
+    display: inline-block;
+    padding: 20px;
+}
+
+footer div ul li a {
+    color: black;
+    text-decoration: none;
+}
+
+footer div ul li a:hover {
+    color: silver;
+}
