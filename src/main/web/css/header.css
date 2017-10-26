@@ -3,7 +3,10 @@ div.header {
     border: none;
     font-size: larger;
     padding: 4px 2px;
-    background-color: darkcyan;
+    background-image: url("../assets/header1.jpg");
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
 p.name {
@@ -13,20 +16,20 @@ p.name {
 
 div.date {
     float: right;
-    color: black;
+    color: white;
     font-size: larger;
     margin-top: -4.5%;
 }
 
 div.currentTime {
     float: right;
-    color: black;
+    color: white;
     font-size: larger;
     margin-top: -3.5%;
 }
 
 input[type=button] {
-    background-color: lightseagreen;
+    background-color: midnightblue;
     color: white;
     font-size: large;
     padding: 4x 4px;
@@ -37,5 +40,5 @@ input[type=button] {
 }
 
 input[type=button]:hover {
-    background-color: cyan;
+    background-color: mediumblue;
 }
