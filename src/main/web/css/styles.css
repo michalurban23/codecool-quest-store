@@ -35,6 +35,7 @@ div.data_edition {
     margin-top: 10%;
     padding: 12px 8px;
     border: 1pt solid black;
+    justify-content: center;
 }
 
 input[type=text] {
@@ -157,3 +158,5 @@ div.container > a:hover {
     color: silver;
     box-shadow: 0 0 10px 5px silver inset;
 }
+
+
