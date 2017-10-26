@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xml:lang="pl" lang="pl" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="Description" content="CodeCool QuestStore System">
+    <meta name="Keywords" content="CodeCool, dataEdition">
+    <link rel="stylesheet" href="css/styles.css" type="text/css">
+    <link rel="stylesheet" href="css/tables.css" type="text/css">
+    <title>Quest data edition</title>
 </head>
 <body>
-$END$
+<div class="data_edition">
+    <form class="new_team">
+        <label>New team name</label>
+        <input type="text" name="firstName">
+        <table class="student_choosing">
+            <caption>Choose students for group</caption>
+            <tr id="col_header">
+                <td></td>
+                <td>Student full name</td>
+                <td>Student email</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="student" value="1"> </input></td>
+                <td>Student 1</td>
+                <td>st_eine@cc.com</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="student" value="2"> </input></td>
+                <td>Student osdfgoabsobgu2</td>
+                <td>st_zweine@cc.com</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="student" value="3"> </input></td>
+                <td>Student 3</td>
+                <td>st_dreine@cc.com</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="student" value="1"> </input></td>
+                <td>Student 4</td>
+                <td>st_vierte@cc.com</td>
+            </tr>
+        </table>
+        <input type="submit" name="SEND"
+               onclick="alert('Data succesfully saved');history.go(-1);alert();">
+    </form>
+</div>
 </body>
 </html>
