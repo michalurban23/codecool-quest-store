@@ -105,6 +105,7 @@ select.class_choice {
     border: 1px solid black;
     border-radius: 50px;
     text-align: center;
+    font: bold 14pt Cambria, serif;
 }
 
 div.options {
