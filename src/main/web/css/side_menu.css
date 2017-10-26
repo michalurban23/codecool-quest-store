@@ -34,3 +34,7 @@ ul {
 .menu-button:hover {
     background-color: white;
 }
+
+ul.menu > a {
+    text-decoration: none;
+}
