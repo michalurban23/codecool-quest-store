@@ -15,7 +15,14 @@ div.date {
     float: right;
     color: black;
     font-size: larger;
-    margin-top: -28px;
+    margin-top: -4.5%;
+}
+
+div.currentTime {
+    float: right;
+    color: black;
+    font-size: larger;
+    margin-top: -3.5%;
 }
 
 input[type=button] {
