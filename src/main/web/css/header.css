@@ -6,15 +6,16 @@ div.header {
     background-color: darkcyan;
 }
 
-div.name {
-    margin: auto;
-    padding: inherit;
+p.name {
+    margin: 0 auto;
+    font-size: larger;
 }
 
 div.date {
     float: right;
     color: black;
     font-size: larger;
+    margin-top: -28px;
 }
 
 input[type=button] {
