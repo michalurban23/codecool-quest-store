@@ -15,16 +15,26 @@
 
 ul {
     list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .menu-button {
     border-radius: 5px;
     border: 1px solid black;
     text-align: left;
-    width: 100%;
+    width: 88%;
     color: black;
     font-size: large;
     font-family: lato;
-    padding: 10pt;
-    margin: 3pt;
+    padding: 10pt   ;
+    margin-bottom: 3pt;
+}
+
+.menu-button:hover {
+    background-color: white;
+}
+
+ul.menu > a {
+    text-decoration: none;
 }
