@@ -32,6 +32,10 @@ caption {
     margin-right: 20px;
 }
 
+.col_header {
+    text-align: center;
+}
+
 .group_quests {
     width: auto;
     float: left;
