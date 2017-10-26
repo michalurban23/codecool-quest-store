@@ -101,4 +101,9 @@ iframe.footer {
     border: none;
     border: 1px solid black;
     border-radius: 50px;
+    text-align: center;
+}
+
+#privacy {
+    text-align: center;
 }
