@@ -1,5 +1,6 @@
 <head>
     <link rel="stylesheet" href="css/header.css" type="text/css">
+    <script src="assets/currentTime.js"></script>
 </head>
 
 <div class="header">
@@ -9,8 +10,14 @@
     <p class="name">
         Welcome Mentor!
     </p>
-</div>
-<div class="date">
-    <script src="assets/date.js">
-    </script>
+    <div class="date">
+        <script src="assets/date.js">
+        </script>
+    </div>
+    <div class="currentTime">
+        <script type="text/javascript">
+            loopTime();
+        </script>
+        <span id="clock">clock</span>
+    </div>
 </div>
