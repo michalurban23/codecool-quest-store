@@ -1,5 +1,5 @@
-body {
-    background-color: lightblue;
+body.inner {
+    background-image: url("../assets/texture-1444067_1920.jpg");
 }
 
 div.content {
@@ -72,6 +72,7 @@ label {
 iframe {
     overflow: hidden;
     border: none;
+    background: transparent;
 }
 
 iframe.header {
@@ -81,13 +82,13 @@ iframe.header {
 
 iframe.sidebar {
     width: 20%;
-    height: 500px;
+    height: 450px;
 }
 
 
 iframe.main {
     width: 79%;
-    height: 500px;
+    height: 450px;
 }
 
 iframe.footer {

@@ -2,11 +2,13 @@ div.header {
     color: black;
     border: none;
     font-size: larger;
-    padding: 4px 2px;
+    padding: 2% 1%;
+    margin: auto;
     background-image: url("../assets/header1.jpg");
     background-position: right;
     background-repeat: no-repeat;
     background-size: 100%;
+    border-radius: 25px;
 }
 
 p.name {
