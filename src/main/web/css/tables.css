@@ -1,0 +1,38 @@
+table {
+    border: 2px solid black;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+table caption {
+    padding: 0 0 10px 0;
+}
+
+table td {
+    height: 25px;
+    border: 2px solid black;
+}
+
+table td a {
+    text-decoration: none;
+    color: indigo;
+}
+
+table td a:hover {
+    color: red;
+}
+
+caption {
+    caption-side: top;
+}
+
+.members {
+    width: auto;
+    float: left;
+    margin-right: 20px;
+}
+
+.group_quests {
+    width: auto;
+    float: left;
+}
