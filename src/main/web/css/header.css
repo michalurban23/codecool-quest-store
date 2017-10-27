@@ -1,0 +1,46 @@
+div.header {
+    color: black;
+    border: none;
+    font-size: larger;
+    padding: 2% 1%;
+    margin: auto;
+    background-image: url("../assets/header1.jpg");
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border-radius: 25px;
+}
+
+p.name {
+    margin: 0 auto;
+    font-size: larger;
+}
+
+div.date {
+    float: right;
+    color: white;
+    font-size: larger;
+    margin-top: -4.5%;
+}
+
+div.currentTime {
+    float: right;
+    color: white;
+    font-size: larger;
+    margin-top: -3%;
+}
+
+input[type=button] {
+    background-color: midnightblue;
+    color: white;
+    font-size: large;
+    padding: 4x 4px;
+    text-decoration: none;
+    cursor: pointer;
+    margin: 4px 2px;
+    align-self: center;
+}
+
+input[type=button]:hover {
+    background-color: mediumblue;
+}

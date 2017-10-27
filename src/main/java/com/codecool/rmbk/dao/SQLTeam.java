@@ -6,9 +6,12 @@ import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
 import java.util.ArrayList;
 
-public class SQLTeam extends SqlDAO implements TeamDAO{
+public class SQLTeam extends SQLGroups implements GroupDAO{
 
-    private ArrayList<ArrayList<String>> results;
+    public SQLTeam() {
+
+        this.tableName = "groups";
+    }
 
     public void getAllGroups() {
 
@@ -49,15 +52,20 @@ public class SQLTeam extends SqlDAO implements TeamDAO{
     }
 
     @Override
-    public Boolean removeTeam(Group team) {
+    public Group getGroupById(Integer id) {
+        return null;
+    }
+
+    @Override
+    public Boolean removeGroup(Group team) {
 
         String query = "DELETE FROM groups WHERE id = ?;";
         return handleQuery(query, new String[] {"" + team.getID()});
     }
 
-    public SQLTeam() {
-
-        this.tableName = "groups";
+    @Override
+    public Boolean renameGroup(Group group, String newName) {
+        return null;
     }
 
     public void addUserToGroup(Group group, User user) {
