@@ -41,14 +41,12 @@ div.login-button {
 
 div.login-button-container > a {
     color: indigo;
-    /*padding: 10px 30px;*/
     text-decoration: none;
     font-size: 21pt;
 }
 
 div.login-button-container > a:hover {
     color: silver;
-    /*padding: 10px 30px;*/
     text-decoration: none;
     font-size: 21pt;
 }
