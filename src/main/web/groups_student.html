@@ -5,24 +5,29 @@
     <title>My groups</title>
     <link rel="stylesheet" href="css/styles.css" type="text/css">
     <link rel="stylesheet" href="css/tables.css" type="text/css">
-
 </head>
 <body>
-    <table border="2">
-        <caption>My groups</caption>
-        <tr>
-            <td width="10%"></td>
-            <td width="100%">Group name</td>
-        </tr>
-        <tr>
-            <td>1.</td>
-            <td><a href="banalni.html" name="main">b.Analni bandyci</a></td>
-        </tr>
-        <tr>
-            <td>2.</td>
-            <td><a href="rmbk.html" name="main">RMBK</a></td>
-        </tr>
-    </table>
+<div class="container" name="container">
 
+    <div class="classes_list">
+        <p class="title">
+            Select team:
+        </p>
+        <div class="options">
+            <select class="class_choice" name="classes">
+                <option value="" disabled selected>Pick a team</option>
+                <option value="1">RMBK</option>
+                <option value="2">b.Analni bandyci</option>
+                <option value="3">BDJQP</option>
+            </select>
+            <a class="button" href="quest_edition.html">
+                <img class="button-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/UniversalEditButton3.png/220px-UniversalEditButton3.png" />
+            </a>
+            <a class="button" href="">
+                <img class="button-image" src="assets/delete-309164_640.png" />
+            </a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

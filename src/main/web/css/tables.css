@@ -1,7 +1,8 @@
 table {
-    border: 2px solid black;
+    border: 1px solid black;
     border-collapse: collapse;
     table-layout: auto;
+    margin-bottom: 10px;
 }
 
 table caption {
@@ -10,7 +11,7 @@ table caption {
 
 table td {
     height: 25px;
-    border: 2px solid black;
+    border: 1px solid black;
 }
 
 table td a {
@@ -36,7 +37,19 @@ caption {
     text-align: center;
 }
 
+#col_header {
+    text-align: center;
+}
+
 .group_quests {
     width: auto;
     float: left;
+}
+
+.new_team {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+
 }
