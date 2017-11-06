@@ -25,6 +25,7 @@ public class WebServer {
         server.createContext("/student", new StudentWebController());
         server.createContext("/team", new TeamWebController());
         server.createContext("/user", new UserWebController());
+        server.createContext("/static", new Static());
         server.setExecutor(null);
     }
 
