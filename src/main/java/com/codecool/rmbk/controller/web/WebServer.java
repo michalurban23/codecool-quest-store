@@ -1,4 +1,4 @@
-package com.codecool.rmbk.controller;
+package com.codecool.rmbk.controller.web;
 
 import com.sun.net.httpserver.HttpServer;
 
