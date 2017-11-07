@@ -6,5 +6,6 @@ import com.sun.net.httpserver.HttpHandler;
 public class UserWebController implements HttpHandler {
 
     @Override
-    public void handle(HttpExchange httpExchange) {}
+    public void handle(HttpExchange httpExchange){
+    }
 }
