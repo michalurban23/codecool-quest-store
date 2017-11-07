@@ -1,0 +1,12 @@
+<div class="main" style="padding:0 50px;">
+    <p class="title">Your personal area:</p>
+    <div class="info-container">
+        <div class="profile-pic">
+            <img src="https://lwandonako5.files.wordpress.com/2013/01/question-mark-face.jpg"/>
+        </div>
+        <div class="personal-info">
+            {% for key, value in map %}
+            <div class="info"><p class="data">{{ key }}</p><p class={{ value }}></div>
+        </div>
+    </div>
+</div>
