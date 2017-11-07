@@ -1,14 +1,18 @@
 <div class="container" name="container">
     <div class="classes_list">
-        <p class="title">Select class:</p>
+        <p class="title">Select team:</p>
         <div class="options">
             <select class="class_choice" name="classes">
-                <option value="" disabled selected>Pick a class</option>
-                    {% for key, value in map %}
+                <option value="" disabled selected>Pick a team</option>
+
+                {% for key, value in map %}
+
                     <option value="{{ key }}">{{ value }}</option>
-                    {%  endfor  %}
+
+                {%  endfor  %}
+
             </select>
-            <a class="button" href="data_edition.html">
+            <a class="button" href="quest_edition.html">
                 <img class="button-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/UniversalEditButton3.png/220px-UniversalEditButton3.png" />
             </a>
             <a class="button" href="">
@@ -16,5 +20,4 @@
             </a>
         </div>
     </div>
-    <a href=""><div class="button">Add New Class</div></a>
 </div>

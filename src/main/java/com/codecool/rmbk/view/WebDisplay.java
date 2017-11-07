@@ -22,9 +22,8 @@ public class WebDisplay {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate(URL);
         JtwigModel model = JtwigModel.newModel();
-        //
-        // model.with("map", entriesList);
 
         return template.render(model);
     }
+
 }

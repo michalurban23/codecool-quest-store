@@ -1,0 +1,13 @@
+<div class="main" style="padding:0 50px;">
+    <p class="title">Your personal area:</p>
+    <div class="info-container">
+        <div class="profile-pic">
+            <img src="assets/Biar9zXjT.jpg">
+        </div>
+        <div class="personal-info">
+            {% for key, value in map %}
+            <div class="info"><p class="data">{{ key }}</p><p class={{ value }}></div>
+            {%  endfor %}
+        </div>
+    </div>
+</div>
