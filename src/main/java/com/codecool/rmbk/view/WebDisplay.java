@@ -24,12 +24,12 @@ public class WebDisplay {
 //        return template.render(model);
 //    }
 
-    public static String getSiteContent(Map<String, String> entriesList, String URL) {
+    public static String getSiteContent(Map<String, String> entriesMap, String URL) {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate(URL);
         JtwigModel model = JtwigModel.newModel();
 
-        model.with("classes", entriesList);
+        model.with("map", entriesMap);
 
         return template.render(model);
     }
