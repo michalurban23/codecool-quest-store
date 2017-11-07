@@ -9,7 +9,7 @@ public class WebServer {
 
     private HttpServer server;
 
-    private void setup() throws IOException {
+    public void setup() throws IOException {
 
         server = HttpServer.create(new InetSocketAddress(8000), 0);
 
@@ -29,7 +29,7 @@ public class WebServer {
         server.setExecutor(null);
     }
 
-    private void start() {
+    public void start() {
 
         server.start();
     }
