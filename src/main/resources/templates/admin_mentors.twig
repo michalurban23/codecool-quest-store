@@ -1,0 +1,21 @@
+<div class="container" name="container">
+    <div class="classes_list">
+        <p class="title">
+            Select mentor:
+        </p>
+        <div class="options">
+            <select class="class_choice" name="options">
+                <option value="" disabled selected>Choose a mentor</option>
+                {% for key, value in map  %}
+                <option value="{{ key }}">{{ value }}</option>
+            </select>
+            <a class="button" href="data_edition.html">
+                <img class="button-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/UniversalEditButton3.png/220px-UniversalEditButton3.png" />
+            </a>
+            <a class="button" href="">
+                <img class="button-image" src="assets/delete-309164_640.png" />
+            </a>
+        </div>
+    </div>
+    <a href=""><div class="button">Add New Mentor</div></a>
+</div>
