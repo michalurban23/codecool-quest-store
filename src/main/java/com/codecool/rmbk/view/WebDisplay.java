@@ -13,7 +13,6 @@ public class WebDisplay {
 
         StringBuilder response = new StringBuilder();
         response.append(getHeaderContent(userName));
-        System.out.println(response);
         response.append(getMenuContent(menu));
         response.append(getMainContent(mainData, url));
         response.append(getFooterContent());
@@ -55,6 +54,22 @@ public class WebDisplay {
         JtwigModel model = JtwigModel.newModel();
 
         model.with("menu", menu);
+
+        return template.render(model);
+    }
+
+    public static String getLoginScreen() {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        return template.render(model);
+    }
+
+    public static String getUnsuccessfulLoginScreen() {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/fail.twig");
+        JtwigModel model = JtwigModel.newModel();
 
         return template.render(model);
     }
