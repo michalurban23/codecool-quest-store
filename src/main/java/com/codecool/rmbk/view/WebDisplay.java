@@ -2,35 +2,61 @@ package com.codecool.rmbk.view;
 
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-
-import java.util.ArrayList;
 import java.util.Map;
 
 public class WebDisplay {
 
-//    public String getSiteContent(ArrayList<String> entriesList, String URL) {
-//
-//        JtwigTemplate template = JtwigTemplate.classpathTemplate(URL);
-//        JtwigModel model = JtwigModel.newModel();
-//
-//        ArrayList<String> dataToDisplay = new ArrayList<>();
-//
-//        for (String entry : entriesList) {
-//            dataToDisplay.add(entry);
-//        }
-//
-//        model.with("entries", dataToDisplay);
-//
-//        return template.render(model);
-//    }
+    public static String getSiteContent(String userName,
+                                        Map<String, String> menu,
+                                        Map<String, String> mainData,
+                                        String url) {
 
-    public static String getSiteContent(Map<String, String> entriesMap, String URL) {
+        StringBuilder response = new StringBuilder();
+        response.append(getHeaderContent(userName));
+        System.out.println(response);
+        response.append(getMenuContent(menu));
+        response.append(getMainContent(mainData, url));
+        response.append(getFooterContent());
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate(URL);
+        return response.toString();
+    }
+
+    private static String getMainContent(Map<String, String> data, String url) {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(url);
         JtwigModel model = JtwigModel.newModel();
 
-        model.with("map", entriesMap);
+        model.with("data", data);
 
         return template.render(model);
     }
+
+    private static String getHeaderContent(String userName) {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/header.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("name", userName);
+
+        return template.render(model);
+    }
+
+    private static String getFooterContent() {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/footer.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        return template.render(model);
+    }
+
+    private static String getMenuContent(Map<String, String> menu) {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/menu.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("menu", menu);
+
+        return template.render(model);
+    }
+
 }

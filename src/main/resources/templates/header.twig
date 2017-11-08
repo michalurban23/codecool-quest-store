@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xml:lang="pl" lang="pl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Description" content="CodeCool QuestStore System">
+    <meta name="Keywords" content="CodeCool, coins, store, artifacts, quests">
+    {#<link rel="stylesheet" href="/static/css/temp.css" type="text/css">#}
+    <script src="static/js/currentTime.js"></script>
+    <Title>CodeCool QuestStore</Title>
+</head>
+<body>
+<header>
+    <form class="backbutton">
+        <input type="button" value="Logout" onclick="window.open('logout_screen.html', '_parent')">
+    </form>
+    <p class="name">Welcome {{ name }}</p>
+    <div class="date">
+        <script src="static/js/date.js"></script>
+    </div>
+
+    <div class="currentTime">
+        <script type="text/javascript">
+            loopTime();
+        </script>
+        <span id="clock">clock</span>
+    </div>
+</header>
