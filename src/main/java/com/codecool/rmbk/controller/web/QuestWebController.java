@@ -17,7 +17,7 @@ public class QuestWebController extends CommonHandler {
 
         String URL = validateUser();
 
-        String response = WebDisplay.getSiteContent("a", sqlMenuDAO.getSideMenu(),
+        String response = WebDisplay.getSiteContent("b", sqlMenuDAO.getSideMenu(),
                 null, URL);
 
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
