@@ -11,8 +11,16 @@ public class ArtifactWebController extends CommonHandler{
     @Override
     public void handle(HttpExchange httpExchange) throws IOException{
 
-        String response = WebDisplay.getSiteContent("a", null,
-                null, "templates/mentor_artifacts.twig");
+        String url = null;
+
+        if (user.getStatus().equals("Mentor")) {
+            url = "templates/mentor_artifacts.twig";
+        } else if (user.getStatus().equals("Student")) {
+            url = "templates/student_artifacts.twig";
+        }
+
+        String response = WebDisplay.getSiteContent(user.getName(), null,
+                null, url);
 
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();

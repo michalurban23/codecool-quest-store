@@ -13,7 +13,6 @@ public class WebDisplay {
 
         StringBuilder response = new StringBuilder();
         response.append(getHeaderContent(userName));
-        System.out.println(response);
         response.append(getMenuContent(menu));
         response.append(getMainContent(mainData, url));
         response.append(getFooterContent());
@@ -58,5 +57,4 @@ public class WebDisplay {
 
         return template.render(model);
     }
-
 }
