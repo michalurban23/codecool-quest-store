@@ -2,26 +2,59 @@ package com.codecool.rmbk.view;
 
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-
-import java.util.ArrayList;
 import java.util.Map;
 
 public class WebDisplay {
 
-    public static String getSiteContent(Map<String, String> entriesList, String URL) {
+    public static String getSiteContent(String userName,
+                                        Map<String, String> menu,
+                                        Map<String, String> mainData,
+                                        String url) {
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate(URL);
+        StringBuilder response = new StringBuilder();
+        response.append(getHeaderContent(userName));
+        System.out.println(response);
+        response.append(getMenuContent(menu));
+        response.append(getMainContent(mainData, url));
+        response.append(getFooterContent());
+
+        return response.toString();
+    }
+
+    private static String getMainContent(Map<String, String> data, String url) {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(url);
         JtwigModel model = JtwigModel.newModel();
 
-        model.with("map", entriesList);
+        model.with("data", data);
 
         return template.render(model);
     }
 
-    public static String getSiteContent(String URL) {
+    private static String getHeaderContent(String userName) {
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate(URL);
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/header.twig");
         JtwigModel model = JtwigModel.newModel();
+
+        model.with("name", userName);
+
+        return template.render(model);
+    }
+
+    private static String getFooterContent() {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/footer.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        return template.render(model);
+    }
+
+    private static String getMenuContent(Map<String, String> menu) {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/menu.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("menu", menu);
 
         return template.render(model);
     }

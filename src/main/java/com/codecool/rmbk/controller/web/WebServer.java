@@ -14,12 +14,12 @@ public class WebServer {
         server = HttpServer.create(new InetSocketAddress(8000), 0);
 
         server.createContext("/index", new UserController());
+        server.createContext("/login", new LoginWebController());
         server.createContext("/static", new Static());
         server.createContext("/artifacts", new ArtifactWebController());
         server.createContext("/backlog", new BacklogWebController());
         server.createContext("/class", new ClassWebController());
         server.createContext("/group", new GroupWebController());
-        server.createContext("/login", new LoginWebController());
         server.createContext("/quest", new QuestWebController());
         server.createContext("/shopping", new ShoppingWebController());
         server.createContext("/team", new TeamWebController());

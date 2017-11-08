@@ -13,16 +13,15 @@ public class UserController implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        Map<String, String> map = new HashMap<>();
-        map.put("1", "1");
-        map.put("2", "2");
 
-        String response = WebDisplay.getSiteContent(map, "templates/index.twig");
+        String userName = "Krzysiek";
+
+        String response = WebDisplay.getSiteContent(userName,
+                null, null,"templates/index.twig");
 
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
-
     }
 }
