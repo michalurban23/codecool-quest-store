@@ -3,6 +3,8 @@ package com.codecool.rmbk.dao;
 import com.codecool.rmbk.model.usr.User;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SQLMenuDAO extends SqlDAO implements MenuDAO {
 
@@ -83,5 +85,17 @@ public class SQLMenuDAO extends SqlDAO implements MenuDAO {
         String query = String.format("SELECT id, option FROM class_details_menu WHERE %s_access = 1 ORDER BY id;",
                                      user.getClass().getSimpleName().toLowerCase());
         return getMenu(query);
+    }
+
+    @Override
+    public LinkedHashMap<String, String> getSideMenu(User user) {
+        String query = String.format("SELECT option, URI FROM main_menu WHERE URI is not null and %1$s_access == 1 ORDER BY id;",
+                                     user.getClass().getSimpleName().toLowerCase());
+        LinkedHashMap<String,String> resultMap = new LinkedHashMap<>();
+        ArrayList<ArrayList<String>> resultList = processQuery(query, null);
+        for (ArrayList<String> resultRecord : resultList.subList(1, resultList.size())) {
+            resultMap.put(resultRecord.get(0), resultRecord.get(1));
+        }
+        return resultMap;
     }
 }
