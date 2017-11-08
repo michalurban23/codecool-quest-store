@@ -1,12 +1,15 @@
 package com.codecool.rmbk.controller.web;
 
+import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class ArtifactWebController extends CommonHandler{
+public class ArtifactWebController extends CommonHandler {
+
+    private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException{
@@ -19,7 +22,7 @@ public class ArtifactWebController extends CommonHandler{
             url = "templates/student_artifacts.twig";
         }
 
-        String response = WebDisplay.getSiteContent(user.getName(), null,
+        String response = WebDisplay.getSiteContent(user.getName(), sqlMenuDAO.getSideMenu(),
                 null, url);
 
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
