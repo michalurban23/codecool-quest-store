@@ -7,7 +7,7 @@ class CookieParser {
 
     private static HttpCookie cookie;
 
-    static String readCookie(HttpExchange httpExchange) {
+    static String readCookieString(HttpExchange httpExchange) {
 
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
 
@@ -17,6 +17,23 @@ class CookieParser {
             return cookie.toString();
         }
         return null;
+    }
+
+    static HttpCookie readCookie(HttpExchange httpExchange) {
+
+        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+
+        if (cookieStr != null) {
+            cookie = HttpCookie.parse(cookieStr).get(0);
+            return cookie;
+        }
+        return null;
+    }
+
+    static String getSessionID (HttpCookie cookie) {
+
+        System.out.println(cookie.toString());
+        return cookie.toString();
     }
 
     static void createCookie(HttpExchange httpExchange, String sessionID) {
