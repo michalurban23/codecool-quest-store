@@ -1,7 +1,10 @@
 package com.codecool.rmbk.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.codecool.rmbk.model.usr.*;
 
 public class SQLUsers extends SqlDAO implements UserInfoDAO {
@@ -100,6 +103,17 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
         }
         return result;
     }
+
+    public Map<String,String> getUserMap(String userType) {
+
+        Map<String,String> result = new HashMap<>();
+        ArrayList<User> objects = getUserList(userType);
+        for(User user : objects) {
+            result.put(String.valueOf(user.getID()), user.getFullName());
+        }
+        return result;
+    }
+
 
     public ArrayList<ArrayList<String>> getIdNameList(String userType) {
 
