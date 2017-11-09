@@ -1,18 +1,17 @@
 package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.SQLMenuDAO;
-import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
+
+import com.codecool.rmbk.view.WebDisplay;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class QuestWebController extends CommonHandler {
+public class StudentsController extends CommonHandler {
 
-    SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
+    private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
@@ -22,12 +21,10 @@ public class QuestWebController extends CommonHandler {
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
 
         if (accessLevel.equals("student")) {
-            String URL = "templates/student_quests.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
-            send200(httpExchange, response);
+            send403(httpExchange);
 
         } else if (accessLevel.equals("mentor")) {
-            String URL = "templates/mentor_quests.twig";
+            String URL = "templates/students.twig";
             response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
             send200(httpExchange, response);
 
@@ -35,5 +32,4 @@ public class QuestWebController extends CommonHandler {
             send403(httpExchange);
         }
     }
-
 }

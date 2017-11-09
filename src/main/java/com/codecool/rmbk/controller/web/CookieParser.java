@@ -7,7 +7,7 @@ class CookieParser {
 
     private static HttpCookie cookie;
 
-    static String readCookieString(HttpExchange httpExchange) {
+    static String readCookieString (HttpExchange httpExchange) {
 
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
 
