@@ -2,7 +2,7 @@ package com.codecool.rmbk.model.usr;
 
 import java.util.ArrayList;
 
-public abstract class Group {
+public abstract class Group implements Holder {
 
     String name;
     Integer id;
@@ -31,7 +31,7 @@ public abstract class Group {
         return name;
     }
 
-    public Integer getID() {
+    public int getID() {
         return id;
     }
 

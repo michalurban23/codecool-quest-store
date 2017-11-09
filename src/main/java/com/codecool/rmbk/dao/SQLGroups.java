@@ -5,6 +5,8 @@ import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class SQLGroups extends SqlDAO implements GroupDAO{
 
@@ -77,6 +79,16 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
     }
 
     public abstract ArrayList<Group> getGroupList(User user);
+
+    public Map<String,String> getGroupMap(User user) {
+
+        Map<String,String> groupsMap = new HashMap<>();
+        ArrayList<Group> groups = getGroupList(user);
+        for(Group group : groups) {
+            groupsMap.put(String.valueOf(group.getID()), group.getName());
+        }
+        return groupsMap;
+    }
 
 
 }

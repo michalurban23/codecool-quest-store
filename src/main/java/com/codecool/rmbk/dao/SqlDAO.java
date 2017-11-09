@@ -1,5 +1,8 @@
 package com.codecool.rmbk.dao;
 
+import com.codecool.rmbk.model.usr.Group;
+import com.codecool.rmbk.model.usr.User;
+
 import java.sql.*;
 import java.util.*;
 
