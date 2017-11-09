@@ -27,9 +27,9 @@ public class SQLQuest extends SqlDAO {
         return getResults();
     }
 
-    public Map<String,String> getQuestMap() {
+    public Map<String,String> getQuestMap(Integer id, String teamName) {
 
-        List<ArrayList<String>> questList = getResults().subList(1, getResults().size());
+        List<ArrayList<String>> questList = getMyQuests(id, teamName).subList(1, getResults().size());
         Map<String,String> result = new HashMap<>();
         for(ArrayList<String> arr : questList) {
             result.put(arr.get(0), arr.get(1));
