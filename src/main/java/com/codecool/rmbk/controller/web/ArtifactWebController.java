@@ -15,14 +15,10 @@ public class ArtifactWebController extends CommonHandler {
     public void handle(HttpExchange httpExchange) throws IOException{
 
         String URL = validateUser();
-
         String response = WebDisplay.getSiteContent(user.getName(), sqlMenuDAO.getSideMenu(),
                 null, URL);
 
-        httpExchange.sendResponseHeaders(200, response.getBytes().length);
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        send200(httpExchange, response);
     }
 
     private String validateUser() {
