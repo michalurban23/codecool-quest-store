@@ -15,7 +15,7 @@ public class GroupWebController extends CommonHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String URL = validateUser();
+        String URL = validateUser(httpExchange);
 
         String response = WebDisplay.getSiteContent("a", null,
                 null, URL);
@@ -26,13 +26,13 @@ public class GroupWebController extends CommonHandler {
         os.close();
     }
 
-    private String validateUser() {
+    private String validateUser(HttpExchange httpExchange) {
 
         String URL = null;
 
-        if (user.getStatus().equals("Mentor")) {
+        if (getLoggedUser(httpExchange).getFirstName().equals("Mentor")) {
             URL = "templates/mentor_groups.twig";
-        } else if (user.getStatus().equals("Student")) {
+        } else if (getLoggedUser(httpExchange).getFirstName().equals("Student")) {
             URL = "templates/student_groups.twig";
         }
 

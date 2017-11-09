@@ -15,9 +15,9 @@ public class QuestWebController extends CommonHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String URL = validateUser();
+        String URL = validateUser(httpExchange);
 
-        String response = WebDisplay.getSiteContent("b", sqlMenuDAO.getSideMenu(),
+        String response = WebDisplay.getSiteContent("b", sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange)),
                 null, URL);
 
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
@@ -26,13 +26,13 @@ public class QuestWebController extends CommonHandler {
         os.close();
     }
 
-    private String validateUser() {
+    private String validateUser(HttpExchange httpExchange) {
 
         String URL = null;
 
-        if (user.getStatus().equals("Mentor")) {
+        if (getLoggedUser(httpExchange).getFirstName().equals("Mentor")) {
             URL = "templates/mentor_quests.twig";
-        } else if (user.getStatus().equals("Student")) {
+        } else if (getLoggedUser(httpExchange).getFirstName().equals("Student")) {
             URL = "templates/student_quests.twig";
         }
 

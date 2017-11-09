@@ -14,20 +14,20 @@ public class ClassWebController extends CommonHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String URL = validateUser();
-        String response = WebDisplay.getSiteContent(null,
-                sqlMenuDAO.getSideMenu(user), null, URL);
+        String URL = validateUser(httpExchange);
+        String response = WebDisplay.getSiteContent(getLoggedUser(httpExchange).getFirstName(),
+                sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange)), null, URL);
         send200(httpExchange, response);
 
     }
 
-    private String validateUser() {
+    private String validateUser(HttpExchange httpExchange) {
 
         String URL = null;
 
-        if (user.getStatus().equals("Mentor")) {
+        if (getLoggedUser(httpExchange).getFirstName().equals("Mentor")) {
             URL = "templates/mentor_teams.twig";
-        } else if (user.getStatus().equals("Student")) {
+        } else if (getLoggedUser(httpExchange).getFirstName().equals("Student")) {
             URL = "templates/student_teams.twig";
         }
 

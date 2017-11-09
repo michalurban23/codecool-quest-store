@@ -13,24 +13,23 @@ public class ArtifactWebController extends CommonHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException{
 
-        String URL = getArtifactURL();
+        String URL = getArtifactURL(httpExchange);
 
-
-
-        String response = WebDisplay.getSiteContent(user.getName(), sqlMenuDAO.getSideMenu(user),
+        String response = WebDisplay.getSiteContent(getLoggedUser(httpExchange).getFirstName(),
+                sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange)),
                 null, URL);
         send200(httpExchange, response);
 
 
     }
 
-    private String getArtifactURL() {
+    private String getArtifactURL(HttpExchange httpExchange) {
 
         String URL = null;
 
-        if (user.getStatus().equals("Mentor")) {
+        if (getLoggedUser(httpExchange).getFirstName().equals("Mentor")) {
             URL = "templates/mentor_artifacts.twig";
-        } else if (user.getStatus().equals("Student")) {
+        } else if (getLoggedUser(httpExchange).getFirstName().equals("Student")) {
             URL = "templates/student_artifacts.twig";
         }
 

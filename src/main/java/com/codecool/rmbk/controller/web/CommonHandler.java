@@ -1,6 +1,7 @@
 package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.helper.MimeTypeResolver;
+import com.codecool.rmbk.model.usr.User;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -110,5 +111,11 @@ public abstract class CommonHandler implements HttpHandler {
     URL getFileURL(String path) {
         ClassLoader classLoader = getClass().getClassLoader();
         return classLoader.getResource(path);
+    }
+
+    User getLoggedUser(HttpExchange httpExchange) {
+
+        return Session.getSessionByCookie(CookieParser.readCookie(httpExchange)).getLoggedUser();
+
     }
 }

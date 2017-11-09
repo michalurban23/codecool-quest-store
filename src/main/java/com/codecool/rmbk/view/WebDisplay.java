@@ -57,8 +57,6 @@ public class WebDisplay {
 
         return template.render(model);
     }
-<<<<<<< HEAD
-=======
 
     public static String getLoginScreen() {
 
@@ -75,6 +73,4 @@ public class WebDisplay {
 
         return template.render(model);
     }
-
->>>>>>> dev
 }
