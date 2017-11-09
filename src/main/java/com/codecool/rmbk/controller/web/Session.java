@@ -24,7 +24,7 @@ public class Session {
         this.sessionId = sessionId;
         this.lastAccessDate = LocalDateTime.now();
         adjustDateTimeObjects();
-
+        System.out.println(activeSessions.size());
         activeSessions.add(this);
     }
 

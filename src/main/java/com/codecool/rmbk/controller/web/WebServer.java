@@ -21,7 +21,6 @@ public class WebServer {
         server.createContext("/class", new ClassWebController());
         server.createContext("/group", new GroupWebController());
         server.createContext("/quest", new QuestWebController());
-        server.createContext("/shopping", new ShoppingWebController());
         server.createContext("/team", new TeamWebController());
         server.createContext("/user", new UserWebController());
         server.setExecutor(null);

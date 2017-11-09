@@ -1,6 +1,7 @@
 package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.helper.MimeTypeResolver;
+import com.codecool.rmbk.model.usr.User;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -69,12 +70,15 @@ public abstract class CommonHandler implements HttpHandler {
         HttpCookie cookie = CookieParser.readCookie(httpExchange);
         Session session = Session.getSessionByCookie(cookie);
         String result = null;
+
         if (session == null) {
-            send401(httpExchange);
+            System.out.println("session==null");
+            send302(httpExchange, "/login");
         } else if (session.isActive()) {
+            System.out.println("sesssion=isactive");
             result = session.getAccessLevel();
         } else {
-            send403(httpExchange);
+            send401(httpExchange);
         }
         return result;
     }
@@ -110,5 +114,13 @@ public abstract class CommonHandler implements HttpHandler {
     URL getFileURL(String path) {
         ClassLoader classLoader = getClass().getClassLoader();
         return classLoader.getResource(path);
+    }
+
+    User getLoggedUser(HttpExchange httpExchange) {
+        System.out.println("ciastko to");
+        System.out.println(CookieParser.readCookie(httpExchange));
+
+        return Session.getSessionByCookie(CookieParser.readCookie(httpExchange)).getLoggedUser();
+
     }
 }
