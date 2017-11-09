@@ -24,7 +24,7 @@ public class Session {
         this.sessionId = sessionId;
         this.lastAccessDate = LocalDateTime.now();
         adjustDateTimeObjects();
-        System.out.println(activeSessions.size());
+
         activeSessions.add(this);
     }
 
@@ -51,8 +51,6 @@ public class Session {
             for (Session session : activeSessions) {
 
                 if (session.getSessionId().equals(sessionId)) {
-
-                    session.refreshSession();
                     return session;
                 }
             }
@@ -62,12 +60,17 @@ public class Session {
 
     public Boolean isActive() {
 
-        return this.expireDate.isAfter(LocalDateTime.now());
+        System.out.println("Session is still not expired = " + this.expireDate.isAfter(LocalDateTime.now()));
+        Boolean isActive = this.expireDate.isAfter(LocalDateTime.now());
+        refreshSession();
+        return isActive;
     }
 
     private void refreshSession() {
 
+        System.out.println("Previous exp time: " + expireDate);
         this.expireDate = LocalDateTime.now().plusMinutes(sessionDurationMinutes);
+        System.out.println("Current exp time: " + expireDate);
     }
 
     public String getAccessLevel() {

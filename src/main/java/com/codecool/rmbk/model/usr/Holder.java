@@ -4,8 +4,5 @@ import com.codecool.rmbk.model.Cart;
 
 public interface Holder {
 
-    Cart getCart();
-    void setCart(Cart cart);
-
     int getID();
 }

@@ -21,12 +21,14 @@ class CookieParser {
     static HttpCookie readCookie(HttpExchange httpExchange) {
 
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
-        System.out.println(cookieStr);
+        System.out.println("Całe cookie : " + cookieStr);
 
-        if (cookieStr != null) {
-            cookie.setValue(parseCookieData(cookieStr));
+        if (cookieStr.contains("session")) {
+            cookie = new HttpCookie("sessionId", parseCookieData(cookieStr));
+            System.out.println("returns " + cookie);
             return cookie;
         }
+        System.out.println("returns null");
         return null;
     }
 

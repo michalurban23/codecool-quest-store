@@ -32,7 +32,6 @@ public class ArtifactWebController extends CommonHandler {
 
         } else if (accessLevel.equals("admin")) {
             send403(httpExchange);
-
         }
     }
 }
