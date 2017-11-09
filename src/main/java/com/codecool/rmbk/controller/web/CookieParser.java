@@ -23,7 +23,7 @@ class CookieParser {
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
 
         if (cookieStr != null) {
-            cookie = HttpCookie.parse(cookieStr).get(0);
+            cookie.setValue(parseCookieData(cookieStr));
             return cookie;
         }
         return null;
@@ -31,14 +31,22 @@ class CookieParser {
 
     static String getSessionID (HttpCookie cookie) {
 
-        System.out.println(cookie.toString());
-        return cookie.toString();
+        int cookieIdStart = 11;
+        int cookieIdEnd = 31;
+
+        return cookie.toString().substring(cookieIdStart, cookieIdEnd);
     }
 
     static void createCookie(HttpExchange httpExchange, String sessionID) {
 
         cookie = new HttpCookie("sessionId", sessionID);
         httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
+        System.out.println("created cookie: " + cookie.toString());
     }
 
+    static private String parseCookieData(String cookieStr) {
+
+        String[] info = cookieStr.split("sessionId=");
+        return info[1].substring(1, info[1].length()-1);
+    }
 }
