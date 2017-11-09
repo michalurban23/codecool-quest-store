@@ -57,4 +57,24 @@ public class WebDisplay {
 
         return template.render(model);
     }
+<<<<<<< HEAD
+=======
+
+    public static String getLoginScreen() {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        return template.render(model);
+    }
+
+    public static String getFailedLoginScreen() {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/fail.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        return template.render(model);
+    }
+
+>>>>>>> dev
 }
