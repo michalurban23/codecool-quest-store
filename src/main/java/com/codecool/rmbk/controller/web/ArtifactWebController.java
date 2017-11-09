@@ -5,7 +5,6 @@ import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 public class ArtifactWebController extends CommonHandler {
 
@@ -17,7 +16,6 @@ public class ArtifactWebController extends CommonHandler {
         String URL = validateUser();
         String response = WebDisplay.getSiteContent(user.getName(), sqlMenuDAO.getSideMenu(),
                 null, URL);
-
         send200(httpExchange, response);
     }
 
