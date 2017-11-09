@@ -1,0 +1,29 @@
+body {
+    background-color: red;
+
+}
+
+img {
+    position: fixed;
+    top: 10%;
+    left: 37%;
+    float: none;
+    padding: 20px;
+    width: 21%;
+    height: auto;
+}
+
+div.joseph {
+    color: white;
+    position: fixed;
+    top: 50%;
+    left: 35%;
+    margin: auto;
+    width: 25%;
+    font-size: 25px;
+    text-align: center;
+    float: none;
+    padding: 20px;
+}
+
+

@@ -11,7 +11,7 @@ public class WebServer {
 
     public void setup() throws IOException {
 
-        server = HttpServer.create(new InetSocketAddress(8000), 0);
+        server = HttpServer.create(new InetSocketAddress(8800), 0);
 
         server.createContext("/index", new UserController());
         server.createContext("/login", new LoginWebController());
@@ -21,7 +21,6 @@ public class WebServer {
         server.createContext("/class", new ClassWebController());
         server.createContext("/group", new GroupWebController());
         server.createContext("/quest", new QuestWebController());
-        server.createContext("/shopping", new ShoppingWebController());
         server.createContext("/team", new TeamWebController());
         server.createContext("/user", new UserWebController());
         server.setExecutor(null);

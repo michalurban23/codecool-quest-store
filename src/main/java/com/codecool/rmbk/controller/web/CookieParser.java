@@ -21,6 +21,7 @@ class CookieParser {
     static HttpCookie readCookie(HttpExchange httpExchange) {
 
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+        System.out.println(cookieStr);
 
         if (cookieStr != null) {
             cookie.setValue(parseCookieData(cookieStr));
