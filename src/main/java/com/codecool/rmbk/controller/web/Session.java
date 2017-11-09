@@ -28,10 +28,10 @@ public class Session {
         this.sessionID = sessionId;
     }
 
-    public static Map<String, String> getActiveSessions() {
+/*    public static Map<String, String> getActiveSessions() {
 
         return activeSessions;
-    }
+    }*/
 
     public User getLoggedUser() {
 
