@@ -14,7 +14,7 @@ public class ArtifactWebController extends CommonHandler {
     public void handle(HttpExchange httpExchange) throws IOException{
 
         String URL = validateUser();
-        String response = WebDisplay.getSiteContent(user.getName(), sqlMenuDAO.getSideMenu(),
+        String response = WebDisplay.getSiteContent(user.getName(), sqlMenuDAO.getSideMenu(user),
                 null, URL);
         send200(httpExchange, response);
     }

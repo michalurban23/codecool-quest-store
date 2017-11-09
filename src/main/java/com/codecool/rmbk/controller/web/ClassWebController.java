@@ -16,7 +16,7 @@ public class ClassWebController extends CommonHandler {
 
         String URL = validateUser();
         String response = WebDisplay.getSiteContent(null,
-                sqlMenuDAO.getSideMenu(), null, URL);
+                sqlMenuDAO.getSideMenu(user), null, URL);
         send200(httpExchange, response);
 
     }

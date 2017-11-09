@@ -15,7 +15,7 @@ public class TeamWebController extends CommonHandler {
 
         String URL = validateUser();
         String response = WebDisplay.getSiteContent("Team",
-                sqlMenuDAO.getSideMenu(),null, URL);
+                sqlMenuDAO.getSideMenu(user),null, URL);
         send200(httpExchange, response);
     }
 

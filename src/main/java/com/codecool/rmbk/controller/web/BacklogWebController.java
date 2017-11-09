@@ -14,7 +14,7 @@ public class BacklogWebController extends CommonHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         String response = WebDisplay.getSiteContent("User",
-                sqlMenuDAO.getSideMenu(),null, "templates/backlog.twig");
+                sqlMenuDAO.getSideMenu(user),null, "templates/backlog.twig");
         send200(httpExchange, response);
     }
 }
