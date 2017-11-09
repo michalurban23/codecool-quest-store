@@ -70,12 +70,15 @@ public abstract class CommonHandler implements HttpHandler {
         HttpCookie cookie = CookieParser.readCookie(httpExchange);
         Session session = Session.getSessionByCookie(cookie);
         String result = null;
+
         if (session == null) {
-            send401(httpExchange);
+            System.out.println("session==null");
+            send302(httpExchange, "/login");
         } else if (session.isActive()) {
+            System.out.println("sesssion=isactive");
             result = session.getAccessLevel();
         } else {
-            send403(httpExchange);
+            send401(httpExchange);
         }
         return result;
     }
@@ -114,6 +117,8 @@ public abstract class CommonHandler implements HttpHandler {
     }
 
     User getLoggedUser(HttpExchange httpExchange) {
+        System.out.println("ciastko to");
+        System.out.println(CookieParser.readCookie(httpExchange));
 
         return Session.getSessionByCookie(CookieParser.readCookie(httpExchange)).getLoggedUser();
 
