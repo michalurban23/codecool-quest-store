@@ -15,14 +15,14 @@ public class UserController extends CommonHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String userName = Session.getSessionByCookie(CookieParser.readCookie(httpExchange)).getLoggedUser().getFullName();
+        Session session = Session.getSessionByCookie(CookieParser.readCookie(httpExchange));
+        System.out.println(validateRequest(httpExchange));
 
-        String response = WebDisplay.getSiteContent(userName, sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange)),
-                null,"templates/index.twig");
-
-        httpExchange.sendResponseHeaders(200, response.getBytes().length);
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        if (validateRequest(httpExchange) != null) {
+            String userName = session.getLoggedUser().getFullName();
+            String response = WebDisplay.getSiteContent(userName, sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange)),
+                    null,"templates/index.twig");
+            send200(httpExchange, response);
+        }
     }
 }
