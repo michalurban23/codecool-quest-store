@@ -3,6 +3,8 @@ package com.codecool.rmbk.dao;
 import com.codecool.rmbk.model.usr.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SQLClass extends SQLGroups {
 

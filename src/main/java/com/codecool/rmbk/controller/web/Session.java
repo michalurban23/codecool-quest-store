@@ -41,6 +41,7 @@ public class Session {
         return this.loggedUser;
     }
 
+
     public static Session getSessionByCookie(HttpCookie cookie) {
 
         if (cookie != null) {

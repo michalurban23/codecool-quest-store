@@ -6,4 +6,6 @@ public interface Holder {
 
     Cart getCart();
     void setCart(Cart cart);
+
+    int getID();
 }
