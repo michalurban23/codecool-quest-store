@@ -67,6 +67,7 @@ public abstract class CommonHandler implements HttpHandler {
     }
 
     String validateRequest(HttpExchange httpExchange) throws IOException {
+
         HttpCookie cookie = CookieParser.readCookie(httpExchange);
         Session session = Session.getSessionByCookie(cookie);
         String result = null;
@@ -75,11 +76,13 @@ public abstract class CommonHandler implements HttpHandler {
             System.out.println("session==null");
             send302(httpExchange, "/login");
         } else if (session.isActive()) {
-            System.out.println("sesssion=isactive");
+            System.out.println("session=isactive");
             result = session.getAccessLevel();
         } else {
+            System.out.println("session = 410");
             send401(httpExchange);
         }
+        System.out.println(result);
         return result;
     }
 
