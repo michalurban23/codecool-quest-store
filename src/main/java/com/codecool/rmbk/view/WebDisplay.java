@@ -66,7 +66,7 @@ public class WebDisplay {
         return template.render(model);
     }
 
-    public static String getUnsuccessfulLoginScreen() {
+    public static String getFailedLoginScreen() {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/fail.twig");
         JtwigModel model = JtwigModel.newModel();
