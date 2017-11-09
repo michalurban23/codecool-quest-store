@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpCookie;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class LoginWebController extends CommonHandler {
 
         setupLoginProcess();
         String method = httpExchange.getRequestMethod();
-        CookieParser.readCookie(httpExchange);
+        CookieParser.readCookieString(httpExchange);
 
         if (method.equals("GET")) {
             response = WebDisplay.getLoginScreen();
@@ -52,6 +53,7 @@ public class LoginWebController extends CommonHandler {
         String sessionID = PasswordHash.getSalt();
         Session session = new Session(loggedUser, sessionID);
         CookieParser.createCookie(httpExchange, sessionID);
+
         send302(httpExchange, "/index");
     }
 
