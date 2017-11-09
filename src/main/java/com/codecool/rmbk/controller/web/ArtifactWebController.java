@@ -13,13 +13,18 @@ public class ArtifactWebController extends CommonHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException{
 
-        String URL = validateUser();
+        String URL = getArtifactURL();
+
+
+
         String response = WebDisplay.getSiteContent(user.getName(), sqlMenuDAO.getSideMenu(user),
                 null, URL);
         send200(httpExchange, response);
+
+
     }
 
-    private String validateUser() {
+    private String getArtifactURL() {
 
         String URL = null;
 
@@ -31,4 +36,6 @@ public class ArtifactWebController extends CommonHandler {
 
         return URL;
     }
+
+
 }
