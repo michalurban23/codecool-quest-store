@@ -14,7 +14,7 @@ public class UserController implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String userName = "Krzysiek";
+        String userName = Session.getSessionByCookie(CookieParser.readCookie(httpExchange)).getLoggedUser().getFullName();
 
         String response = WebDisplay.getSiteContent(userName,
                 null, null,"templates/index.twig");
