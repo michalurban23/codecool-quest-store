@@ -43,12 +43,17 @@ public class Session {
 
     public static Session getSessionByCookie(HttpCookie cookie) {
 
-        String sessionId = CookieParser.getSessionID(cookie);
+        if (cookie != null) {
 
-        for (Session session : activeSessions) {
-            if (session.getSessionId().equals(sessionId)) {
-                session.refreshSession();
-                return session;
+            String sessionId = CookieParser.getSessionID(cookie);
+
+            for (Session session : activeSessions) {
+
+                if (session.getSessionId().equals(sessionId)) {
+
+                    session.refreshSession();
+                    return session;
+                }
             }
         }
         return null;
