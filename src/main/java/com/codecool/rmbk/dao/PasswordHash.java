@@ -3,16 +3,16 @@ package com.codecool.rmbk.dao;
 import org.apache.commons.codec.digest.DigestUtils;
 import java.util.Random;
 
-class PasswordHash {
+public class PasswordHash {
 
-    static String hash(String originalString, String salt) {
+    public static String hash(String originalString, String salt) {
 
         String hashed = DigestUtils.sha256Hex(salt + originalString);
 
         return hashed;
     }
 
-    static String getSalt() {
+    public static String getSalt() {
 
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
