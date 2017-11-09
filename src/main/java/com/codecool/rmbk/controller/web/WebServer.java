@@ -11,7 +11,7 @@ public class WebServer {
 
     public void setup() throws IOException {
 
-        server = HttpServer.create(new InetSocketAddress(8000), 0);
+        server = HttpServer.create(new InetSocketAddress(8800), 0);
 
         server.createContext("/index", new UserController());
         server.createContext("/login", new LoginWebController());

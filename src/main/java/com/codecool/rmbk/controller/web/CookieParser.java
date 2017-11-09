@@ -13,7 +13,6 @@ class CookieParser {
 
         if (cookieStr != null) {
             cookie = HttpCookie.parse(cookieStr).get(0);
-            System.out.println(HttpCookie.parse(cookieStr).size());
             return cookie.toString();
         }
         return null;
