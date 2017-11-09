@@ -40,11 +40,7 @@ public class LoginWebController extends CommonHandler {
                 response = WebDisplay.getFailedLoginScreen();
             }
         }
-
-        httpExchange.sendResponseHeaders(200, response.getBytes().length);
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        send200(httpExchange, response);
     }
 
     private void logUserIn(HttpExchange httpExchange) throws IOException {

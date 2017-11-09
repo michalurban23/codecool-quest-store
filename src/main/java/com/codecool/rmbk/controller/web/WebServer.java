@@ -14,7 +14,7 @@ public class WebServer {
         server = HttpServer.create(new InetSocketAddress(8800), 0);
 
         server.createContext("/index", new UserController());
-        server.createContext("/", new UserController());
+        server.createContext("/logout", new LogoutWebController());
         server.createContext("/login", new LoginWebController());
         server.createContext("/static", new Static());
         server.createContext("/artifacts", new ArtifactWebController());
@@ -24,6 +24,7 @@ public class WebServer {
         server.createContext("/team", new TeamWebController());
         server.createContext("/students", new StudentsController());
         server.createContext("/mentors", new MentorsController());
+        server.createContext("/", new UserController());
         server.setExecutor(null);
     }
 
