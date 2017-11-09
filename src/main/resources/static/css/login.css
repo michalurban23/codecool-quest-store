@@ -1,11 +1,11 @@
 body {
-    background-image: url("../assets/backdrop-21534_1280.jpg");
+    background-image: url("../img/backdrop-21534_1280.jpg");
     background-attachment: fixed;
     background-size: cover
 }
 
 div.login {
-    background-image: url("../assets/sky-232000_640.jpg");
+    background-image: url("../img/sky-232000_640.jpg");
     background-attachment: fixed;
     background-size: cover;
     border: 5px solid black;

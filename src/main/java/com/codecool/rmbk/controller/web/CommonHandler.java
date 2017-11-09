@@ -22,6 +22,10 @@ public abstract class CommonHandler implements HttpHandler {
         httpExchange.sendResponseHeaders(302, -1);
     }
 
+    void send302(HttpExchange httpExchange, String location) throws IOException {
+        httpExchange.getResponseHeaders().set("Location", location);
+        httpExchange.sendResponseHeaders(302, -1);
+    }
 
     void send200(HttpExchange httpExchange, String response) throws IOException {
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
