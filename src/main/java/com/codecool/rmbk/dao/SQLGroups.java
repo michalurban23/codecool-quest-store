@@ -85,7 +85,7 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
         Map<String,String> groupsMap = new HashMap<>();
         ArrayList<Group> groups = getGroupList(user);
         for(Group group : groups) {
-            groupsMap.put(group.getID().toString(), group.getName());
+            groupsMap.put(String.valueOf(group.getID()), group.getName());
         }
         return groupsMap;
     }

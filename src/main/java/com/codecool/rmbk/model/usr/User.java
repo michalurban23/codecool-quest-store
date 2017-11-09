@@ -1,6 +1,6 @@
 package com.codecool.rmbk.model.usr;
 
-public abstract class User {
+public abstract class User implements Holder {
 
     protected String firstName;
     protected String lastName;
