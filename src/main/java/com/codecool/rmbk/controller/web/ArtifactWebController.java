@@ -1,5 +1,6 @@
 package com.codecool.rmbk.controller.web;
 
+import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
@@ -11,6 +12,7 @@ import java.util.Map;
 public class ArtifactWebController extends CommonHandler {
 
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
+    private SQLArtifact sqlArtifact = new SQLArtifact();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -19,6 +21,7 @@ public class ArtifactWebController extends CommonHandler {
         String accessLevel = validateRequest(httpExchange);
         String name = getLoggedUser(httpExchange).getFirstName();
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
+//        Map<String, String> data = sqlArtifact.getArtifactMapBy(getLoggedUser(httpExchange));
 
         if (accessLevel.equals("student")) {
             String URL = "templates/student_artifacts.twig";

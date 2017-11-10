@@ -4,7 +4,7 @@
         <div class="options">
             <select class="class_choice" name="classes">
                 <option value="" disabled selected>Pick a team</option>
-                {% for key, value in map  %}
+                {% for key, value in data  %}
                 <option value="{{ key }}">{{ value }}</option>
                 {%  endfor %}
             </select>
