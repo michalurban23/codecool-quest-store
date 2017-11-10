@@ -1,6 +1,7 @@
 package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.SQLMenuDAO;
+import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -16,24 +17,11 @@ public class UserController extends CommonHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         String response;
-        String accessLevel = validateRequest(httpExchange);
-        String name = getLoggedUser(httpExchange).getFirstName();
+        validateRequest(httpExchange);
+        User user = getLoggedUser(httpExchange);
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
-
-        if (accessLevel.equals("student")) {
-            String URL = "templates/main_student.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
-            send200(httpExchange, response);
-
-        } else if (accessLevel.equals("mentor")) {
-            String URL = "templates/main_mentor.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
-            send200(httpExchange, response);
-
-        } else if (accessLevel.equals("admin")) {
-            String URL = "templates/main_admin.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
-            send200(httpExchange, response);
-        }
+        String URL = "templates/main_user.twig";
+        response = WebDisplay.getSiteContent(user.getFirstName(), sideMenu, user.getFullInfoMap(), URL);
+        send200(httpExchange, response);
     }
 }
