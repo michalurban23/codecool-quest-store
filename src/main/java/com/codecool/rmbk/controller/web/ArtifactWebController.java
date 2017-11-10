@@ -21,16 +21,16 @@ public class ArtifactWebController extends CommonHandler {
         String accessLevel = validateRequest(httpExchange);
         String name = getLoggedUser(httpExchange).getFirstName();
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
-//        Map<String, String> data = sqlArtifact.getArtifactMapBy(getLoggedUser(httpExchange));
+        Map<String, String> data = sqlArtifact.getArtifactMapBy(getLoggedUser(httpExchange));
 
         if (accessLevel.equals("student")) {
             String URL = "templates/student_artifacts.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
+            response = WebDisplay.getSiteContent(name, sideMenu, data, URL);
             send200(httpExchange, response);
 
         } else if (accessLevel.equals("mentor")) {
             String URL = "templates/mentor_artifacts.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
+            response = WebDisplay.getSiteContent(name, sideMenu, data, URL);
             send200(httpExchange, response);
 
         } else if (accessLevel.equals("admin")) {
