@@ -9,11 +9,11 @@
     <Title>CodeCool QuestStore</Title>
 </head>
 <body>
-<header onclick="window.open('/index', '_parent')">
+<header>
     <form class="backbutton">
         <input type="button" value="Logout" onclick="window.open('/logout', '_parent')">
     </form>
-    <p class="name">Welcome {{ name }}</p>
+    <p  class="name" onclick="window.open('/index', '_parent')">Welcome {{ name }}</p>
     <div class="date">
         <script src="/static/js/date.js"></script>
     </div>
