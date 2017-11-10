@@ -72,5 +72,8 @@ public abstract class User implements Holder {
         return this.firstName + " " + this.lastName;
     }
 
-    public String toString() { return getFullName(); }
+    public String toString() {
+
+        return getFullName();
+    }
 }

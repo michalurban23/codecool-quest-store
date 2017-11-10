@@ -73,16 +73,12 @@ public abstract class CommonHandler implements HttpHandler {
         String result = null;
 
         if (session == null) {
-            System.out.println("session==null");
             send302(httpExchange, "/login");
         } else if (session.isActive()) {
-            System.out.println("session=isactive");
             result = session.getAccessLevel();
         } else {
-            System.out.println("session = 410");
             send401(httpExchange);
         }
-        System.out.println(result);
         return result;
     }
 
@@ -120,8 +116,6 @@ public abstract class CommonHandler implements HttpHandler {
     }
 
     User getLoggedUser(HttpExchange httpExchange) {
-        System.out.println("ciastko to");
-        System.out.println(CookieParser.readCookie(httpExchange));
 
         return Session.getSessionByCookie(CookieParser.readCookie(httpExchange)).getLoggedUser();
 

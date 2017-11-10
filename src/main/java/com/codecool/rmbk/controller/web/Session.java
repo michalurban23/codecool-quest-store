@@ -42,7 +42,7 @@ public class Session {
     }
 
 
-    public static Session getSessionByCookie(HttpCookie cookie) {
+    static Session getSessionByCookie(HttpCookie cookie) {
 
         if (cookie != null) {
 
@@ -58,9 +58,8 @@ public class Session {
         return null;
     }
 
-    public Boolean isActive() {
+    Boolean isActive() {
 
-        System.out.println("Session is still not expired = " + this.expireDate.isAfter(LocalDateTime.now()));
         Boolean isActive = this.expireDate.isAfter(LocalDateTime.now());
         refreshSession();
         return isActive;
@@ -68,12 +67,10 @@ public class Session {
 
     private void refreshSession() {
 
-        System.out.println("Previous exp time: " + expireDate);
         this.expireDate = LocalDateTime.now().plusMinutes(sessionDurationMinutes);
-        System.out.println("Current exp time: " + expireDate);
     }
 
-    public String getAccessLevel() {
+    String getAccessLevel() {
 
         return this.loggedUser.getClass().getSimpleName().toLowerCase();
     }
@@ -81,6 +78,11 @@ public class Session {
     private String getSessionId() {
 
         return this.sessionId;
+    }
+
+    static void clearCache() {
+
+        activeSessions.clear();
     }
 
 }

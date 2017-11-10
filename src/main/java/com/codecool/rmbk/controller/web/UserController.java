@@ -6,21 +6,33 @@ import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserController extends CommonHandler {
 
-    SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
+    private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
 
-    @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        Session session = Session.getSessionByCookie(CookieParser.readCookie(httpExchange));
-        System.out.println(validateRequest(httpExchange));
+        String response;
+        String accessLevel = validateRequest(httpExchange);
+        String name = getLoggedUser(httpExchange).getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
 
-        if (validateRequest(httpExchange) != null) {
-            String userName = session.getLoggedUser().getFullName();
-            String response = WebDisplay.getSiteContent(userName, sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange)),
-                    null,"templates/index.twig");
+        if (accessLevel.equals("student")) {
+            String URL = "templates/main_student.twig";
+            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
+            send200(httpExchange, response);
+
+        } else if (accessLevel.equals("mentor")) {
+            String URL = "templates/main_mentor.twig";
+            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
+            send200(httpExchange, response);
+
+        } else if (accessLevel.equals("admin")) {
+            String URL = "templates/main_admin.twig";
+            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
             send200(httpExchange, response);
         }
     }

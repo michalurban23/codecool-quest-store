@@ -23,12 +23,12 @@ class CookieParser {
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         System.out.println("Całe cookie : " + cookieStr);
 
-        if (cookieStr.contains("session")) {
-            cookie = new HttpCookie("sessionId", parseCookieData(cookieStr));
-            System.out.println("returns " + cookie);
-            return cookie;
+        if (cookieStr != null) {
+            if (cookieStr.contains("session")) {
+                cookie = new HttpCookie("sessionId", parseCookieData(cookieStr));
+                return cookie;
+            }
         }
-        System.out.println("returns null");
         return null;
     }
 

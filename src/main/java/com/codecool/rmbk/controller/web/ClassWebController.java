@@ -24,7 +24,7 @@ public class ClassWebController extends CommonHandler {
             send403(httpExchange);
 
         } else if (accessLevel.equals("mentor")) {
-            String URL = "templates/mentor_classes.twig";
+            String URL = "templates/mentor_groups.twig";
             response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
             send200(httpExchange, response);
 

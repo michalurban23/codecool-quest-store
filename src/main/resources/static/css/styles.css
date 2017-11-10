@@ -1,30 +1,31 @@
-body.inner {
+body {
     background-image: url("../img/texture-1444067_1920.jpg");
 }
 
-div.content {
-    background-color: lightblue;
-    width: 100%;
-    border: 1pt solid black;
+div.container {
+    background-color: transparent;
+    width: 95%;
+    margin: 1%;
+    padding: 1%;
     display: flex;
     justify-content: center;
     align-items: flex-end;
 }
 
-div.sidebar {
-    width: 10%;
-    border: 1pt solid black;
-    margin: auto;
+div.menu {
+    width: 15%;
+    margin: 1%;
     padding: 1%;
     justify-content: center;
     align-items: center;
+    min-height: 350px;
 }
 
 div.main {
-    width: 90%;
-    margin: auto;
+    width: 82%;
+    margin: 1%;
     padding: 1%;
-    border-radius: 25px;
+    min-height: 350px;
 }
 
 div.data_edition {
@@ -186,38 +187,39 @@ div.info > p.value {
     padding: 0 1%;
 }
 
-footer div {
+footer {
     position: static;
 }
 
-footer div ul {
+footer ul {
     float: none;
     font-size: 25px;
     height: 50px;
     text-align: center;
 }
 
-footer div ul li {
+footer ul li {
     display: inline-block;
     padding: 20px;
 }
 
-footer div ul li a {
+footer ul li a {
     color: black;
     text-decoration: none;
 }
 
-footer div ul li a:hover {
+footer ul li a:hover {
     color: red;
 }
 
-div.header {
+header {
+    width: 95%;
     color: black;
     border: none;
     font-size: larger;
     padding: 2% 1%;
     margin: auto;
-    background-image: url("../assets/header1.jpg");
+    background-image: url("../img/header1.jpg");
     background-position: right;
     background-repeat: no-repeat;
     background-size: 100%;
