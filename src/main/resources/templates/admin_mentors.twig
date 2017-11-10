@@ -6,7 +6,7 @@
         <div class="options">
             <select class="class_choice" name="options">
                 <option value="" disabled selected>Choose a mentor</option>
-                {% for key, value in map  %}
+                {% for key, value in data  %}
                 <option value="{{ key }}">{{ value }}</option>
                 {% endfor %}
             </select>
