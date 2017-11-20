@@ -8,6 +8,6 @@ public class LogoutWebController extends CommonHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         Session.clearCache();
-        send302(httpExchange, "/login");
+        send302("/login");
     }
 }
