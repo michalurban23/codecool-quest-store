@@ -14,9 +14,9 @@ public class BacklogWebController extends CommonHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String response = webDisplay.getSiteContent(getLoggedUser(httpExchange).getFirstName(),
-                sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange)),
+        String response = webDisplay.getSiteContent(getLoggedUser().getFirstName(),
+                sqlMenuDAO.getSideMenu(getLoggedUser()),
                 null);
-        send200(httpExchange, response);
+        send200(response);
     }
 }

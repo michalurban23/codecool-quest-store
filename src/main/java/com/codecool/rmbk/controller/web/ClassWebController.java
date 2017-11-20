@@ -17,23 +17,21 @@ public class ClassWebController extends CommonHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         String response;
-        String accessLevel = validateRequest(httpExchange);
-        String name = getLoggedUser(httpExchange).getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
-        Map<String, String> data = sqlClass.getGroupMap(getLoggedUser(httpExchange));
+        String accessLevel = validateRequest();
+        String name = getLoggedUser().getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
+        Map<String, String> data = sqlClass.getGroupMap(getLoggedUser());
 
         if (accessLevel.equals("student")) {
-            send403(httpExchange);
+            send403();
 
         } else if (accessLevel.equals("mentor")) {
-            String URL = "templates/mentor_groups.twig";
             response = webDisplay.getSiteContent(name, sideMenu, data);
-            send200(httpExchange, response);
+            send200(response);
 
         } else if (accessLevel.equals("admin")) {
-            String URL = "templates/admin_classes.twig";
             response = webDisplay.getSiteContent(name, sideMenu, data);
-            send200(httpExchange, response);
+            send200(response);
         }
     }
 }

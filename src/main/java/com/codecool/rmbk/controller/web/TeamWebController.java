@@ -16,20 +16,20 @@ public class TeamWebController extends CommonHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         String response;
-        String accessLevel = validateRequest(httpExchange);
-        String name = getLoggedUser(httpExchange).getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
+        String accessLevel = validateRequest();
+        String name = getLoggedUser().getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
 
         if (accessLevel.equals("student")) {
             response = webDisplay.getSiteContent(name, sideMenu, new HashMap<>());
-            send200(httpExchange, response);
+            send200(response);
 
         } else if (accessLevel.equals("mentor")) {
             response = webDisplay.getSiteContent(name, sideMenu, new HashMap<>());
-            send200(httpExchange, response);
+            send200(response);
 
         } else if (accessLevel.equals("admin")) {
-            send403(httpExchange);
+            send403();
         }
     }
 

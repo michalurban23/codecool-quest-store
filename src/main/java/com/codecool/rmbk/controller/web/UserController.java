@@ -16,11 +16,14 @@ public class UserController extends CommonHandler {
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
+        setHttpExchange(httpExchange);
+
         String response;
-        validateRequest(httpExchange);
-        User user = getLoggedUser(httpExchange);
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
+        validateRequest();
+        User user = getLoggedUser();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
         response = webDisplay.getSiteContent(user.getFirstName(), sideMenu, user.getFullInfoMap());
-        send200(httpExchange, response);
+        send200(response);
     }
+
 }

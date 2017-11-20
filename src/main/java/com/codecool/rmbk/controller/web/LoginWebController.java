@@ -26,6 +26,8 @@ public class LoginWebController extends CommonHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
+        setHttpExchange(httpExchange);
+
         setupLoginProcess();
         String method = httpExchange.getRequestMethod();
         CookieParser.readCookieString(httpExchange);
@@ -40,7 +42,7 @@ public class LoginWebController extends CommonHandler {
                 response = webDisplay.getFailedLoginScreen();
             }
         }
-        send200(httpExchange, response);
+        send200(response);
     }
 
     private void logUserIn(HttpExchange httpExchange) throws IOException {
@@ -50,7 +52,7 @@ public class LoginWebController extends CommonHandler {
         Session session = new Session(loggedUser, sessionID);
         CookieParser.createCookie(httpExchange, sessionID);
 
-        send302(httpExchange, "/index");
+        send302("/index");
     }
 
     private void readUserCredentials(HttpExchange httpExchange) {
