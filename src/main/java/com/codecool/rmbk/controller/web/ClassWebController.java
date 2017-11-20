@@ -15,6 +15,8 @@ public class ClassWebController extends CommonHandler {
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
+        setHttpExchange(httpExchange);
+
         String accessLevel = validateRequest();
         String name = getLoggedUser().getFirstName();
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());

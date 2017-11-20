@@ -16,7 +16,7 @@ public class UserController extends CommonHandler {
     private String response;
 
     public void handle(HttpExchange httpExchange) throws IOException {
-
+        setHttpExchange(httpExchange);
         validateRequest();
 
         User user = getLoggedUser();

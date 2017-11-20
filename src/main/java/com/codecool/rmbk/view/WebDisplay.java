@@ -24,10 +24,6 @@ public class WebDisplay {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/content.twig");
         JtwigModel model = JtwigModel.newModel();
 
-        for (String s : data.keySet()) {
-            System.out.println(s + "   " + data.get(s));
-        }
-
         model.with("data", data);
 
         return template.render(model);

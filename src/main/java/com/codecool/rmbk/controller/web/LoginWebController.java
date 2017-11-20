@@ -24,6 +24,7 @@ public class LoginWebController extends CommonHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         setupLoginProcess();
+        setHttpExchange(httpExchange);
         String method = httpExchange.getRequestMethod();
         CookieParser.readCookieString(httpExchange);
 
