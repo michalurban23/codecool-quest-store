@@ -21,7 +21,7 @@ public class WebDisplay {
 
     private String getMainContent(Map<String, String> data) {
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/content.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/context_menu.twig");
         JtwigModel model = JtwigModel.newModel();
 
         model.with("data", data);
@@ -49,7 +49,7 @@ public class WebDisplay {
 
     private String getMenuContent(Map<String, String> menu) {
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/menu.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/side_menu.twig");
         JtwigModel model = JtwigModel.newModel();
 
         model.with("menu", menu);
