@@ -20,7 +20,6 @@ public class MentorsController extends CommonHandler {
         String accessLevel = validateRequest();
         String name = getLoggedUser().getFirstName();
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
-
         handleWebMentor(accessLevel, name, sideMenu);
     }
 
