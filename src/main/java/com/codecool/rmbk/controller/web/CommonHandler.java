@@ -1,6 +1,8 @@
 package com.codecool.rmbk.controller.web;
 
+import com.codecool.rmbk.helper.CookieParser;
 import com.codecool.rmbk.helper.MimeTypeResolver;
+import com.codecool.rmbk.model.Session;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;

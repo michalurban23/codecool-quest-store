@@ -1,5 +1,6 @@
-package com.codecool.rmbk.controller.web;
+package com.codecool.rmbk.model;
 
+import com.codecool.rmbk.helper.CookieParser;
 import com.codecool.rmbk.model.usr.User;
 
 import java.net.HttpCookie;
@@ -16,9 +17,9 @@ public class Session {
     private LocalDateTime createDate = null;
     private LocalDateTime expireDate;
     private LocalDateTime lastAccessDate;
-    private int sessionDurationMinutes = 1;
+    private int sessionDurationMinutes = 10;
 
-    Session(User loggedUser, String sessionId) {
+    public Session(User loggedUser, String sessionId) {
 
         this.loggedUser = loggedUser;
         this.sessionId = sessionId;
@@ -42,7 +43,7 @@ public class Session {
     }
 
 
-    static Session getSessionByCookie(HttpCookie cookie) {
+    public static Session getSessionByCookie(HttpCookie cookie) {
 
         if (cookie != null) {
 
@@ -58,7 +59,7 @@ public class Session {
         return null;
     }
 
-    Boolean isActive() {
+    public Boolean isActive() {
 
         Boolean isActive = this.expireDate.isAfter(LocalDateTime.now());
         refreshSession();
@@ -70,17 +71,17 @@ public class Session {
         this.expireDate = LocalDateTime.now().plusMinutes(sessionDurationMinutes);
     }
 
-    String getAccessLevel() {
+    public String getAccessLevel() {
 
         return this.loggedUser.getClass().getSimpleName().toLowerCase();
     }
 
-    private String getSessionId() {
+    public String getSessionId() {
 
         return this.sessionId;
     }
 
-    static void clearCache() {
+    public static void clearCache() {
 
         activeSessions.clear();
     }

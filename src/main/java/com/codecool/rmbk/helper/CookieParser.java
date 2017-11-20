@@ -1,13 +1,13 @@
-package com.codecool.rmbk.controller.web;
+package com.codecool.rmbk.helper;
 
 import com.sun.net.httpserver.HttpExchange;
 import java.net.HttpCookie;
 
-class CookieParser {
+public class CookieParser {
 
     private static HttpCookie cookie;
 
-    static String readCookieString (HttpExchange httpExchange) {
+    public static String readCookieString (HttpExchange httpExchange) {
 
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
 
@@ -18,7 +18,7 @@ class CookieParser {
         return null;
     }
 
-    static HttpCookie readCookie(HttpExchange httpExchange) {
+    public static HttpCookie readCookie(HttpExchange httpExchange) {
 
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         System.out.println("Całe cookie : " + cookieStr);
@@ -32,7 +32,7 @@ class CookieParser {
         return null;
     }
 
-    static String getSessionID (HttpCookie cookie) {
+    public static String getSessionID (HttpCookie cookie) {
 
         int cookieIdStart = 11;
         int cookieIdEnd = 31;
@@ -40,14 +40,14 @@ class CookieParser {
         return cookie.toString().substring(cookieIdStart, cookieIdEnd);
     }
 
-    static void createCookie(HttpExchange httpExchange, String sessionID) {
+    public static void createCookie(HttpExchange httpExchange, String sessionID) {
 
         cookie = new HttpCookie("sessionId", sessionID);
         httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
         System.out.println("created cookie: " + cookie.toString());
     }
 
-    static private String parseCookieData(String cookieStr) {
+    public static String parseCookieData(String cookieStr) {
 
         String[] info = cookieStr.split("sessionId=");
         return info[1].substring(1, info[1].length()-1);
