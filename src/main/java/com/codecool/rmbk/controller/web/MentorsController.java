@@ -13,26 +13,26 @@ public class MentorsController extends CommonHandler {
 
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
     private SQLUsers sqlUsers = new SQLUsers();
-
+    private String response;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String response;
-        String accessLevel = validateRequest(httpExchange);
-        String name = getLoggedUser(httpExchange).getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
-        Map<String, String> data = sqlUsers.getUserMap("mentor");
+        String accessLevel = validateRequest();
+        String name = getLoggedUser().getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
 
-        if (accessLevel.equals("student")) {
-            send403(httpExchange);
+        handleWebMentor(accessLevel, name, sideMenu);
+    }
 
+    private void handleWebMentor(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
+
+        if (accessLevel.equals(sideMenu)) {
+            send403();
         } else if (accessLevel.equals("mentor")) {
-            send403(httpExchange);
-
+            send403();
         } else if (accessLevel.equals("admin")) {
-            String URL = "templates/mentors.twig";
-            response = webDisplay.getSiteContent(name, sideMenu, data);
-            send200(httpExchange, response);
+            response = webDisplay.getSiteContent(name, sideMenu, prepareMentorOptions("mentors"));
+            send200(response);
         }
     }
 }
