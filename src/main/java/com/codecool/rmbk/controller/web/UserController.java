@@ -20,8 +20,7 @@ public class UserController extends CommonHandler {
         validateRequest(httpExchange);
         User user = getLoggedUser(httpExchange);
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
-        String URL = "templates/main_user.twig";
-        response = WebDisplay.getSiteContent(user.getFirstName(), sideMenu, user.getFullInfoMap(), URL);
+        response = webDisplay.getSiteContent(user.getFirstName(), sideMenu, user.getFullInfoMap());
         send200(httpExchange, response);
     }
 }

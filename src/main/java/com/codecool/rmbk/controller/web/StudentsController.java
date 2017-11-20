@@ -27,8 +27,7 @@ public class StudentsController extends CommonHandler {
             send403(httpExchange);
 
         } else if (accessLevel.equals("mentor")) {
-            String URL = "templates/students.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, data, URL);
+            response = webDisplay.getSiteContent(name, sideMenu, data);
             send200(httpExchange, response);
 
         } else if (accessLevel.equals("admin")) {

@@ -31,7 +31,7 @@ public class MentorsController extends CommonHandler {
 
         } else if (accessLevel.equals("admin")) {
             String URL = "templates/mentors.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, data, URL);
+            response = webDisplay.getSiteContent(name, sideMenu, data);
             send200(httpExchange, response);
         }
     }

@@ -21,13 +21,11 @@ public class TeamWebController extends CommonHandler {
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
 
         if (accessLevel.equals("student")) {
-            String URL = "templates/student_groups.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
+            response = webDisplay.getSiteContent(name, sideMenu, new HashMap<>());
             send200(httpExchange, response);
 
         } else if (accessLevel.equals("mentor")) {
-            String URL = "templates/mentor_teams.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
+            response = webDisplay.getSiteContent(name, sideMenu, new HashMap<>());
             send200(httpExchange, response);
 
         } else if (accessLevel.equals("admin")) {

@@ -2,6 +2,7 @@ package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.helper.MimeTypeResolver;
 import com.codecool.rmbk.model.usr.User;
+import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -15,74 +16,78 @@ import java.net.URL;
 
 public abstract class CommonHandler implements HttpHandler {
 
-    void send404(HttpExchange httpExchange) throws IOException {
+    private User user;
+    WebDisplay webDisplay = new WebDisplay();
+    HttpExchange httpExchange;
+
+    void send404() throws IOException {
         URL file404 = getFileURL("./static/404.html");
         if (file404 == null) {
-            sendString(httpExchange, "404: not found", 404);
+            sendString("404: not found", 404);
         } else {
-            sendFile(httpExchange, file404, 404);
+            sendFile(file404, 404);
         }
     }
 
-    void send302(HttpExchange httpExchange, URI location) throws IOException {
+    void send302(URI location) throws IOException {
         httpExchange.getResponseHeaders().set("Location", location.toString());
         httpExchange.sendResponseHeaders(302, -1);
     }
 
-    void send302(HttpExchange httpExchange, String location) throws IOException {
+    void send302(String location) throws IOException {
         httpExchange.getResponseHeaders().set("Location", location);
         httpExchange.sendResponseHeaders(302, -1);
     }
 
-    void send200(HttpExchange httpExchange, String response) throws IOException {
-        sendString(httpExchange, response, 200);
+    void send200(String response) throws IOException {
+        sendString(response, 200);
     }
 
-    void send200(HttpExchange httpExchange, URL fileURL) throws IOException {
+    void send200(URL fileURL) throws IOException {
         if (fileURL == null) {
-            send401(httpExchange);
+            send401();
         } else {
-            sendFile(httpExchange, fileURL, 200);
+            sendFile(fileURL, 200);
         }
 
     }
 
-    void send403(HttpExchange httpExchange) throws IOException {
+    void send403() throws IOException {
         URL file403 = getFileURL("./static/403.html");
         if (file403 == null) {
-            sendString(httpExchange, "403: access denied", 403);
+            sendString("403: access denied", 403);
         } else {
-            sendFile(httpExchange, file403, 403);
+            sendFile(file403, 403);
         }
 
     }
 
-    private void send401(HttpExchange httpExchange) throws IOException {
+    private void send401() throws IOException {
         URL file401 = getFileURL("./static/401.html");
         if (file401 == null) {
-            sendString(httpExchange, "401: session expired", 401);
+            sendString("401: session expired", 401);
         } else {
-            sendFile(httpExchange, file401, 401);
+            sendFile(file401, 401);
         }
     }
 
-    String validateRequest(HttpExchange httpExchange) throws IOException {
+    String validateRequest() throws IOException {
 
         HttpCookie cookie = CookieParser.readCookie(httpExchange);
         Session session = Session.getSessionByCookie(cookie);
         String result = null;
 
         if (session == null) {
-            send302(httpExchange, "/login");
+            send302("/login");
         } else if (session.isActive()) {
             result = session.getAccessLevel();
         } else {
-            send401(httpExchange);
+            send401();
         }
         return result;
     }
 
-    void sendFile(HttpExchange httpExchange, URL fileURL, int httpCode) throws IOException {
+    void sendFile(URL fileURL, int httpCode) throws IOException {
 
         File file = new File(fileURL.getFile());
 
@@ -103,7 +108,7 @@ public abstract class CommonHandler implements HttpHandler {
         os.close();
     }
 
-    void sendString(HttpExchange httpExchange, String response, int httpCode) throws IOException {
+    void sendString(String response, int httpCode) throws IOException {
         httpExchange.sendResponseHeaders(httpCode, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
@@ -115,9 +120,14 @@ public abstract class CommonHandler implements HttpHandler {
         return classLoader.getResource(path);
     }
 
-    User getLoggedUser(HttpExchange httpExchange) {
+    User getLoggedUser() {
 
         return Session.getSessionByCookie(CookieParser.readCookie(httpExchange)).getLoggedUser();
 
+    }
+
+    void setHttpExchange(HttpExchange httpExchange) {
+
+        this.httpExchange = httpExchange;
     }
 }

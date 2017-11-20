@@ -31,13 +31,13 @@ public class LoginWebController extends CommonHandler {
         CookieParser.readCookieString(httpExchange);
 
         if (method.equals("GET")) {
-            response = WebDisplay.getLoginScreen();
+            response = webDisplay.getLoginScreen();
         } else if (method.equals("POST")) {
             readUserCredentials(httpExchange);
             if (dataAccess.login(loginUserName, loginPassword)) {
                 logUserIn(httpExchange);
             } else {
-                response = WebDisplay.getFailedLoginScreen();
+                response = webDisplay.getFailedLoginScreen();
             }
         }
         send200(httpExchange, response);

@@ -27,12 +27,12 @@ public class ClassWebController extends CommonHandler {
 
         } else if (accessLevel.equals("mentor")) {
             String URL = "templates/mentor_groups.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, data, URL);
+            response = webDisplay.getSiteContent(name, sideMenu, data);
             send200(httpExchange, response);
 
         } else if (accessLevel.equals("admin")) {
             String URL = "templates/admin_classes.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, data, URL);
+            response = webDisplay.getSiteContent(name, sideMenu, data);
             send200(httpExchange, response);
         }
     }
