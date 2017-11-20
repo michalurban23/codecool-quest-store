@@ -28,11 +28,15 @@ public class TeamWebController extends CommonHandler {
     private void handleWebTeam(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
 
         if (accessLevel.equals("student")) {
-            response = webDisplay.getSiteContent(name, sideMenu, prepareStudentOptions("teams"));
+            response = webDisplay.getSiteContent(name, sideMenu,
+                    prepareStudentOptions("teams"),
+                    null);
             send200(response);
 
         } else if (accessLevel.equals("mentor")) {
-            response = webDisplay.getSiteContent(name, sideMenu, prepareMentorOptions("teams"));
+            response = webDisplay.getSiteContent(name, sideMenu,
+                    prepareMentorOptions("teams"),
+                    null);
             send200(response);
 
         } else if (accessLevel.equals("admin")) {

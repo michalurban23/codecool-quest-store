@@ -33,7 +33,8 @@ public class MentorsController extends CommonHandler {
         } else if (accessLevel.equals("mentor")) {
             send403();
         } else if (accessLevel.equals("admin")) {
-            response = webDisplay.getSiteContent(name, sideMenu, prepareMentorOptions("mentors"));
+            response = webDisplay.getSiteContent(name, sideMenu,
+                    prepareMentorOptions("mentors"), sqlUsers.getUserMap("mentor"));
             send200(response);
         }
     }
