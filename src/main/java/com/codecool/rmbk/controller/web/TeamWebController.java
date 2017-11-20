@@ -12,24 +12,29 @@ import java.util.Map;
 public class TeamWebController extends CommonHandler {
 
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
+    private String response;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String response;
-        String accessLevel = validateRequest(httpExchange);
-        String name = getLoggedUser(httpExchange).getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
+        String accessLevel = validateRequest();
+        String name = getLoggedUser().getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
+
+        handleWebTeam(accessLevel, name, sideMenu);
+    }
+
+    private void handleWebTeam(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
 
         if (accessLevel.equals("student")) {
-            response = webDisplay.getSiteContent(name, sideMenu, new HashMap<>());
-            send200(httpExchange, response);
+            response = webDisplay.getSiteContent(name, sideMenu, prepareStudentOptions("teams"));
+            send200(response);
 
         } else if (accessLevel.equals("mentor")) {
-            response = webDisplay.getSiteContent(name, sideMenu, new HashMap<>());
-            send200(httpExchange, response);
+            response = webDisplay.getSiteContent(name, sideMenu, prepareMentorOptions("teams"));
+            send200(response);
 
         } else if (accessLevel.equals("admin")) {
-            send403(httpExchange);
+            send403();
         }
     }
 
