@@ -4,8 +4,6 @@ import com.codecool.rmbk.dao.SQLClass;
 import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.sun.net.httpserver.HttpExchange;
 
-import com.codecool.rmbk.view.WebDisplay;
-
 import java.io.IOException;
 import java.util.Map;
 
@@ -13,27 +11,30 @@ public class ClassWebController extends CommonHandler {
 
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
     private SQLClass sqlClass = new SQLClass();
+    String response;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String response;
-        String accessLevel = validateRequest(httpExchange);
-        String name = getLoggedUser(httpExchange).getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
-        Map<String, String> data = sqlClass.getGroupMap(getLoggedUser(httpExchange));
+        String accessLevel = validateRequest();
+        String name = getLoggedUser().getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
+
+        handleWebClass(accessLevel, name, sideMenu);
+    }
+
+    private void handleWebClass(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
 
         if (accessLevel.equals("student")) {
-            send403(httpExchange);
+            response = webDisplay.getSiteContent(name, sideMenu, prepareStudentOptions("class"));
+            send200(response);
 
         } else if (accessLevel.equals("mentor")) {
-            String URL = "templates/mentor_groups.twig";
-            response = webDisplay.getSiteContent(name, sideMenu, data);
-            send200(httpExchange, response);
+            response = webDisplay.getSiteContent(name, sideMenu, prepareMentorOptions("class"));
+            send200(response);
 
         } else if (accessLevel.equals("admin")) {
-            String URL = "templates/admin_classes.twig";
-            response = webDisplay.getSiteContent(name, sideMenu, data);
-            send200(httpExchange, response);
+            send403();
         }
     }
+
 }
