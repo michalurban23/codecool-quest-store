@@ -33,11 +33,11 @@ public class ArtifactWebController extends CommonHandler {
 
         if (accessLevel.equals("student")) {
             response = webDisplay.getSiteContent(name, sideMenu, prepareMentorArtifactOptions());
-            send200(, response);
+            send200(response);
 
         } else if (accessLevel.equals("mentor")) {
             response = webDisplay.getSiteContent(name, sideMenu, prepareMentorArtifactOptions());
-            send200(, response);
+            send200(response);
 
         } else if (accessLevel.equals("admin")) {
             send403();
