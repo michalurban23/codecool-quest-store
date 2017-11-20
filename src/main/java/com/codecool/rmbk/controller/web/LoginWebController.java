@@ -4,13 +4,10 @@ import com.codecool.rmbk.dao.PasswordHash;
 import com.codecool.rmbk.dao.SQLLoginDAO;
 import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.model.usr.User;
-import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpCookie;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +37,7 @@ public class LoginWebController extends CommonHandler {
                 response = webDisplay.getFailedLoginScreen();
             }
         }
-        send200(httpExchange, response);
+        send200(response);
     }
 
     private void logUserIn(HttpExchange httpExchange) throws IOException {
@@ -50,7 +47,7 @@ public class LoginWebController extends CommonHandler {
         Session session = new Session(loggedUser, sessionID);
         CookieParser.createCookie(httpExchange, sessionID);
 
-        send302(httpExchange, "/index");
+        send302("/index");
     }
 
     private void readUserCredentials(HttpExchange httpExchange) {
