@@ -14,24 +14,30 @@ public class StudentsController extends CommonHandler {
 
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
     private SQLUsers sqlUsers = new SQLUsers();
+    private String response;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String response;
-        String accessLevel = validateRequest(httpExchange);
-        String name = getLoggedUser(httpExchange).getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
-        Map<String, String> data = sqlUsers.getUserMap("student");
+        String accessLevel = validateRequest();
+        String name = getLoggedUser().getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
+
+        handleWebStudents(accessLevel, name, sideMenu);
+    }
+
+    private void handleWebStudents(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
 
         if (accessLevel.equals("student")) {
-            send403(httpExchange);
+            response = webDisplay.getSiteContent(name, sideMenu, prepareStudentOptions("students"));
+            send200(response);
 
         } else if (accessLevel.equals("mentor")) {
-            response = webDisplay.getSiteContent(name, sideMenu, data);
-            send200(httpExchange, response);
+            response = webDisplay.getSiteContent(name, sideMenu, prepareMentorOptions("students"));
+            send200(response);
 
         } else if (accessLevel.equals("admin")) {
-            send403(httpExchange);
+            send403();
         }
     }
+
 }
