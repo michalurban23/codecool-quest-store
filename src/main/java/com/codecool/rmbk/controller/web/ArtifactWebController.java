@@ -1,66 +1,93 @@
 package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.SQLArtifact;
+import com.codecool.rmbk.dao.SQLArtifactTemplate;
 import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ArtifactWebController extends CommonHandler {
 
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
     private SQLArtifact sqlArtifact = new SQLArtifact();
+    private SQLArtifactTemplate sqlArtifactTemplate = new SQLArtifactTemplate();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
         setHttpExchange(httpExchange);
-
         String accessLevel = validateRequest();
-
-        String name = user.getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
-
-        handleWebArtifact(accessLevel, name, sideMenu);
+        validateAccessLevel(accessLevel);
 
     }
 
-    private void handleWebArtifact(String accessLevel, String name,
-                                   Map<String, String> sideMenu) throws IOException {
+    private void validateAccessLevel(String accessLevel) throws IOException {
 
-        Map<String, String> studentOptions = prepareStudentContextMenu();
-        Map<String, String> mentorOptions = prepareMentorContextMenu();
-
-        if (accessLevel.equals("Student")) {
-            response = webDisplay.getSiteContent(name, sideMenu,studentOptions, sqlArtifact.getArtifactMapBy(user),
-                    "templates/list_content.twig");
-            send200(response);
-
-        } else if (accessLevel.equals("Mentor")) {
-            response = webDisplay.getSiteContent(name, sideMenu,
-                    mentorOptions, new HashMap<>(), "templates/list_content.twig");
-            send200(response);
-
-        } else if (accessLevel.equals("Admin")) {
-            send403();
+        switch (accessLevel) {
+            case "Mentor":
+                validateURIMentor();
+                send200(response);
+                break;
+            case "Student":
+                validateURIStudent();
+                send200(response);
+                break;
+            case "Admin":
+                send403();
         }
     }
 
-    private Map<String, String> prepareStudentContextMenu() {
+    private void prepareMentorResponse() {
 
-        Map<String, String> options = new HashMap<>();
-        options.put("Buy", prepareURI("artifacts","buy"));
+        String name = user.getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
+        String[] options = new String[]{"Add"};
+        Map<String, String> contextMenu = prepareContextMenu(options);
+        Map<String, String> mainData = sqlArtifactTemplate.getArtifactTemplatesMap();
+        String URL = "templates/list_content.twig";
 
-        return options;
+        response = webDisplay.getSiteContent(name, sideMenu, contextMenu, mainData, URL);
     }
 
-    private Map<String, String> prepareMentorContextMenu() {
+    private void prepareStudentResponse() {
 
-        Map<String, String> options = new HashMap<>();
-        options.put("Add", prepareURI("artifacts","add"));
+        String name = user.getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
+        String[] options = new String[]{"Buy"};
+        Map<String, String> contextMenu = prepareContextMenu(options);
+        Map<String, String> mainData = sqlArtifact.getArtifactMapBy(user);
+        String URL = "templates/list_content.twig";
 
-        return options;
+        response = webDisplay.getSiteContent(name, sideMenu, contextMenu, mainData, URL);
+    }
+
+    private void validateURIMentor() {
+
+        switch (getRequestURI()) {
+            case "artifacts/add":
+                handleAddArtifact();
+            default:
+                prepareMentorResponse();
+        }
+    }
+
+    private void validateURIStudent() {
+
+        switch (getRequestURI()) {
+            case "artifacts/buy":
+                handleBuyArtifact();
+            default:
+                prepareStudentResponse();
+        }
+    }
+
+    private void handleBuyArtifact() {
+
+    }
+
+    private void handleAddArtifact() {
+
     }
 }
