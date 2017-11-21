@@ -32,7 +32,7 @@ public class ArtifactWebController extends CommonHandler {
 
         if (accessLevel.equals("Student")) {
             response = webDisplay.getSiteContent(name, sideMenu,
-                    prepareStudentOptions("artifact"), sqlArtifact.getArtifactMapBy(getLoggedUser()));
+                    prepareStudentOptions("artifact"), sqlArtifact.getArtifactMapBy(user));
             send200(response);
 
         } else if (accessLevel.equals("Mentor")) {

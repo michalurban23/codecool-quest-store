@@ -22,7 +22,7 @@ public class StudentsController extends CommonHandler {
 
         String accessLevel = validateRequest();
         String name = user.getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
 
         handleWebStudents(accessLevel, name, sideMenu);
     }

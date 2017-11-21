@@ -16,8 +16,8 @@ public class BacklogWebController extends CommonHandler {
 
         setHttpExchange(httpExchange);
 
-        String response = webDisplay.getSiteContent(getLoggedUser().getFirstName(),
-                sqlMenuDAO.getSideMenu(getLoggedUser()),
+        String response = webDisplay.getSiteContent(user.getFirstName(),
+                sqlMenuDAO.getSideMenu(user),
                 null, null);
         send200(response);
     }

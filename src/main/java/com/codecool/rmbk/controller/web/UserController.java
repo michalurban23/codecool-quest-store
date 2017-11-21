@@ -20,7 +20,7 @@ public class UserController extends CommonHandler {
 
         validateRequest();
 
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
         response = webDisplay.getSiteContent(user.getFirstName(), sideMenu, null,
                 user.getFullInfoMap());
 
