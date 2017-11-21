@@ -31,8 +31,8 @@ public class ArtifactWebController extends CommonHandler {
                                    Map<String, String> sideMenu) throws IOException {
 
         if (accessLevel.equals("Student")) {
-            response = webDisplay.getSiteContent(name, sideMenu,
-                    null, sqlArtifact.getArtifactMapBy(user), "templates/list_content.twig");
+            response = webDisplay.getSiteContent(name, sideMenu,null, sqlArtifact.getArtifactMapBy(user), "templates/list_content.twig");
+
             send200(response);
 
         } else if (accessLevel.equals("Mentor")) {

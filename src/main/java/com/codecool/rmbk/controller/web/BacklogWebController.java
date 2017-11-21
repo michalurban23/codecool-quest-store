@@ -19,6 +19,7 @@ public class BacklogWebController extends CommonHandler {
         String response = webDisplay.getSiteContent(user.getFirstName(),
                 sqlMenuDAO.getSideMenu(user),
                 null, null, "templates/list_content.twig");
+
         send200(response);
     }
 
