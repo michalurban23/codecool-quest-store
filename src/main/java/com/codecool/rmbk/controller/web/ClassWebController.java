@@ -26,17 +26,17 @@ public class ClassWebController extends CommonHandler {
 
     private void handleWebClass(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
 
-        if (accessLevel.equals("student")) {
+        if (accessLevel.equals("Student")) {
             response = webDisplay.getSiteContent(name, sideMenu,
                     prepareStudentOptions("classes"), null);
             send200(response);
 
-        } else if (accessLevel.equals("mentor")) {
+        } else if (accessLevel.equals("Mentor")) {
             response = webDisplay.getSiteContent(name, sideMenu,
                     prepareMentorOptions("class"), null);
             send200(response);
 
-        } else if (accessLevel.equals("admin")) {
+        } else if (accessLevel.equals("Admin")) {
             send403();
 
         }

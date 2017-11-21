@@ -1,24 +1,10 @@
-<!DOCTYPE html>
-<html xml:lang="pl" lang="pl">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="Description" content="CodeCool QuestStore System">
-    <meta name="Keywords" content="CodeCool, coins, store, artifacts, quests">
-    <link rel="stylesheet" href="/static/css/login.css" type="text/css">
-    <Title>QuestStore Login System</Title>
-</head>
-<body>
-<div class="login">
-    <p class="login-title">Login as:</p>
-    <div class="login-button-container">
-        <form method="post">
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" placeholder="Enter your name" required>
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" required>
-            <input type="submit" value="Log in">
-        </form>
-    </div>
+<div>
+    {{ message }}
+    <form method="post">
+        <label for="name">Name: </label>
+        <input type="text" name="name" id="name" placeholder="Enter your name" required>
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password" required>
+        <input type="submit" value="Log in">
+    </form>
 </div>
-</body>
-</html>

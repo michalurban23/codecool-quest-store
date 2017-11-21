@@ -19,7 +19,6 @@ public class BacklogWebController extends CommonHandler {
         String response = webDisplay.getSiteContent(getLoggedUser().getFirstName(),
                 sqlMenuDAO.getSideMenu(getLoggedUser()),
                 null, null);
-
         send200(response);
     }
 }

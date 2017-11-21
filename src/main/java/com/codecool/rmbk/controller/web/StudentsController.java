@@ -21,7 +21,7 @@ public class StudentsController extends CommonHandler {
         setHttpExchange(httpExchange);
 
         String accessLevel = validateRequest();
-        String name = getLoggedUser().getFirstName();
+        String name = user.getFirstName();
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
 
         handleWebStudents(accessLevel, name, sideMenu);

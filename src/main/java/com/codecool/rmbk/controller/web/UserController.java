@@ -17,9 +17,9 @@ public class UserController extends CommonHandler {
 
     public void handle(HttpExchange httpExchange) throws IOException {
         setHttpExchange(httpExchange);
+
         validateRequest();
 
-        User user = getLoggedUser();
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
         response = webDisplay.getSiteContent(user.getFirstName(), sideMenu, null,
                 user.getFullInfoMap());
