@@ -91,7 +91,6 @@ public abstract class CommonHandler implements HttpHandler {
 
     String validateRequest() throws IOException {
 
-
         String sessionStatus = cookieHandler.getSessionStatus();
         Boolean active = sessionDao.isSessionActive(cookieHandler.getSessionId());
         String requestStatus = null;
@@ -175,15 +174,16 @@ public abstract class CommonHandler implements HttpHandler {
         return map;
     }
 
-    String prepareURI(String location, String option) {
+    Map<String,String> parseURIstring(String uriString) {
 
-        StringBuilder URI = new StringBuilder();
-        URI.append("/");
-        URI.append(location);
-        URI.append("/");
-        URI.append(option);
+        String[] controlLevels = new String[] {"controller", "object", "action", "subject"};
+        String[] uriElements = uriString.split("[/]");
+        Map<String,String> resultMap = new HashMap<>();
 
-        return URI.toString();
+        for (int i=0; i<uriElements.length; i++) {
+            resultMap.put(controlLevels[i], uriElements[i]);
+        }
+        return resultMap;
     }
 
     Map<String, String> prepareContextMenu(String[] options) {
@@ -199,7 +199,15 @@ public abstract class CommonHandler implements HttpHandler {
 
     String getRequestURI() {
 
-        return httpExchange.getRequestURI().toString();
+        String uriString = httpExchange.getRequestURI().toString();
+        if (uriString.startsWith("/")) {
+            uriString = uriString.substring(1);
+        }
+        if (uriString.endsWith("/")) {
+            uriString = uriString.substring(0, uriString.length() - 2);
+        }
+
+        return uriString;
     }
 
 }
