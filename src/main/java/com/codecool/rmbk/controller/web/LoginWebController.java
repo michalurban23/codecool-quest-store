@@ -3,6 +3,7 @@ package com.codecool.rmbk.controller.web;
 import com.codecool.rmbk.dao.SQLLoginDAO;
 import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.model.Session;
+import com.codecool.rmbk.model.usr.User;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.BufferedReader;

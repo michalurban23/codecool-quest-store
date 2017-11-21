@@ -7,12 +7,14 @@ import java.util.Map;
 public class WebDisplay {
 
     public String getSiteContent(String userName,
-                                        Map<String, String> menu,
+                                        Map<String, String> sideMenu,
+                                        Map<String, String> contextMenu,
                                         Map<String, String> mainData) {
 
         StringBuilder response = new StringBuilder();
         response.append(getHeaderContent(userName));
-        response.append(getMenuContent(menu));
+        response.append(getSideMenuContent(sideMenu));
+        response.append(getContextMenu(contextMenu));
         response.append(getMainContent(mainData));
         response.append(getFooterContent());
 
@@ -21,7 +23,17 @@ public class WebDisplay {
 
     private String getMainContent(Map<String, String> data) {
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/content.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/main_user.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("data", data);
+
+        return template.render(model);
+    }
+
+    private String getContextMenu(Map<String, String> data) {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/context_menu.twig");
         JtwigModel model = JtwigModel.newModel();
 
         model.with("data", data);
@@ -47,9 +59,9 @@ public class WebDisplay {
         return template.render(model);
     }
 
-    private String getMenuContent(Map<String, String> menu) {
+    private String getSideMenuContent(Map<String, String> menu) {
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/menu.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/side_menu.twig");
         JtwigModel model = JtwigModel.newModel();
 
         model.with("menu", menu);

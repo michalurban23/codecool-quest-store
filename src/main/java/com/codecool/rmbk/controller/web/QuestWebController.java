@@ -15,23 +15,37 @@ import java.util.Map;
 public class QuestWebController extends CommonHandler {
 
     SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
+    SQLQuest sqlQuest = new SQLQuest();
+    SQLQuestTemplate sqlQuestTemplate = new SQLQuestTemplate();
+    private String response;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String response;
+        setHttpExchange(httpExchange);
+
         String accessLevel = validateRequest();
         String name = user.getFirstName();
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
 
-        if (accessLevel.equals("student")) {
-            response = webDisplay.getSiteContent(name, sideMenu, new HashMap<>());
+        handleWebQuest(accessLevel, name, sideMenu);
+    }
+
+    private void handleWebQuest(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
+
+        if (accessLevel.equals("Student")) {
+            response = webDisplay.getSiteContent(name, sideMenu,
+                    prepareStudentOptions("quests"),
+                    sqlQuest.getQuestMap(getLoggedUser().getID(), "rmbk"));
             send200(response);
 
-        } else if (accessLevel.equals("mentor")) {
-            response = webDisplay.getSiteContent(name, sideMenu, new HashMap<>());
+        } else if (accessLevel.equals("Mentor")) {
+            response = webDisplay.getSiteContent(name, sideMenu,
+                    prepareMentorOptions("quests"),
+                    null);
+
             send200(response);
 
-        } else if (accessLevel.equals("admin")) {
+        } else if (accessLevel.equals("Admin")) {
             send403();
         }
     }
