@@ -91,7 +91,6 @@ public abstract class CommonHandler implements HttpHandler {
 
     String validateRequest() throws IOException {
 
-
         String sessionStatus = cookieHandler.getSessionStatus();
         Boolean active = sessionDao.isSessionActive(cookieHandler.getSessionId());
         String requestStatus = null;
@@ -175,23 +174,12 @@ public abstract class CommonHandler implements HttpHandler {
         return map;
     }
 
-    private String prepareURI(String location, String option) {
-
-        StringBuilder URI = new StringBuilder();
-        URI.append("/");
-        URI.append(location);
-        URI.append("/");
-        URI.append(option);
-
-        return URI.toString();
-    }
-
     Map<String, String> prepareContextMenu(String[] options) {
 
         Map<String, String> menu = new HashMap<>();
 
         for (String option : options) {
-            String url = "/" + option.toLowerCase();
+            String url = getRequestURI() + "/" + option.toLowerCase();
             menu.put(option, url);
         }
         return menu;
