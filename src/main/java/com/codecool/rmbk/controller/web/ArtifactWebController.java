@@ -36,7 +36,6 @@ public class ArtifactWebController extends CommonHandler {
         if (accessLevel.equals("Student")) {
             response = webDisplay.getSiteContent(name, sideMenu,studentOptions, sqlArtifact.getArtifactMapBy(user),
                     "templates/list_content.twig");
-
             send200(response);
 
         } else if (accessLevel.equals("Mentor")) {
