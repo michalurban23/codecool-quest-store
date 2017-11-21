@@ -7,23 +7,24 @@ import java.util.Map;
 public class WebDisplay {
 
     public String getSiteContent(String userName,
-                                        Map<String, String> sideMenu,
-                                        Map<String, String> contextMenu,
-                                        Map<String, String> mainData) {
+                                 Map<String, String> mainMenu,
+                                 Map<String, String> contextMenu,
+                                 Map<String, String> mainData,
+                                 String mainContentUrl) {
 
         StringBuilder response = new StringBuilder();
         response.append(getHeaderContent(userName));
-        response.append(getSideMenuContent(sideMenu));
+        response.append(getSideMenuContent(mainMenu));
         response.append(getContextMenu(contextMenu));
-        response.append(getMainContent(mainData));
+        response.append(getMainContent(mainData, mainContentUrl));
         response.append(getFooterContent());
 
         return response.toString();
     }
 
-    private String getMainContent(Map<String, String> data) {
+    private String getMainContent(Map<String, String> data, String url) {
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/main_user.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(url);
         JtwigModel model = JtwigModel.newModel();
 
         model.with("data", data);
@@ -77,7 +78,6 @@ public class WebDisplay {
 
         StringBuilder response = new StringBuilder();
         response.append(getHeaderContent("to QuestStore"));
-        response.append(getMenuContent(null));
         response.append(template.render(model));
         response.append(getFooterContent());
 

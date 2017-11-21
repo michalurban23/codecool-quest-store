@@ -35,7 +35,7 @@ public class MentorsController extends CommonHandler {
             send403();
         } else if (accessLevel.equals("Admin")) {
             response = webDisplay.getSiteContent(name, sideMenu,
-                    prepareMentorOptions("mentors"), sqlUsers.getUserMap("mentor"));
+                    null, sqlUsers.getUserMap("mentor"), "templates/list_content.twig");
 
             send200(response);
         }

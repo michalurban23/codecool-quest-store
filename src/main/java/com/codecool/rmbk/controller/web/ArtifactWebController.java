@@ -33,13 +33,13 @@ public class ArtifactWebController extends CommonHandler {
         Map<String, String> studentOptions = prepareStudentContextMenu();
 
         if (accessLevel.equals("Student")) {
-            response = webDisplay.getSiteContent(name, sideMenu,
-                    prepareStudentOptions("artifact"), sqlArtifact.getArtifactMapBy(user));
+            response = webDisplay.getSiteContent(name, sideMenu,null, sqlArtifact.getArtifactMapBy(user), "templates/list_content.twig");
+
             send200(response);
 
         } else if (accessLevel.equals("Mentor")) {
             response = webDisplay.getSiteContent(name, sideMenu,
-                    prepareMentorOptions("artifact"), new HashMap<>());
+                    null, new HashMap<>(), "templates/list_content.twig");
             send200(response);
 
         } else if (accessLevel.equals("Admin")) {

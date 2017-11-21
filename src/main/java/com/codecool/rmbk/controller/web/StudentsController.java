@@ -31,14 +31,14 @@ public class StudentsController extends CommonHandler {
 
         if (accessLevel.equals("Student")) {
             response = webDisplay.getSiteContent(name, sideMenu,
-                    prepareStudentOptions("students"),
-                    null);
+                    null,
+                    null, "templates/list_content.twig");
             send200(response);
 
         } else if (accessLevel.equals("Mentor")) {
             response = webDisplay.getSiteContent(name, sideMenu,
-                    prepareMentorOptions("students"),
-                    sqlUsers.getUserMap("student"));
+                    null,
+                    sqlUsers.getUserMap("student"), "templates/list_content.twig");
             send200(response);
 
         } else if (accessLevel.equals("Admin")) {

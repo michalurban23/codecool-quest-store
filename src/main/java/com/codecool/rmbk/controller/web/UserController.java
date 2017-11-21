@@ -22,7 +22,7 @@ public class UserController extends CommonHandler {
 
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
         response = webDisplay.getSiteContent(user.getFirstName(), sideMenu, null,
-                user.getFullInfoMap());
+                user.getFullInfoMap(), "templates/main_user.twig");
 
         send200(response);
     }

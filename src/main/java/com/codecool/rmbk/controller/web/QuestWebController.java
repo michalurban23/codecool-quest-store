@@ -33,15 +33,14 @@ public class QuestWebController extends CommonHandler {
     private void handleWebQuest(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
 
         if (accessLevel.equals("Student")) {
-            response = webDisplay.getSiteContent(name, sideMenu,
-                    prepareStudentOptions("quests"),
-                    sqlQuest.getQuestMap(user.getID(), "rmbk"));
+            response = webDisplay.getSiteContent(name, sideMenu,null,
+                    sqlQuest.getQuestMap(user.getID(), "rmbk"), "templates/list_content.twig");
             send200(response);
 
         } else if (accessLevel.equals("Mentor")) {
             response = webDisplay.getSiteContent(name, sideMenu,
-                    prepareMentorOptions("quests"),
-                    null);
+                    null,
+                    null, "templates/list_content.twig");
 
             send200(response);
 
