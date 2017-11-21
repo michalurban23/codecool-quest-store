@@ -26,6 +26,7 @@ public abstract class CommonHandler implements HttpHandler {
     CookieHandler cookieHandler;
     WebDisplay webDisplay = new WebDisplay();
     SQLSession sessionDao = new SQLSession();
+    String urlList = "templates/list_content.twig";
 
     static User user;
     static Session session;
@@ -109,7 +110,7 @@ public abstract class CommonHandler implements HttpHandler {
         return requestStatus;
     }
 
-    void sendFile(URL fileURL, int httpCode) throws IOException {
+    private void sendFile(URL fileURL, int httpCode) throws IOException {
 
         File file = new File(fileURL.getFile());
 
@@ -185,10 +186,20 @@ public abstract class CommonHandler implements HttpHandler {
         return URI.toString();
     }
 
+    Map<String, String> prepareContextMenu(String[] options) {
+
+        Map<String, String> menu = new HashMap<>();
+
+        for (String option : options) {
+            String url = "/" + option.toLowerCase();
+            menu.put(option, url);
+        }
+        return menu;
+    }
+
     String getRequestURI() {
 
-        System.out.println(httpExchange.getRequestURI().toString());
-        return "";
+        return httpExchange.getRequestURI().toString();
     }
 
 }
