@@ -16,15 +16,20 @@ public class UserController extends CommonHandler {
     private String response;
 
     public void handle(HttpExchange httpExchange) throws IOException {
-        setHttpExchange(httpExchange);
 
+        setHttpExchange(httpExchange);
         validateRequest();
+
+        Map<String,String> uriMap = parseURIstring(getRequestURI());
+        System.out.println(uriMap);
 
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
         response = webDisplay.getSiteContent(user.getFirstName(), sideMenu, null,
                 user.getFullInfoMap(), "templates/main_user.twig");
 
         send200(response);
+
     }
+
 
 }
