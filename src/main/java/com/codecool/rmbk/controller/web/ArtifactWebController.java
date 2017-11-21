@@ -31,15 +31,17 @@ public class ArtifactWebController extends CommonHandler {
                                    Map<String, String> sideMenu) throws IOException {
 
         Map<String, String> studentOptions = prepareStudentContextMenu();
+        Map<String, String> mentorOptions = prepareMentorContextMenu();
 
         if (accessLevel.equals("Student")) {
-            response = webDisplay.getSiteContent(name, sideMenu,null, sqlArtifact.getArtifactMapBy(user), "templates/list_content.twig");
+            response = webDisplay.getSiteContent(name, sideMenu,studentOptions, sqlArtifact.getArtifactMapBy(user),
+                    "templates/list_content.twig");
 
             send200(response);
 
         } else if (accessLevel.equals("Mentor")) {
             response = webDisplay.getSiteContent(name, sideMenu,
-                    null, new HashMap<>(), "templates/list_content.twig");
+                    mentorOptions, new HashMap<>(), "templates/list_content.twig");
             send200(response);
 
         } else if (accessLevel.equals("Admin")) {
@@ -47,7 +49,7 @@ public class ArtifactWebController extends CommonHandler {
         }
     }
 
-    private Map<String, String> prepareStudentContextMenu(String location) {
+    private Map<String, String> prepareStudentContextMenu() {
 
         Map<String, String> options = new HashMap<>();
         options.put("Buy", prepareURI("artifacts","buy"));
