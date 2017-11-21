@@ -30,7 +30,6 @@ public class CookieHandler {
 
     public String getSessionStatus() {
 
-        System.out.println("FULL COOKIE: " + httpExchange.getRequestHeaders().getFirst("Cookie"));
         String cookie = httpExchange.getRequestHeaders().getFirst("Cookie");
 
         if (cookie != null) {
@@ -82,8 +81,10 @@ public class CookieHandler {
 
     public void clearCookie() {
 
-        httpExchange.getResponseHeaders().add("Set-Cookie", "sessionId=");
-        httpExchange.getResponseHeaders().add("Set-Cookie", "sessionStatus=");
+        String expired = "; expires=" + createDateInPast();
+
+        httpExchange.getResponseHeaders().add("Set-Cookie", "sessionId=" + expired);
+        httpExchange.getResponseHeaders().add("Set-Cookie", "sessionStatus=" + expired);
     }
 
     private String createExpireString() {
@@ -93,6 +94,13 @@ public class CookieHandler {
         String cookieExpireTime = DateTimeFormatter.RFC_1123_DATE_TIME.format(veryLongTime);
 
         return "; expires= " + cookieExpireTime;
+    }
+
+    private String createDateInPast() {
+
+        OffsetDateTime veryLongTime = OffsetDateTime.now(ZoneOffset.UTC).plus(Duration.ofMinutes(-5));
+
+        return DateTimeFormatter.RFC_1123_DATE_TIME.format(veryLongTime);
     }
 
 }
