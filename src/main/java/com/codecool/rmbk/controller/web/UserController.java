@@ -13,16 +13,17 @@ import java.util.Map;
 public class UserController extends CommonHandler {
 
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
+    private String response;
 
     public void handle(HttpExchange httpExchange) throws IOException {
-
         setHttpExchange(httpExchange);
-
-        String response;
         validateRequest();
+
         User user = getLoggedUser();
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
-        response = webDisplay.getSiteContent(user.getFirstName(), sideMenu, user.getFullInfoMap());
+        response = webDisplay.getSiteContent(user.getFirstName(), sideMenu, null,
+                user.getFullInfoMap());
+
         send200(response);
     }
 

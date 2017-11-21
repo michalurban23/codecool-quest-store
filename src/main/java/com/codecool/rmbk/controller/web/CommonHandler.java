@@ -15,6 +15,8 @@ import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.net.URI;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class CommonHandler implements HttpHandler {
 
@@ -131,5 +133,37 @@ public abstract class CommonHandler implements HttpHandler {
     void setHttpExchange(HttpExchange httpExchange) {
 
         this.httpExchange = httpExchange;
+    }
+
+    Map<String, String> prepareMentorOptions(String location) {
+
+        Map<String, String> options = new HashMap<>();
+        options.put("Display", prepareURI(location, "display"));
+        options.put("Edit", prepareURI(location, "edit"));
+        options.put("Add", prepareURI(location, "add"));
+        options.put("Delete", prepareURI(location, "delete"));
+
+        return options;
+    }
+
+    Map<String, String> prepareStudentOptions(String location) {
+
+        Map<String, String> options = new HashMap<>();
+        options.put("Display", prepareURI(location, "display"));
+        options.put("Edit", prepareURI(location, "edit"));
+        options.put("Acquire", prepareURI(location, "acquire"));
+
+        return options;
+    }
+
+    private String prepareURI(String location, String option) {
+
+        StringBuilder URI = new StringBuilder();
+        URI.append("/");
+        URI.append(location);
+        URI.append("/");
+        URI.append(option);
+
+        return URI.toString();
     }
 }

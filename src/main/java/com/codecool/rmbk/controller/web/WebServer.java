@@ -19,9 +19,9 @@ public class WebServer {
         server.createContext("/static", new Static());
         server.createContext("/artifacts", new ArtifactWebController());
         server.createContext("/backlog", new BacklogWebController());
-        server.createContext("/class", new ClassWebController());
+        server.createContext("/classes", new ClassWebController());
         server.createContext("/quest", new QuestWebController());
-        server.createContext("/team", new TeamWebController());
+        server.createContext("/teams", new TeamWebController());
         server.createContext("/students", new StudentsController());
         server.createContext("/mentors", new MentorsController());
         server.createContext("/", new UserController());

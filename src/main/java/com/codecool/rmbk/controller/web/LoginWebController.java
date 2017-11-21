@@ -6,7 +6,6 @@ import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.helper.CookieParser;
 import com.codecool.rmbk.model.Session;
 import com.codecool.rmbk.model.usr.User;
-import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,6 +28,7 @@ public class LoginWebController extends CommonHandler {
         setHttpExchange(httpExchange);
 
         setupLoginProcess();
+        setHttpExchange(httpExchange);
         String method = httpExchange.getRequestMethod();
         CookieParser.readCookieString(httpExchange);
 
