@@ -39,15 +39,30 @@ public class SQLArtifactTemplate extends SqlDAO {
 
         Map<String, String> result = new HashMap<>();
 
-        String query = "SELECT `description`, `name` " +
+        String query = "SELECT name " +
                 "FROM artifact_template";
 
         processQuery(query, null);
 
-        for (ArrayList<String> template : getResults().subList(1, getResults().size())) {
-            result.put(template.get(0), template.get(1));
+        for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
+            String href = "/artifacts/" + removeWhitespaces(outcome.get(0));
+            String name = outcome.get(0);
+            result.put(name, href);
         }
-
         return result;
+    }
+
+    private String removeWhitespaces(String original) {
+
+        StringBuilder newString = new StringBuilder();
+
+        for (char ch: original.toCharArray()) {
+            if (ch == ' ') {
+                newString.append("_");
+            } else {
+                newString.append(ch);
+            }
+        }
+        return newString.toString();
     }
 }

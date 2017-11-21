@@ -65,21 +65,24 @@ public class ArtifactWebController extends CommonHandler {
 
     private void validateURIMentor() {
 
-        switch (getRequestURI()) {
-            case "artifacts/add":
-                handleAddArtifact();
-            default:
-                prepareMentorResponse();
+        if (getRequestURI().equals("artifacts/add")) {
+            handleAddArtifact();
+        } else if (!getRequestURI().equals("artifacts/add")) {
+            handleSingleArtifact(getRequestURI());
+        } else {
+            prepareMentorResponse();
         }
+
     }
 
     private void validateURIStudent() {
 
-        switch (getRequestURI()) {
-            case "artifacts/buy":
-                handleBuyArtifact();
-            default:
-                prepareStudentResponse();
+        if (getRequestURI().equals("artifacts/buy")) {
+            handleAddArtifact();
+        } else if (!getRequestURI().equals("artifacts/buy")) {
+            handleSingleArtifact(getRequestURI());
+        } else {
+            prepareMentorResponse();
         }
     }
 
@@ -88,6 +91,11 @@ public class ArtifactWebController extends CommonHandler {
     }
 
     private void handleAddArtifact() {
+
+    }
+
+    private void handleSingleArtifact(String URI) {
+
 
     }
 }
