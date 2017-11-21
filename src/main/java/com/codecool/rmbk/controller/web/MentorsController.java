@@ -26,15 +26,17 @@ public class MentorsController extends CommonHandler {
         handleWebMentor(accessLevel, name, sideMenu);
     }
 
+
     private void handleWebMentor(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
 
         if (accessLevel.equals(sideMenu)) {
             send403();
-        } else if (accessLevel.equals("mentor")) {
+        } else if (accessLevel.equals("Mentor")) {
             send403();
-        } else if (accessLevel.equals("admin")) {
+        } else if (accessLevel.equals("Admin")) {
             response = webDisplay.getSiteContent(name, sideMenu,
                     prepareMentorOptions("mentors"), sqlUsers.getUserMap("mentor"));
+
             send200(response);
         }
     }

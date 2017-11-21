@@ -15,7 +15,7 @@ public class TeamWebController extends CommonHandler {
     private String response;
 
     public void handle(HttpExchange httpExchange) throws IOException {
-
+      
         setHttpExchange(httpExchange);
 
         String accessLevel = validateRequest();
@@ -27,19 +27,19 @@ public class TeamWebController extends CommonHandler {
 
     private void handleWebTeam(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
 
-        if (accessLevel.equals("student")) {
+        if (accessLevel.equals("Student")) {
             response = webDisplay.getSiteContent(name, sideMenu,
                     prepareStudentOptions("teams"),
                     null);
             send200(response);
 
-        } else if (accessLevel.equals("mentor")) {
+        } else if (accessLevel.equals("Mentor")) {
             response = webDisplay.getSiteContent(name, sideMenu,
                     prepareMentorOptions("teams"),
                     null);
             send200(response);
 
-        } else if (accessLevel.equals("admin")) {
+        } else if (accessLevel.equals("Admin")) {
             send403();
         }
     }

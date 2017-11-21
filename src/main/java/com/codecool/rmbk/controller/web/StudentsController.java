@@ -29,19 +29,19 @@ public class StudentsController extends CommonHandler {
 
     private void handleWebStudents(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
 
-        if (accessLevel.equals("student")) {
+        if (accessLevel.equals("Student")) {
             response = webDisplay.getSiteContent(name, sideMenu,
                     prepareStudentOptions("students"),
                     null);
             send200(response);
 
-        } else if (accessLevel.equals("mentor")) {
+        } else if (accessLevel.equals("Mentor")) {
             response = webDisplay.getSiteContent(name, sideMenu,
                     prepareMentorOptions("students"),
                     sqlUsers.getUserMap("student"));
             send200(response);
 
-        } else if (accessLevel.equals("admin")) {
+        } else if (accessLevel.equals("Admin")) {
             send403();
         }
     }

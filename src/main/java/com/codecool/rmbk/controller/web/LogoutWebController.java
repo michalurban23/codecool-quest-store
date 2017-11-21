@@ -1,5 +1,6 @@
 package com.codecool.rmbk.controller.web;
 
+import com.codecool.rmbk.model.Session;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
 

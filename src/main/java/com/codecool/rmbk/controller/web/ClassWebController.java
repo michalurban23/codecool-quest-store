@@ -38,6 +38,7 @@ public class ClassWebController extends CommonHandler {
 
         } else if (accessLevel.equals("admin")) {
             send403();
+
         }
     }
 

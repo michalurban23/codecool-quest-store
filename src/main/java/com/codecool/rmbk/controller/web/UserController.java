@@ -23,6 +23,8 @@ public class UserController extends CommonHandler {
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
         response = webDisplay.getSiteContent(user.getFirstName(), sideMenu, null,
                 user.getFullInfoMap());
+
         send200(response);
     }
+
 }
