@@ -1,8 +1,6 @@
 package com.codecool.rmbk.dao;
 
-import com.codecool.rmbk.model.usr.Group;
 import com.codecool.rmbk.model.usr.Holder;
-import com.codecool.rmbk.model.usr.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,11 +33,18 @@ public class SQLArtifact extends SqlDAO {
     public Map<String,String> getArtifactMapBy(Holder holder) {
 
         Map<String,String> result = new HashMap<>();
-        String query = "SELECT `id`, `template_name` FROM artifacts WHERE `owner` = ?;";
-        ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {String.valueOf(holder.getID())});
 
-        for(ArrayList<String> arr : queryResult.subList(1, queryResult.size())) {
-            result.put(arr.get(0), arr.get(1));
+        String query = "SELECT `id`, `template_name` " +
+                       "FROM artifacts " +
+                       "WHERE `owner` = ?;";
+        String[] data = {String.valueOf(holder.getID())};
+
+        processQuery(query, data);
+
+        for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
+            String href = "/artifacts/" + outcome.get(0);
+            String name = outcome.get(1);
+            result.put(name, href);
         }
 
         return result;

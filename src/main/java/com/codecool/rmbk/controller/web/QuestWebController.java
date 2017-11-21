@@ -34,7 +34,9 @@ public class QuestWebController extends CommonHandler {
 
         if (accessLevel.equals("Student")) {
             response = webDisplay.getSiteContent(name, sideMenu,null,
-                    sqlQuest.getQuestMap(user.getID(), "rmbk"), "templates/list_content.twig");
+                    sqlQuest.getQuestMapBy(user),
+                    "templates/list_content.twig");
+            System.out.println(response);
             send200(response);
 
         } else if (accessLevel.equals("Mentor")) {
