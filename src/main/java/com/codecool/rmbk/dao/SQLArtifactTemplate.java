@@ -39,7 +39,7 @@ public class SQLArtifactTemplate extends SqlDAO {
 
         Map<String, String> result = new HashMap<>();
 
-        String query = "SELECT `name`, `description` " +
+        String query = "SELECT `description`, `name` " +
                 "FROM artifact_template";
 
         processQuery(query, null);

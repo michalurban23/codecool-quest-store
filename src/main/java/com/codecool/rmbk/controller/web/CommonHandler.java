@@ -191,7 +191,7 @@ public abstract class CommonHandler implements HttpHandler {
         Map<String, String> menu = new HashMap<>();
 
         for (String option : options) {
-            String url = "/" + option.toLowerCase();
+            String url = getRequestURI() + "/" + option.toLowerCase();
             menu.put(option, url);
         }
         return menu;
