@@ -186,6 +186,16 @@ public abstract class CommonHandler implements HttpHandler {
         return URI.toString();
     }
 
+    Map<String,String> parseURIstring(String uriString) {
+        String[] controlLevels = new String[] {"controller", "object", "action", "subject"};
+        String[] uriElements = uriString.split("[/]");
+        Map<String,String> resultMap = new HashMap<>();
+        for (int i=0; i<uriElements.length; i++) {
+            resultMap.put(controlLevels[i], uriElements[i]);
+        }
+        return resultMap;
+    }
+
     Map<String, String> prepareContextMenu(String[] options) {
 
         Map<String, String> menu = new HashMap<>();
@@ -199,7 +209,15 @@ public abstract class CommonHandler implements HttpHandler {
 
     String getRequestURI() {
 
-        return httpExchange.getRequestURI().toString();
+        String uriString = httpExchange.getRequestURI().toString();
+        if (uriString.startsWith("/")) {
+            uriString = uriString.substring(1);
+        }
+        if (uriString.endsWith("/")) {
+            uriString = uriString.substring(0, uriString.length() - 2);
+        }
+
+        return uriString;
     }
 
 }
