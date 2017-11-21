@@ -22,6 +22,7 @@ public class QuestWebController extends CommonHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         setHttpExchange(httpExchange);
+        getRequestURI();
 
         String accessLevel = validateRequest();
         String name = user.getFirstName();
@@ -36,7 +37,6 @@ public class QuestWebController extends CommonHandler {
             response = webDisplay.getSiteContent(name, sideMenu,null,
                     sqlQuest.getQuestMapBy(user),
                     "templates/list_content.twig");
-            System.out.println(response);
             send200(response);
 
         } else if (accessLevel.equals("Mentor")) {

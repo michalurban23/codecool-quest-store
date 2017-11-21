@@ -102,7 +102,7 @@ public abstract class CommonHandler implements HttpHandler {
                 requestStatus = user.getAccessLevel();
             } else {
                 requestStatus = "expired";
-                cookieHandler.clearCookie();
+                clearUser();
                 send401();
             }
         }
@@ -158,6 +158,7 @@ public abstract class CommonHandler implements HttpHandler {
 
         user = null;
         session = null;
+        cookieHandler.clearCookie();
     }
 
     Map<String, String> parseFormData(String formData) throws IOException {
@@ -183,4 +184,11 @@ public abstract class CommonHandler implements HttpHandler {
 
         return URI.toString();
     }
+
+    String getRequestURI() {
+
+        System.out.println(httpExchange.getRequestURI().toString());
+        return "";
+    }
+
 }
