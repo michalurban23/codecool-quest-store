@@ -13,8 +13,6 @@ public class ArtifactWebController extends CommonHandler {
 
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
     private SQLArtifact sqlArtifact = new SQLArtifact();
-    private String response;
-
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -22,8 +20,9 @@ public class ArtifactWebController extends CommonHandler {
         setHttpExchange(httpExchange);
 
         String accessLevel = validateRequest();
-        String name = getLoggedUser().getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
+
+        String name = user.getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
 
         handleWebArtifact(accessLevel, name, sideMenu);
 
@@ -31,15 +30,15 @@ public class ArtifactWebController extends CommonHandler {
 
     private void handleWebArtifact(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
 
-        if (accessLevel.equals("student")) {
+        if (accessLevel.equals("Student")) {
             response = webDisplay.getSiteContent(name, sideMenu, prepareMentorArtifactOptions());
             send200(response);
 
-        } else if (accessLevel.equals("mentor")) {
+        } else if (accessLevel.equals("Mentor")) {
             response = webDisplay.getSiteContent(name, sideMenu, prepareMentorArtifactOptions());
             send200(response);
 
-        } else if (accessLevel.equals("admin")) {
+        } else if (accessLevel.equals("Admin")) {
             send403();
         }
     }

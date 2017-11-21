@@ -57,19 +57,19 @@ public class WebDisplay {
         return template.render(model);
     }
 
-    public String getLoginScreen() {
+    public String getLoginScreen(String message) {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login.twig");
         JtwigModel model = JtwigModel.newModel();
+        model.with("message", message);
 
-        return template.render(model);
+        StringBuilder response = new StringBuilder();
+        response.append(getHeaderContent("to QuestStore"));
+        response.append(getMenuContent(null));
+        response.append(template.render(model));
+        response.append(getFooterContent());
+
+        return response.toString();
     }
 
-    public String getFailedLoginScreen() {
-
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/fail.twig");
-        JtwigModel model = JtwigModel.newModel();
-
-        return template.render(model);
-    }
 }

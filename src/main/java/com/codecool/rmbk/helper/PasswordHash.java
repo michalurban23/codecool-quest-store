@@ -1,4 +1,4 @@
-package com.codecool.rmbk.dao;
+package com.codecool.rmbk.helper;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import java.util.Random;

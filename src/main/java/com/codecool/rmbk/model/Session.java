@@ -1,79 +1,40 @@
 package com.codecool.rmbk.model;
 
-import com.codecool.rmbk.helper.CookieParser;
-import com.codecool.rmbk.model.usr.User;
-
-import java.net.HttpCookie;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Session {
 
-    private static List<Session> activeSessions = new ArrayList<>();
-
-    private User loggedUser;
     private String sessionId;
-    private LocalDateTime createDate = null;
-    private LocalDateTime expireDate;
-    private LocalDateTime lastAccessDate;
-    private int sessionDurationMinutes = 10;
+    private LocalDateTime createTime = null;
+    private LocalDateTime expireTime;
+    private LocalDateTime lastAccessTime;
+    private int sessionDurationMinutes = 2;
 
-    public Session(User loggedUser, String sessionId) {
+    public Session(String sessionId) {
 
-        this.loggedUser = loggedUser;
         this.sessionId = sessionId;
-        this.lastAccessDate = LocalDateTime.now();
+        this.lastAccessTime = LocalDateTime.now();
         adjustDateTimeObjects();
-
-        activeSessions.add(this);
     }
 
     private void adjustDateTimeObjects() {
 
-        if (createDate == null) {
-            createDate = lastAccessDate;
+        if (createTime == null) {
+            createTime = lastAccessTime;
         }
-        expireDate = LocalDateTime.now().plusMinutes(sessionDurationMinutes);
-    }
-
-    public User getLoggedUser() {
-
-        return this.loggedUser;
-    }
-
-
-    public static Session getSessionByCookie(HttpCookie cookie) {
-
-        if (cookie != null) {
-
-            String sessionId = CookieParser.getSessionID(cookie);
-
-            for (Session session : activeSessions) {
-
-                if (session.getSessionId().equals(sessionId)) {
-                    return session;
-                }
-            }
-        }
-        return null;
+        expireTime = LocalDateTime.now().plusMinutes(sessionDurationMinutes);
     }
 
     public Boolean isActive() {
 
-        Boolean isActive = this.expireDate.isAfter(LocalDateTime.now());
+        Boolean isActive = this.expireTime.isAfter(LocalDateTime.now());
         refreshSession();
         return isActive;
     }
 
     private void refreshSession() {
 
-        this.expireDate = LocalDateTime.now().plusMinutes(sessionDurationMinutes);
-    }
-
-    public String getAccessLevel() {
-
-        return this.loggedUser.getClass().getSimpleName().toLowerCase();
+        this.expireTime = LocalDateTime.now().plusMinutes(sessionDurationMinutes);
     }
 
     public String getSessionId() {
@@ -81,9 +42,19 @@ public class Session {
         return this.sessionId;
     }
 
-    public static void clearCache() {
+    public LocalDateTime getCreateTime() {
 
-        activeSessions.clear();
+        return createTime;
+    }
+
+    public LocalDateTime getLastAccessTime() {
+
+        return lastAccessTime;
+    }
+
+    public LocalDateTime getExpireTime() {
+
+        return expireTime;
     }
 
 }

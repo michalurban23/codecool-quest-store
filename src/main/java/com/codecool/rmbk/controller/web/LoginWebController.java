@@ -1,61 +1,46 @@
 package com.codecool.rmbk.controller.web;
 
-import com.codecool.rmbk.dao.PasswordHash;
 import com.codecool.rmbk.dao.SQLLoginDAO;
 import com.codecool.rmbk.dao.SQLUsers;
-import com.codecool.rmbk.helper.CookieParser;
 import com.codecool.rmbk.model.Session;
-import com.codecool.rmbk.model.usr.User;
-import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URLDecoder;
-import java.util.HashMap;
 import java.util.Map;
 
 public class LoginWebController extends CommonHandler {
 
-    private String response;
     private String loginUserName;
     private String loginPassword;
-    private SQLLoginDAO dataAccess;
-    private SQLUsers userDao;
+    private SQLLoginDAO dataAccess = new SQLLoginDAO();
+    private SQLUsers userDao = new SQLUsers();
 
-    @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
         setHttpExchange(httpExchange);
 
-        setupLoginProcess();
-        String method = httpExchange.getRequestMethod();
-        CookieParser.readCookieString(httpExchange);
-
-        if (method.equals("GET")) {
-            response = webDisplay.getLoginScreen();
-        } else if (method.equals("POST")) {
-            readUserCredentials(httpExchange);
-            if (dataAccess.login(loginUserName, loginPassword)) {
-                logUserIn(httpExchange);
-            } else {
-                response = webDisplay.getFailedLoginScreen();
-            }
+        if (user == null) {
+            setupLoginProcess();
+        } else {
+            send302("/index");
         }
-        send200(response);
     }
 
-    private void logUserIn(HttpExchange httpExchange) throws IOException {
+    private void logUserIn() throws IOException {
 
-        User loggedUser = userDao.getUserByLogin(loginUserName);
-        String sessionID = PasswordHash.getSalt();
-        Session session = new Session(loggedUser, sessionID);
-        CookieParser.createCookie(httpExchange, sessionID);
+        String sessionID = cookieHandler.setNewSessionId();
+        user = userDao.getUserByLogin(loginUserName);
 
+        session = new Session(sessionID);
+        sessionDao.addSession(session, loginUserName);
+
+        cookieHandler.setStatusToLoggedIn();
         send302("/index");
     }
 
-    private void readUserCredentials(HttpExchange httpExchange) {
+    private void readUserCredentials() {
 
         try {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
@@ -71,24 +56,22 @@ public class LoginWebController extends CommonHandler {
         }
     }
 
-    private Map<String, String> parseFormData(String formData) throws IOException {
-
-        Map<String, String> map = new HashMap<>();
-        String[] pairs = formData.split("&");
-
-        for (String pair : pairs) {
-            String[] keyValue = pair.split("=");
-            String value = URLDecoder.decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
-        }
-        return map;
-    }
-
-    private void setupLoginProcess() {
+    private void setupLoginProcess() throws IOException {
 
         SQLLoginDAO.setPermission();
-        dataAccess = new SQLLoginDAO();
-        userDao = new SQLUsers();
+        String method = httpExchange.getRequestMethod();
+
+        if (method.equals("GET")) {
+            response = webDisplay.getLoginScreen(null);
+        } else if (method.equals("POST")) {
+            readUserCredentials();
+            if (dataAccess.login(loginUserName, loginPassword)) {
+                logUserIn();
+            } else {
+                response = webDisplay.getLoginScreen("Invalid username or password!");
+            }
+        }
+        send200(response);
     }
 
 }

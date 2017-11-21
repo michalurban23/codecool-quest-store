@@ -18,9 +18,9 @@ public class ClassWebController extends CommonHandler {
 
         String response;
         String accessLevel = validateRequest();
-        String name = getLoggedUser().getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
-        Map<String, String> data = sqlClass.getGroupMap(getLoggedUser());
+        String name = user.getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
+        Map<String, String> data = sqlClass.getGroupMap(user);
 
         if (accessLevel.equals("student")) {
             send403();

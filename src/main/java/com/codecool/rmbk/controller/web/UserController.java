@@ -18,11 +18,11 @@ public class UserController extends CommonHandler {
 
         setHttpExchange(httpExchange);
 
-        String response;
         validateRequest();
-        User user = getLoggedUser();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
+
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
         response = webDisplay.getSiteContent(user.getFirstName(), sideMenu, user.getFullInfoMap());
+
         send200(response);
     }
 

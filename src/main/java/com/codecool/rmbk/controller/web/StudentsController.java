@@ -19,8 +19,8 @@ public class StudentsController extends CommonHandler {
 
         String response;
         String accessLevel = validateRequest();
-        String name = getLoggedUser().getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
+        String name = user.getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
         Map<String, String> data = sqlUsers.getUserMap("student");
 
         if (accessLevel.equals("student")) {
