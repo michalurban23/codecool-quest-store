@@ -194,7 +194,7 @@ public abstract class CommonHandler implements HttpHandler {
         return options;
     }
 
-    private String prepareURI(String location, String option) {
+    String prepareURI(String location, String option) {
 
         StringBuilder URI = new StringBuilder();
         URI.append("/");

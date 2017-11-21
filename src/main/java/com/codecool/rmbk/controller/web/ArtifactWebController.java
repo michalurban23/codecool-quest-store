@@ -30,6 +30,8 @@ public class ArtifactWebController extends CommonHandler {
     private void handleWebArtifact(String accessLevel, String name,
                                    Map<String, String> sideMenu) throws IOException {
 
+        Map<String, String> studentOptions = prepareStudentContextMenu();
+
         if (accessLevel.equals("Student")) {
             response = webDisplay.getSiteContent(name, sideMenu,
                     prepareStudentOptions("artifact"), sqlArtifact.getArtifactMapBy(user));
@@ -43,5 +45,21 @@ public class ArtifactWebController extends CommonHandler {
         } else if (accessLevel.equals("Admin")) {
             send403();
         }
+    }
+
+    private Map<String, String> prepareStudentContextMenu(String location) {
+
+        Map<String, String> options = new HashMap<>();
+        options.put("Buy", prepareURI("artifacts","buy"));
+
+        return options;
+    }
+
+    private Map<String, String> prepareMentorContextMenu() {
+
+        Map<String, String> options = new HashMap<>();
+        options.put("Add", prepareURI("artifacts","add"));
+
+        return options;
     }
 }
