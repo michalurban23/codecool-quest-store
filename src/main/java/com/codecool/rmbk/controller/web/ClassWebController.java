@@ -18,8 +18,8 @@ public class ClassWebController extends CommonHandler {
         setHttpExchange(httpExchange);
 
         String accessLevel = validateRequest();
-        String name = getLoggedUser().getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
+        String name = user.getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
 
         handleWebClass(accessLevel, name, sideMenu);
     }
@@ -28,12 +28,12 @@ public class ClassWebController extends CommonHandler {
 
         if (accessLevel.equals("Student")) {
             response = webDisplay.getSiteContent(name, sideMenu,
-                    prepareStudentOptions("classes"), null);
+                    null, null, "templates/list_content.twig");
             send200(response);
 
         } else if (accessLevel.equals("Mentor")) {
             response = webDisplay.getSiteContent(name, sideMenu,
-                    prepareMentorOptions("class"), null);
+                    null, null, "templates/list_content.twig");
             send200(response);
 
         } else if (accessLevel.equals("Admin")) {

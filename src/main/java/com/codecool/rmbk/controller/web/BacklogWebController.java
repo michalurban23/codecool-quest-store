@@ -16,9 +16,10 @@ public class BacklogWebController extends CommonHandler {
 
         setHttpExchange(httpExchange);
 
-        String response = webDisplay.getSiteContent(getLoggedUser().getFirstName(),
-                sqlMenuDAO.getSideMenu(getLoggedUser()),
-                null, null);
+        String response = webDisplay.getSiteContent(user.getFirstName(),
+                sqlMenuDAO.getSideMenu(user),
+                null, null, "templates/list_content.twig");
         send200(response);
     }
+
 }

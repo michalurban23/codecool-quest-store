@@ -29,14 +29,14 @@ public class TeamWebController extends CommonHandler {
 
         if (accessLevel.equals("Student")) {
             response = webDisplay.getSiteContent(name, sideMenu,
-                    prepareStudentOptions("teams"),
-                    null);
+                    null,
+                    null, "templates/list_content.twig");
             send200(response);
 
         } else if (accessLevel.equals("Mentor")) {
             response = webDisplay.getSiteContent(name, sideMenu,
-                    prepareMentorOptions("teams"),
-                    null);
+                    null,
+                    null, "templates/list_content.twig");
             send200(response);
 
         } else if (accessLevel.equals("Admin")) {

@@ -172,27 +172,6 @@ public abstract class CommonHandler implements HttpHandler {
         }
         return map;
     }
-  
-    Map<String, String> prepareMentorOptions(String location) {
-
-        Map<String, String> options = new HashMap<>();
-        options.put("Display", prepareURI(location, "display"));
-        options.put("Edit", prepareURI(location, "edit"));
-        options.put("Add", prepareURI(location, "add"));
-        options.put("Delete", prepareURI(location, "delete"));
-
-        return options;
-    }
-
-    Map<String, String> prepareStudentOptions(String location) {
-
-        Map<String, String> options = new HashMap<>();
-        options.put("Display", prepareURI(location, "display"));
-        options.put("Edit", prepareURI(location, "edit"));
-        options.put("Acquire", prepareURI(location, "acquire"));
-
-        return options;
-    }
 
     private String prepareURI(String location, String option) {
 

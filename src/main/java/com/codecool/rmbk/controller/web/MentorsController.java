@@ -20,8 +20,8 @@ public class MentorsController extends CommonHandler {
         setHttpExchange(httpExchange);
 
         String accessLevel = validateRequest();
-        String name = getLoggedUser().getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser());
+        String name = user.getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
 
         handleWebMentor(accessLevel, name, sideMenu);
     }
@@ -35,7 +35,7 @@ public class MentorsController extends CommonHandler {
             send403();
         } else if (accessLevel.equals("Admin")) {
             response = webDisplay.getSiteContent(name, sideMenu,
-                    prepareMentorOptions("mentors"), sqlUsers.getUserMap("mentor"));
+                    null, sqlUsers.getUserMap("mentor"), "templates/list_content.twig");
 
             send200(response);
         }
