@@ -20,9 +20,19 @@ div.sidebar {
     align-items: center;
 }
 
+div.menu {
+    width: 100%;
+    margin: 1%;
+    padding: 1%;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+}
+
 div.main {
-    width: 90%;
-    margin: auto;
+    width: 82%;
+    margin-top: 50px;
+    margin: 1%;
     padding: 1%;
     border-radius: 25px;
 }
@@ -353,4 +363,54 @@ caption {
     flex-direction: column;
     align-content: center;
     justify-content: center;
+}
+
+.menu-bar {
+    width: 95%;
+    height: auto;
+}
+.menu-bar ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    background-color: inherit;
+}
+
+.menu-bar li {
+    font-family: Verdana, serif;
+    font-size: 1.2em;
+    height: 40px;
+    line-height: 40px;
+}
+
+.menu-bar a {
+    text-decoration: none;
+    display: block;
+    transition: .3s background-color;
+}
+
+.menu-bar a:hover {
+    background-color: blue;
+}
+
+@media screen and (min-width: 600px) {
+    .menu-bar li {
+        width: 120px;
+        border-bottom: none;
+        height: 50px;
+        line-height: 50px;
+        font-size: 1.4em;
+        float: left;
+    }
+
+    .menu-bar ul {
+        overflow: auto;
+        width: 600px;
+        margin: auto;
+    }
+
+    .menu-bar {
+        background-color: inherit;
+    }
 }
