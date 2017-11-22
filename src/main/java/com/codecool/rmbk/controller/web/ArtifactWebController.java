@@ -5,7 +5,9 @@ import com.codecool.rmbk.dao.SQLArtifactTemplate;
 import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.sun.net.httpserver.HttpExchange;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Map;
 
 public class ArtifactWebController extends CommonHandler {
@@ -63,27 +65,30 @@ public class ArtifactWebController extends CommonHandler {
         response = webDisplay.getSiteContent(name, sideMenu, contextMenu, mainData, URL);
     }
 
+    private void prepareRespone(String[] options, Map<String, String> mainData,
+                                String URL) {
+
+        String name = user.getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
+        Map<String, String> contextMenu = prepareContextMenu(options);
+
+        response = webDisplay.getSiteContent(name, sideMenu, contextMenu, mainData, URL);
+    }
+
     private void validateURIMentor() {
 
-        if (getRequestURI().equals("artifacts/add")) {
-            handleAddArtifact();
-        } else if (!getRequestURI().equals("artifacts/add")) {
-            handleSingleArtifact(getRequestURI());
-        } else {
-            prepareMentorResponse();
-        }
+        Map<String, String> URI = parseURIstring(getRequestURI());
 
+        if (URI.get("controller").equals("artifacts")) {
+            prepareMentorResponse();
+        } else if (URI.get("object").equals("new")) {
+            prepareRespone(null, null, "templates/new.twig" );
+        }
     }
 
     private void validateURIStudent() {
 
-        if (getRequestURI().equals("artifacts/buy")) {
-            handleAddArtifact();
-        } else if (!getRequestURI().equals("artifacts/buy")) {
-            handleSingleArtifact(getRequestURI());
-        } else {
-            prepareMentorResponse();
-        }
+
     }
 
     private void handleBuyArtifact() {
@@ -97,5 +102,15 @@ public class ArtifactWebController extends CommonHandler {
     private void handleSingleArtifact(String URI) {
 
 
+    }
+
+    private Map<String, String> readArtifactTemplateData(HttpExchange httpExchange) throws IOException {
+
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
+                "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String formData = br.readLine();
+
+        return parseFormData(formData);
     }
 }
