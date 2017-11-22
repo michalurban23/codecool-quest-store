@@ -52,6 +52,41 @@ public class SQLArtifactTemplate extends SqlDAO {
         return result;
     }
 
+    public Map<String, String> getArtifactInfo(String artifactName) {
+
+        Map<String,String> result = new HashMap<>();
+
+        String query = "SELECT * " +
+                "FROM artifact_template " +
+                "WHERE name = ?;";
+        String[] data = {addWhitespaces(artifactName)};
+
+        processQuery(query, data);
+
+        for(int i=0; i<getResults().get(0).size(); i++) {
+            String key = getResults().get(0).get(i);
+            String value = getResults().get(1).get(i);
+            result.put(key, value);
+        }
+        return result;
+    }
+
+    public Map<String, String> getArtifactLabels() {
+
+        Map<String,String> result = new HashMap<>();
+
+        String query = "SELECT * " +
+                "FROM artifact_template ";
+
+        processQuery(query, null);
+
+        for(String label : getResults().get(0)) {
+            result.put(label, label);
+        }
+
+        return result;
+    }
+
     private String removeWhitespaces(String original) {
 
         StringBuilder newString = new StringBuilder();
@@ -59,6 +94,20 @@ public class SQLArtifactTemplate extends SqlDAO {
         for (char ch: original.toCharArray()) {
             if (ch == ' ') {
                 newString.append("_");
+            } else {
+                newString.append(ch);
+            }
+        }
+        return newString.toString();
+    }
+
+    private String addWhitespaces(String original) {
+
+        StringBuilder newString = new StringBuilder();
+
+        for (char ch: original.toCharArray()) {
+            if (ch == '_') {
+                newString.append(" ");
             } else {
                 newString.append(ch);
             }

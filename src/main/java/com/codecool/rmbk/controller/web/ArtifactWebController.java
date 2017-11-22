@@ -15,102 +15,135 @@ public class ArtifactWebController extends CommonHandler {
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
     private SQLArtifact sqlArtifact = new SQLArtifact();
     private SQLArtifactTemplate sqlArtifactTemplate = new SQLArtifactTemplate();
+    private Map<String, String> mainMenu;
+    private Map<String, String> request;
+    private String accessLevel;
+    private String name;
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        setHttpExchange(httpExchange);
-        String accessLevel = validateRequest();
-        validateAccessLevel(accessLevel);
+        prepareController(httpExchange);
+        request = parseURIstring(getRequestURI());
+        handleAccesRights();
 
     }
 
-    private void validateAccessLevel(String accessLevel) throws IOException {
+    private void prepareController(HttpExchange httpExchange) throws IOException {
+
+        setHttpExchange(httpExchange);
+        accessLevel = validateRequest();
+    }
+
+    private void handleAccesRights() throws IOException {
+
+        name = user.getFirstName();
+        mainMenu = sqlMenuDAO.getSideMenu(user);
 
         switch (accessLevel) {
             case "Mentor":
-                validateURIMentor();
-                send200(response);
+                handleMentorArtifacts();
                 break;
             case "Student":
-                validateURIStudent();
-                send200(response);
+                handleStudentArtifacts();
                 break;
             case "Admin":
                 send403();
         }
     }
 
-    private void prepareMentorResponse() {
+    private void handleMentorArtifacts() throws IOException {
 
-        String name = user.getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
-        String[] options = new String[]{"Add"};
+        String object = request.get("object");
+        String action = request.get("action");
+        String subject = request.get("subject");
+
+        if (object == null) {
+            viewArtifactTemplates();
+        } else if (object.equals("new")) {
+            addArtifactTemplate();
+        } else {
+            if (action == null) {
+                showArtifactTemplate(object);
+            } else if (action.equals("remove")) {
+                removeArtifactTemplate(object);
+            } else if (action.equals("edit")) {
+                editArtifactTemplate(object);
+            }
+        }
+        send200(response);
+    }
+
+    private void handleStudentArtifacts() throws IOException {
+
+        String object = request.get("object");
+        String action = request.get("action");
+        String subject = request.get("subject");
+
+        if (object == null) {
+            viewArtifacts();
+        } else if (object.equals("new")) {
+            buyArtifact();
+        } else {
+            if (action == null) {
+                showArtifact(object);
+            }
+        }
+        send200(response);
+    }
+
+    private void viewArtifactTemplates() {
+        String[] options = {"Add"};
         Map<String, String> contextMenu = prepareContextMenu(options);
         Map<String, String> mainData = sqlArtifactTemplate.getArtifactTemplatesMap();
-        String URL = "templates/list_content.twig";
 
-        response = webDisplay.getSiteContent(name, sideMenu, contextMenu, mainData, URL);
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlList);
     }
 
-    private void prepareStudentResponse() {
-
-        String name = user.getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
-        String[] options = new String[]{"Buy"};
+    private void viewArtifacts() {
+        String[] options = {"Buy"};
         Map<String, String> contextMenu = prepareContextMenu(options);
         Map<String, String> mainData = sqlArtifact.getArtifactMapBy(user);
-        String URL = "templates/list_content.twig";
 
-        response = webDisplay.getSiteContent(name, sideMenu, contextMenu, mainData, URL);
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlList);
     }
 
-    private void prepareRespone(String[] options, Map<String, String> mainData,
-                                String URL) {
+    private void buyArtifact() {
 
-        String name = user.getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
+    }
+
+    private void addArtifactTemplate() {
+
+        Map<String, String> labels = sqlArtifactTemplate.getArtifactLabels();
+
+        response = webDisplay.getSiteContent(name, mainMenu, null, labels, urlEdit);
+
+    }
+
+    private void showArtifactTemplate(String object) {
+        String[] options = {"Edit", "Remove"};
         Map<String, String> contextMenu = prepareContextMenu(options);
+        Map<String, String> mainData = sqlArtifactTemplate.getArtifactInfo(object);
 
-        response = webDisplay.getSiteContent(name, sideMenu, contextMenu, mainData, URL);
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlItem);
     }
 
-    private void validateURIMentor() {
+    private void showArtifact(String object) {
+        Map<String, String> mainData = sqlArtifact.getArtifactInfo(object);
 
-        Map<String, String> URI = parseURIstring(getRequestURI());
-
-        if (URI.get("controller").equals("artifacts")) {
-            prepareMentorResponse();
-        } else if (URI.get("object").equals("new")) {
-            prepareRespone(null, null, "templates/new.twig" );
-        }
+        response = webDisplay.getSiteContent(name, mainMenu, null, mainData, urlItem);
     }
 
-    private void validateURIStudent() {
+    private void removeArtifactTemplate(String object) throws IOException{
 
-
+        sqlArtifactTemplate.removeArtifactTemplate(object);
+        send302("/artifacts/");
     }
 
-    private void handleBuyArtifact() {
+    private void editArtifactTemplate(String object) throws IOException{
 
-    }
+        Map<String, String> labels = sqlArtifactTemplate.getArtifactLabels();
 
-    private void handleAddArtifact() {
-
-    }
-
-    private void handleSingleArtifact(String URI) {
-
-
-    }
-
-    private Map<String, String> readArtifactTemplateData(HttpExchange httpExchange) throws IOException {
-
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
-                "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        String formData = br.readLine();
-
-        return parseFormData(formData);
+        response = webDisplay.getSiteContent(name, mainMenu, null, labels, urlEdit);
     }
 }
