@@ -14,9 +14,26 @@ public class WebDisplay {
 
         StringBuilder response = new StringBuilder();
         response.append(getHeaderContent(userName));
-        response.append(getSideMenuContent(mainMenu));
+        response.append(getTopMenuContent(mainMenu));
         response.append(getContextMenu(contextMenu));
         response.append(getMainContent(mainData, mainContentUrl));
+        response.append(getFooterContent());
+
+        return response.toString();
+    }
+
+    public String getSiteContent(String userName,
+                                 Map<String, String> mainMenu,
+                                 Map<String, String> contextMenu,
+                                 String title,
+                                 Map<String, String> mainData,
+                                 String mainContentUrl) {
+
+        StringBuilder response = new StringBuilder();
+        response.append(getHeaderContent(userName));
+        response.append(getTopMenuContent(mainMenu));
+        response.append(getContextMenu(contextMenu));
+        response.append(getMainContent(title, mainData, mainContentUrl));
         response.append(getFooterContent());
 
         return response.toString();
@@ -27,6 +44,17 @@ public class WebDisplay {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(url);
         JtwigModel model = JtwigModel.newModel();
 
+        model.with("data", data);
+
+        return template.render(model);
+    }
+
+    private String getMainContent(String title, Map<String, String> data, String url) {
+
+        System.out.println(url);
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(url);
+        JtwigModel model = JtwigModel.newModel();
+        model.with("title", title);
         model.with("data", data);
 
         return template.render(model);
@@ -60,7 +88,7 @@ public class WebDisplay {
         return template.render(model);
     }
 
-    private String getSideMenuContent(Map<String, String> menu) {
+    private String getTopMenuContent(Map<String, String> menu) {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/side_menu.twig");
         JtwigModel model = JtwigModel.newModel();

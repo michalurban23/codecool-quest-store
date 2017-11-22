@@ -1,15 +1,16 @@
 package com.codecool.rmbk.dao;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import com.codecool.rmbk.helper.StringParser;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.*;
 
 public class SQLQuestTemplate extends SqlDAO {
 
     public ArrayList<ArrayList<String>> getAllQuestTemplates() {
 
-        String query = "SELECT * FROM quest_template";
+        String query = "SELECT * FROM quest_template " +
+                "ORDER BY name ASC";
         processQuery(query, null);
 
         return getResults();
@@ -33,15 +34,16 @@ public class SQLQuestTemplate extends SqlDAO {
 
     public Map<String, String> getTemplatesMap() {
 
-        Map<String,String> result = new HashMap<>();
+        Map<String,String> result = new TreeMap<>();
 
         String query = "SELECT name " +
-                "FROM quest_template ";
+                "FROM quest_template " +
+                "ORDER BY name ASC";
 
         processQuery(query, null);
 
         for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
-            String href = "/quests/" + removeWhitespaces(outcome.get(0));
+            String href = "/quests/" + StringParser.removeWhitespaces(outcome.get(0));
             String name = outcome.get(0);
             result.put(name, href);
         }
@@ -56,7 +58,7 @@ public class SQLQuestTemplate extends SqlDAO {
         String query = "SELECT * " +
                 "FROM quest_template " +
                 "WHERE name = ?;";
-        String[] data = {addWhitespaces(templateId)};
+        String[] data = {StringParser.addWhitespaces(templateId)};
 
         processQuery(query, data);
 
@@ -68,53 +70,37 @@ public class SQLQuestTemplate extends SqlDAO {
         return result;
     }
 
-    private String removeWhitespaces(String original) {
-
-        StringBuilder newString = new StringBuilder();
-
-        for (char ch: original.toCharArray()) {
-            if (ch == ' ') {
-                newString.append("_");
-            } else {
-                newString.append(ch);
-            }
-        }
-        return newString.toString();
-    }
-
-    private String addWhitespaces(String original) {
-
-        StringBuilder newString = new StringBuilder();
-
-        for (char ch: original.toCharArray()) {
-            if (ch == '_') {
-                newString.append(" ");
-            } else {
-                newString.append(ch);
-            }
-        }
-        return newString.toString();
-    }
-
     public void addQuestTemplate(String name, String desc, Integer value, Boolean isSpecial) {
 
         String special = isSpecial ? "1" : "0";
-        String query = "INSERT INTO quest_template (name, description, value, special) VALUES (?, ?, ?, ?)";
+        name = StringUtils.capitalize(StringParser.addWhitespaces(name));
+        String query = "INSERT INTO quest_template (name, description, value, special) " +
+                "VALUES (?, ?, ?, ?)";
+
         processQuery(query, new String[] {name, desc, "" + value, special});
     }
 
-    public void editQuestTemplate(String[] data) {
+    public void addQuestTemplate(List<String> data) {
 
-        String name = data[0];
+        String name = StringUtils.capitalize(StringParser.addWhitespaces(data.get(0)));
+        String query = "INSERT INTO quest_template (name, description, value, special, active) " +
+                "VALUES ('" + name + "', ?, ?, ?, ?)";
+
+        processQuery(query, data.subList(1, data.size()-1).toArray(new String[0]));
+    }
+
+    public void editQuestTemplate(List<String> data) {
+
+        String name = StringParser.addWhitespaces(data.get(0));
         String query = "UPDATE quest_template " +
                        "SET `description` = ?, `value` = ?, `special` = ?, `active` = ? " +
                        "WHERE `name` = '" + name + "';";
-        processQuery(query, Arrays.copyOfRange(data, 1, 4));
+        processQuery(query, data.subList(1, data.size()-1).toArray(new String[0]));
     }
 
     public void removeQuestTemplate(String name) {
 
-        name = addWhitespaces(name);
+        name = StringParser.addWhitespaces(name);
         String query = "DELETE FROM quest_template WHERE `name` = ?;";
         processQuery(query, new String[] {name});
     }
