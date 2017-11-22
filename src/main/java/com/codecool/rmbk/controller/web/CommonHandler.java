@@ -28,6 +28,9 @@ public abstract class CommonHandler implements HttpHandler {
     WebDisplay webDisplay = new WebDisplay();
     SQLSession sessionDao = new SQLSession();
     String urlList = "templates/list_content.twig";
+    String urlItem = "templates/item.twig";
+    String urlEdit = "templates/edit.twig";
+    String urlAdd = "templates/add.twig";
 
     static User user;
     static Map<String, String> sideMenu;
@@ -104,7 +107,7 @@ public abstract class CommonHandler implements HttpHandler {
                 requestStatus = user.getAccessLevel();
             } else {
                 requestStatus = "expired";
-                clearUser();
+                clearSessionData();
                 send401();
             }
         }
@@ -156,7 +159,7 @@ public abstract class CommonHandler implements HttpHandler {
         }
     }
 
-    void clearUser() {
+    void clearSessionData() {
 
         user = null;
         session = null;
@@ -176,32 +179,29 @@ public abstract class CommonHandler implements HttpHandler {
         return map;
     }
 
-    private String prepareURI(String location, String option) {
+    Map<String,String> parseURIstring(String uriString) {
 
-        StringBuilder URI = new StringBuilder();
-        URI.append("/");
-        URI.append(location);
-        URI.append("/");
-        URI.append(option);
-
-        return URI.toString();
-    }
-
-    void parseURIstring(String uriString) {
         String[] controlLevels = new String[] {"controller", "object", "action", "subject"};
         String[] uriElements = uriString.split("[/]");
-        parsedURI = new HashMap<>();
+        Map<String,String> resultMap = new HashMap<>();
         for (int i=0; i<uriElements.length; i++) {
-            parsedURI.put(controlLevels[i], uriElements[i]);
+            resultMap.put(controlLevels[i], uriElements[i]);
         }
+        parsedURI = resultMap;
+        return resultMap;
     }
 
     Map<String, String> prepareContextMenu(String[] options) {
 
         Map<String, String> menu = new HashMap<>();
+        String url;
 
         for (String option : options) {
-            String url = "/" + option.toLowerCase();
+            if (option.equals("Add")) {
+                url = "/" + getRequestURI() + "/new/" + option.toLowerCase();
+            } else {
+                url = "/" + getRequestURI() + "/" + option.toLowerCase();
+            }
             menu.put(option, url);
         }
         return menu;
@@ -214,9 +214,8 @@ public abstract class CommonHandler implements HttpHandler {
             uriString = uriString.substring(1);
         }
         if (uriString.endsWith("/")) {
-            uriString = uriString.substring(0, uriString.length() - 2);
+            uriString = uriString.substring(0, uriString.length() - 1);
         }
-
         return uriString;
     }
 

@@ -3,52 +3,187 @@ package com.codecool.rmbk.controller.web;
 import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.SQLQuest;
 import com.codecool.rmbk.dao.SQLQuestTemplate;
-import com.codecool.rmbk.view.WebDisplay;
+import com.codecool.rmbk.helper.StringParser;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.HashMap;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class QuestWebController extends CommonHandler {
 
-    SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
-    SQLQuest sqlQuest = new SQLQuest();
-    SQLQuestTemplate sqlQuestTemplate = new SQLQuestTemplate();
-    private String response;
+    private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
+    private SQLQuest sqlQuest = new SQLQuest();
+    private SQLQuestTemplate sqlQuestTemplate = new SQLQuestTemplate();
+    private List<String> templateData;
+    private Map<String, String> mainMenu;
+    private Map<String, String> request;
+    private String accessLevel;
+    private String name;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        setHttpExchange(httpExchange);
-        getRequestURI();
-
-        String accessLevel = validateRequest();
-        String name = user.getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
-
-        handleWebQuest(accessLevel, name, sideMenu);
+        prepareController(httpExchange);
+        request = parseURIstring(getRequestURI());
+        handleAccessRights();
     }
 
-    private void handleWebQuest(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
+    private void prepareController(HttpExchange httpExchange) throws IOException {
 
-        if (accessLevel.equals("Student")) {
-            response = webDisplay.getSiteContent(name, sideMenu,null,
-                    sqlQuest.getQuestMapBy(user),
-                    "templates/list_content.twig");
-            send200(response);
+        setHttpExchange(httpExchange);
+        accessLevel = validateRequest();
+    }
 
-        } else if (accessLevel.equals("Mentor")) {
-            response = webDisplay.getSiteContent(name, sideMenu,
-                    null,
-                    null, "templates/list_content.twig");
+    private void handleAccessRights() throws IOException {
 
-            send200(response);
+        name = user.getFirstName();
+        mainMenu = sqlMenuDAO.getSideMenu(user);
 
-        } else if (accessLevel.equals("Admin")) {
-            send403();
+        switch (accessLevel) {
+            case "Student":
+                handleStudentQuest();
+                break;
+            case "Mentor":
+                handleMentorQuest();
+                break;
+            default:
+                send403();
+                break;
         }
+    }
+
+    private void handleMentorQuest() throws IOException {
+
+        String object = request.get("object");
+        String action = request.get("action");
+
+        if(object == null) {
+            showAll();
+        } else if (object.equals("new")) {
+            addQuestTemplate();
+        } else {
+            if (action == null) {
+                showTemplate(object);
+            } else if (action.equals("remove")) {
+                removeTemplate(object);
+            } else if (action.equals("edit")) {
+                editTemplate(object);
+            }
+        }
+        send200(response);
+    }
+
+    private void showAll() {
+
+        String[] options = {"Add"};
+        Map <String, String> contextMenu = prepareContextMenu(options);
+        Map <String, String> allQuests = sqlQuestTemplate.getTemplatesMap();
+
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, allQuests, urlList);
+    }
+
+    private void showTemplate(String object) {
+
+        String[] options = {"Edit", "Remove"};
+
+        Map <String, String> contextMenu = prepareContextMenu(options);
+        Map <String, String> allQuests = sqlQuestTemplate.getTemplateInfo(object);
+
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, allQuests, urlItem);
+    }
+
+    private void addQuestTemplate() throws IOException {
+
+        String method = httpExchange.getRequestMethod();
+        String title = "Create New Template:";
+        Map<String, String> labels = sqlQuestTemplate.getTemplateLabels();
+
+        if (method.equals("GET")) {
+            response = webDisplay.getSiteContent(name, mainMenu, null, title, labels, urlAdd);
+        } else if (method.equals("POST")) {
+            readInputs();
+            Boolean properData = verifyInputs();
+            if (properData) {
+                sqlQuestTemplate.addQuestTemplate(templateData);
+                send302("/quests/");
+            } else {
+                showFailureMessage();
+            }
+        }
+    }
+
+    private void removeTemplate(String object) throws IOException {
+
+        sqlQuestTemplate.removeQuestTemplate(object);
+        send302("/quests/");
+    }
+
+    private void editTemplate(String object) throws IOException {
+
+        String method = httpExchange.getRequestMethod();
+        String title = "Editing " + StringParser.addWhitespaces(object) + ":";
+        Map<String, String> labels = sqlQuestTemplate.getTemplateInfo(object);
+
+        if (method.equals("GET")) {
+            response = webDisplay.getSiteContent(name, mainMenu, null, title, labels, urlEdit);
+        } else if (method.equals("POST")) {
+            readInputs();
+            Boolean properData = verifyInputs();
+            if (properData) {
+                sqlQuestTemplate.editQuestTemplate(templateData);
+                send302("/quests/");
+            } else {
+                showFailureMessage();
+            }
+        }
+    }
+
+    private void readInputs() throws IOException {
+
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
+                "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String formData = br.readLine();
+
+        Map<String, String> inputs = parseFormData(formData);
+        templateData = new ArrayList<>();
+
+        templateData.add(inputs.get("name"));
+        templateData.add(inputs.get("description"));
+        templateData.add(inputs.get("value"));
+        templateData.add(inputs.get("special"));
+        templateData.add(inputs.get("active"));
+    }
+
+    private Boolean verifyInputs() {
+
+        List<Integer> binaries = new ArrayList<>();
+        binaries.add(0);
+        binaries.add(1);
+
+        try {
+            Integer value = Integer.parseInt(templateData.get(2));
+            Integer special = Integer.parseInt(templateData.get(3));
+            Integer active = Integer.parseInt(templateData.get(4));
+
+            return value > 0 && binaries.contains(special) && binaries.contains(active);
+
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private void showFailureMessage() {
+
+        response = "FAIL"; // TODO
+    }
+
+    private void handleStudentQuest() throws IOException {
+
+        // TODO
     }
 
 }

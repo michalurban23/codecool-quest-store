@@ -191,7 +191,7 @@ class QuestController {
         String[] newData = changeData(labels);
 
         qt.updateData(newData);
-        templateDAO.editQuestTemplate(qt.getQuestTemplate());
+        // templateDAO.editQuestTemplate(qt.getQuestTemplate());
     }
 
     private void removeTemplate() {

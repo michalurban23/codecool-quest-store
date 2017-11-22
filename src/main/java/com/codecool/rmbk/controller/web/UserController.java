@@ -25,6 +25,7 @@ public class UserController extends CommonHandler {
         send302(String.format("/%1s/%2s", controller, object));
     }
 
+
     String[] getAllowedActions() {
         List<String> options = new ArrayList<>();
         boolean accessForSelf = String.valueOf(user.getID()).equals(parsedURI.get("object"));
