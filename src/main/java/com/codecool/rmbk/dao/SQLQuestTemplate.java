@@ -1,7 +1,5 @@
 package com.codecool.rmbk.dao;
 
-import com.codecool.rmbk.model.usr.User;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,6 +13,22 @@ public class SQLQuestTemplate extends SqlDAO {
         processQuery(query, null);
 
         return getResults();
+    }
+
+    public Map<String, String> getTemplateLabels() {
+
+        Map<String,String> result = new HashMap<>();
+
+        String query = "SELECT * " +
+                "FROM quest_template ";
+
+        processQuery(query, null);
+
+        for(String label : getResults().get(0)) {
+            result.put(label, label);
+        }
+
+        return result;
     }
 
     public Map<String, String> getTemplatesMap() {
@@ -32,6 +46,25 @@ public class SQLQuestTemplate extends SqlDAO {
             result.put(name, href);
         }
 
+        return result;
+    }
+
+    public Map<String, String> getTemplateInfo(String templateId) {
+
+        Map<String,String> result = new HashMap<>();
+
+        String query = "SELECT * " +
+                "FROM quest_template " +
+                "WHERE name = ?;";
+        String[] data = {addWhitespaces(templateId)};
+
+        processQuery(query, data);
+
+        for(int i=0; i<getResults().get(0).size(); i++) {
+            String key = getResults().get(0).get(i);
+            String value = getResults().get(1).get(i);
+            result.put(key, value);
+        }
         return result;
     }
 
@@ -81,6 +114,7 @@ public class SQLQuestTemplate extends SqlDAO {
 
     public void removeQuestTemplate(String name) {
 
+        name = addWhitespaces(name);
         String query = "DELETE FROM quest_template WHERE `name` = ?;";
         processQuery(query, new String[] {name});
     }

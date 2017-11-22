@@ -27,6 +27,8 @@ public abstract class CommonHandler implements HttpHandler {
     WebDisplay webDisplay = new WebDisplay();
     SQLSession sessionDao = new SQLSession();
     String urlList = "templates/list_content.twig";
+    String urlItem = "templates/item.twig";
+    String urlEdit = "templates/edit.twig";
 
     static User user;
     static Session session;
@@ -102,7 +104,7 @@ public abstract class CommonHandler implements HttpHandler {
                 requestStatus = user.getAccessLevel();
             } else {
                 requestStatus = "expired";
-                clearUser();
+                clearSessionData();
                 send401();
             }
         }
@@ -154,7 +156,7 @@ public abstract class CommonHandler implements HttpHandler {
         }
     }
 
-    void clearUser() {
+    void clearSessionData() {
 
         user = null;
         session = null;
@@ -209,9 +211,8 @@ public abstract class CommonHandler implements HttpHandler {
             uriString = uriString.substring(1);
         }
         if (uriString.endsWith("/")) {
-            uriString = uriString.substring(0, uriString.length() - 2);
+            uriString = uriString.substring(0, uriString.length() - 1);
         }
-
         return uriString;
     }
 
