@@ -29,6 +29,7 @@ public abstract class CommonHandler implements HttpHandler {
     String urlList = "templates/list_content.twig";
     String urlItem = "templates/item.twig";
     String urlEdit = "templates/edit.twig";
+    String urlAdd = "templates/add.twig";
 
     static User user;
     static Session session;
