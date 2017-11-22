@@ -1,0 +1,9 @@
+<div>
+    <form>
+        {% for key, value in data %}
+            <li><a href="/artifacts">{{ key }}</a>
+                <button value="buy" onclick="window.open('/artifacts', '_parent')">Buy</button>
+            </li>
+        {% endfor %}
+
+</div>

@@ -82,7 +82,7 @@ public class ArtifactWebController extends CommonHandler {
 
         if (object == null) {
             viewArtifacts();
-        } else if (object.equals("new")) {
+        } else if (object.equals("buy")) {
             buyArtifact();
         } else {
             if (action == null) {
@@ -110,6 +110,20 @@ public class ArtifactWebController extends CommonHandler {
 
     private void buyArtifact() {
 
+        if (httpExchange.getRequestMethod().equals("GET")) {
+            Map<String, String> mainData = sqlArtifactTemplate.getArtifactTemplatesMap();
+
+            response = webDisplay.getSiteContent(name, mainMenu, null , mainData,
+                    "templates/buyable.twig");
+        }
+        if (httpExchange.getRequestMethod().equals("POST")) {
+            try {
+                Map<String, String> formData = getPostData();
+                System.out.println(formData);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void addArtifactTemplate() {
@@ -145,5 +159,17 @@ public class ArtifactWebController extends CommonHandler {
         Map<String, String> labels = sqlArtifactTemplate.getArtifactLabels();
 
         response = webDisplay.getSiteContent(name, mainMenu, null, labels, urlEdit);
+    }
+
+    private Map<String, String> getPostData() throws IOException {
+
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
+                "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String formData = br.readLine();
+
+        Map<String, String> inputs = parseFormData(formData);
+
+        return inputs;
     }
 }
