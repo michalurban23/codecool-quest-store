@@ -2,6 +2,7 @@ package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.SQLUsers;
+import com.codecool.rmbk.model.usr.User;
 import com.sun.net.httpserver.HttpExchange;
 
 import com.codecool.rmbk.view.WebDisplay;
@@ -10,38 +11,68 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StudentsController extends CommonHandler {
+public class StudentsController extends UserController {
 
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
+    private SQLUsers userDAO = new SQLUsers();
     private SQLUsers sqlUsers = new SQLUsers();
     private String response;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
         setHttpExchange(httpExchange);
+        parseURIstring(getRequestURI());
+        validateRequest();
 
-        String accessLevel = validateRequest();
-        String name = user.getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
-
-        handleWebStudents(accessLevel, name, sideMenu);
+        if (parsedURI.get("object") == null) {
+            showList();
+        } else if (parsedURI.get("action") == null){
+            showDetails();
+        } else {
+            performAction();
+        }
     }
 
-    private void handleWebStudents(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
+    private void performAction() throws IOException {
+        String action = parsedURI.get("action");
+        User user = userDAO.getUserByID(Integer.parseInt(parsedURI.get("object")));
+        switch (action) {
+            case "add":
+                User newUser = userDAO.addUser("Student");
+                send302(String.format("/students/%s/edit", String.valueOf(newUser.getID())));
+                break;
+            case "edit":
+                editUserData(user);
+                break;
+            case "remove":
+                userDAO.removeUser(user);
+                break;
+        }
+    }
 
-        if (accessLevel.equals("Student")) {
-            response = webDisplay.getSiteContent(name, sideMenu,
-                    null,
-                    null, "templates/list_content.twig");
-            send200(response);
+    private void editUserData(User user) {
+    }
 
-        } else if (accessLevel.equals("Mentor")) {
-            response = webDisplay.getSiteContent(name, sideMenu,
-                    null,
+    private void showDetails() throws IOException {
+        if (user.getClass().getSimpleName().equals("Mentor")) {
+            response = webDisplay.getSiteContent(user.getFullName(), sideMenu,
+                    prepareContextMenu(getAllowedActions()),
                     sqlUsers.getUserMap("student"), "templates/list_content.twig");
             send200(response);
+        } else {
+            send403();
+        }
+    }
 
-        } else if (accessLevel.equals("Admin")) {
+    private void showList() throws IOException {
+
+        if (user.getClass().getSimpleName().equals("Mentor")) {
+
+            response = webDisplay.getSiteContent(user.getFullName(), sideMenu,
+                    prepareContextMenu(getAllowedActions()),
+                    sqlUsers.getUserMap("student"), "templates/list_content.twig");
+            send200(response);
+        } else {
             send403();
         }
     }

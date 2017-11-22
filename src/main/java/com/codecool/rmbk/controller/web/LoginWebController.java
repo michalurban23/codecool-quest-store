@@ -1,6 +1,7 @@
 package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.SQLLoginDAO;
+import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.model.Session;
 import com.codecool.rmbk.model.usr.User;
@@ -15,6 +16,7 @@ public class LoginWebController extends CommonHandler {
 
     private String loginUserName;
     private String loginPassword;
+    private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
     private SQLLoginDAO dataAccess = new SQLLoginDAO();
     private SQLUsers userDao = new SQLUsers();
 
@@ -33,6 +35,7 @@ public class LoginWebController extends CommonHandler {
 
         String sessionID = cookieHandler.setNewSessionId();
         user = userDao.getUserByLogin(loginUserName);
+        sideMenu = sqlMenuDAO.getSideMenu(user);
 
         session = new Session(sessionID);
         sessionDao.addSession(session, loginUserName);

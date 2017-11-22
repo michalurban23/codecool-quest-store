@@ -24,11 +24,13 @@ public abstract class CommonHandler implements HttpHandler {
     String response;
     HttpExchange httpExchange;
     CookieHandler cookieHandler;
+    Map<String,String> parsedURI;
     WebDisplay webDisplay = new WebDisplay();
     SQLSession sessionDao = new SQLSession();
     String urlList = "templates/list_content.twig";
 
     static User user;
+    static Map<String, String> sideMenu;
     static Session session;
 
     void send404() throws IOException {
@@ -90,7 +92,6 @@ public abstract class CommonHandler implements HttpHandler {
     }
 
     String validateRequest() throws IOException {
-
 
         String sessionStatus = cookieHandler.getSessionStatus();
         Boolean active = sessionDao.isSessionActive(cookieHandler.getSessionId());
@@ -186,14 +187,13 @@ public abstract class CommonHandler implements HttpHandler {
         return URI.toString();
     }
 
-    Map<String,String> parseURIstring(String uriString) {
+    void parseURIstring(String uriString) {
         String[] controlLevels = new String[] {"controller", "object", "action", "subject"};
         String[] uriElements = uriString.split("[/]");
-        Map<String,String> resultMap = new HashMap<>();
+        parsedURI = new HashMap<>();
         for (int i=0; i<uriElements.length; i++) {
-            resultMap.put(controlLevels[i], uriElements[i]);
+            parsedURI.put(controlLevels[i], uriElements[i]);
         }
-        return resultMap;
     }
 
     Map<String, String> prepareContextMenu(String[] options) {
