@@ -79,28 +79,28 @@ public class CookieHandler {
         return cookieMap;
     }
 
-    public void clearCookie() {
-
-        String expired = "; expires=" + createDateInPast();
-
-        httpExchange.getResponseHeaders().add("Set-Cookie", "sessionId=" + expired);
-        httpExchange.getResponseHeaders().add("Set-Cookie", "sessionStatus=" + expired);
-    }
+//    public void clearCookie() {
+//
+//        String expired = "; expires=" + createDateInPast();
+//
+//        httpExchange.getResponseHeaders().add("Set-Cookie", "sessionId=" + expired);
+//        httpExchange.getResponseHeaders().add("Set-Cookie", "sessionStatus=" + expired);
+//    }
 
     private String createExpireString() {
 
-        OffsetDateTime veryLongTime = OffsetDateTime.now(ZoneOffset.UTC).plus(Duration.ofMinutes(5));
+        OffsetDateTime veryLongTime = OffsetDateTime.now(ZoneOffset.UTC).plus(Duration.ofMinutes(60));
 
         String cookieExpireTime = DateTimeFormatter.RFC_1123_DATE_TIME.format(veryLongTime);
 
         return "; expires= " + cookieExpireTime;
     }
 
-    private String createDateInPast() {
-
-        OffsetDateTime veryLongTime = OffsetDateTime.now(ZoneOffset.UTC).plus(Duration.ofMinutes(-5));
-
-        return DateTimeFormatter.RFC_1123_DATE_TIME.format(veryLongTime);
-    }
+//    private String createDateInPast() {
+//
+//        OffsetDateTime veryLongTime = OffsetDateTime.now(ZoneOffset.UTC).plus(Duration.ofMinutes(-5));
+//
+//        return DateTimeFormatter.RFC_1123_DATE_TIME.format(veryLongTime);
+//    }
 
 }

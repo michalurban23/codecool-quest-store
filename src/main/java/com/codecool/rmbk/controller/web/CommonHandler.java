@@ -92,7 +92,7 @@ public abstract class CommonHandler implements HttpHandler {
     String validateRequest() throws IOException {
 
         String sessionStatus = cookieHandler.getSessionStatus();
-        Boolean active = sessionDao.isSessionActive(cookieHandler.getSessionId());
+        Boolean active = Session.isActive(cookieHandler.getSessionId());
         String requestStatus = null;
 
         if (sessionStatus == null || sessionStatus.equals("loggedOut")) {
@@ -158,7 +158,6 @@ public abstract class CommonHandler implements HttpHandler {
 
         user = null;
         session = null;
-        cookieHandler.clearCookie();
     }
 
     Map<String, String> parseFormData(String formData) throws IOException {

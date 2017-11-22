@@ -34,7 +34,7 @@ public class LoginWebController extends CommonHandler {
         String sessionID = cookieHandler.setNewSessionId();
         user = userDao.getUserByLogin(loginUserName);
 
-        session = new Session(sessionID);
+        session = Session.addSession(sessionID, user);
         sessionDao.addSession(session, loginUserName);
 
         cookieHandler.setStatusToLoggedIn();
