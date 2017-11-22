@@ -1,5 +1,8 @@
 package com.codecool.rmbk.model.usr;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public abstract class User implements Holder {
 
     protected String firstName;
@@ -67,10 +70,27 @@ public abstract class User implements Holder {
         return this.id;
     }
 
+    public Map<String, String> getFullInfoMap() {
+        Map<String, String> fullInfo = new LinkedHashMap<>();
+        fullInfo.put("name", getFirstName());
+        fullInfo.put("surname", getLastName());
+        fullInfo.put("email", getEmail());
+        fullInfo.put("address", getAddress());
+        return fullInfo;
+    }
+
     public String getFullName() {
 
         return this.firstName + " " + this.lastName;
     }
 
-    public String toString() { return getFullName(); }
+    public String getAccessLevel() {
+
+        return this.getClass().getSimpleName();
+    }
+
+    public String toString() {
+
+        return getFullName();
+    }
 }

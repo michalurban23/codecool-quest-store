@@ -2,10 +2,16 @@ package com.codecool.rmbk.controller.web;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import java.io.IOException;
+
 public class LogoutWebController extends CommonHandler {
 
-    public void handle(HttpExchange httpExchange) {
+    public void handle(HttpExchange httpExchange) throws IOException {
 
-        Session.getSessionByCookie(CookieParser.readCookie(httpExchange)).clearCache();
+        setHttpExchange(httpExchange);
+
+        cookieHandler.setStatusToLoggedOut();
+        clearUser();
+        send302("/login");
     }
 }

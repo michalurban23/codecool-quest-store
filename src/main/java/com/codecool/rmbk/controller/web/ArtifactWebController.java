@@ -1,7 +1,7 @@
 package com.codecool.rmbk.controller.web;
 
+import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLMenuDAO;
-import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
@@ -11,27 +11,36 @@ import java.util.Map;
 public class ArtifactWebController extends CommonHandler {
 
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
+    private SQLArtifact sqlArtifact = new SQLArtifact();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String response;
-        String accessLevel = validateRequest(httpExchange);
-        String name = getLoggedUser(httpExchange).getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
+        setHttpExchange(httpExchange);
 
-        if (accessLevel.equals("student")) {
-            String URL = "templates/student_artifacts.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
-            send200(httpExchange, response);
+        String accessLevel = validateRequest();
 
-        } else if (accessLevel.equals("mentor")) {
-            String URL = "templates/mentor_artifacts.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
-            send200(httpExchange, response);
+        String name = user.getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
 
-        } else if (accessLevel.equals("admin")) {
-            send403(httpExchange);
+        handleWebArtifact(accessLevel, name, sideMenu);
+
+    }
+
+    private void handleWebArtifact(String accessLevel, String name,
+                                   Map<String, String> sideMenu) throws IOException {
+
+        if (accessLevel.equals("Student")) {
+            response = webDisplay.getSiteContent(name, sideMenu,null, sqlArtifact.getArtifactMapBy(user), "templates/list_content.twig");
+            send200(response);
+
+        } else if (accessLevel.equals("Mentor")) {
+            response = webDisplay.getSiteContent(name, sideMenu,
+                    null, new HashMap<>(), "templates/list_content.twig");
+            send200(response);
+
+        } else if (accessLevel.equals("Admin")) {
+            send403();
         }
     }
 }

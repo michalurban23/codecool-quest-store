@@ -1,6 +1,8 @@
 package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.SQLMenuDAO;
+import com.codecool.rmbk.dao.SQLQuest;
+import com.codecool.rmbk.dao.SQLQuestTemplate;
 import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -12,28 +14,80 @@ import java.util.Map;
 
 public class QuestWebController extends CommonHandler {
 
-    SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
+    private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
+    private SQLQuest sqlQuest = new SQLQuest();
+    private SQLQuestTemplate sqlQuestTemplate = new SQLQuestTemplate();
+    private Map<String, String> mainMenu;
+    private String accessLevel;
+    private String request;
+    private String name;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String response;
-        String accessLevel = validateRequest(httpExchange);
-        String name = getLoggedUser(httpExchange).getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
+        prepareController(httpExchange);
+        request = getRequestURI();
+        handleAccessRights();
+    }
 
-        if (accessLevel.equals("student")) {
-            String URL = "templates/student_quests.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
-            send200(httpExchange, response);
+    private void prepareController(HttpExchange httpExchange) throws IOException {
 
-        } else if (accessLevel.equals("mentor")) {
-            String URL = "templates/mentor_quests.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
-            send200(httpExchange, response);
+        setHttpExchange(httpExchange);
+        accessLevel = validateRequest();
+    }
 
-        } else if (accessLevel.equals("admin")) {
-            send403(httpExchange);
+    private void handleAccessRights() throws IOException {
+
+        name = user.getFirstName();
+        mainMenu = sqlMenuDAO.getSideMenu(user);
+        System.out.println(accessLevel);
+        switch (accessLevel) {
+            case "Student":
+                handleStudentQuest();
+                break;
+            case "Mentor":
+                handleMentorQuest();
+                break;
+            default:
+                send403();
+                break;
         }
+    }
+
+    private void handleMentorQuest() throws IOException {
+
+        System.out.println(request);
+        switch (request) {
+            case "/quests/add":
+                addQuest();
+                break;
+            default:
+                showAll();
+                break;
+        }
+        send200(response);
+    }
+
+    private void showAll() {
+
+        String[] options = {"Add"};
+        Map <String, String> contextMenu = prepareContextMenu(options);
+        Map <String, String> allQuests = sqlQuestTemplate.getTemplatesMap();
+        for (String s: allQuests.keySet()) {
+            System.out.println(s);
+            System.out.println(allQuests.get(s));
+        }
+
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, allQuests, urlList);
+    }
+
+    private void addQuest() {
+
+        response = webDisplay.getSiteContent(name, mainMenu, null, null, urlList);
+    }
+
+    private void handleStudentQuest() throws IOException {
+
+        ;
     }
 
 }

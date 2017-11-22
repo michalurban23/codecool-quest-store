@@ -1,37 +1,45 @@
 package com.codecool.rmbk.controller.web;
 
+import com.codecool.rmbk.dao.SQLClass;
 import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.sun.net.httpserver.HttpExchange;
 
-import com.codecool.rmbk.view.WebDisplay;
-
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ClassWebController extends CommonHandler {
 
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
+    private SQLClass sqlClass = new SQLClass();
+    String response;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String response;
-        String accessLevel = validateRequest(httpExchange);
-        String name = getLoggedUser(httpExchange).getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
+        setHttpExchange(httpExchange);
 
-        if (accessLevel.equals("student")) {
-            send403(httpExchange);
+        String accessLevel = validateRequest();
+        String name = user.getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
 
-        } else if (accessLevel.equals("mentor")) {
-            String URL = "templates/mentor_classes.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
-            send200(httpExchange, response);
+        handleWebClass(accessLevel, name, sideMenu);
+    }
 
-        } else if (accessLevel.equals("admin")) {
-            String URL = "templates/admin_classes.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
-            send200(httpExchange, response);
+    private void handleWebClass(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
+
+        if (accessLevel.equals("Student")) {
+            response = webDisplay.getSiteContent(name, sideMenu,
+                    null, null, "templates/list_content.twig");
+            send200(response);
+
+        } else if (accessLevel.equals("Mentor")) {
+            response = webDisplay.getSiteContent(name, sideMenu,
+                    null, null, "templates/list_content.twig");
+            send200(response);
+
+        } else if (accessLevel.equals("Admin")) {
+            send403();
+
         }
     }
+
 }

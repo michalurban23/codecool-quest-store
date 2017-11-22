@@ -1,5 +1,7 @@
 package com.codecool.rmbk.dao;
 
+import com.codecool.rmbk.helper.PasswordHash;
+
 import java.io.File;
 import java.util.ArrayList;
 

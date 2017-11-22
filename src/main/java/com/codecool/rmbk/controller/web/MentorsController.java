@@ -1,6 +1,7 @@
 package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.SQLMenuDAO;
+import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -11,24 +12,32 @@ import java.util.Map;
 public class MentorsController extends CommonHandler {
 
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
+    private SQLUsers sqlUsers = new SQLUsers();
+    private String response;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        String response;
-        String accessLevel = validateRequest(httpExchange);
-        String name = getLoggedUser(httpExchange).getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(getLoggedUser(httpExchange));
+        setHttpExchange(httpExchange);
 
-        if (accessLevel.equals("student")) {
-            send403(httpExchange);
+        String accessLevel = validateRequest();
+        String name = user.getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
 
-        } else if (accessLevel.equals("mentor")) {
-            send403(httpExchange);
+        handleWebMentor(accessLevel, name, sideMenu);
+    }
 
-        } else if (accessLevel.equals("admin")) {
-            String URL = "templates/mentors.twig";
-            response = WebDisplay.getSiteContent(name, sideMenu, new HashMap<>(), URL);
-            send200(httpExchange, response);
+
+    private void handleWebMentor(String accessLevel, String name, Map<String, String> sideMenu) throws IOException {
+
+        if (accessLevel.equals(sideMenu)) {
+            send403();
+        } else if (accessLevel.equals("Mentor")) {
+            send403();
+        } else if (accessLevel.equals("Admin")) {
+            response = webDisplay.getSiteContent(name, sideMenu,
+                    null, sqlUsers.getUserMap("mentor"), "templates/list_content.twig");
+
+            send200(response);
         }
     }
 }

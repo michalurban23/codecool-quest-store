@@ -5,7 +5,7 @@
     <meta name="Description" content="CodeCool QuestStore System">
     <meta name="Keywords" content="CodeCool, coins, store, artifacts, quests">
     <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
-    <script src="static/js/currentTime.js"></script>
+    <script src="/static/js/currentTime.js"></script>
     <Title>CodeCool QuestStore</Title>
 </head>
 <body>
@@ -13,9 +13,9 @@
     <form class="backbutton">
         <input type="button" value="Logout" onclick="window.open('/logout', '_parent')">
     </form>
-    <p class="name">Welcome {{ name }}</p>
+    <p  class="name" onclick="window.open('/index', '_parent')">Welcome {{ name }}</p>
     <div class="date">
-        <script src="static/js/date.js"></script>
+        <script src="/static/js/date.js"></script>
     </div>
 
     <div class="currentTime">
@@ -25,3 +25,4 @@
         <span id="clock">clock</span>
     </div>
 </header>
+<div class="container">

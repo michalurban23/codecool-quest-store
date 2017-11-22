@@ -6,21 +6,23 @@ import java.util.Map;
 
 public class WebDisplay {
 
-    public static String getSiteContent(String userName,
-                                        Map<String, String> menu,
-                                        Map<String, String> mainData,
-                                        String url) {
+    public String getSiteContent(String userName,
+                                 Map<String, String> mainMenu,
+                                 Map<String, String> contextMenu,
+                                 Map<String, String> mainData,
+                                 String mainContentUrl) {
 
         StringBuilder response = new StringBuilder();
         response.append(getHeaderContent(userName));
-        response.append(getMenuContent(menu));
-        response.append(getMainContent(mainData, url));
+        response.append(getSideMenuContent(mainMenu));
+        response.append(getContextMenu(contextMenu));
+        response.append(getMainContent(mainData, mainContentUrl));
         response.append(getFooterContent());
 
         return response.toString();
     }
 
-    private static String getMainContent(Map<String, String> data, String url) {
+    private String getMainContent(Map<String, String> data, String url) {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate(url);
         JtwigModel model = JtwigModel.newModel();
@@ -30,7 +32,17 @@ public class WebDisplay {
         return template.render(model);
     }
 
-    private static String getHeaderContent(String userName) {
+    private String getContextMenu(Map<String, String> data) {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/context_menu.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("data", data);
+
+        return template.render(model);
+    }
+
+    private String getHeaderContent(String userName) {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/header.twig");
         JtwigModel model = JtwigModel.newModel();
@@ -40,7 +52,7 @@ public class WebDisplay {
         return template.render(model);
     }
 
-    private static String getFooterContent() {
+    private String getFooterContent() {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/footer.twig");
         JtwigModel model = JtwigModel.newModel();
@@ -48,9 +60,9 @@ public class WebDisplay {
         return template.render(model);
     }
 
-    private static String getMenuContent(Map<String, String> menu) {
+    private String getSideMenuContent(Map<String, String> menu) {
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/menu.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/side_menu.twig");
         JtwigModel model = JtwigModel.newModel();
 
         model.with("menu", menu);
@@ -58,19 +70,18 @@ public class WebDisplay {
         return template.render(model);
     }
 
-    public static String getLoginScreen() {
+    public String getLoginScreen(String message) {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login.twig");
         JtwigModel model = JtwigModel.newModel();
+        model.with("message", message);
 
-        return template.render(model);
+        StringBuilder response = new StringBuilder();
+        response.append(getHeaderContent("to QuestStore"));
+        response.append(template.render(model));
+        response.append(getFooterContent());
+
+        return response.toString();
     }
 
-    public static String getFailedLoginScreen() {
-
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/fail.twig");
-        JtwigModel model = JtwigModel.newModel();
-
-        return template.render(model);
-    }
 }
