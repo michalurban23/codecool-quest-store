@@ -20,9 +20,6 @@ public class UserController extends CommonHandler {
         setHttpExchange(httpExchange);
         validateRequest();
 
-        Map<String,String> uriMap = parseURIstring(getRequestURI());
-        System.out.println(uriMap);
-
         Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
         response = webDisplay.getSiteContent(user.getFirstName(), sideMenu, null,
                 user.getFullInfoMap(), "templates/main_user.twig");

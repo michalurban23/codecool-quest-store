@@ -1,0 +1,9 @@
+<div>
+    <form method="post">
+    {% for key in data %}
+        <label for="{{ key }}">{{ key }}</label>
+        <input name="{{ key }}" id="{{ key }}" />
+    {% endfor %}
+        <input type="submit" value="Save" />
+    </form>
+</div>

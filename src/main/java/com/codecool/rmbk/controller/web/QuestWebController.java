@@ -18,14 +18,14 @@ public class QuestWebController extends CommonHandler {
     private SQLQuest sqlQuest = new SQLQuest();
     private SQLQuestTemplate sqlQuestTemplate = new SQLQuestTemplate();
     private Map<String, String> mainMenu;
+    private Map<String, String> request;
     private String accessLevel;
-    private String request;
     private String name;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
         prepareController(httpExchange);
-        request = getRequestURI();
+        request = parseURIstring(getRequestURI());
         handleAccessRights();
     }
 
@@ -39,7 +39,7 @@ public class QuestWebController extends CommonHandler {
 
         name = user.getFirstName();
         mainMenu = sqlMenuDAO.getSideMenu(user);
-        System.out.println(accessLevel);
+
         switch (accessLevel) {
             case "Student":
                 handleStudentQuest();
@@ -55,14 +55,22 @@ public class QuestWebController extends CommonHandler {
 
     private void handleMentorQuest() throws IOException {
 
-        System.out.println(request);
-        switch (request) {
-            case "/quests/add":
-                addQuest();
-                break;
-            default:
-                showAll();
-                break;
+        String object = request.get("object");
+        String action = request.get("action");
+        String subject = request.get("subject");
+
+        if(object == null) {
+            showAll();
+        } else if (object.equals("new")) {
+            addQuestTemplate();  // TODO
+        } else {
+            if (action == null) {
+                showTemplate(object);
+            } else if (action.equals("remove")) {
+                removeTemplate(object);
+            } else if (action.equals("edit")) {
+                editTemplate(object);
+            }
         }
         send200(response);
     }
@@ -72,17 +80,38 @@ public class QuestWebController extends CommonHandler {
         String[] options = {"Add"};
         Map <String, String> contextMenu = prepareContextMenu(options);
         Map <String, String> allQuests = sqlQuestTemplate.getTemplatesMap();
-        for (String s: allQuests.keySet()) {
-            System.out.println(s);
-            System.out.println(allQuests.get(s));
-        }
 
         response = webDisplay.getSiteContent(name, mainMenu, contextMenu, allQuests, urlList);
     }
 
-    private void addQuest() {
+    private void showTemplate(String object) {
 
-        response = webDisplay.getSiteContent(name, mainMenu, null, null, urlList);
+        String[] options = {"Edit", "Remove"};
+
+        Map <String, String> contextMenu = prepareContextMenu(options);
+        Map <String, String> allQuests = sqlQuestTemplate.getTemplateInfo(object);
+
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, allQuests, urlItem);
+    }
+
+    private void addQuestTemplate() {
+
+        Map<String, String> labels = sqlQuestTemplate.getTemplateLabels();
+
+        response = webDisplay.getSiteContent(name, mainMenu, null, labels, urlEdit);
+    }
+
+    private void removeTemplate(String object) throws IOException {
+
+        sqlQuestTemplate.removeQuestTemplate(object);
+        send302("/quests/");
+    }
+
+    private void editTemplate(String object) {
+
+        Map<String, String> labels = sqlQuestTemplate.getTemplateLabels();
+
+        response = webDisplay.getSiteContent(name, mainMenu, null, labels, urlEdit);
     }
 
     private void handleStudentQuest() throws IOException {
