@@ -12,10 +12,10 @@ public class Session {
 
     private String sessionId;
     private User user;
+    private int duration = 300; // minutes
     private LocalDateTime createTime = null;
     private LocalDateTime expireTime;
     private LocalDateTime lastAccessTime;
-    private int duration = 2; // minutes
 
     private Session(String sessionId, User user) {
 
@@ -48,6 +48,7 @@ public class Session {
 
         sessionDao.updateSession(this);
     }
+
     public User getUser() {
 
         return this.user;
