@@ -16,7 +16,7 @@ public class ArtifactWebController extends CommonHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        setHttpExchange(httpExchange);
+        setConnectionData(httpExchange);
 
         String accessLevel = validateRequest();
 

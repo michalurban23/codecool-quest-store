@@ -111,4 +111,24 @@ public class Session {
         return false;
     }
 
+    public static Boolean sessionExists(String sessionId) {
+
+        for (Session s: sessions) {
+            if (s.getSessionId().equals(sessionId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Session getSessionById(String sessionId) {
+
+        for (Session s: sessions) {
+            if (s.getSessionId().equals(sessionId)) {
+                return s;
+            }
+        }
+        return null;
+    }
+
 }

@@ -1,12 +1,9 @@
 package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.SQLMenuDAO;
-import com.codecool.rmbk.dao.SQLTeam;
-import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class TeamWebController extends CommonHandler {
@@ -16,7 +13,7 @@ public class TeamWebController extends CommonHandler {
 
     public void handle(HttpExchange httpExchange) throws IOException {
       
-        setHttpExchange(httpExchange);
+        setConnectionData(httpExchange);
 
         String accessLevel = validateRequest();
         String name = user.getFirstName();

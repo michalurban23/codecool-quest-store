@@ -3,13 +3,9 @@ package com.codecool.rmbk.controller.web;
 import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.SQLQuest;
 import com.codecool.rmbk.dao.SQLQuestTemplate;
-import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 public class QuestWebController extends CommonHandler {
@@ -31,7 +27,7 @@ public class QuestWebController extends CommonHandler {
 
     private void prepareController(HttpExchange httpExchange) throws IOException {
 
-        setHttpExchange(httpExchange);
+        setConnectionData(httpExchange);
         accessLevel = validateRequest();
     }
 

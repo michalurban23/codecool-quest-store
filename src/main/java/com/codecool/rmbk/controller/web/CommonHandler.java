@@ -24,12 +24,11 @@ public abstract class CommonHandler implements HttpHandler {
     String response;
     HttpExchange httpExchange;
     CookieHandler cookieHandler;
+    Session session;
+    User user;
     WebDisplay webDisplay = new WebDisplay();
     SQLSession sessionDao = new SQLSession();
     String urlList = "templates/list_content.twig";
-
-    static User user;
-    static Session session;
 
     void send404() throws IOException {
 
@@ -91,21 +90,25 @@ public abstract class CommonHandler implements HttpHandler {
 
     String validateRequest() throws IOException {
 
-        String sessionStatus = cookieHandler.getSessionStatus();
-        Boolean active = Session.isActive(cookieHandler.getSessionId());
+        String sessionId = cookieHandler.getSessionId();
+        Boolean sessionExists = Session.sessionExists(sessionId);
+        Boolean active = Session.isActive(sessionId);
+        System.out.println("EXISTS: " + sessionExists);
+        System.out.println("ACTIVE: " + active);
         String requestStatus = null;
 
-        if (sessionStatus == null || sessionStatus.equals("loggedOut")) {
-            send302("/login");
-        } else {
+        if (sessionExists) {
             if (active) {
                 requestStatus = user.getAccessLevel();
             } else {
-                requestStatus = "expired";
-                clearUser();
                 send401();
+                Session.removeSession(cookieHandler.getSessionId());
+                sessionDao.removeSession(session);
             }
+        } else {
+            send302("/login");
         }
+
         return requestStatus;
     }
 
@@ -144,20 +147,15 @@ public abstract class CommonHandler implements HttpHandler {
         return classLoader.getResource(path);
     }
 
-    void setHttpExchange(HttpExchange httpExchange) {
+    void setConnectionData(HttpExchange httpExchange) {
 
         this.httpExchange = httpExchange;
         cookieHandler = new CookieHandler(httpExchange);
+        session = Session.getSessionById(cookieHandler.getSessionId());
 
         if (session != null) {
-            sessionDao.updateSession(session);
+            user = session.getUser();
         }
-    }
-
-    void clearUser() {
-
-        user = null;
-        session = null;
     }
 
     Map<String, String> parseFormData(String formData) throws IOException {

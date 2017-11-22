@@ -3,7 +3,6 @@ package com.codecool.rmbk.controller.web;
 import com.codecool.rmbk.dao.SQLLoginDAO;
 import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.model.Session;
-import com.codecool.rmbk.model.usr.User;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.BufferedReader;
@@ -20,13 +19,10 @@ public class LoginWebController extends CommonHandler {
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        setHttpExchange(httpExchange);
+        setConnectionData(httpExchange);
 
-        if (user == null) {
-            setupLoginProcess();
-        } else {
-            send302("/index");
-        }
+
+        setupLoginProcess();
     }
 
     private void logUserIn() throws IOException {
@@ -37,7 +33,6 @@ public class LoginWebController extends CommonHandler {
         session = Session.addSession(sessionID, user);
         sessionDao.addSession(session, loginUserName);
 
-        cookieHandler.setStatusToLoggedIn();
         send302("/index");
     }
 

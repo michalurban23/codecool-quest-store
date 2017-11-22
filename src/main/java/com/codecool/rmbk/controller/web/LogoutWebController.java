@@ -12,7 +12,7 @@ public class LogoutWebController extends CommonHandler {
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        setHttpExchange(httpExchange);
+        setConnectionData(httpExchange);
 
         Session session = Session.removeSession(cookieHandler.getSessionId());
         if (session != null) {

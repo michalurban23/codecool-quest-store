@@ -48,19 +48,19 @@ public class CookieHandler {
         return sessionId;
     }
 
-    public void setStatusToLoggedOut() {
-
-        String cookie = "sessionStatus=loggedOut" + createExpireString();
-
-        httpExchange.getResponseHeaders().add("Set-Cookie",cookie);
-    }
-
-    public void setStatusToLoggedIn() {
-
-        String cookie = "sessionStatus=loggedIn" + createExpireString();
-
-        httpExchange.getResponseHeaders().add("Set-Cookie", cookie);
-    }
+//    public void setStatusToLoggedOut() {
+//
+//        String cookie = "sessionStatus=loggedOut" + createExpireString();
+//
+//        httpExchange.getResponseHeaders().add("Set-Cookie",cookie);
+//    }
+//
+//    public void setStatusToLoggedIn() {
+//
+//        String cookie = "sessionStatus=loggedIn" + createExpireString();
+//
+//        httpExchange.getResponseHeaders().add("Set-Cookie", cookie);
+//    }
 
     private Map<String, String> parseCookie(String cookie) {
 
