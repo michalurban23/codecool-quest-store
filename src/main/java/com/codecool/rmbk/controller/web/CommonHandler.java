@@ -93,17 +93,16 @@ public abstract class CommonHandler implements HttpHandler {
         String sessionId = cookieHandler.getSessionId();
         Boolean sessionExists = Session.sessionExists(sessionId);
         Boolean active = Session.isActive(sessionId);
-        System.out.println("EXISTS: " + sessionExists);
-        System.out.println("ACTIVE: " + active);
+
         String requestStatus = null;
 
         if (sessionExists) {
             if (active) {
                 requestStatus = user.getAccessLevel();
             } else {
-                send401();
                 Session.removeSession(cookieHandler.getSessionId());
                 sessionDao.removeSession(session);
+                send401();
             }
         } else {
             send302("/login");

@@ -21,8 +21,13 @@ public class LoginWebController extends CommonHandler {
 
         setConnectionData(httpExchange);
 
+        Boolean alreadyLogged = Session.sessionExists(cookieHandler.getSessionId());
 
-        setupLoginProcess();
+        if (alreadyLogged) {
+            send302("/");
+        } else {
+            setupLoginProcess();
+        }
     }
 
     private void logUserIn() throws IOException {
