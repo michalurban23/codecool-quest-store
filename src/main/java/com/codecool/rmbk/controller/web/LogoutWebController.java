@@ -11,7 +11,7 @@ public class LogoutWebController extends CommonHandler {
         setHttpExchange(httpExchange);
 
         cookieHandler.setStatusToLoggedOut();
-        clearUser();
+        clearSessionData();
         send302("/login");
     }
 }
