@@ -1,7 +1,7 @@
 <div>
     <p>{{ title }}</p>
     <form method="post">
-        {% for key, value in data %}
+        {% for key in data %}
         <label for="{{ key }}">{{ key }}</label>
         <input name="{{ key }}" id="{{ key }}" placeholder="{{ key }}" required />
         {% endfor %}

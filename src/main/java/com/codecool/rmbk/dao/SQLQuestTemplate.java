@@ -16,18 +16,16 @@ public class SQLQuestTemplate extends SqlDAO {
         return getResults();
     }
 
-    public Map<String, String> getTemplateLabels() {
+    public List<String> getTemplateLabels() {
 
-        Map<String,String> result = new HashMap<>();
+        List<String> result = new ArrayList<>();
 
         String query = "SELECT * " +
                 "FROM quest_template ";
 
         processQuery(query, null);
 
-        for(String label : getResults().get(0)) {
-            result.put(label, label);
-        }
+        result.addAll(getResults().get(0));
 
         return result;
     }

@@ -88,7 +88,7 @@ public class SqlDAO {
     private void terminateConnection(Exception e) {
 
         String message = "Query failure. SQL message:\n" + e.getMessage();
-        System.err.println(message);
+        System.out.println(message);
     }
 
     private void saveResults() throws SQLException {

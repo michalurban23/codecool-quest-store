@@ -27,7 +27,7 @@ public class LoginWebController extends CommonHandler {
         if (user == null) {
             setupLoginProcess();
         } else {
-            send302("/index");
+            send302("/");
         }
     }
 
@@ -41,7 +41,7 @@ public class LoginWebController extends CommonHandler {
         sessionDao.addSession(session, loginUserName);
 
         cookieHandler.setStatusToLoggedIn();
-        send302("/index");
+        send302("/");
     }
 
     private void readUserCredentials() {

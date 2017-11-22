@@ -21,9 +21,9 @@ public class SQLSession extends SqlDAO {
 
     public void updateSession(Session session) {
 
-        String query = "UPDATE `session` " +
-                "SET `lastActiveTime` = ?, `expireTime` = ? " +
-                "WHERE `sessionID` = ?;";
+        String query = "UPDATE session " +
+                "SET lastActiveTime = ?, expireTime = ? " +
+                "WHERE sessionID = ?;";
         String[] data = {session.getLastAccessTime().toString(),
                 session.getExpireTime().toString(),
                 session.getSessionId()};
