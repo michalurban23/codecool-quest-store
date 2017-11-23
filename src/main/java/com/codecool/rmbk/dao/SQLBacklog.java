@@ -1,6 +1,10 @@
 package com.codecool.rmbk.dao;
 
+import com.codecool.rmbk.helper.StringParser;
+import com.codecool.rmbk.model.usr.Holder;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class SQLBacklog extends SqlDAO {
 
@@ -15,6 +19,45 @@ public class SQLBacklog extends SqlDAO {
 
         processQuery(query, null);
         return getResults();
+    }
+
+    public Map<String, String> getBacklogMap(Holder holder) {
+
+        Map<String, String> result = new LinkedHashMap<>();
+
+        String id = String.valueOf(holder.getID());
+        String query = "SELECT id, status, description " +
+                "FROM backlog " +
+                "WHERE owner = ?;";
+        String[] data = {id};
+
+        processQuery(query, data);
+
+        for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
+            String href = "/backlog/" + StringParser.removeWhitespaces(outcome.get(0));
+            String name = "&lt&lt" + outcome.get(1).toUpperCase() + "&gt&gt " + outcome.get(2);
+            result.put(name, href);
+        }
+        return result;
+    }
+
+    public Map<String, String> getBacklogDetail(String object) {
+
+        Map<String,String> result = new LinkedHashMap<>();
+
+        String query = "SELECT action_date, status, description, value " +
+                "FROM backlog " +
+                "WHERE id = ?;";
+        String[] data = {StringParser.addWhitespaces(object)};
+
+        processQuery(query, data);
+
+        for(int i=0; i<getResults().get(0).size(); i++) {
+            String key = getResults().get(0).get(i);
+            String value = getResults().get(1).get(i);
+            result.put(key, value);
+        }
+        return result;
     }
 
     public ArrayList<ArrayList<String>> getBacklog(int id) {
