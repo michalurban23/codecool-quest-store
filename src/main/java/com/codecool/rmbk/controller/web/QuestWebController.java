@@ -5,10 +5,7 @@ import com.codecool.rmbk.dao.SQLQuest;
 import com.codecool.rmbk.dao.SQLQuestTemplate;
 import com.codecool.rmbk.helper.StringParser;
 import com.sun.net.httpserver.HttpExchange;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +30,7 @@ public class QuestWebController extends CommonHandler {
 
     private void prepareController(HttpExchange httpExchange) throws IOException {
 
-        setHttpExchange(httpExchange);
+        setConnectionData(httpExchange);
         accessLevel = validateRequest();
     }
 

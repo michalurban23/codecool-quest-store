@@ -10,14 +10,13 @@ public class ControllerRouter extends CommonHandler {
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        setHttpExchange(httpExchange);
+        setConnectionData(httpExchange);
         validateRequest();
         parseURIstring(getRequestURI());
 
         String controller = user.getClass().getSimpleName().toLowerCase();
         String object = String.valueOf(user.getID());
-        System.out.println(">" + object + "<");
-        System.out.println(object.length());
+
         send302(String.format("/%s/%s", controller, object));
     }
 }

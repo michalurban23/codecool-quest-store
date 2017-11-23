@@ -8,7 +8,7 @@ public class Static extends CommonHandler {
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        setHttpExchange(httpExchange);
+        setConnectionData(httpExchange);
 
         URI uri = httpExchange.getRequestURI();
         String path = "." + uri.getPath();
