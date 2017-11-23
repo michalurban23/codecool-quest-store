@@ -40,7 +40,7 @@ public class ClassWebController extends CommonHandler {
         String objectId = parsedURI.get("object");
         Group object = null;
         User subject;
-        if (objectId != null) {
+        if (objectId != null && !objectId.equals("new")) {
             object = sqlClass.getGroupById(Integer.parseInt(parsedURI.get("object")));
         }
         switch (action) {
@@ -121,8 +121,6 @@ public class ClassWebController extends CommonHandler {
         
         String userStatus = user.getClass().getSimpleName();
         List<String> contextMenuOptions = new ArrayList<>();
-        System.out.println(userStatus);
-        System.out.println(sqlClass.getGroupMap(parsedURI.get("controller")));
 
         switch (userStatus) {
             case "Admin":
@@ -137,7 +135,6 @@ public class ClassWebController extends CommonHandler {
                         prepareContextMenu(contextMenuOptions.toArray(new String[contextMenuOptions.size()])),
                         sqlClass.getGroupMap(parsedURI.get("controller")), urlList);
                 send200(response);
-                System.out.println(response);
                 break;
             default:
                 send403();

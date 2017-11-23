@@ -138,6 +138,7 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
         String query = "DELETE FROM users WHERE id = ?;";
         String[] param = new String[] {String.valueOf(user.getID())};
+
         return handleQuery(query, param);
     }
 
