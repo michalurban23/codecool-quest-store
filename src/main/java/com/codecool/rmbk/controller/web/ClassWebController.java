@@ -16,10 +16,8 @@ import java.util.Map;
 
 public class ClassWebController extends CommonHandler {
 
-    private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
     private SQLClass sqlClass = new SQLClass();
     private SQLUsers sqlUsers = new SQLUsers();
-    String response;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 

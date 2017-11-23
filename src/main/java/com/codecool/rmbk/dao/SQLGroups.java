@@ -8,17 +8,14 @@ import java.util.Map;
 
 public abstract class SQLGroups extends SqlDAO implements GroupDAO{
 
-    private ArrayList<ArrayList<String>> results;
     String tableName;
 
     public ArrayList<Group> getAllGroups(String groupType) {
 
-        System.out.println(tableName);
-
         ArrayList<Group> result = new ArrayList<>();
         String query = "SELECT * FROM " + tableName + ";";
         ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
-        System.out.println(queryResult);
+
         for (ArrayList<String> record : queryResult.subList(1, queryResult.size())) {
             if (groupType.toLowerCase().equals("class")) {
                 result.add(new Klass(Integer.parseInt(record.get(0)), record.get(1)));
@@ -34,6 +31,7 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
         Group resultGroup = null;
         String query = "SELECT * FROM " + tableName +" WHERE id = ?;";
         ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {"" + id});
+
         if(queryResult.size() > 1) {
             resultGroup = new Team(id, queryResult.get(1).get(1));
         }
@@ -44,20 +42,24 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
 
         String query = "INSERT INTO " + tableName + " (name) VALUES (null);";
         handleQuery(query, null);
-        query = String.format("SELECT * FROM " + tableName + " ORDER BY id DESC LIMIT 1;");
+
+        query = "SELECT * FROM " + tableName + " ORDER BY id DESC LIMIT 1;";
         ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
+
         return getGroupById(Integer.parseInt(queryResult.get(1).get(0)));
     }
 
     public Boolean removeGroup(Group group) {
 
         String query = "DELETE FROM " + tableName + " WHERE id = ?;";
+
         return handleQuery(query, new String[] {"" + group.getID()});
     }
 
     public Boolean renameGroup(Group group, String newName) {
 
         String query = "UPDATE " + tableName + " SET name = ? WHERE id = ?;";
+
         return handleQuery(query, new String[] {newName, "" + group.getID()});
     }
 
@@ -93,7 +95,8 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
         Map<String,String> groupsMap = new HashMap<>();
 
         for(Group group : getAllGroups(groupType)) {
-            groupsMap.put(String.format("/%s/%s", groupType, String.valueOf(group.getID())), group.getName());
+            groupsMap.put(String.format("/%s/%s", groupType, String.valueOf(group.getID())),
+                    group.getName());
         }
         return groupsMap;
     }

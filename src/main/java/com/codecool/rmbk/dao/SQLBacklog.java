@@ -36,7 +36,7 @@ public class SQLBacklog extends SqlDAO {
         for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
             String href = "/backlog/" + StringParser.removeWhitespaces(outcome.get(0));
             String name = "&lt&lt" + outcome.get(1).toUpperCase() + "&gt&gt " + outcome.get(2);
-            result.put(name, href);
+            result.put(href, name);
         }
         return result;
     }

@@ -65,7 +65,7 @@ public class BacklogWebController extends CommonHandler {
         Map <String, String> backlog = backlogDao.getBacklogMap(user);
         String[] summary = {String.format("You have a total of %s", 2),
                 "qweqweq",
-                "rqwrq"};
+                "rqwrq"}; // TODO
 
         response = webDisplay.getSiteContent(name, mainMenu, null, summary, backlog, urlJustList);
     }

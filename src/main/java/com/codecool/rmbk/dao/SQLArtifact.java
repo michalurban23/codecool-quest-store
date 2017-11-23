@@ -45,7 +45,7 @@ public class SQLArtifact extends SqlDAO {
         for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
             String href = "/artifacts/" + outcome.get(0);
             String name = outcome.get(1);
-            result.put(name, href);
+            result.put(href, name);
         }
 
         return result;
