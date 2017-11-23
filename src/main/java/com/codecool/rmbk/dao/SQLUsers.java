@@ -127,9 +127,9 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
     @Override
     public Boolean removeUser(User user) {
-        boolean jeden = removeUserFromUserGroupsTable(user);
-        boolean dwa = removeUserFromUsersTable(user);
-        return jeden && dwa;
+        boolean removedFromGroups = removeUserFromUserGroupsTable(user);
+        boolean removedFromUsers = removeUserFromUsersTable(user);
+        return removedFromGroups && removedFromUsers;
     }
 
     public Boolean removeUserFromUsersTable(User user) {
