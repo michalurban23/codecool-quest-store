@@ -28,10 +28,17 @@ public class SQLBacklog extends SqlDAO {
     public Integer getCurrentCoins(int id) {
 
         Integer coins = 0;
-        Integer earned;
-        Integer spent;
         String[] data = {"" + id};
 
+        coins += getEarned(data);
+        coins -= getSpent(data);
+
+        return coins;
+    }
+
+    private Integer getEarned(String[] data) {
+
+        Integer earned;
         String query = "SELECT SUM(value) AS balance " +
                 "FROM backlog WHERE owner = ? AND status = 'used';";
         processQuery(query, data);
@@ -41,9 +48,13 @@ public class SQLBacklog extends SqlDAO {
         } catch (NumberFormatException e) {
             earned = 0;
         }
-        coins += earned;
+        return earned;
+    }
 
-        query = "SELECT SUM(value) AS balance " +
+    private Integer getSpent(String[] data) {
+
+        Integer spent;
+        String query = "SELECT SUM(value) AS balance " +
                 "FROM backlog WHERE owner = ? AND status = 'bought';";
         processQuery(query, data);
 
@@ -52,9 +63,7 @@ public class SQLBacklog extends SqlDAO {
         } catch (NumberFormatException e) {
             spent = 0;
         }
-        coins -= spent;
-
-        return coins;
+        return spent;
     }
 
     public String getExperience(int id) {
