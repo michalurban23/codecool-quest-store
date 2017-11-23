@@ -50,8 +50,9 @@ public class UserController extends CommonHandler {
     private void addUser() throws IOException {
         String method = httpExchange.getRequestMethod();
         if (method.equals("GET")) {
-            response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
-                                                 prepareContextMenu(getAllowedActions()),
+            response = webDisplay.getSiteContent(user.getFullName(),
+                                                 sideMenu,
+                                                 null,
                                                  String.format("Add new %s", parsedURI.get("controller")),
                                                  User.getFieldLabels(),
                                                  urlAdd);
