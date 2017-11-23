@@ -71,7 +71,7 @@ public class ClassWebController extends CommonHandler {
         String method = httpExchange.getRequestMethod();
         if (method.equals("GET")) {
             response = webDisplay.getSiteContent(user.getFullName(),
-                    sideMenu,
+                    mainMenu,
                     null,
                     String.format("Add new %s", parsedURI.get("controller")),
                     Group.getFieldLabels(),
@@ -90,7 +90,7 @@ public class ClassWebController extends CommonHandler {
         String method = httpExchange.getRequestMethod();
         if (method.equals("GET")) {
             response = webDisplay.getSiteContent(user.getFullName(),
-                    sideMenu,
+                    mainMenu,
                     prepareContextMenu(getAllowedDetailsActions(user)),
                     String.format("Rename %s:", object.getClass().getSimpleName()),
                     Group.getFieldLabels(),
@@ -111,7 +111,7 @@ public class ClassWebController extends CommonHandler {
         if (userStatus.equals("Student")) {
             send403();
         } else {
-            response = webDisplay.getSiteContent(user.getFullName(), sideMenu,
+            response = webDisplay.getSiteContent(user.getFullName(), mainMenu,
                     prepareContextMenu(getAllowedDetailsActions(user)), object.getName(),
                     sqlClass.getMembersMap(object),
                     urlItem);
@@ -123,23 +123,20 @@ public class ClassWebController extends CommonHandler {
         
         String userStatus = user.getClass().getSimpleName();
         List<String> contextMenuOptions = new ArrayList<>();
-        System.out.println(userStatus);
-        System.out.println(sqlClass.getGroupMap(parsedURI.get("controller")));
 
         switch (userStatus) {
             case "Admin":
                 contextMenuOptions.add("Add");
-                response = webDisplay.getSiteContent(user.getFullName(), sideMenu,
+                response = webDisplay.getSiteContent(user.getFullName(), mainMenu,
                         prepareContextMenu(contextMenuOptions.toArray(new String[contextMenuOptions.size()])),
                         sqlClass.getGroupMap(parsedURI.get("controller")), urlList);
                 send200(response);
                 break;
             case "Mentor":
-                response = webDisplay.getSiteContent(user.getFullName(), sideMenu,
+                response = webDisplay.getSiteContent(user.getFullName(), mainMenu,
                         prepareContextMenu(contextMenuOptions.toArray(new String[contextMenuOptions.size()])),
                         sqlClass.getGroupMap(parsedURI.get("controller")), urlList);
                 send200(response);
-                System.out.println(response);
                 break;
             default:
                 send403();
