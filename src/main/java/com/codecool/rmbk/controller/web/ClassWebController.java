@@ -15,7 +15,7 @@ public class ClassWebController extends CommonHandler {
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        setHttpExchange(httpExchange);
+        setConnectionData(httpExchange);
 
         String accessLevel = validateRequest();
         String name = user.getFirstName();

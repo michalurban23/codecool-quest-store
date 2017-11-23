@@ -1,15 +1,11 @@
 package com.codecool.rmbk.controller.web;
 
-import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.model.usr.User;
-import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
-
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.*;
+import java.util.Map;
 
 public class UserController extends CommonHandler {
 
@@ -19,7 +15,7 @@ public class UserController extends CommonHandler {
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        setHttpExchange(httpExchange);
+        setConnectionData(httpExchange);
         parseURIstring(getRequestURI());
         validateRequest();
 

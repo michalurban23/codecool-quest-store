@@ -11,6 +11,7 @@ import java.util.*;
 public class CookieHandler {
 
     private HttpExchange httpExchange;
+    private int sessionDuration = 300; // minutes
 
     public CookieHandler(HttpExchange httpExchange) {
 
@@ -48,20 +49,6 @@ public class CookieHandler {
         return sessionId;
     }
 
-    public void setStatusToLoggedOut() {
-
-        String cookie = "sessionStatus=loggedOut" + createExpireString();
-
-        httpExchange.getResponseHeaders().add("Set-Cookie",cookie);
-    }
-
-    public void setStatusToLoggedIn() {
-
-        String cookie = "sessionStatus=loggedIn" + createExpireString();
-
-        httpExchange.getResponseHeaders().add("Set-Cookie", cookie);
-    }
-
     private Map<String, String> parseCookie(String cookie) {
 
         Map<String, String> cookieMap = new HashMap<>();
@@ -79,28 +66,13 @@ public class CookieHandler {
         return cookieMap;
     }
 
-    public void clearCookie() {
-
-        String expired = "; expires=" + createDateInPast();
-
-        httpExchange.getResponseHeaders().add("Set-Cookie", "sessionId=" + expired);
-        httpExchange.getResponseHeaders().add("Set-Cookie", "sessionStatus=" + expired);
-    }
-
     private String createExpireString() {
 
-        OffsetDateTime veryLongTime = OffsetDateTime.now(ZoneOffset.UTC).plus(Duration.ofMinutes(5));
+        OffsetDateTime expTime = OffsetDateTime.now(ZoneOffset.UTC).plus(Duration.ofMinutes(sessionDuration));
 
-        String cookieExpireTime = DateTimeFormatter.RFC_1123_DATE_TIME.format(veryLongTime);
+        String cookieExpireTime = DateTimeFormatter.RFC_1123_DATE_TIME.format(expTime);
 
         return "; expires= " + cookieExpireTime;
-    }
-
-    private String createDateInPast() {
-
-        OffsetDateTime veryLongTime = OffsetDateTime.now(ZoneOffset.UTC).plus(Duration.ofMinutes(-5));
-
-        return DateTimeFormatter.RFC_1123_DATE_TIME.format(veryLongTime);
     }
 
 }

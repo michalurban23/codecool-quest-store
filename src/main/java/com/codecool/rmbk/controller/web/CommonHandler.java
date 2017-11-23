@@ -1,5 +1,6 @@
 package com.codecool.rmbk.controller.web;
 
+import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.SQLSession;
 import com.codecool.rmbk.helper.CookieHandler;
 import com.codecool.rmbk.helper.MimeTypeResolver;
@@ -23,16 +24,17 @@ public abstract class CommonHandler implements HttpHandler {
     HttpExchange httpExchange;
     CookieHandler cookieHandler;
     Map<String,String> parsedURI;
+    Map<String, String> sideMenu;
+    Session session;
+    User user;
     WebDisplay webDisplay = new WebDisplay();
     SQLSession sessionDao = new SQLSession();
     String urlList = "templates/list_content.twig";
     String urlItem = "templates/item.twig";
     String urlEdit = "templates/edit.twig";
     String urlAdd = "templates/add.twig";
+    private SQLMenuDAO menuDao = new SQLMenuDAO();
 
-    static User user;
-    static Map<String, String> sideMenu;
-    static Session session;
 
     void send404() throws IOException {
 
@@ -94,21 +96,24 @@ public abstract class CommonHandler implements HttpHandler {
 
     String validateRequest() throws IOException {
 
-        String sessionStatus = cookieHandler.getSessionStatus();
-        Boolean active = sessionDao.isSessionActive(cookieHandler.getSessionId());
+        String sessionId = cookieHandler.getSessionId();
+        Boolean sessionExists = Session.sessionExists(sessionId);
+        Boolean active = Session.isActive(sessionId);
+
         String requestStatus = null;
 
-        if (sessionStatus == null || sessionStatus.equals("loggedOut")) {
-            send302("/login");
-        } else {
+        if (sessionExists) {
             if (active) {
                 requestStatus = user.getAccessLevel();
             } else {
-                requestStatus = "expired";
-                clearSessionData();
+                Session.removeSession(cookieHandler.getSessionId());
+                sessionDao.removeSession(session);
                 send401();
             }
+        } else {
+            send302("/login");
         }
+
         return requestStatus;
     }
 
@@ -147,21 +152,16 @@ public abstract class CommonHandler implements HttpHandler {
         return classLoader.getResource(path);
     }
 
-    void setHttpExchange(HttpExchange httpExchange) {
+    void setConnectionData(HttpExchange httpExchange) {
 
         this.httpExchange = httpExchange;
         cookieHandler = new CookieHandler(httpExchange);
+        session = Session.getSessionById(cookieHandler.getSessionId());
 
         if (session != null) {
-            sessionDao.updateSession(session);
+            user = session.getUser();
+            sideMenu = menuDao.getSideMenu(user);
         }
-    }
-
-    void clearSessionData() {
-
-        user = null;
-        session = null;
-        cookieHandler.clearCookie();
     }
 
     Map<String, String> parseFormData(String formData) throws IOException {

@@ -33,7 +33,7 @@ public class ArtifactWebController extends CommonHandler {
 
     private void prepareController(HttpExchange httpExchange) throws IOException {
 
-        setHttpExchange(httpExchange);
+        setConnectionData(httpExchange);
         accessLevel = validateRequest();
     }
 

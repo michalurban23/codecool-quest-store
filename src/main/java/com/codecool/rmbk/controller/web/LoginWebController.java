@@ -1,10 +1,8 @@
 package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.SQLLoginDAO;
-import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.model.Session;
-import com.codecool.rmbk.model.usr.User;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.BufferedReader;
@@ -16,18 +14,19 @@ public class LoginWebController extends CommonHandler {
 
     private String loginUserName;
     private String loginPassword;
-    private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
     private SQLLoginDAO dataAccess = new SQLLoginDAO();
     private SQLUsers userDao = new SQLUsers();
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        setHttpExchange(httpExchange);
+        setConnectionData(httpExchange);
 
-        if (user == null) {
-            setupLoginProcess();
-        } else {
+        Boolean alreadyLogged = Session.sessionExists(cookieHandler.getSessionId());
+
+        if (alreadyLogged) {
             send302("/");
+        } else {
+            setupLoginProcess();
         }
     }
 
@@ -35,12 +34,10 @@ public class LoginWebController extends CommonHandler {
 
         String sessionID = cookieHandler.setNewSessionId();
         user = userDao.getUserByLogin(loginUserName);
-        sideMenu = sqlMenuDAO.getSideMenu(user);
 
-        session = new Session(sessionID);
+        session = Session.addSession(sessionID, user);
         sessionDao.addSession(session, loginUserName);
 
-        cookieHandler.setStatusToLoggedIn();
         send302("/");
     }
 
