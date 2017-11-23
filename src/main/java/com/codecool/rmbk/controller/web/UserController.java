@@ -72,8 +72,7 @@ public class UserController extends CommonHandler {
     private void editUserData(User object) throws IOException {
         String method = httpExchange.getRequestMethod();
         if (method.equals("GET")) {
-            response = webDisplay.getSiteContent(user.getFullName(),
-                                                 sideMenu,
+            response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
                                                  prepareContextMenu(getAllowedActions()),
                                                  object.getFullInfoMap(),
                                                  urlEdit);
@@ -91,7 +90,7 @@ public class UserController extends CommonHandler {
 
     private void showDetails(User object) throws IOException {
         if (isRequestedBySupervisor() || isRequestedBySelf()) {
-            response = webDisplay.getSiteContent(user.getFullName(), sideMenu,
+            response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
                     prepareContextMenu(getAllowedActions()), object.getFullInfoMap(),
                     urlItem);
             send200(response);
@@ -104,7 +103,7 @@ public class UserController extends CommonHandler {
 
         if (isRequestedBySupervisor()) {
 
-            response = webDisplay.getSiteContent(user.getFullName(), sideMenu,
+            response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
                     prepareContextMenu(new String[] {"Add"}),
                     sqlUsers.getUserMap(parsedURI.get("controller")), urlList);
             send200(response);

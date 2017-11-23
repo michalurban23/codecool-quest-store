@@ -23,6 +23,8 @@ public class WebServer {
         server.createContext("/team", new TeamWebController());
         server.createContext("/student", new UserController());
         server.createContext("/mentor", new UserController());
+        server.createContext("/admin", new UserController());
+        server.createContext("/experience", new ExperienceLevelsController());
         server.createContext("/", new ControllerRouter());
         server.setExecutor(null);
     }

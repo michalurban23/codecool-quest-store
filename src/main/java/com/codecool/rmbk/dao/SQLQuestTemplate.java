@@ -84,22 +84,23 @@ public class SQLQuestTemplate extends SqlDAO {
         String query = "INSERT INTO quest_template (name, description, value, special, active) " +
                 "VALUES ('" + name + "', ?, ?, ?, ?)";
 
-        processQuery(query, data.subList(1, data.size()-1).toArray(new String[0]));
+        processQuery(query, data.subList(1, data.size()).toArray(new String[0]));
     }
 
-    public void editQuestTemplate(List<String> data) {
+    public void editQuestTemplate(String originalName, List<String> data) {
 
-        String name = StringParser.addWhitespaces(data.get(0));
+        originalName = StringParser.addWhitespaces(originalName);
         String query = "UPDATE quest_template " +
-                       "SET `description` = ?, `value` = ?, `special` = ?, `active` = ? " +
-                       "WHERE `name` = '" + name + "';";
-        processQuery(query, data.subList(1, data.size()-1).toArray(new String[0]));
+                       "SET `name` = ?, `description` = ?, `value` = ?, `special` = ?, `active` = ? " +
+                       "WHERE `name` = '" + originalName + "';";
+        processQuery(query, data.toArray(new String[0]));
     }
 
     public void removeQuestTemplate(String name) {
 
         name = StringParser.addWhitespaces(name);
         String query = "DELETE FROM quest_template WHERE `name` = ?;";
+
         processQuery(query, new String[] {name});
     }
 

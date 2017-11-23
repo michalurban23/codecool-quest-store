@@ -108,8 +108,10 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
         Map<String,String> result = new LinkedHashMap<>();
         ArrayList<User> objects = getUserList(userType);
+
         for(User user : objects) {
-            result.put(String.format("/%s/%s",userType.toLowerCase(), String.valueOf(user.getID())), user.getFullName());
+            result.put(user.getFullName(),
+                    String.format("/%s/%s",userType.toLowerCase(), String.valueOf(user.getID())));
         }
         return result;
     }
