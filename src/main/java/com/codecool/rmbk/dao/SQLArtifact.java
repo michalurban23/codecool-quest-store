@@ -23,12 +23,12 @@ public class SQLArtifact extends SqlDAO {
         processQuery(query, new String[] {name});
     }
 
-    public void addArtifact(String templateName) {
+    public void addArtifact(String templateName, String owner) {
 
-        String query = "INSERT INTO artifacts template_name " +
-                       "VALUES ?;" + templateName;
+        String query = "INSERT INTO artifacts (template_name, owner) " +
+                       "VALUES (?, ?);";
 
-        processQuery(query, null);
+        processQuery(query, new String[]{templateName, owner});
     }
 
     public Map<String,String> getArtifactMapBy(Holder holder) {

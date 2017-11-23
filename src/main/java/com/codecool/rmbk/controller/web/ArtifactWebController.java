@@ -125,7 +125,12 @@ public class ArtifactWebController extends CommonHandler {
                     "templates/buyable.twig");
         } else if (method.equals("POST")) {
             readBuyableArtifactsInputs();
-            send302("/artifacts/");
+            if (checkIfBuyable()) {
+                buyArtifacts();
+                send302("/artifacts/");
+            } else {
+                getFailureResponse();
+            }
         }
     }
 
@@ -187,20 +192,26 @@ public class ArtifactWebController extends CommonHandler {
 
     }
 
-    private Boolean checkIfBuyable(String object) {
+    private Boolean checkIfBuyable() {
 
         Boolean buyable;
         Integer coins = sqlBacklog.getCurrentCoins(user.getID());
-        System.out.println(object);
-        Integer value = sqlArtifactTemplate.getTemplateValue(object);
+        Integer value = calculateArtifactsValue();
 
-        if (coins > value) {
-            buyable = Boolean.FALSE;
-        } else {
-            buyable = Boolean.TRUE;
-        }
+        buyable = coins > value ;
 
         return buyable;
+    }
+
+    private Integer calculateArtifactsValue() {
+
+        Integer value = 0;
+
+        for(String templateName : templateData) {
+            value += sqlArtifactTemplate.getTemplateValue(templateName);
+        }
+
+        return value;
     }
 
     private void readArtifactTemplateInputs() throws IOException{
@@ -223,5 +234,18 @@ public class ArtifactWebController extends CommonHandler {
         for (String templateName : inputs.keySet()) {
             templateData.add(inputs.get(templateName));
         }
+    }
+
+    private void buyArtifacts() {
+        String owner = String.valueOf(user.getID());
+
+        for (String templateName : templateData) {
+            sqlArtifact.addArtifact(templateName, owner);
+        }
+    }
+
+    private void getFailureResponse() {
+
+        response = "Ni mosz hajsu";
     }
 }
