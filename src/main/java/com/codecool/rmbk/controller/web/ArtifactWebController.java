@@ -96,6 +96,7 @@ public class ArtifactWebController extends CommonHandler {
         String[] options = {"Add"};
         Map<String, String> contextMenu = prepareContextMenu(options);
         Map<String, String> mainData = sqlArtifactTemplate.getArtifactTemplatesMap();
+        System.out.println(mainData);
 
         response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlList);
     }
