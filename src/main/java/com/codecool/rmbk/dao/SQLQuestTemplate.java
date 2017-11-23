@@ -43,7 +43,7 @@ public class SQLQuestTemplate extends SqlDAO {
         for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
             String href = "/quests/" + StringParser.removeWhitespaces(outcome.get(0));
             String name = outcome.get(0);
-            result.put(name, href);
+            result.put(href, name);
         }
 
         return result;

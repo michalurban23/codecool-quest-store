@@ -51,7 +51,7 @@ public class UserController extends CommonHandler {
         String method = httpExchange.getRequestMethod();
         if (method.equals("GET")) {
             response = webDisplay.getSiteContent(user.getFullName(),
-                                                 sideMenu,
+                                                 mainMenu,
                                                  null,
                                                  String.format("Add new %s", parsedURI.get("controller")),
                                                  User.getFieldLabels(),

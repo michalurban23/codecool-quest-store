@@ -133,7 +133,7 @@ public class ArtifactWebController extends CommonHandler {
 
         String method = httpExchange.getRequestMethod();
         String title = "Create new Artifact template: ";
-        Map<String, String> labels = sqlArtifactTemplate.getArtifactLabels();
+        List<String> labels = sqlArtifactTemplate.getArtifactLabels();
 
 
         if (method.equals("GET")) {
