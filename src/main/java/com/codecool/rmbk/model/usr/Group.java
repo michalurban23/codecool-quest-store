@@ -1,6 +1,8 @@
 package com.codecool.rmbk.model.usr;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public abstract class Group implements Holder {
 
@@ -59,4 +61,11 @@ public abstract class Group implements Holder {
     public void clearMembersList() {
         members = new ArrayList<>();
     }
+
+    public static List<String> getFieldLabels() {
+        List<String> labels = new ArrayList<>();
+        labels.add("name");
+        return labels;
+    }
+
 }
