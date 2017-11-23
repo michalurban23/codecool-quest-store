@@ -2,6 +2,8 @@ package com.codecool.rmbk.view;
 
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
+
+import java.util.List;
 import java.util.Map;
 
 public class WebDisplay {
@@ -39,6 +41,23 @@ public class WebDisplay {
         return response.toString();
     }
 
+    public String getSiteContent(String userName,
+                                 Map<String, String> mainMenu,
+                                 Map<String, String> contextMenu,
+                                 String title,
+                                 List<String> mainData,
+                                 String mainContentUrl) {
+
+        StringBuilder response = new StringBuilder();
+        response.append(getHeaderContent(userName));
+        response.append(getTopMenuContent(mainMenu));
+        response.append(getContextMenu(contextMenu));
+        response.append(getMainContent(title, mainData, mainContentUrl));
+        response.append(getFooterContent());
+
+        return response.toString();
+    }
+
     private String getMainContent(Map<String, String> data, String url) {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate(url);
@@ -51,9 +70,29 @@ public class WebDisplay {
 
     private String getMainContent(String title, Map<String, String> data, String url) {
 
-        System.out.println(url);
         JtwigTemplate template = JtwigTemplate.classpathTemplate(url);
         JtwigModel model = JtwigModel.newModel();
+        model.with("title", title);
+        model.with("data", data);
+
+        return template.render(model);
+    }
+
+    private String getMainContent(List<String> data, String url) {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(url);
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("data", data);
+
+        return template.render(model);
+    }
+
+    private String getMainContent(String title, List<String> data, String url) {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(url);
+        JtwigModel model = JtwigModel.newModel();
+
         model.with("title", title);
         model.with("data", data);
 

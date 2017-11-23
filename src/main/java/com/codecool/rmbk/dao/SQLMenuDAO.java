@@ -96,6 +96,7 @@ public class SQLMenuDAO extends SqlDAO implements MenuDAO {
         for (ArrayList<String> resultRecord : resultList.subList(1, resultList.size())) {
             resultMap.put(resultRecord.get(0), resultRecord.get(1));
         }
+        System.out.println(resultMap);
         return resultMap;
     }
 }
