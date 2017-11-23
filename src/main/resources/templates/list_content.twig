@@ -1,7 +1,7 @@
 <div>
     <ol>
         {% for key, value in data %}
-        <li><a href="{{ value }}">{{ key }}</a>
+        <li><a href="{{ key }}">{{ value }}</a>
             <button value="edit" onclick="window.open('{{ value }}/edit', '_parent')">Edit</button>
             <button value="remove" onclick="window.open('{{ value }}/remove', '_parent')">Remove</button>
         </li>

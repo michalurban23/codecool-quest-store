@@ -6,7 +6,7 @@ import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
 import java.util.ArrayList;
 
-public class SQLTeam extends SQLGroups implements GroupDAO{
+public class SQLTeam extends SQLGroups implements GroupDAO {
 
     public SQLTeam() {
 

@@ -123,12 +123,10 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
         return new ArrayList<>(queryResult.subList(1, queryResult.size()));
     }
 
-
     @Override
     public Boolean removeUser(User user) {
         boolean jeden = removeUserFromUserGroupsTable(user);
         boolean dwa = removeUserFromUsersTable(user);
-        System.out.println(jeden + " " + dwa);
         return jeden && dwa;
     }
 
