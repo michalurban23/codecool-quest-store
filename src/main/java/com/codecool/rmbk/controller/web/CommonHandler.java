@@ -20,11 +20,12 @@ import java.util.Map;
 
 public abstract class CommonHandler implements HttpHandler {
 
+    private SQLMenuDAO menuDao = new SQLMenuDAO();
     String response;
     HttpExchange httpExchange;
     CookieHandler cookieHandler;
     Map<String,String> parsedURI;
-    Map<String, String> sideMenu;
+    Map<String, String> mainMenu;
     Session session;
     User user;
     WebDisplay webDisplay = new WebDisplay();
@@ -33,7 +34,6 @@ public abstract class CommonHandler implements HttpHandler {
     String urlItem = "templates/item.twig";
     String urlEdit = "templates/edit.twig";
     String urlAdd = "templates/add.twig";
-    private SQLMenuDAO menuDao = new SQLMenuDAO();
 
 
     void send404() throws IOException {
@@ -160,7 +160,7 @@ public abstract class CommonHandler implements HttpHandler {
 
         if (session != null) {
             user = session.getUser();
-            sideMenu = menuDao.getSideMenu(user);
+            mainMenu = menuDao.getSideMenu(user);
         }
     }
 
@@ -171,8 +171,9 @@ public abstract class CommonHandler implements HttpHandler {
 
         for (String pair : pairs) {
             String[] keyValue = pair.split("=");
+            String key = URLDecoder.decode(keyValue[0], "UTF-8");
             String value = URLDecoder.decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
+            map.put(key, value);
         }
         return map;
     }
@@ -218,6 +219,7 @@ public abstract class CommonHandler implements HttpHandler {
     }
 
     Map<String,String> readInputs() throws IOException {
+
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
                 "utf-8");
         BufferedReader br = new BufferedReader(isr);

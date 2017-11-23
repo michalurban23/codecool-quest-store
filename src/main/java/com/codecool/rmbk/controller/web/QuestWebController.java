@@ -1,6 +1,5 @@
 package com.codecool.rmbk.controller.web;
 
-import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.SQLQuest;
 import com.codecool.rmbk.dao.SQLQuestTemplate;
 import com.codecool.rmbk.helper.StringParser;
@@ -12,11 +11,9 @@ import java.util.Map;
 
 public class QuestWebController extends CommonHandler {
 
-    private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
     private SQLQuest sqlQuest = new SQLQuest();
     private SQLQuestTemplate sqlQuestTemplate = new SQLQuestTemplate();
     private List<String> templateData;
-    private Map<String, String> mainMenu;
     private Map<String, String> request;
     private String accessLevel;
     private String name;
@@ -37,7 +34,6 @@ public class QuestWebController extends CommonHandler {
     private void handleAccessRights() throws IOException {
 
         name = user.getFirstName();
-        mainMenu = sqlMenuDAO.getSideMenu(user);
 
         switch (accessLevel) {
             case "Student":
@@ -57,7 +53,7 @@ public class QuestWebController extends CommonHandler {
         String object = request.get("object");
         String action = request.get("action");
 
-        if(object == null) {
+        if (object == null) {
             showAll();
         } else if (object.equals("new")) {
             addQuestTemplate();
@@ -130,7 +126,7 @@ public class QuestWebController extends CommonHandler {
             readQuestInputs();
             Boolean properData = verifyInputs();
             if (properData) {
-                sqlQuestTemplate.editQuestTemplate(templateData);
+                sqlQuestTemplate.editQuestTemplate(object, templateData);
                 send302("/quests/");
             } else {
                 showFailureMessage();
@@ -168,12 +164,44 @@ public class QuestWebController extends CommonHandler {
         }
     }
 
-    private void showFailureMessage() {
+    private void showFailureMessage() throws IOException {
 
-        response = "FAIL"; // TODO
+        send302("/quests/"); // TODO
     }
 
     private void handleStudentQuest() throws IOException {
+
+        String object = request.get("object");
+        String action = request.get("action");
+
+        if(object == null) {
+            showMyQuests();
+        } else if (object.equals("new")) {
+            acquireNewQuest();
+        } else {
+            if (action == null) {
+                showQuestDetails();
+            }
+        }
+        send200(response);
+    }
+
+    private void showMyQuests() {
+
+        String[] options = {"Acquire"};
+        Map <String, String> contextMenu = prepareContextMenu(options);
+        Map <String, String> myQuests = sqlQuest.getQuestMapBy(user);
+
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, myQuests, urlList);
+
+    }
+
+    private void acquireNewQuest() {
+
+        // TODO
+    }
+
+    private void showQuestDetails() {
 
         // TODO
     }
