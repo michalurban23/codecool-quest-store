@@ -99,12 +99,12 @@ public class QuestWebController extends CommonHandler {
 
         String method = httpExchange.getRequestMethod();
         String title = "Create New Template:";
-        Map<String, String> labels = sqlQuestTemplate.getTemplateLabels();
+        List<String> labels = sqlQuestTemplate.getTemplateLabels();
 
         if (method.equals("GET")) {
             response = webDisplay.getSiteContent(name, mainMenu, null, title, labels, urlAdd);
         } else if (method.equals("POST")) {
-            readInputs();
+            readQuestInputs();
             Boolean properData = verifyInputs();
             if (properData) {
                 sqlQuestTemplate.addQuestTemplate(templateData);
@@ -130,7 +130,7 @@ public class QuestWebController extends CommonHandler {
         if (method.equals("GET")) {
             response = webDisplay.getSiteContent(name, mainMenu, null, title, labels, urlEdit);
         } else if (method.equals("POST")) {
-            readInputs();
+            readQuestInputs();
             Boolean properData = verifyInputs();
             if (properData) {
                 sqlQuestTemplate.editQuestTemplate(templateData);
@@ -141,14 +141,9 @@ public class QuestWebController extends CommonHandler {
         }
     }
 
-    private void readInputs() throws IOException {
+    private void readQuestInputs() throws IOException {
 
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
-                "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        String formData = br.readLine();
-
-        Map<String, String> inputs = parseFormData(formData);
+        Map<String, String> inputs = readInputs();
         templateData = new ArrayList<>();
 
         templateData.add(inputs.get("name"));

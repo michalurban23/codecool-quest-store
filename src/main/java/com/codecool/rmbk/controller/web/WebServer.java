@@ -13,7 +13,6 @@ public class WebServer {
 
         server = HttpServer.create(new InetSocketAddress(8800), 0);
 
-        // server.createContext("/index", new UserController());
         server.createContext("/logout", new LogoutWebController());
         server.createContext("/login", new LoginWebController());
         server.createContext("/static", new Static());
@@ -22,9 +21,9 @@ public class WebServer {
         server.createContext("/classes", new ClassWebController());
         server.createContext("/quest", new QuestWebController());
         server.createContext("/teams", new TeamWebController());
-        server.createContext("/students", new StudentsController());
-        server.createContext("/mentors", new MentorsController());
-        server.createContext("/", new UserController());
+        server.createContext("/student", new UserController());
+        server.createContext("/mentor", new UserController());
+        server.createContext("/", new ControllerRouter());
         server.setExecutor(null);
     }
 

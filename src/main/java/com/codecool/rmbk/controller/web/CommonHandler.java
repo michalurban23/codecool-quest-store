@@ -9,14 +9,12 @@ import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class CommonHandler implements HttpHandler {
@@ -24,6 +22,7 @@ public abstract class CommonHandler implements HttpHandler {
     String response;
     HttpExchange httpExchange;
     CookieHandler cookieHandler;
+    Map<String,String> parsedURI;
     WebDisplay webDisplay = new WebDisplay();
     SQLSession sessionDao = new SQLSession();
     String urlList = "templates/list_content.twig";
@@ -32,6 +31,7 @@ public abstract class CommonHandler implements HttpHandler {
     String urlAdd = "templates/add.twig";
 
     static User user;
+    static Map<String, String> sideMenu;
     static Session session;
 
     void send404() throws IOException {
@@ -166,7 +166,7 @@ public abstract class CommonHandler implements HttpHandler {
 
     Map<String, String> parseFormData(String formData) throws IOException {
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new LinkedHashMap<>();
         String[] pairs = formData.split("&");
 
         for (String pair : pairs) {
@@ -182,10 +182,10 @@ public abstract class CommonHandler implements HttpHandler {
         String[] controlLevels = new String[] {"controller", "object", "action", "subject"};
         String[] uriElements = uriString.split("[/]");
         Map<String,String> resultMap = new HashMap<>();
-
         for (int i=0; i<uriElements.length; i++) {
             resultMap.put(controlLevels[i], uriElements[i]);
         }
+        parsedURI = resultMap;
         return resultMap;
     }
 
@@ -215,6 +215,14 @@ public abstract class CommonHandler implements HttpHandler {
             uriString = uriString.substring(0, uriString.length() - 1);
         }
         return uriString;
+    }
+    Map<String,String> readInputs() throws IOException {
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
+                "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String formData = br.readLine();
+
+        return parseFormData(formData);
     }
 
 }
