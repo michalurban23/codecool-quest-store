@@ -40,7 +40,7 @@ public class ClassWebController extends CommonHandler {
         String objectId = parsedURI.get("object");
         Group object = null;
         User subject;
-        if (objectId != null) {
+        if (objectId != null && !objectId.equals("new")) {
             object = sqlClass.getGroupById(Integer.parseInt(parsedURI.get("object")));
         }
         switch (action) {

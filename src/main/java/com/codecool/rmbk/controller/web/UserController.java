@@ -42,6 +42,7 @@ public class UserController extends CommonHandler {
                 break;
             case "remove":
                 object = userDAO.getUserByID(Integer.parseInt(parsedURI.get("object")));
+                userDAO.removeUser(object);
                 send302(String.format("/%s", parsedURI.get("controller")));
                 break;
         }
