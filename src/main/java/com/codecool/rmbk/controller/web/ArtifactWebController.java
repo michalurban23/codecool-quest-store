@@ -2,12 +2,16 @@ package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
+import com.codecool.rmbk.dao.SQLBacklog;
 import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.helper.StringParser;
 import com.sun.net.httpserver.HttpExchange;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +20,7 @@ public class ArtifactWebController extends CommonHandler {
     private SQLMenuDAO sqlMenuDAO = new SQLMenuDAO();
     private SQLArtifact sqlArtifact = new SQLArtifact();
     private SQLArtifactTemplate sqlArtifactTemplate = new SQLArtifactTemplate();
+    private SQLBacklog sqlBacklog= new SQLBacklog();
     private Map<String, String> mainMenu;
     private Map<String, String> request;
     private List<String> templateData;
@@ -84,11 +89,11 @@ public class ArtifactWebController extends CommonHandler {
 
         if (object == null) {
             viewArtifacts();
-        } else if (object.equals("buy")) {
-            buyArtifact();
+        } else if (object.equals("new")) {
+            buyArtifact(object);
         } else {
             if (action == null) {
-                showArtifact(object);
+                showBuyableArtifact(object);
             }
         }
         send200(response);
@@ -98,34 +103,29 @@ public class ArtifactWebController extends CommonHandler {
         String[] options = {"Add"};
         Map<String, String> contextMenu = prepareContextMenu(options);
         Map<String, String> mainData = sqlArtifactTemplate.getArtifactTemplatesMap();
-        System.out.println(mainData);
 
         response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlList);
     }
 
     private void viewArtifacts() {
-        String[] options = {"Buy"};
+        String[] options = {"Acquire"};
         Map<String, String> contextMenu = prepareContextMenu(options);
         Map<String, String> mainData = sqlArtifact.getArtifactMapBy(user);
 
         response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlList);
     }
 
-    private void buyArtifact() {
+    private void buyArtifact(String object) throws IOException{
 
-        if (httpExchange.getRequestMethod().equals("GET")) {
-            Map<String, String> mainData = sqlArtifactTemplate.getArtifactTemplatesMap();
+        String method = httpExchange.getRequestMethod();
+        Map<String, String> templates = sqlArtifactTemplate.getArtifactTemplatesMap();
 
-            response = webDisplay.getSiteContent(name, mainMenu, null , mainData,
+        if (method.equals("GET")) {
+            response = webDisplay.getSiteContent(name, mainMenu, null , templates,
                     "templates/buyable.twig");
-        }
-        if (httpExchange.getRequestMethod().equals("POST")) {
-            try {
-                Map<String, String> formData = readInputs();
-                System.out.println(formData);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } else if (method.equals("POST")) {
+            readBuyableArtifactsInputs();
+            send302("/artifacts/");
         }
     }
 
@@ -153,6 +153,12 @@ public class ArtifactWebController extends CommonHandler {
         response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlItem);
     }
 
+    private void showBuyableArtifact(String object) {
+        Map<String, String> mainData = sqlArtifactTemplate.getArtifactInfo(object);
+
+        response = webDisplay.getSiteContent(name, mainMenu, null, mainData, urlItem);
+    }
+
     private void showArtifact(String object) {
         Map<String, String> mainData = sqlArtifact.getArtifactInfo(object);
 
@@ -168,13 +174,33 @@ public class ArtifactWebController extends CommonHandler {
     private void editArtifactTemplate(String object) throws IOException{
 
         String method = httpExchange.getRequestMethod();
-        String title = "Editing" + StringParser.addWhitespaces(object) + ":";
-        Map<String, String> labels = sqlArtifactTemplate.getArtifactLabels();
+        String title = "Editing " + StringParser.addWhitespaces(object) + ":";
+        Map<String, String> labels = sqlArtifactTemplate.getArtifactInfo(object);
 
-//        if (method.equals("GET")) {
-//        }
+        if (method.equals("GET")) {
+            response = webDisplay.getSiteContent(name, mainMenu, null, title, labels, urlEdit);
+        } else if (method.equals("POST")) {
+            readArtifactTemplateInputs();
+            sqlArtifactTemplate.editArtifactTemplate(object, templateData);
+            send302("/artifacts/");
+        }
 
-        response = webDisplay.getSiteContent(name, mainMenu, null, labels, urlEdit);
+    }
+
+    private Boolean checkIfBuyable(String object) {
+
+        Boolean buyable;
+        Integer coins = sqlBacklog.getCurrentCoins(user.getID());
+        System.out.println(object);
+        Integer value = sqlArtifactTemplate.getTemplateValue(object);
+
+        if (coins > value) {
+            buyable = Boolean.FALSE;
+        } else {
+            buyable = Boolean.TRUE;
+        }
+
+        return buyable;
     }
 
     private void readArtifactTemplateInputs() throws IOException{
@@ -187,5 +213,15 @@ public class ArtifactWebController extends CommonHandler {
         templateData.add(inputs.get("value"));
         templateData.add(inputs.get("special"));
         templateData.add(inputs.get("active"));
+    }
+
+    private void readBuyableArtifactsInputs() throws IOException {
+
+        Map<String, String> inputs = readInputs();
+        templateData = new ArrayList<>();
+
+        for (String templateName : inputs.keySet()) {
+            templateData.add(inputs.get(templateName));
+        }
     }
 }

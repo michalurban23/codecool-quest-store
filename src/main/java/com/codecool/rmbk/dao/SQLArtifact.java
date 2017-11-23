@@ -1,5 +1,6 @@
 package com.codecool.rmbk.dao;
 
+import com.codecool.rmbk.helper.StringParser;
 import com.codecool.rmbk.model.usr.Holder;
 
 import java.util.ArrayList;
@@ -22,12 +23,12 @@ public class SQLArtifact extends SqlDAO {
         processQuery(query, new String[] {name});
     }
 
-    public void addArtifact(String[] info) {
+    public void addArtifact(String templateName) {
 
-        String query = "INSERT INTO artifacts (template_name, owner, completion) " +
-                       "VALUES (?, ?, ?);" + info;
+        String query = "INSERT INTO artifacts template_name " +
+                       "VALUES ?;" + templateName;
 
-        processQuery(query, info);
+        processQuery(query, null);
     }
 
     public Map<String,String> getArtifactMapBy(Holder holder) {
@@ -57,7 +58,7 @@ public class SQLArtifact extends SqlDAO {
         String query = "SELECT * " +
                 "FROM artifacts " +
                 "WHERE id = ?;";
-        String[] data = {addWhitespaces(artifactName)};
+        String[] data = {StringParser.addWhitespaces(artifactName)};
 
         processQuery(query, data);
 
@@ -69,17 +70,4 @@ public class SQLArtifact extends SqlDAO {
         return result;
     }
 
-    private String addWhitespaces(String original) {
-
-        StringBuilder newString = new StringBuilder();
-
-        for (char ch: original.toCharArray()) {
-            if (ch == '_') {
-                newString.append(" ");
-            } else {
-                newString.append(ch);
-            }
-        }
-        return newString.toString();
-    }
 }

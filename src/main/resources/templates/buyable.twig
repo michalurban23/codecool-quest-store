@@ -1,9 +1,8 @@
 <div>
-    <form>
+    <form method="post">
         {% for key, value in data %}
-            <li><a href="/artifacts">{{ key }}</a>
-                <button value="buy" onclick="window.open('/artifacts', '_parent')">Buy</button>
-            </li>
+            <p>{{ key }} <input type="checkbox" name="{{ key }}" value="{{ key }}"></p>
         {% endfor %}
-
+        <input type="submit" value="Acquire">
+    </form>
 </div>

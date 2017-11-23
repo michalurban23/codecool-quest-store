@@ -195,7 +195,7 @@ public abstract class CommonHandler implements HttpHandler {
         String url;
 
         for (String option : options) {
-            if (option.equals("Add")) {
+            if (option.equals("Add") || option.equals("Acquire")) {
                 url = "/" + getRequestURI() + "/new/" + option.toLowerCase();
             } else {
                 url = "/" + getRequestURI() + "/" + option.toLowerCase();

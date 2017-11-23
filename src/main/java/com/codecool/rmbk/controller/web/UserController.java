@@ -42,7 +42,6 @@ public class UserController extends CommonHandler {
                 break;
             case "remove":
                 object = userDAO.getUserByID(Integer.parseInt(parsedURI.get("object")));
-                System.out.println(userDAO.removeUser(object));
                 send302(String.format("/%s", parsedURI.get("controller")));
                 break;
         }
@@ -72,7 +71,6 @@ public class UserController extends CommonHandler {
 
     private void editUserData(User object) throws IOException {
         String method = httpExchange.getRequestMethod();
-        System.out.println(method);
         if (method.equals("GET")) {
             response = webDisplay.getSiteContent(user.getFullName(),
                                                  sideMenu,

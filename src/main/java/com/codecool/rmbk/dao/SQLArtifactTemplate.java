@@ -34,6 +34,8 @@ public class SQLArtifactTemplate extends SqlDAO {
 
     public void removeArtifactTemplate(String name) {
 
+        name = StringParser.addWhitespaces(name);
+
         String query = "DELETE FROM artifact_template WHERE name = ?;";
 
         processQuery(query, new String[] {name});
@@ -91,6 +93,21 @@ public class SQLArtifactTemplate extends SqlDAO {
         return result;
     }
 
+    public Map<String, String> getArtifactTemplatesWithDescription() {
+
+        Map<String, String> result = new HashMap<>();
+
+        String query = "SELECT `name`, `value` " +
+                "FROM artifact_template ";
+
+        processQuery(query, null);
+
+        for (ArrayList<String> template : getResults().subList(1, getResults().size())) {
+            result.put(template.get(0), template.get(1));
+        }
+        return result;
+    }
+
     public void addArtifactTemplate(List<String> data) {
 
         String name = StringUtils.capitalize(StringParser.addWhitespaces(data.get(0)));
@@ -100,12 +117,21 @@ public class SQLArtifactTemplate extends SqlDAO {
         processQuery(query, data.subList(1, data.size()-1).toArray(new String[0]));
     }
 
-    public void editArtifactTemplate(List<String> data) {
+    public void editArtifactTemplate(String originalName, List<String> data) {
 
-        String name = StringParser.addWhitespaces(data.get(0));
-        String query = "UPDATE artifact_template " +
-                "SET `description` = ?, `value` = ?, `special` = ?, `active` = ? " +
-                "WHERE `name` = '" + name + "';";
-        processQuery(query, data.subList(1, data.size()-1).toArray(new String[0]));
+        originalName = StringParser.addWhitespaces(originalName);
+        String query = "UPDATE quest_template " +
+                "SET `name` = ?, `description` = ?, `value` = ?, `special` = ?, `active` = ? " +
+                "WHERE `name` = '" + originalName + "';";
+        processQuery(query, data.toArray(new String[0]));
+    }
+
+    public Integer getTemplateValue(String name) {
+
+        String query = "SELECT * FROM artifact_template WHERE name = '" + name + "';";
+        processQuery(query, null);
+        System.out.println(getResults());
+        Integer value = Integer.parseInt(getResults().get(1).get(0));
+        return value;
     }
 }
