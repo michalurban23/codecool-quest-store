@@ -216,6 +216,7 @@ public abstract class CommonHandler implements HttpHandler {
         }
         return uriString;
     }
+
     Map<String,String> readInputs() throws IOException {
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
                 "utf-8");

@@ -3,11 +3,12 @@ package com.codecool.rmbk.controller.web;
 import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
 import com.codecool.rmbk.dao.SQLMenuDAO;
+import com.codecool.rmbk.helper.StringParser;
 import com.sun.net.httpserver.HttpExchange;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class ArtifactWebController extends CommonHandler {
@@ -17,6 +18,7 @@ public class ArtifactWebController extends CommonHandler {
     private SQLArtifactTemplate sqlArtifactTemplate = new SQLArtifactTemplate();
     private Map<String, String> mainMenu;
     private Map<String, String> request;
+    private List<String> templateData;
     private String accessLevel;
     private String name;
 
@@ -25,7 +27,7 @@ public class ArtifactWebController extends CommonHandler {
 
         prepareController(httpExchange);
         request = parseURIstring(getRequestURI());
-        handleAccesRights();
+        handleAccessRights();
 
     }
 
@@ -35,7 +37,7 @@ public class ArtifactWebController extends CommonHandler {
         accessLevel = validateRequest();
     }
 
-    private void handleAccesRights() throws IOException {
+    private void handleAccessRights() throws IOException {
 
         name = user.getFirstName();
         mainMenu = sqlMenuDAO.getSideMenu(user);
@@ -119,7 +121,7 @@ public class ArtifactWebController extends CommonHandler {
         }
         if (httpExchange.getRequestMethod().equals("POST")) {
             try {
-                Map<String, String> formData = getPostData();
+                Map<String, String> formData = readInputs();
                 System.out.println(formData);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -127,12 +129,20 @@ public class ArtifactWebController extends CommonHandler {
         }
     }
 
-    private void addArtifactTemplate() {
+    private void addArtifactTemplate() throws IOException {
 
+        String method = httpExchange.getRequestMethod();
+        String title = "Create new Artifact template: ";
         Map<String, String> labels = sqlArtifactTemplate.getArtifactLabels();
 
-        response = webDisplay.getSiteContent(name, mainMenu, null, labels, urlEdit);
 
+        if (method.equals("GET")) {
+            response = webDisplay.getSiteContent(name, mainMenu, null, title, labels, urlEdit);
+        } else if (method.equals("POST")) {
+            readArtifactTemplateInputs();
+            sqlArtifactTemplate.addArtifactTemplate(templateData);
+            send302("/artifacts/");
+        }
     }
 
     private void showArtifactTemplate(String object) {
@@ -157,20 +167,25 @@ public class ArtifactWebController extends CommonHandler {
 
     private void editArtifactTemplate(String object) throws IOException{
 
+        String method = httpExchange.getRequestMethod();
+        String title = "Editing" + StringParser.addWhitespaces(object) + ":";
         Map<String, String> labels = sqlArtifactTemplate.getArtifactLabels();
+
+//        if (method.equals("GET")) {
+//        }
 
         response = webDisplay.getSiteContent(name, mainMenu, null, labels, urlEdit);
     }
 
-    private Map<String, String> getPostData() throws IOException {
+    private void readArtifactTemplateInputs() throws IOException{
 
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
-                "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        String formData = br.readLine();
+        Map<String, String> inputs = readInputs();
+        templateData = new ArrayList<>();
 
-        Map<String, String> inputs = parseFormData(formData);
-
-        return inputs;
+        templateData.add(inputs.get("name"));
+        templateData.add(inputs.get("description"));
+        templateData.add(inputs.get("value"));
+        templateData.add(inputs.get("special"));
+        templateData.add(inputs.get("active"));
     }
 }

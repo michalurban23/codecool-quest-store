@@ -1,7 +1,11 @@
 package com.codecool.rmbk.dao;
 
+import com.codecool.rmbk.helper.StringParser;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SQLArtifactTemplate extends SqlDAO {
@@ -45,7 +49,7 @@ public class SQLArtifactTemplate extends SqlDAO {
         processQuery(query, null);
 
         for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
-            String href = "/artifacts/" + removeWhitespaces(outcome.get(0));
+            String href = "/artifacts/" + StringParser.removeWhitespaces(outcome.get(0));
             String name = outcome.get(0);
             result.put(name, href);
         }
@@ -59,7 +63,7 @@ public class SQLArtifactTemplate extends SqlDAO {
         String query = "SELECT * " +
                 "FROM artifact_template " +
                 "WHERE name = ?;";
-        String[] data = {addWhitespaces(artifactName)};
+        String[] data = {StringParser.addWhitespaces(artifactName)};
 
         processQuery(query, data);
 
@@ -87,31 +91,21 @@ public class SQLArtifactTemplate extends SqlDAO {
         return result;
     }
 
-    private String removeWhitespaces(String original) {
+    public void addArtifactTemplate(List<String> data) {
 
-        StringBuilder newString = new StringBuilder();
+        String name = StringUtils.capitalize(StringParser.addWhitespaces(data.get(0)));
+        String query = "INSERT INTO artifact_template (name, description, value, special, active) " +
+                "VALUES ('" + name + "', ?, ?, ?, ?)";
 
-        for (char ch: original.toCharArray()) {
-            if (ch == ' ') {
-                newString.append("_");
-            } else {
-                newString.append(ch);
-            }
-        }
-        return newString.toString();
+        processQuery(query, data.subList(1, data.size()-1).toArray(new String[0]));
     }
 
-    private String addWhitespaces(String original) {
+    public void editArtifactTemplate(List<String> data) {
 
-        StringBuilder newString = new StringBuilder();
-
-        for (char ch: original.toCharArray()) {
-            if (ch == '_') {
-                newString.append(" ");
-            } else {
-                newString.append(ch);
-            }
-        }
-        return newString.toString();
+        String name = StringParser.addWhitespaces(data.get(0));
+        String query = "UPDATE artifact_template " +
+                "SET `description` = ?, `value` = ?, `special` = ?, `active` = ? " +
+                "WHERE `name` = '" + name + "';";
+        processQuery(query, data.subList(1, data.size()-1).toArray(new String[0]));
     }
 }
