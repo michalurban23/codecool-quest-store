@@ -8,17 +8,26 @@ import java.util.Map;
 
 public class SQLBacklog extends SqlDAO {
 
-    public ArrayList<ArrayList<String>> getAllBacklogs() {
+    public Map<String, String> getAllBacklogs() {
 
-        String query = "SELECT action_date, description, backlog.status, value," +
+        Map<String, String> result = new LinkedHashMap<>();
+
+        String query = "SELECT backlog.id, description, backlog.status, " +
                        "       (first_name || ' ' || last_name) as full_name " +
                        "FROM backlog " +
                        "JOIN users " +
                        "ON backlog.owner = users.id " +
                        "ORDER BY `owner` ASC, `action_date`;";
-
         processQuery(query, null);
-        return getResults();
+
+        for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
+            String href = "/backlog/" + StringParser.removeWhitespaces(outcome.get(0));
+            String name = "<strong>" + outcome.get(3).toUpperCase() + " </strong> " +
+                    " <em> " + outcome.get(2) + " </em> &lt&lt" +
+                    outcome.get(1) + "&gt&gt";
+            result.put(href, name);
+        }
+        return result;
     }
 
     public Map<String, String> getBacklogMap(Holder holder) {
@@ -113,11 +122,14 @@ public class SQLBacklog extends SqlDAO {
 
         String query = "SELECT sum(value) " +
                        "FROM backlog " +
-                       "WHERE `owner` = ? ";
+                       "WHERE `owner` = ? AND `status` = 'used';";
         String[] data = {"" + id};
 
         processQuery(query, data);
-        return getResults().get(1).get(0);
+
+        String experience = getResults().get(1).get(0);
+
+        return experience != null ? experience : "0";
     }
 
     public void saveToBacklog(String[] data) {

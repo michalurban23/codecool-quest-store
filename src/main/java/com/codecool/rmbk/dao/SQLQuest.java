@@ -1,12 +1,10 @@
 package com.codecool.rmbk.dao;
 
+import com.codecool.rmbk.helper.StringParser;
 import com.codecool.rmbk.model.quest.Quest;
 import com.codecool.rmbk.model.usr.Holder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SQLQuest extends SqlDAO {
 
@@ -71,4 +69,44 @@ public class SQLQuest extends SqlDAO {
 
         return result;
     }
+
+    public Map<String, String> getQuestInfo(String templateId) {
+
+        Map<String,String> result = new HashMap<>();
+
+        String query = "SELECT template_name, accept_date, return_date " +
+                "FROM quests " +
+                "WHERE id = ?;";
+        String[] data = {StringParser.addWhitespaces(templateId)};
+
+        processQuery(query, data);
+
+        for(int i=0; i<getResults().get(0).size(); i++) {
+            String key = getResults().get(0).get(i);
+            String value = getResults().get(1).get(i);
+            result.put(key, value);
+        }
+        return result;
+    }
+
+    public Map<String, String> getAvailableQuests(Holder holder) {
+
+        Map<String,String> result = new TreeMap<>();
+
+        String query = "SELECT name, value FROM quest_template " +
+                "WHERE name NOT IN " +
+                "(SELECT template_name FROM quests WHERE owner = ?);";
+        String[] data = {"" + holder.getID()};
+
+        processQuery(query, data);
+
+        for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
+            String name = outcome.get(0);
+            String value = outcome.get(1);
+            result.put(name, value);
+        }
+
+        return result;
+    }
+
 }

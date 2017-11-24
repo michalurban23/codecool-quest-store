@@ -3,9 +3,11 @@ package com.codecool.rmbk.controller.web;
 import com.codecool.rmbk.dao.SQLQuest;
 import com.codecool.rmbk.dao.SQLQuestTemplate;
 import com.codecool.rmbk.helper.StringParser;
+import com.codecool.rmbk.model.quest.Quest;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +19,7 @@ public class QuestWebController extends CommonHandler {
     private Map<String, String> request;
     private String accessLevel;
     private String name;
+    private String urlBuy = "templates/buyable.twig";
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
@@ -180,7 +183,7 @@ public class QuestWebController extends CommonHandler {
             acquireNewQuest();
         } else {
             if (action == null) {
-                showQuestDetails();
+                showQuestDetails(object);
             }
         }
         send200(response);
@@ -189,21 +192,56 @@ public class QuestWebController extends CommonHandler {
     private void showMyQuests() {
 
         String[] options = {"Acquire"};
-        Map <String, String> contextMenu = prepareContextMenu(options);
-        Map <String, String> myQuests = sqlQuest.getQuestMapBy(user);
+        Map<String, String> contextMenu = prepareContextMenu(options);
+        Map<String, String> myQuests = sqlQuest.getQuestMapBy(user);
 
-        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, myQuests, urlList);
-
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, myQuests, urlJustList);
     }
 
-    private void acquireNewQuest() {
+    private void acquireNewQuest() throws IOException {
 
-        // TODO
+        String method = httpExchange.getRequestMethod();
+        Map<String, String> availableQuests = sqlQuest.getAvailableQuests(user);
+
+        if (method.equals("GET")) {
+            response = webDisplay.getSiteContent(name, mainMenu, null, availableQuests, urlBuy);
+        } else if (method.equals("POST")) {
+            readStudentNewQuestsInputs();
+            saveNewQuests();
+            send302("/quests/");
+        }
     }
 
-    private void showQuestDetails() {
+    private void readStudentNewQuestsInputs() throws IOException {
 
-        // TODO
+        Map<String, String> inputs = readInputs();
+        templateData = new ArrayList<>();
+
+        for (String entry: inputs.keySet()) {
+            templateData.add(entry);
+            templateData.add(inputs.get(entry));
+        }
+    }
+
+    private void saveNewQuests() {
+
+        for (int i = 0 ; i < templateData.size() ; i += 2) {
+
+            String questName = templateData.get(i);
+            String questValue = templateData.get(i+1);
+
+            List<String> questData = Arrays.asList(questName, questValue);
+            Quest quest = new Quest(questData, user);
+
+            sqlQuest.getNewQuest(quest);
+        }
+    }
+
+    private void showQuestDetails(String object) {
+
+        Map<String, String> quest = sqlQuest.getQuestInfo(object);
+
+        response = webDisplay.getSiteContent(name, mainMenu, null, quest, urlItem);
     }
 
 }

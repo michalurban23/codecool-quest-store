@@ -34,6 +34,7 @@ public abstract class CommonHandler implements HttpHandler {
     String urlItem = "templates/item.twig";
     String urlEdit = "templates/edit.twig";
     String urlAdd = "templates/add.twig";
+    String urlJustList = "templates/list.twig";
 
 
     void send404() throws IOException {

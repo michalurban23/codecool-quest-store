@@ -119,7 +119,7 @@ class BacklogController {
     private void showAllHistory() {
 
         String title = "All students history";
-        ArrayList<ArrayList<String>> history = backlogDao.getAllBacklogs();
+        ArrayList<ArrayList<String>> history = null; //backlogDao.getAllBacklogs();
 
         display.printList(title, history);
     }

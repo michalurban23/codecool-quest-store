@@ -1,7 +1,7 @@
 <div>
     <form method="post">
         {% for key, value in data %}
-            <p>{{ key }} <input type="checkbox" name="{{ key }}" value="{{ key }}"></p>
+            <p>{{ key }}<br />value: {{ value }} <input type="checkbox" name="{{ key }}" value="{{ value }}"></p>
         {% endfor %}
         <input type="submit" value="Acquire">
     </form>

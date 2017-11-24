@@ -98,4 +98,29 @@ public class SQLExperience extends SqlDAO {
         processQuery(query, data);
     }
 
+    public String getExperienceInfo(String totalCoinsEver) {
+
+        String query = "SELECT level FROM experience " +
+                "WHERE value <= ? " +
+                "ORDER BY value DESC " +
+                "LIMIT 1";
+        String[] data = {totalCoinsEver};
+
+        processQuery(query, data);
+
+        return getResults().get(1).get(0);
+    }
+
+    public String getMissingExp(String totalCoinsEver) {
+
+        String query = "SELECT (value - ?) FROM experience " +
+                "WHERE value > ? " +
+                "LIMIT 1";
+        String[] data = {totalCoinsEver, totalCoinsEver};
+
+        processQuery(query, data);
+
+        return getResults().get(1).get(0);
+    }
+
 }
