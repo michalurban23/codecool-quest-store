@@ -1,5 +1,6 @@
 package com.codecool.rmbk.controller.web;
 
+import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.SQLSession;
 import com.codecool.rmbk.helper.CookieHandler;
 import com.codecool.rmbk.helper.MimeTypeResolver;
@@ -9,29 +10,31 @@ import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class CommonHandler implements HttpHandler {
 
+    private SQLMenuDAO menuDao = new SQLMenuDAO();
     String response;
     HttpExchange httpExchange;
     CookieHandler cookieHandler;
+    Map<String,String> parsedURI;
+    Map<String, String> mainMenu;
+    Session session;
+    User user;
     WebDisplay webDisplay = new WebDisplay();
     SQLSession sessionDao = new SQLSession();
     String urlList = "templates/list_content.twig";
     String urlItem = "templates/item.twig";
     String urlEdit = "templates/edit.twig";
+    String urlAdd = "templates/add.twig";
 
-    static User user;
-    static Session session;
 
     void send404() throws IOException {
 
@@ -93,21 +96,24 @@ public abstract class CommonHandler implements HttpHandler {
 
     String validateRequest() throws IOException {
 
-        String sessionStatus = cookieHandler.getSessionStatus();
-        Boolean active = sessionDao.isSessionActive(cookieHandler.getSessionId());
+        String sessionId = cookieHandler.getSessionId();
+        Boolean sessionExists = Session.sessionExists(sessionId);
+        Boolean active = Session.isActive(sessionId);
+
         String requestStatus = null;
 
-        if (sessionStatus == null || sessionStatus.equals("loggedOut")) {
-            send302("/login");
-        } else {
+        if (sessionExists) {
             if (active) {
                 requestStatus = user.getAccessLevel();
             } else {
-                requestStatus = "expired";
-                clearSessionData();
+                Session.removeSession(cookieHandler.getSessionId());
+                sessionDao.removeSession(session);
                 send401();
             }
+        } else {
+            send302("/login");
         }
+
         return requestStatus;
     }
 
@@ -146,32 +152,28 @@ public abstract class CommonHandler implements HttpHandler {
         return classLoader.getResource(path);
     }
 
-    void setHttpExchange(HttpExchange httpExchange) {
+    void setConnectionData(HttpExchange httpExchange) {
 
         this.httpExchange = httpExchange;
         cookieHandler = new CookieHandler(httpExchange);
+        session = Session.getSessionById(cookieHandler.getSessionId());
 
         if (session != null) {
-            sessionDao.updateSession(session);
+            user = session.getUser();
+            mainMenu = menuDao.getSideMenu(user);
         }
-    }
-
-    void clearSessionData() {
-
-        user = null;
-        session = null;
-        cookieHandler.clearCookie();
     }
 
     Map<String, String> parseFormData(String formData) throws IOException {
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new LinkedHashMap<>();
         String[] pairs = formData.split("&");
 
         for (String pair : pairs) {
             String[] keyValue = pair.split("=");
+            String key = URLDecoder.decode(keyValue[0], "UTF-8");
             String value = URLDecoder.decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
+            map.put(key, value);
         }
         return map;
     }
@@ -181,10 +183,10 @@ public abstract class CommonHandler implements HttpHandler {
         String[] controlLevels = new String[] {"controller", "object", "action", "subject"};
         String[] uriElements = uriString.split("[/]");
         Map<String,String> resultMap = new HashMap<>();
-
         for (int i=0; i<uriElements.length; i++) {
             resultMap.put(controlLevels[i], uriElements[i]);
         }
+        parsedURI = resultMap;
         return resultMap;
     }
 
@@ -194,7 +196,7 @@ public abstract class CommonHandler implements HttpHandler {
         String url;
 
         for (String option : options) {
-            if (option.equals("Add")) {
+            if (option.equals("Add") || option.equals("Acquire")) {
                 url = "/" + getRequestURI() + "/new/" + option.toLowerCase();
             } else {
                 url = "/" + getRequestURI() + "/" + option.toLowerCase();
@@ -214,6 +216,16 @@ public abstract class CommonHandler implements HttpHandler {
             uriString = uriString.substring(0, uriString.length() - 1);
         }
         return uriString;
+    }
+
+    Map<String,String> readInputs() throws IOException {
+
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(),
+                "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String formData = br.readLine();
+
+        return parseFormData(formData);
     }
 
 }

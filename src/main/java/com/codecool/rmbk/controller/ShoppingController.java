@@ -163,7 +163,7 @@ class ShoppingController {
      private void addArtifactToDatabase(Item artifact) {
 
          SQLArtifact artifacts = new SQLArtifact();
-         artifacts.addArtifact(getArtifactInfo(artifact));
+//         artifacts.addArtifact(getArtifactInfo(artifact));
      }
 
      private void addArtifactsAfterPayment(ArrayList<Item> itemsList) {

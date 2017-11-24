@@ -1,6 +1,8 @@
 package com.codecool.rmbk.model.usr;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class User implements Holder {
@@ -93,4 +95,16 @@ public abstract class User implements Holder {
 
         return getFullName();
     }
+
+    public static List<String> getFieldLabels() {
+        List<String> labels = new ArrayList<>();
+        labels.add("name");
+        labels.add("surname");
+        labels.add("email");
+        labels.add("address");
+        return labels;
+    }
+
+
+
 }

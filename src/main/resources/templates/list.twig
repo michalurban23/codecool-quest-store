@@ -1,0 +1,10 @@
+<div>
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+    <ol>
+        {% for key, value in data %}
+        <li><a href="{{ key }}">{{ value }}</a></li>
+        {% endfor %}
+    </ol>
+</div>
