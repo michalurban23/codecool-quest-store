@@ -5,8 +5,8 @@ function updateClock() {
     var sec = currentTime.getSeconds();
     var hour = currentTime.getHours();
 
-    min = (min < 0 ? "0" : "") + min;
-    sec = (sec < 0 ? "0" : "") + sec;
+    min = (min < 10 ? "0" : "") + min;
+    sec = (sec < 10 ? "0" : "") + sec;
 
     var currentTimeString = hour + ":" + min + ":" + sec;
 

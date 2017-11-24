@@ -14,6 +14,7 @@ public class WebDisplay {
                                  Map<String, String> mainData,
                                  String mainContentUrl) {
 
+
         StringBuilder response = new StringBuilder();
         response.append(getHeaderContent(userName));
         response.append(getTopMenuContent(mainMenu));
