@@ -1,9 +1,11 @@
-<div>
+<div class="login">
     <p>{{ title }}</p>
     <form method="post">
         {% for key in data %}
-        <label for="{{ key }}">{{ key }}</label>
-        <input name="{{ key }}" id="{{ key }}" placeholder="{{ key }}" required />
+            <div class="row">
+                <label for="{{ key }}">{{ key }}</label>
+                <input name="{{ key }}" id="{{ key }}" placeholder="{{ key }}" required />
+            </div>
         {% endfor %}
         <input type="submit" value="Save" />
     </form>

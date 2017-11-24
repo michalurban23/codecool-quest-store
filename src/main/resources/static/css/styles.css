@@ -1,10 +1,11 @@
 body {
-    background-image: url("../img/texture-1444067_1920.jpg");
+    background-color: #888888;
+
 }
 
 div.container {
     background-color: transparent;
-    width: 95%;
+    width: 80%;
     margin: 1%;
     padding: 1%;
     display: flex;
@@ -13,16 +14,17 @@ div.container {
 }
 
 div.menu {
-    width: 15%;
+    width: 100%;
     margin: 1%;
     padding: 1%;
     justify-content: center;
     align-items: center;
-    min-height: 350px;
+    min-height: 100px;
 }
 
 div.main {
     width: 82%;
+    margin-top: 50px;
     margin: 1%;
     padding: 1%;
     min-height: 350px;
@@ -47,12 +49,12 @@ input[type=text] {
     cursor: pointer;
     border: 1pt solid black;
     margin: 0 auto;
-    margin-bottom: 5%;
+    margin-bottom: -20px;
     justify-content: center;
 }
 
 input[type=submit] {
-    background-color: darkcyan;
+    background-color: #555555;
     color: white;
     font-size: large;
     padding: 4px 2px;
@@ -61,6 +63,14 @@ input[type=submit] {
     border: 1pt solid black;
     display: table;
     margin: 0 auto;
+}
+
+input[type=submit]:hover {
+    background-color: #666666
+}
+
+input[type=submit]:active {
+    background-color: #777777
 }
 
 label {
@@ -187,6 +197,63 @@ div.info > p.value {
     padding: 0 1%;
 }
 
+div.login form {
+    padding: 15px;
+}
+
+div.login p {
+    text-align: center;
+}
+
+form div.row {
+    width: 50%;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+form label {
+    width: 30%;
+    text-align: end;
+    display: block;
+    float: left;
+    margin-right: 20px;
+    margin-top: 8px;
+}
+
+form input {
+    padding: 5px;
+    border-radius: 5px;
+    width: 200px;
+}
+
+form p {
+    padding: 8px;
+    width: auto;
+}
+
+form input[type="checkbox"] {
+    position: relative;
+    left: 30%;
+    width: auto;
+}
+
+form span {
+    position: relative;
+    left: 30%;
+}
+
+form > input[type="submit"] {
+    width: 100px;
+    background: rgba(0, 0, 0, .5);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+div.item {
+    margin: auto;
+}
+
 footer {
     position: static;
 }
@@ -213,17 +280,13 @@ footer ul li a:hover {
 }
 
 header {
-    width: 95%;
     color: black;
-    border: none;
+    /*border: none;*/
     font-size: larger;
     padding: 2% 1%;
     margin: auto;
-    background-image: url("../img/header1.jpg");
-    background-position: right;
-    background-repeat: no-repeat;
+    background-color: dimgrey;
     background-size: 100%;
-    border-radius: 25px;
 }
 
 p.name {
@@ -243,10 +306,11 @@ div.currentTime {
     color: white;
     font-size: larger;
     margin-top: -3%;
+    margin-right: 1.2%;
 }
 
 input[type=button] {
-    background-color: midnightblue;
+    background-color: #888888;
     color: white;
     font-size: large;
     padding: 4px 4px;
@@ -257,7 +321,7 @@ input[type=button] {
 }
 
 input[type=button]:hover {
-    background-color: mediumblue;
+    background-color: dimgrey;
 }
 
 /*@font-face {*/
@@ -279,23 +343,6 @@ ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-}
-
-.menu-button {
-    border-radius: 5px;
-    border: 1px solid black;
-    text-align: left;
-    width: 88%;
-    color: black;
-    font-size: large;
-    /*font-family: lato;*/
-    font-family: Verdana, serif;
-    padding: 10pt;
-    margin-bottom: 3pt;
-}
-
-.menu-button:hover {
-    background-color: white;
 }
 
 ul.menu > a {
@@ -355,4 +402,56 @@ caption {
     flex-direction: column;
     align-content: center;
     justify-content: center;
+}
+
+.menu-bar {
+    width: auto;
+    height: auto;
+}
+.menu-bar ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    background-color: inherit;
+}
+
+.menu-bar li {
+    font-family: 'Oswald', serif;
+    font-size: 1.2em;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #888;
+}
+.menu-bar a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+}
+
+
+.menu-bar li:hover {
+    background-color: red;
+    transition: .3s background-color;
+}
+
+@media screen and (min-width: 800px) {
+    .menu-bar li {
+        width: 15%;
+        border-bottom: none;
+        height: 50px;
+        line-height: 50px;
+        font-size: 1.3em;
+        float: left;
+    }
+
+    .menu-bar ul {
+        overflow: auto;
+        width: 600px;
+        margin: auto;
+    }
+
+    .menu-bar {
+        background-color: #444;
+    }
 }
