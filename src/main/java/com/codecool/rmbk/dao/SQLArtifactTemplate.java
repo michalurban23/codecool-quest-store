@@ -53,7 +53,7 @@ public class SQLArtifactTemplate extends SqlDAO {
         for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
             String href = "/artifacts/" + StringParser.removeWhitespaces(outcome.get(0));
             String name = outcome.get(0);
-            result.put(name, href);
+            result.put(href, name);
         }
         return result;
     }
@@ -77,18 +77,16 @@ public class SQLArtifactTemplate extends SqlDAO {
         return result;
     }
 
-    public Map<String, String> getArtifactLabels() {
+    public List<String> getArtifactLabels() {
 
-        Map<String,String> result = new HashMap<>();
+        List<String> result = new ArrayList<>();
 
         String query = "SELECT * " +
                 "FROM artifact_template ";
 
         processQuery(query, null);
 
-        for(String label : getResults().get(0)) {
-            result.put(label, label);
-        }
+        result.addAll(getResults().get(0));
 
         return result;
     }

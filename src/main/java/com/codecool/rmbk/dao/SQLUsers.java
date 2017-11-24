@@ -110,8 +110,8 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
         ArrayList<User> objects = getUserList(userType);
 
         for(User user : objects) {
-            result.put(user.getFullName(),
-                    String.format("/%s/%s",userType.toLowerCase(), String.valueOf(user.getID())));
+            result.put(String.format("/%s/%s",userType.toLowerCase(), String.valueOf(user.getID())),
+                    user.getFullName());
         }
         return result;
     }
@@ -119,25 +119,26 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
     public ArrayList<ArrayList<String>> getIdNameList(String userType) {
 
-        String query = "SELECT id, (first_name || \" \" || last_name) as full_name FROM users WHERE status = ?;";
+        String query = "SELECT id, (first_name || \" \" || last_name) as full_name " +
+                "FROM users " +
+                "WHERE status = ?;";
         ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {userType});
 
         return new ArrayList<>(queryResult.subList(1, queryResult.size()));
     }
 
-
     @Override
     public Boolean removeUser(User user) {
-        boolean jeden = removeUserFromUserGroupsTable(user);
-        boolean dwa = removeUserFromUsersTable(user);
-        System.out.println(jeden + " " + dwa);
-        return jeden && dwa;
+        boolean removedFromGroups = removeUserFromUserGroupsTable(user);
+        boolean removedFromUsers = removeUserFromUsersTable(user);
+        return removedFromGroups && removedFromUsers;
     }
 
     public Boolean removeUserFromUsersTable(User user) {
 
         String query = "DELETE FROM users WHERE id = ?;";
         String[] param = new String[] {String.valueOf(user.getID())};
+
         return handleQuery(query, param);
     }
 
