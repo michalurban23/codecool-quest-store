@@ -1,6 +1,7 @@
-<div>
-    {% for key, value in data %}
-    <a href="{{ value }}"><div>{{ key }}</div></a>
-    {% endfor %}
-
+<div class="menu-bar">
+    <ul>
+        {% for key, value in data %}
+            <a href="{{ value }}"><li>{{ key }}</li></a>
+        {% endfor %}
+    </ul>
 </div>
