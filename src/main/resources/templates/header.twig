@@ -10,20 +10,20 @@
     <Title>CodeCool QuestStore</Title>
 </head>
 <body>
-<header>
-    <form class="backbutton">
-        <input type="button" value="Logout" onclick="window.open('/logout', '_parent')">
-    </form>
-    <p  class="name" onclick="window.open('/index', '_parent')">Welcome {{ name }}</p>
-    <div class="date">
-        <script src="/static/js/date.js"></script>
-    </div>
+    <header>
+        <form class="backbutton">
+            <input type="button" value="Logout" onclick="window.open('/logout', '_parent')">
+        </form>
+        <p  class="name" onclick="window.open('/index', '_parent')">Welcome {{ name }}</p>
+        <div class="date">
+            <script src="/static/js/date.js"></script>
+        </div>
 
-    <div class="currentTime">
-        <script type="text/javascript">
-            loopTime();
-        </script>
-        <span id="clock">clock</span>
-    </div>
-</header>
+        <div class="currentTime">
+            <script type="text/javascript">
+                loopTime();
+            </script>
+            <span id="clock">clock</span>
+        </div>
+    </header>
 <div>
