@@ -195,10 +195,16 @@ public class ArtifactWebController extends CommonHandler {
     private Boolean checkIfBuyable() {
 
         Boolean buyable;
+        System.out.println("weszloDoCheck");
         Integer coins = sqlBacklog.getCurrentCoins(user.getID());
+        System.out.println("weszloDoCheck");
         Integer value = calculateArtifactsValue();
 
+        System.out.println("coins" + coins.toString());
+        System.out.println("value" + value.toString());
+
         buyable = coins > value ;
+        System.out.println(buyable);
 
         return buyable;
     }
