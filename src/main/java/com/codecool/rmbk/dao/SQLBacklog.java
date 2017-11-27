@@ -92,7 +92,7 @@ public class SQLBacklog extends SqlDAO {
 
         Integer earned;
         String query = "SELECT SUM(value) AS balance " +
-                "FROM backlog WHERE owner = ? AND status = 'used';";
+                "FROM backlog WHERE owner = ? AND status = 'accepted';";
         processQuery(query, data);
 
         try {
@@ -122,7 +122,7 @@ public class SQLBacklog extends SqlDAO {
 
         String query = "SELECT sum(value) " +
                        "FROM backlog " +
-                       "WHERE `owner` = ? AND `status` = 'used';";
+                       "WHERE `owner` = ? AND `status` = 'accepted';";
         String[] data = {"" + id};
 
         processQuery(query, data);

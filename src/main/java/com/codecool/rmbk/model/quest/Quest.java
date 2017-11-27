@@ -21,6 +21,14 @@ public class Quest {
         this.originalValue = template.get(1);
     }
 
+    public Quest(List<String> template, String ownerID) {
+
+        this.ownerID = Integer.parseInt(ownerID);
+        this.templateName = template.get(0);
+        this.startTime = LocalDate.now();
+        this.originalValue = template.get(1);
+    }
+
     public Integer getOwnerID() {
 
         return ownerID;

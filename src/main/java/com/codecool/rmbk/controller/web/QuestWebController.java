@@ -21,6 +21,7 @@ public class QuestWebController extends CommonHandler {
     private String name;
     private String urlBuy = "templates/buyable.twig";
     private String urlListQuests = "templates/list_student_quests.twig";
+    private String urlListMentorQuests = "templates/list_mentor_quests.twig";
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
@@ -61,15 +62,18 @@ public class QuestWebController extends CommonHandler {
             showAll();
         } else if (object.equals("new")) {
             addQuestTemplate();
-        } else {
+        } else if (object.equals("grade")) {
+            showQuestsToAccept();
+        }else {
             if (action == null) {
                 showTemplate(object);
             } else if (action.equals("remove")) {
                 removeTemplate(object);
             } else if (action.equals("edit")) {
                 editTemplate(object);
-            } else if (action.equals("grade")) {
-                acceptQuest();
+            } else if (action.equals("accept")) {
+                acceptQuest(object);
+                send302("/quests/grade/");
             }
         }
         send200(response);
@@ -140,9 +144,21 @@ public class QuestWebController extends CommonHandler {
         }
     }
 
-    private void acceptQuest() {
+    private void showQuestsToAccept() {
 
-        // TODO
+        String title = "Accept quests submission:";
+        Map<String, String> submittedQuests = sqlQuest.getAllSubmittedQuestsMap();
+
+        response = webDisplay.getSiteContent(name, mainMenu, null, title, submittedQuests, urlListMentorQuests);
+    }
+
+    private void acceptQuest(String object) {
+
+        Map<String, String> questInfo = sqlQuest.getQuestInfo(object);
+        List<String> data = Arrays.asList(questInfo.get("template_name"), questInfo.get("value"));
+
+        Quest quest = new Quest(data, questInfo.get("owner"));
+        sqlQuest.acceptQuest(quest);
     }
 
     private void readQuestInputs() throws IOException {

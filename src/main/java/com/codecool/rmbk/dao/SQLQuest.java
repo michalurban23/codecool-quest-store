@@ -120,11 +120,30 @@ public class SQLQuest extends SqlDAO {
         return result;
     }
 
+    public Map<String,String> getAllSubmittedQuestsMap() {
+
+        Map<String,String> result = new HashMap<>();
+
+        String query = "SELECT `id`, `template_name` " +
+                "FROM quests " +
+                "WHERE accept_date IS NULL AND return_date IS NOT NULL;";
+
+        processQuery(query, null);
+
+        for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
+            String href = "/quests/" + outcome.get(0);
+            String name = outcome.get(1);
+            result.put(href, name);
+        }
+
+        return result;
+    }
+
     public Map<String, String> getQuestInfo(String templateId) {
 
         Map<String,String> result = new HashMap<>();
 
-        String query = "SELECT template_name, accept_date, return_date, quest_template.value " +
+        String query = "SELECT owner, template_name, accept_date, return_date, quest_template.value " +
                 "FROM quests " +
                 "JOIN quest_template " +
                 "ON quests.template_name = quest_template.name " +
