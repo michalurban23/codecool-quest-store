@@ -7,11 +7,8 @@ import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.helper.StringParser;
 import com.sun.net.httpserver.HttpExchange;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -91,16 +88,14 @@ public class ArtifactWebController extends CommonHandler {
             viewArtifacts();
         } else if (object.equals("new")) {
             buyArtifact(object);
-        } else {
-            if (action == null) {
-                showBuyableArtifact(object);
-            }
+        } else if (action.equals("use")) {
+            useArtifact(object);
         }
         send200(response);
     }
 
     private void viewArtifactTemplates() {
-        String[] options = {"Add"};
+        String[] options = {"Add", "Check used"};
         Map<String, String> contextMenu = prepareContextMenu(options);
         Map<String, String> mainData = sqlArtifactTemplate.getArtifactTemplatesMap();
 
@@ -112,7 +107,7 @@ public class ArtifactWebController extends CommonHandler {
         Map<String, String> contextMenu = prepareContextMenu(options);
         Map<String, String> mainData = sqlArtifact.getArtifactMapBy(user);
 
-        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlNoOptionsList);
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlStudentArtifacts);
     }
 
     private void buyArtifact(String object) throws IOException{
@@ -149,6 +144,22 @@ public class ArtifactWebController extends CommonHandler {
         }
     }
 
+    private void editArtifactTemplate(String object) throws IOException{
+
+        String method = httpExchange.getRequestMethod();
+        String title = "Editing " + StringParser.addWhitespaces(object) + ":";
+        Map<String, String> labels = sqlArtifactTemplate.getArtifactInfo(object);
+
+        if (method.equals("GET")) {
+            response = webDisplay.getSiteContent(name, mainMenu, null, title, labels, urlEdit);
+        } else if (method.equals("POST")) {
+            readArtifactTemplateInputs();
+            sqlArtifactTemplate.editArtifactTemplate(object, templateData);
+            send302("/artifacts/");
+        }
+
+    }
+
     private void showArtifactTemplate(String object) {
         String[] options = {"Edit", "Remove"};
         Map<String, String> contextMenu = prepareContextMenu(options);
@@ -169,22 +180,6 @@ public class ArtifactWebController extends CommonHandler {
 
         sqlArtifactTemplate.removeArtifactTemplate(object);
         send302("/artifacts/");
-    }
-
-    private void editArtifactTemplate(String object) throws IOException{
-
-        String method = httpExchange.getRequestMethod();
-        String title = "Editing " + StringParser.addWhitespaces(object) + ":";
-        Map<String, String> labels = sqlArtifactTemplate.getArtifactInfo(object);
-
-        if (method.equals("GET")) {
-            response = webDisplay.getSiteContent(name, mainMenu, null, title, labels, urlEdit);
-        } else if (method.equals("POST")) {
-            readArtifactTemplateInputs();
-            sqlArtifactTemplate.editArtifactTemplate(object, templateData);
-            send302("/artifacts/");
-        }
-
     }
 
     private Boolean checkIfBuyable() {
@@ -242,5 +237,11 @@ public class ArtifactWebController extends CommonHandler {
     private void getFailureResponse() {
 
         response = "Ni mosz hajsu";
+    }
+
+    private void useArtifact(String object) throws IOException {
+
+        sqlArtifact.updateReturnDate(String.valueOf(user.getID()), object);
+        send302("/artifacts/");
     }
 }

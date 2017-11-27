@@ -7,10 +7,8 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.MultimapBuilder;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class SQLArtifact extends SqlDAO {
 
@@ -42,7 +40,8 @@ public class SQLArtifact extends SqlDAO {
 
         String query = "SELECT * " +
                 "FROM artifacts " +
-                "WHERE `owner` = ?;";
+                "WHERE `owner` = ?" +
+                "AND `return_date` = ''";
         String[] data = {String.valueOf(holder.getID())};
 
         processQuery(query, data);
@@ -75,4 +74,14 @@ public class SQLArtifact extends SqlDAO {
         return result;
     }
 
+    public void updateReturnDate(String owner, String template_name) {
+
+        String now = LocalDateTime.now().toString();
+        String query = "UPDATE artifacts " +
+        "SET `return_date` = '" + now + "' " +
+        "WHERE `template_name` = ?" +
+        "AND `owner` = ?";
+
+        processQuery(query, new String[] {StringParser.addWhitespaces(template_name), owner});
+    }
 }

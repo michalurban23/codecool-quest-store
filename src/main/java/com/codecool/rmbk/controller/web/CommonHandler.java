@@ -32,6 +32,7 @@ public abstract class CommonHandler implements HttpHandler {
     SQLSession sessionDao = new SQLSession();
     String urlList = "templates/list_content.twig";
     String urlNoOptionsList = "templates/list.twig";
+    String urlStudentArtifacts ="templates/list_student_artifacts.twig";
     String urlItem = "templates/item.twig";
     String urlEdit = "templates/edit.twig";
     String urlAdd = "templates/add.twig";
