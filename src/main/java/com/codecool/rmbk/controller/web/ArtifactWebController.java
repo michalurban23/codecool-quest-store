@@ -112,13 +112,13 @@ public class ArtifactWebController extends CommonHandler {
         Map<String, String> contextMenu = prepareContextMenu(options);
         Map<String, String> mainData = sqlArtifact.getArtifactMapBy(user);
 
-        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlList);
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlNoOptionsList);
     }
 
     private void buyArtifact(String object) throws IOException{
 
         String method = httpExchange.getRequestMethod();
-        Map<String, String> templates = sqlArtifactTemplate.getArtifactTemplatesMap();
+        Map<String, String> templates = sqlArtifactTemplate.getBuyableArtifacts();
 
         if (method.equals("GET")) {
             response = webDisplay.getSiteContent(name, mainMenu, null , templates,
@@ -140,9 +140,8 @@ public class ArtifactWebController extends CommonHandler {
         String title = "Create new Artifact template: ";
         List<String> labels = sqlArtifactTemplate.getArtifactLabels();
 
-
         if (method.equals("GET")) {
-            response = webDisplay.getSiteContent(name, mainMenu, null, title, labels, urlEdit);
+            response = webDisplay.getSiteContent(name, mainMenu, null, title, labels, urlAdd);
         } else if (method.equals("POST")) {
             readArtifactTemplateInputs();
             sqlArtifactTemplate.addArtifactTemplate(templateData);
@@ -159,15 +158,11 @@ public class ArtifactWebController extends CommonHandler {
     }
 
     private void showBuyableArtifact(String object) {
+        String[] options = {"Acquire"};
+        Map<String, String> contextMenu = prepareContextMenu(options);
         Map<String, String> mainData = sqlArtifactTemplate.getArtifactInfo(object);
 
-        response = webDisplay.getSiteContent(name, mainMenu, null, mainData, urlItem);
-    }
-
-    private void showArtifact(String object) {
-        Map<String, String> mainData = sqlArtifact.getArtifactInfo(object);
-
-        response = webDisplay.getSiteContent(name, mainMenu, null, mainData, urlItem);
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlItem);
     }
 
     private void removeArtifactTemplate(String object) throws IOException{
@@ -195,16 +190,10 @@ public class ArtifactWebController extends CommonHandler {
     private Boolean checkIfBuyable() {
 
         Boolean buyable;
-        System.out.println("weszloDoCheck");
         Integer coins = sqlBacklog.getCurrentCoins(user.getID());
-        System.out.println("weszloDoCheck");
         Integer value = calculateArtifactsValue();
 
-        System.out.println("coins" + coins.toString());
-        System.out.println("value" + value.toString());
-
         buyable = coins > value ;
-        System.out.println(buyable);
 
         return buyable;
     }
