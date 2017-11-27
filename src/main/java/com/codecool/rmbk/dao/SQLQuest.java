@@ -44,10 +44,40 @@ public class SQLQuest extends SqlDAO {
         String today = quest.getStartTime();
         String value = quest.getValue();
 
-        String query = "INSERT INTO quests(template_name, owner, accept_date) VALUES(?, ?, ?);";
+        String query = "INSERT INTO quests(template_name, owner) VALUES(?, ?);";
 
-        backlog.saveToBacklog(new String[] {today, name, "used", value, owner});
-        processQuery(query, new String[] {name, owner, today});
+        backlog.saveToBacklog(new String[] {today, name, "acquired", value, owner});
+        processQuery(query, new String[] {name, owner});
+    }
+
+    public void submitQuest(Quest quest) {
+
+        String name = quest.getTemplateName();
+        String owner = quest.getOwnerID().toString();
+        String today = quest.getStartTime();
+        String value = quest.getValue();
+
+        String query = "UPDATE `quests` " +
+                "SET return_date = ? " +
+                "WHERE owner = ? AND template_name = ?;";
+
+        backlog.saveToBacklog(new String[] {today, name, "submitted", value, owner});
+        processQuery(query, new String[] {today, owner, name});
+    }
+
+    public void acceptQuest(Quest quest) {
+
+        String name = quest.getTemplateName();
+        String owner = quest.getOwnerID().toString();
+        String today = quest.getStartTime();
+        String value = quest.getValue();
+
+        String query = "UPDATE `quests` " +
+                "SET accept_date = ? " +
+                "WHERE owner = ? AND template_name = ?;";
+
+        backlog.saveToBacklog(new String[] {today, name, "accepted", value, owner});
+        processQuery(query, new String[] {today, owner, name});
     }
 
     public Map<String,String> getQuestMapBy(Holder holder) {
@@ -56,7 +86,27 @@ public class SQLQuest extends SqlDAO {
 
         String query = "SELECT `id`, `template_name` " +
                 "FROM quests " +
-                "WHERE `owner` = ?;";
+                "WHERE `owner` = ? AND return_date IS NULL;";
+        String[] data = {String.valueOf(holder.getID())};
+
+        processQuery(query, data);
+
+        for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
+            String href = "/quests/" + outcome.get(0);
+            String name = outcome.get(1);
+            result.put(href, name);
+        }
+
+        return result;
+    }
+
+    public Map<String,String> getSubmittedQuestMapBy(Holder holder) {
+
+        Map<String,String> result = new HashMap<>();
+
+        String query = "SELECT `id`, `template_name` " +
+                "FROM quests " +
+                "WHERE `owner` = ? AND accept_date IS NULL AND return_date IS NOT NULL;";
         String[] data = {String.valueOf(holder.getID())};
 
         processQuery(query, data);
@@ -74,8 +124,10 @@ public class SQLQuest extends SqlDAO {
 
         Map<String,String> result = new HashMap<>();
 
-        String query = "SELECT template_name, accept_date, return_date " +
+        String query = "SELECT template_name, accept_date, return_date, quest_template.value " +
                 "FROM quests " +
+                "JOIN quest_template " +
+                "ON quests.template_name = quest_template.name " +
                 "WHERE id = ?;";
         String[] data = {StringParser.addWhitespaces(templateId)};
 

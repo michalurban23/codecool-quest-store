@@ -71,9 +71,36 @@ public class SQLExperience extends SqlDAO {
         for (ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
             thresholds.add(outcome.get(0));
         }
+        adjustForLackOfExtremeValues(thresholds);
         thresholds.add(levelName);
 
         return thresholds;
+    }
+
+    private void adjustForLackOfExtremeValues(List<String> values) {
+
+        int minLevelSize = 2;
+        int maxLevelSize = 0;
+
+        if (values.size() == minLevelSize) {
+            values.add("-1");
+        } else if (values.size() == maxLevelSize) {
+            editMaxLevel(values);
+        }
+    }
+
+    private void editMaxLevel(List<String> values) {
+
+        String arbitraryBigNumber = "100000";
+        String query = "SELECT level, value FROM experience " +
+                "ORDER BY value DESC LIMIT 2";
+
+        processQuery(query, null);
+
+        values.add(arbitraryBigNumber);
+        values.add(getResults().get(1).get(1));
+        values.add(getResults().get(2).get(1));
+        values.add(getResults().get(1).get(0));
     }
 
     public void removeLevel(String name) {

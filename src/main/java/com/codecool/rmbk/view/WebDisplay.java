@@ -91,6 +91,7 @@ public class WebDisplay {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(url);
         JtwigModel model = JtwigModel.newModel();
         model.with("title", title);
+        model.with("messages", title);
         model.with("data", data);
 
         return template.render(model);
