@@ -166,7 +166,7 @@ public class SQLQuest extends SqlDAO {
 
         String query = "SELECT name, value FROM quest_template " +
                 "WHERE name NOT IN " +
-                "(SELECT template_name FROM quests WHERE owner = ?);";
+                "(SELECT template_name FROM quests WHERE owner = ? AND accept_date IS NULL);";
         String[] data = {"" + holder.getID()};
 
         processQuery(query, data);

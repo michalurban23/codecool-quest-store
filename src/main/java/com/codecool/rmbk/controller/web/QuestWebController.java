@@ -66,7 +66,7 @@ public class QuestWebController extends CommonHandler {
             showQuestsToAccept();
         }else {
             if (action == null) {
-                showTemplate(object);
+                showItem(object);
             } else if (action.equals("remove")) {
                 removeTemplate(object);
             } else if (action.equals("edit")) {
@@ -88,6 +88,16 @@ public class QuestWebController extends CommonHandler {
         response = webDisplay.getSiteContent(name, mainMenu, contextMenu, allQuests, urlList);
     }
 
+    private void showItem(String object) {
+
+        try {
+            Integer.parseInt(object);
+            showQuest(object);
+        } catch (NumberFormatException e) {
+            showTemplate(object);
+        }
+    }
+
     private void showTemplate(String object) {
 
         String[] options = {"Edit", "Remove"};
@@ -96,6 +106,13 @@ public class QuestWebController extends CommonHandler {
         Map <String, String> allQuests = sqlQuestTemplate.getTemplateInfo(object);
 
         response = webDisplay.getSiteContent(name, mainMenu, contextMenu, allQuests, urlItem);
+    }
+
+    private void showQuest(String object) {
+
+        Map <String, String> allQuests = sqlQuest.getQuestInfo(object);
+
+        response = webDisplay.getSiteContent(name, mainMenu, null, allQuests, urlItem);
     }
 
     private void addQuestTemplate() throws IOException {
@@ -212,7 +229,7 @@ public class QuestWebController extends CommonHandler {
                 showQuestDetails(object);
             } else if (action.equals("submit")) {
                 submitQuest(object);
-                send302("/quests/submitted/");
+                send302("/quests/");
             }
         }
         send200(response);
@@ -221,9 +238,11 @@ public class QuestWebController extends CommonHandler {
     private void showSubmitted() {
 
         String title = "My submitted quests";
+        String[] options = {"Acquire"};
+        Map<String, String> contextMenu = prepareContextMenu(options);
         Map<String, String> submittedQuests = sqlQuest.getSubmittedQuestMapBy(user);
 
-        response = webDisplay.getSiteContent(name, mainMenu, null, title, submittedQuests, urlJustList);
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, title, submittedQuests, urlJustList);
     }
 
     private void showMyQuests() {
