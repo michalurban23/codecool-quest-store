@@ -145,14 +145,26 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
     @Override
     public Boolean removeUser(User user) {
+
         boolean removedFromGroups = removeUserFromUserGroupsTable(user);
         boolean removedFromUsers = removeUserFromUsersTable(user);
+
+        removeUserFromLogin(user);
+
         return removedFromGroups && removedFromUsers;
     }
 
-    public Boolean removeUserFromUsersTable(User user) {
+    private Boolean removeUserFromUsersTable(User user) {
 
         String query = "DELETE FROM users WHERE id = ?;";
+        String[] param = new String[] {String.valueOf(user.getID())};
+
+        return handleQuery(query, param);
+    }
+
+    private Boolean removeUserFromLogin(User user) {
+
+        String query = "DELETE FROM login_info WHERE id = ?;";
         String[] param = new String[] {String.valueOf(user.getID())};
 
         return handleQuery(query, param);
