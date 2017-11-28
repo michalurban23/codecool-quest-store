@@ -1,9 +1,7 @@
 <div class="menu-bar">
-    <nav>
-        <ul>
-            {% for key, value in menu %}
-                <a href={{ value }}><li><span>{{ key }}</span></li></a>
-            {% endfor %}
-        </ul>
-    </nav>
+    <ul id="menu-bar">
+        {% for key, value in menu %}
+            <li><a href={{ value }}>{{ key }}</a></li>
+        {% endfor %}
+    </ul>
 </div>
