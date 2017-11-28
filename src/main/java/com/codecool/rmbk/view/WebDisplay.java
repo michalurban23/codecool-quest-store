@@ -167,7 +167,7 @@ public class WebDisplay {
 
     public String getLoginScreen(String message) {
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login2.twig");
         JtwigModel model = JtwigModel.newModel();
         model.with("message", message);
 
