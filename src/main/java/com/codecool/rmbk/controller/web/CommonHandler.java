@@ -2,6 +2,7 @@ package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.SQLSession;
+import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.helper.CookieHandler;
 import com.codecool.rmbk.helper.MimeTypeResolver;
 import com.codecool.rmbk.model.Session;
@@ -230,4 +231,12 @@ public abstract class CommonHandler implements HttpHandler {
         return parseFormData(formData);
     }
 
+    Boolean isObjectInstanceOfController(String controller, String object) {
+
+        SQLUsers usersDao = new SQLUsers();
+
+        String objectType = usersDao.getUserTypeByID(object);
+
+        return objectType.toLowerCase().equals(controller);
+    }
 }

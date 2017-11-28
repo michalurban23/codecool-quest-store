@@ -59,6 +59,22 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
         return processQuery(query, new String[] {login}).get(1).get(0);
     }
 
+    public String getUserTypeByID(String id) {
+
+        String query = "SELECT status " +
+                "FROM users " +
+                "WHERE id = ?;";
+        String[] data = {id};
+
+        processQuery(query, data);
+
+        if (getResults().size() > 1) {
+            return getResults().get(1).get(0);
+        } else {
+            return null;
+        }
+    }
+
     public ArrayList<String> getNameList(String userType) {
 
         String query = "SELECT (first_name || \" \" || last_name) as full_name FROM users WHERE status = ?;";
