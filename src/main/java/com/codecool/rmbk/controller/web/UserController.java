@@ -12,39 +12,52 @@ public class UserController extends CommonHandler {
     private SQLUsers userDAO = new SQLUsers();
     private SQLUsers sqlUsers = new SQLUsers();
     private String response;
+    private String accessLevel;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
         setConnectionData(httpExchange);
         parseURIstring(getRequestURI());
-        validateRequest();
+        accessLevel = validateRequest();
 
-        if (parsedURI.get("object") == null) {
+        String controller = parsedURI.get("controller");
+        String object = parsedURI.get("object");
+        String action = parsedURI.get("action");
+
+        if (object == null) {
             showList();
-        } else if (parsedURI.get("action") == null){
-            User object = userDAO.getUserByID(Integer.parseInt(parsedURI.get("object")));
-            showDetails(object);
+        } else if (isObjectInstanceOfController(controller, object)) {
+            if (action == null) {
+                User user = userDAO.getUserByID(Integer.parseInt(object));
+                showDetails(user);
+            } else {
+                performAction();
+            }
         } else {
-            performAction();
+            send403();
         }
     }
 
     private void performAction() throws IOException {
+
         String action = parsedURI.get("action");
+        Integer id = Integer.parseInt(parsedURI.get("object"));
+        Boolean editable = isRequestedBySelf() || isRequestedBySupervisor();
         User object;
-        switch (action) {
-            case "add":
+
+        if (editable && action.equals("edit")) {
+            object = userDAO.getUserByID(id);
+            editUserData(object);
+        } else if (isRequestedBySupervisor()) {
+            if (action.equals("add")) {
                 addUser();
-                break;
-            case "edit":
-                object = userDAO.getUserByID(Integer.parseInt(parsedURI.get("object")));
-                editUserData(object);
-                break;
-            case "remove":
-                object = userDAO.getUserByID(Integer.parseInt(parsedURI.get("object")));
+            } else if (action.equals("remove")) {
+                object = userDAO.getUserByID(id);
                 userDAO.removeUser(object);
                 send302(String.format("/%s", parsedURI.get("controller")));
-                break;
+            }
+        } else {
+            send403();
         }
     }
 
@@ -125,16 +138,18 @@ public class UserController extends CommonHandler {
     }
 
     private boolean isRequestedBySelf() {
+
         return String.valueOf(user.getID()).equals(parsedURI.get("object"));
     }
 
     private boolean isRequestedBySupervisor() {
+
         boolean answer;
-        String loggedUserType = user.getClass().getSimpleName();
         String requestedUserType = parsedURI.get("controller");
-        if (loggedUserType.equals("Mentor") && requestedUserType.equals("student")) {
+
+        if (accessLevel.equals("Mentor") && requestedUserType.equals("student")) {
             answer = true;
-        } else if (loggedUserType.equals("Admin") && requestedUserType.equals("mentor")) {
+        } else if (accessLevel.equals("Admin") && requestedUserType.equals("mentor")) {
             answer = true;
         } else {
             answer = false;

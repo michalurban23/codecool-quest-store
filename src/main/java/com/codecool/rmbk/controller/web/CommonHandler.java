@@ -2,6 +2,7 @@ package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.SQLSession;
+import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.helper.CookieHandler;
 import com.codecool.rmbk.helper.MimeTypeResolver;
 import com.codecool.rmbk.model.Session;
@@ -34,6 +35,7 @@ public abstract class CommonHandler implements HttpHandler {
     String urlItem = "templates/item.twig";
     String urlEdit = "templates/edit.twig";
     String urlAdd = "templates/add.twig";
+    String urlJustList = "templates/list.twig";
 
 
     void send404() throws IOException {
@@ -193,14 +195,15 @@ public abstract class CommonHandler implements HttpHandler {
     Map<String, String> prepareContextMenu(String[] options) {
 
         Map<String, String> menu = new HashMap<>();
-        String url;
 
         for (String option : options) {
+            String url = "/" + parseURIstring(getRequestURI()).get("controller");
             if (option.equals("Add") || option.equals("Acquire")) {
-                url = "/" + getRequestURI() + "/new/" + option.toLowerCase();
-            } else {
-                url = "/" + getRequestURI() + "/" + option.toLowerCase();
+                url += "/new";
+            } else if (option.equals("Edit") || option.equals("Remove")) {
+                url += "/" + parseURIstring(getRequestURI()).get("object");
             }
+            url += "/" + option.toLowerCase();
             menu.put(option, url);
         }
         return menu;
@@ -228,4 +231,12 @@ public abstract class CommonHandler implements HttpHandler {
         return parseFormData(formData);
     }
 
+    Boolean isObjectInstanceOfController(String controller, String object) {
+
+        SQLUsers usersDao = new SQLUsers();
+
+        String objectType = usersDao.getUserTypeByID(object);
+
+        return objectType.toLowerCase().equals(controller);
+    }
 }
