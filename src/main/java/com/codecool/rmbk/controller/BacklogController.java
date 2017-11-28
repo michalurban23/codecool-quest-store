@@ -119,7 +119,7 @@ class BacklogController {
     private void showAllHistory() {
 
         String title = "All students history";
-        ArrayList<ArrayList<String>> history = backlogDao.getAllBacklogs();
+        ArrayList<ArrayList<String>> history = null; //backlogDao.getAllBacklogs();
 
         display.printList(title, history);
     }
@@ -127,13 +127,13 @@ class BacklogController {
     private void showExperienceLevels() {
 
         String title = "Current experience levels";
-        ArrayList<ArrayList<String>> expLevels = experienceDao.getExperienceLevels();
+        ArrayList<ArrayList<String>> expLevels = null; //experienceDao.getExperienceLevels();
 
         display.printList(title, expLevels);
 
         String coinsEarned = ((Student) user).getExperience();
         Integer missingExp = findNextLevel(coinsEarned, expLevels);
-        String rankName = experienceDao.getExperienceInfo(coinsEarned);
+        String rankName = null; //experienceDao.getExperienceInfo(coinsEarned);
 
         display.printSuccess("You earned total of > " + coinsEarned + " < CoolCoins! Your rank is " + rankName + "!");
         display.printSuccess("You need to earn > " + missingExp + " < more CC for next level\n");

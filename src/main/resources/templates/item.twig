@@ -1,0 +1,11 @@
+<div>
+    <form method="get">
+        {% for key, value in data %}
+            <div class="row">
+                <label>{{ key }}</label>
+                <p>{{ value }}</p>
+            </div>
+        {% endfor %}
+    </form>
+</div>
+

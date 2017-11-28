@@ -1,20 +1,29 @@
 package com.codecool.rmbk.dao;
 
-import com.codecool.rmbk.model.usr.Group;
-import com.codecool.rmbk.model.usr.Student;
-import com.codecool.rmbk.model.usr.Team;
-import com.codecool.rmbk.model.usr.User;
+import com.codecool.rmbk.model.usr.*;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class SQLGroups extends SqlDAO implements GroupDAO{
 
-    private ArrayList<ArrayList<String>> results;
     String tableName;
 
-    public void getAllGroups() {
+    public ArrayList<Group> getAllGroups(String groupType) {
 
+        ArrayList<Group> result = new ArrayList<>();
         String query = "SELECT * FROM " + tableName + ";";
-        processQuery(query, null);
+        ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
+
+        for (ArrayList<String> record : queryResult.subList(1, queryResult.size())) {
+            if (groupType.toLowerCase().equals("class")) {
+                result.add(new Klass(Integer.parseInt(record.get(0)), record.get(1)));
+            } else if (groupType.toLowerCase().equals("team")){
+                result.add(new Team(Integer.parseInt(record.get(0)), record.get(1)));
+            }
+        }
+        return result;
     }
 
     public Group getGroupById(Integer id){
@@ -22,6 +31,7 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
         Group resultGroup = null;
         String query = "SELECT * FROM " + tableName +" WHERE id = ?;";
         ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {"" + id});
+
         if(queryResult.size() > 1) {
             resultGroup = new Team(id, queryResult.get(1).get(1));
         }
@@ -32,20 +42,24 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
 
         String query = "INSERT INTO " + tableName + " (name) VALUES (null);";
         handleQuery(query, null);
-        query = String.format("SELECT * FROM " + tableName + " ORDER BY id DESC LIMIT 1;");
+
+        query = "SELECT * FROM " + tableName + " ORDER BY id DESC LIMIT 1;";
         ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
+
         return getGroupById(Integer.parseInt(queryResult.get(1).get(0)));
     }
 
     public Boolean removeGroup(Group group) {
 
         String query = "DELETE FROM " + tableName + " WHERE id = ?;";
+
         return handleQuery(query, new String[] {"" + group.getID()});
     }
 
     public Boolean renameGroup(Group group, String newName) {
 
         String query = "UPDATE " + tableName + " SET name = ? WHERE id = ?;";
+
         return handleQuery(query, new String[] {newName, "" + group.getID()});
     }
 
@@ -76,7 +90,16 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
 
     }
 
-    public abstract ArrayList<Group> getGroupList(User user);
+    public Map<String,String> getGroupMap(String groupType) {
+
+        Map<String,String> groupsMap = new HashMap<>();
+
+        for(Group group : getAllGroups(groupType)) {
+            groupsMap.put(String.format("/%s/%s", groupType, String.valueOf(group.getID())),
+                    group.getName());
+        }
+        return groupsMap;
+    }
 
 
 }

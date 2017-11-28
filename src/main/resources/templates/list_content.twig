@@ -1,0 +1,10 @@
+<div>
+    <ol>
+        {% for key, value in data %}
+        <li><a href="{{ key }}">{{ value }}</a>
+            <button value="edit" onclick="window.open('{{ key }}/edit', '_parent')">Edit</button>
+            <button value="remove" onclick="window.open('{{ key }}/remove', '_parent')">Remove</button>
+        </li>
+        {% endfor %}
+    </ol>
+</div>

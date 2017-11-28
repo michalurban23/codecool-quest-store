@@ -29,7 +29,7 @@ public class Team extends Group implements Holder {
         return name;
     }
 
-    public Integer getID() {
+    public int getID() {
         return this.id;
     }
 

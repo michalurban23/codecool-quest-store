@@ -2,7 +2,7 @@ package com.codecool.rmbk.dao;
 
 import com.codecool.rmbk.model.usr.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class SQLClass extends SQLGroups {
 
@@ -65,6 +65,16 @@ public class SQLClass extends SQLGroups {
 
         String query = "UPDATE users SET class_name = ? WHERE id = ?;";
         handleQuery(query, new String[] {group.getName(), "" + user.getID()});
+    }
+
+    public Map<String,String> getMembersMap (Group group) {
+
+        Map<String,String> usersMap = new LinkedHashMap<>();
+        ArrayList<User> members = getStudentsList(group);
+        for (User member : members) {
+            usersMap.put("/student/" + String.valueOf(member.getID()), member.getFullName());
+        }
+        return usersMap;
     }
 
 

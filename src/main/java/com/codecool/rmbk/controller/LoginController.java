@@ -20,13 +20,13 @@ public class LoginController {
     public void startSqlLoginService() {
 
         SQLLoginDAO.setPermission();
-        LoginDAO dataAccess = new SQLLoginDAO();
+        SQLLoginDAO dataAccess = new SQLLoginDAO();
         userDao = new SQLUsers();
 
         while (!mainAppStarted) {
             String[] loginInfo = view.LoginScreen();
 
-            if (dataAccess.login(loginInfo)) {
+            if (dataAccess.login(loginInfo[0], loginInfo[1])) {
                 startUserController(loginInfo[0]);
             } else {
                 view.showWrongDataMessage();

@@ -1,5 +1,8 @@
 package com.codecool.rmbk.dao;
 
+import com.codecool.rmbk.model.usr.Group;
+import com.codecool.rmbk.model.usr.User;
+
 import java.sql.*;
 import java.util.*;
 
@@ -85,7 +88,7 @@ public class SqlDAO {
     private void terminateConnection(Exception e) {
 
         String message = "Query failure. SQL message:\n" + e.getMessage();
-        System.err.println(message);
+        System.out.println(message);
     }
 
     private void saveResults() throws SQLException {

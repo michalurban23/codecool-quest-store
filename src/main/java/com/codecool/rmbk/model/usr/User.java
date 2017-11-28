@@ -1,6 +1,11 @@
 package com.codecool.rmbk.model.usr;
 
-public abstract class User {
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+public abstract class User implements Holder {
 
     protected String firstName;
     protected String lastName;
@@ -67,10 +72,39 @@ public abstract class User {
         return this.id;
     }
 
+    public Map<String, String> getFullInfoMap() {
+        Map<String, String> fullInfo = new LinkedHashMap<>();
+        fullInfo.put("name", getFirstName());
+        fullInfo.put("surname", getLastName());
+        fullInfo.put("email", getEmail());
+        fullInfo.put("address", getAddress());
+        return fullInfo;
+    }
+
     public String getFullName() {
 
         return this.firstName + " " + this.lastName;
     }
 
-    public String toString() { return getFullName(); }
+    public String getAccessLevel() {
+
+        return this.getClass().getSimpleName();
+    }
+
+    public String toString() {
+
+        return getFullName();
+    }
+
+    public static List<String> getFieldLabels() {
+        List<String> labels = new ArrayList<>();
+        labels.add("name");
+        labels.add("surname");
+        labels.add("email");
+        labels.add("address");
+        return labels;
+    }
+
+
+
 }
