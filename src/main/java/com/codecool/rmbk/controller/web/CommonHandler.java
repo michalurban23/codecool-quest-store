@@ -194,14 +194,15 @@ public abstract class CommonHandler implements HttpHandler {
     Map<String, String> prepareContextMenu(String[] options) {
 
         Map<String, String> menu = new HashMap<>();
-        String url;
 
         for (String option : options) {
+            String url = "/" + parseURIstring(getRequestURI()).get("controller");
             if (option.equals("Add") || option.equals("Acquire")) {
-                url = "/" + getRequestURI() + "/new/" + option.toLowerCase();
-            } else {
-                url = "/" + getRequestURI() + "/" + option.toLowerCase();
+                url += "/new";
+            } else if (option.equals("Edit") || option.equals("Remove")) {
+                url += "/" + parseURIstring(getRequestURI()).get("object");
             }
+            url += "/" + option.toLowerCase();
             menu.put(option, url);
         }
         return menu;

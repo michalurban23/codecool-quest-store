@@ -143,11 +143,13 @@ public class SQLQuest extends SqlDAO {
 
         Map<String,String> result = new HashMap<>();
 
-        String query = "SELECT owner, template_name, accept_date, return_date, quest_template.value " +
+        String query = "SELECT (first_name || ' ' || last_name) as fullname, " +
+                "template_name, accept_date, return_date, quest_template.value " +
                 "FROM quests " +
                 "JOIN quest_template " +
-                "ON quests.template_name = quest_template.name " +
-                "WHERE id = ?;";
+                "JOIN users " +
+                "ON quests.template_name = quest_template.name AND users.id = quests.owner " +
+                "WHERE quests.id = ?;";
         String[] data = {StringParser.addWhitespaces(templateId)};
 
         processQuery(query, data);

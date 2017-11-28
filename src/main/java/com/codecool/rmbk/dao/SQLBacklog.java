@@ -54,9 +54,11 @@ public class SQLBacklog extends SqlDAO {
 
         Map<String,String> result = new LinkedHashMap<>();
 
-        String query = "SELECT action_date, status, description, value " +
+        String query = "SELECT (first_name || ' ' || last_name) as fullname, " +
+                "action_date, backlog.status, description, value " +
                 "FROM backlog " +
-                "WHERE id = ?;";
+                "JOIN users ON users.id = backlog.owner " +
+                "WHERE backlog.id = ?;";
         String[] data = {StringParser.addWhitespaces(object)};
 
         processQuery(query, data);
