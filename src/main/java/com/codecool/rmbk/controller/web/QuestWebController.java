@@ -64,7 +64,7 @@ public class QuestWebController extends CommonHandler {
             addQuestTemplate();
         } else if (object.equals("grade")) {
             showQuestsToAccept();
-        }else {
+        } else {
             if (action == null) {
                 showItem(object);
             } else if (action.equals("remove")) {
@@ -208,17 +208,12 @@ public class QuestWebController extends CommonHandler {
         }
     }
 
-    private void showFailureMessage() throws IOException {
-
-        send302("/quests/"); // TODO
-    }
-
     private void handleStudentQuest() throws IOException {
 
         String object = request.get("object");
         String action = request.get("action");
 
-        if(object == null) {
+        if (object == null) {
             showMyQuests();
         } else if (object.equals("new")) {
             acquireNewQuest();

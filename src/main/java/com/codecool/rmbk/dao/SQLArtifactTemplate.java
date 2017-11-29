@@ -1,12 +1,10 @@
 package com.codecool.rmbk.dao;
 
 import com.codecool.rmbk.helper.StringParser;
+import com.codecool.rmbk.model.usr.Holder;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SQLArtifactTemplate extends SqlDAO {
 
@@ -58,19 +56,21 @@ public class SQLArtifactTemplate extends SqlDAO {
         return result;
     }
 
-    public Map<String, String> getBuyableArtifacts() {
+    public Map<String, String> getAvailableArtifacts(Holder holder) {
 
-        Map<String, String> result = new HashMap<>();
+        Map<String,String> result = new TreeMap<>();
 
-        String query = "SELECT name " +
-                "FROM artifact_template";
+        String query = "SELECT name, value FROM artifact_template " +
+                "WHERE name NOT IN " +
+                "(SELECT template_name FROM artifacts WHERE owner = ? AND accept_date IS NULL);";
+        String[] data = {"" + holder.getID()};
 
-        processQuery(query, null);
+        processQuery(query, data);
 
         for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
-            String href = StringParser.addWhitespaces(outcome.get(0));
             String name = outcome.get(0);
-            result.put(href, name);
+            String value = outcome.get(1);
+            result.put(name, value);
         }
         return result;
     }

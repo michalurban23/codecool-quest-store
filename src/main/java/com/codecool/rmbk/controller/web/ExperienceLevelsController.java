@@ -148,9 +148,4 @@ public class ExperienceLevelsController extends CommonHandler {
         }
     }
 
-    private void showFailureMessage() throws IOException {
-
-        send302("/experience"); // TODO
-    }
-
 }

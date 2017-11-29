@@ -171,13 +171,16 @@ public abstract class CommonHandler implements HttpHandler {
     Map<String, String> parseFormData(String formData) throws IOException {
 
         Map<String, String> map = new LinkedHashMap<>();
-        String[] pairs = formData.split("&");
 
-        for (String pair : pairs) {
-            String[] keyValue = pair.split("=");
-            String key = URLDecoder.decode(keyValue[0], "UTF-8");
-            String value = URLDecoder.decode(keyValue[1], "UTF-8");
-            map.put(key, value);
+        if (formData != null) {
+            String[] pairs = formData.split("&");
+
+            for (String pair : pairs) {
+                String[] keyValue = pair.split("=");
+                String key = URLDecoder.decode(keyValue[0], "UTF-8");
+                String value = URLDecoder.decode(keyValue[1], "UTF-8");
+                map.put(key, value);
+            }
         }
         return map;
     }
@@ -241,4 +244,10 @@ public abstract class CommonHandler implements HttpHandler {
 
         return objectType.toLowerCase().equals(controller);
     }
+
+    void showFailureMessage() throws IOException {
+
+        send302("/static/fail.html");
+    }
+
 }
