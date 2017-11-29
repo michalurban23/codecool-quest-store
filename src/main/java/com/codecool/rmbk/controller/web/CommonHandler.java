@@ -174,9 +174,15 @@ public abstract class CommonHandler implements HttpHandler {
         for (String pair : pairs) {
             String[] keyValue = pair.split("=");
             String key = URLDecoder.decode(keyValue[0], "UTF-8");
-            String value = URLDecoder.decode(keyValue[1], "UTF-8");
+            String value;
+            if (keyValue.length == 1) {
+                value = "";
+            } else {
+                value = URLDecoder.decode(keyValue[1], "UTF-8");
+            }
             map.put(key, value);
         }
+
         return map;
     }
 
@@ -227,7 +233,6 @@ public abstract class CommonHandler implements HttpHandler {
                 "utf-8");
         BufferedReader br = new BufferedReader(isr);
         String formData = br.readLine();
-
         return parseFormData(formData);
     }
 
