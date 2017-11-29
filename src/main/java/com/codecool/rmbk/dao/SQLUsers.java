@@ -143,6 +143,20 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
         return new ArrayList<>(queryResult.subList(1, queryResult.size()));
     }
 
+    public List<String> getLoginList() {
+
+        String query = "SELECT login FROM login_info;";
+        processQuery(query, null);
+        ArrayList<ArrayList<String>> results = getResults();
+        List<String> logins = new ArrayList<>();
+
+        for (ArrayList<String> result : results.subList(1, results.size())) {
+            logins.add(result.get(0));
+        }
+
+        return logins;
+    }
+
     @Override
     public Boolean removeUser(User user) {
 

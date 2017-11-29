@@ -2,6 +2,7 @@ package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.SQLLoginDAO;
 import com.codecool.rmbk.dao.SQLUsers;
+import com.codecool.rmbk.helper.PasswordHash;
 import com.codecool.rmbk.model.usr.User;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
@@ -113,14 +114,32 @@ public class UserController extends CommonHandler {
         if (method.equals("GET")) {
             response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
                     prepareContextMenu(getAllowedActions()),
-                    loginDao.getCredentialsMap(),
+                    loginDao.getCredentialsMap(user.getID()),
                     "templates/edit_login.twig");
-            send200(response);
         } else if (method.equals("POST")) {
+
             Map<String,String> inputs = readInputs();
-            loginDao.updateCredentials(user, inputs);
-            send302("/");
+            Map<String, String> credentials = loginDao.getCredentialsMap(user.getID());
+
+            if (isNewPassword(inputs)) {
+
+                if (arePasswordsCompatible(credentials, inputs)){
+                    loginDao.updateCredentials(user, inputs);
+                    send302("/");
+                }
+            } else if (isPasswordCorrect(credentials, inputs)) {
+                if (isLoginAvailable(inputs.get("login"))) {
+                    loginDao.updateLogin(user, inputs);
+                    send302("/");
+                } else {
+                    send302("/static/fail.html");
+                }
+
+            } else {
+                send302("/static/fail.html");
+            }
         }
+        send200(response);
     }
 
     private void showDetails(User object) throws IOException {
@@ -178,4 +197,64 @@ public class UserController extends CommonHandler {
         }
         return answer;
     }
+
+    private boolean isNewPassword(Map<String, String> inputs) {
+
+        boolean isNewPassword;
+        if (inputs.get("newpass1").equals("") && inputs.get("newpass2").equals("")) {
+            isNewPassword = false;
+        } else {
+            isNewPassword = true;
+        }
+
+        return isNewPassword;
+    }
+
+    private boolean isPasswordCorrect(Map<String, String> credentials, Map<String, String> inputs) {
+
+        boolean correct;
+
+        String password = credentials.get("password");
+        String passwordInput = PasswordHash.hash(inputs.get("password"), credentials.get("salt"));
+
+        if (password.equals(passwordInput)) {
+            correct = true;
+        } else {
+            correct = false;
+        }
+
+
+        return correct;
+    }
+
+    private boolean arePasswordsCompatible(Map<String, String> credentials, Map<String, String> inputs) {
+
+        boolean compatible;
+        String oldPassword = credentials.get("password");
+        String oldPasswordInput = PasswordHash.hash(inputs.get("password"), credentials.get("salt"));
+        String newPassword = inputs.get("newpass1");
+        String newPasswordConfirm = inputs.get("newpass2");
+
+        if (oldPassword.equals(oldPasswordInput) && newPassword.equals(newPasswordConfirm)) {
+            compatible = true;
+        } else {
+            compatible = false;
+        }
+        return compatible;
+    }
+
+    private boolean isLoginAvailable(String login) {
+
+        boolean isAvailable;
+        List<String> logins = userDAO.getLoginList();
+
+        if (logins.contains(login)) {
+            isAvailable = false;
+        } else {
+            isAvailable = true;
+        }
+
+        return isAvailable;
+    }
+
 }
