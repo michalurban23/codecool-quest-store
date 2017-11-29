@@ -132,11 +132,11 @@ public class UserController extends CommonHandler {
                     loginDao.updateLogin(user, inputs);
                     send302("/");
                 } else {
-                    response = "Login already in use.";
+                    send302("/static/fail.html");
                 }
 
             } else {
-                response = "Data input incorrect";
+                send302("/static/fail.html");
             }
         }
         send200(response);
