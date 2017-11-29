@@ -51,7 +51,24 @@ public class SQLArtifactTemplate extends SqlDAO {
         processQuery(query, null);
 
         for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
-            String href = "/artifacts/" + StringParser.removeWhitespaces(outcome.get(0));
+            String href = "/artifacts/" +   StringParser.removeWhitespaces(outcome.get(0));
+            String name = outcome.get(0);
+            result.put(href, name);
+        }
+        return result;
+    }
+
+    public Map<String, String> getBuyableArtifacts() {
+
+        Map<String, String> result = new HashMap<>();
+
+        String query = "SELECT name " +
+                "FROM artifact_template";
+
+        processQuery(query, null);
+
+        for(ArrayList<String> outcome : getResults().subList(1, getResults().size())) {
+            String href = StringParser.addWhitespaces(outcome.get(0));
             String name = outcome.get(0);
             result.put(href, name);
         }
@@ -91,21 +108,6 @@ public class SQLArtifactTemplate extends SqlDAO {
         return result;
     }
 
-    public Map<String, String> getArtifactTemplatesWithDescription() {
-
-        Map<String, String> result = new HashMap<>();
-
-        String query = "SELECT `name`, `value` " +
-                "FROM artifact_template ";
-
-        processQuery(query, null);
-
-        for (ArrayList<String> template : getResults().subList(1, getResults().size())) {
-            result.put(template.get(0), template.get(1));
-        }
-        return result;
-    }
-
     public void addArtifactTemplate(List<String> data) {
 
         String name = StringUtils.capitalize(StringParser.addWhitespaces(data.get(0)));
@@ -118,7 +120,7 @@ public class SQLArtifactTemplate extends SqlDAO {
     public void editArtifactTemplate(String originalName, List<String> data) {
 
         originalName = StringParser.addWhitespaces(originalName);
-        String query = "UPDATE quest_template " +
+        String query = "UPDATE artifact_template " +
                 "SET `name` = ?, `description` = ?, `value` = ?, `special` = ?, `active` = ? " +
                 "WHERE `name` = '" + originalName + "';";
         processQuery(query, data.toArray(new String[0]));
@@ -126,10 +128,10 @@ public class SQLArtifactTemplate extends SqlDAO {
 
     public Integer getTemplateValue(String name) {
 
+        name = StringParser.addWhitespaces(name);
         String query = "SELECT * FROM artifact_template WHERE name = '" + name + "';";
         processQuery(query, null);
-        System.out.println(getResults());
-        Integer value = Integer.parseInt(getResults().get(1).get(0));
+        Integer value = Integer.parseInt(getResults().get(1).get(2));
         return value;
     }
 }
