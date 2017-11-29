@@ -7,11 +7,8 @@ import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.helper.StringParser;
 import com.sun.net.httpserver.HttpExchange;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -91,16 +88,14 @@ public class ArtifactWebController extends CommonHandler {
             viewArtifacts();
         } else if (object.equals("new")) {
             buyArtifact(object);
-        } else {
-            if (action == null) {
-                showBuyableArtifact(object);
-            }
+        } else if (action.equals("use")) {
+            useArtifact(object);
         }
         send200(response);
     }
 
     private void viewArtifactTemplates() {
-        String[] options = {"Add"};
+        String[] options = {"Add", "Check used"};
         Map<String, String> contextMenu = prepareContextMenu(options);
         Map<String, String> mainData = sqlArtifactTemplate.getArtifactTemplatesMap();
 
@@ -112,20 +107,25 @@ public class ArtifactWebController extends CommonHandler {
         Map<String, String> contextMenu = prepareContextMenu(options);
         Map<String, String> mainData = sqlArtifact.getArtifactMapBy(user);
 
-        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlList);
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlStudentArtifacts);
     }
 
     private void buyArtifact(String object) throws IOException{
 
         String method = httpExchange.getRequestMethod();
-        Map<String, String> templates = sqlArtifactTemplate.getArtifactTemplatesMap();
+        Map<String, String> templates = sqlArtifactTemplate.getBuyableArtifacts();
 
         if (method.equals("GET")) {
             response = webDisplay.getSiteContent(name, mainMenu, null , templates,
                     "templates/buyable.twig");
         } else if (method.equals("POST")) {
             readBuyableArtifactsInputs();
-            send302("/artifacts/");
+            if (checkIfBuyable()) {
+                buyArtifacts();
+                send302("/artifacts/");
+            } else {
+                getFailureResponse();
+            }
         }
     }
 
@@ -135,40 +135,13 @@ public class ArtifactWebController extends CommonHandler {
         String title = "Create new Artifact template: ";
         List<String> labels = sqlArtifactTemplate.getArtifactLabels();
 
-
         if (method.equals("GET")) {
-            response = webDisplay.getSiteContent(name, mainMenu, null, title, labels, urlEdit);
+            response = webDisplay.getSiteContent(name, mainMenu, null, title, labels, urlAdd);
         } else if (method.equals("POST")) {
             readArtifactTemplateInputs();
             sqlArtifactTemplate.addArtifactTemplate(templateData);
             send302("/artifacts/");
         }
-    }
-
-    private void showArtifactTemplate(String object) {
-        String[] options = {"Edit", "Remove"};
-        Map<String, String> contextMenu = prepareContextMenu(options);
-        Map<String, String> mainData = sqlArtifactTemplate.getArtifactInfo(object);
-
-        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlItem);
-    }
-
-    private void showBuyableArtifact(String object) {
-        Map<String, String> mainData = sqlArtifactTemplate.getArtifactInfo(object);
-
-        response = webDisplay.getSiteContent(name, mainMenu, null, mainData, urlItem);
-    }
-
-    private void showArtifact(String object) {
-        Map<String, String> mainData = sqlArtifact.getArtifactInfo(object);
-
-        response = webDisplay.getSiteContent(name, mainMenu, null, mainData, urlItem);
-    }
-
-    private void removeArtifactTemplate(String object) throws IOException{
-
-        sqlArtifactTemplate.removeArtifactTemplate(object);
-        send302("/artifacts/");
     }
 
     private void editArtifactTemplate(String object) throws IOException{
@@ -187,20 +160,48 @@ public class ArtifactWebController extends CommonHandler {
 
     }
 
-    private Boolean checkIfBuyable(String object) {
+    private void showArtifactTemplate(String object) {
+        String[] options = {"Edit", "Remove"};
+        Map<String, String> contextMenu = prepareContextMenu(options);
+        Map<String, String> mainData = sqlArtifactTemplate.getArtifactInfo(object);
+
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlItem);
+    }
+
+    private void showBuyableArtifact(String object) {
+        String[] options = {"Acquire"};
+        Map<String, String> contextMenu = prepareContextMenu(options);
+        Map<String, String> mainData = sqlArtifactTemplate.getArtifactInfo(object);
+
+        response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlItem);
+    }
+
+    private void removeArtifactTemplate(String object) throws IOException{
+
+        sqlArtifactTemplate.removeArtifactTemplate(object);
+        send302("/artifacts/");
+    }
+
+    private Boolean checkIfBuyable() {
 
         Boolean buyable;
         Integer coins = sqlBacklog.getCurrentCoins(user.getID());
-        System.out.println(object);
-        Integer value = sqlArtifactTemplate.getTemplateValue(object);
+        Integer value = calculateArtifactsValue();
 
-        if (coins > value) {
-            buyable = Boolean.FALSE;
-        } else {
-            buyable = Boolean.TRUE;
-        }
+        buyable = coins > value ;
 
         return buyable;
+    }
+
+    private Integer calculateArtifactsValue() {
+
+        Integer value = 0;
+
+        for(String templateName : templateData) {
+            value += sqlArtifactTemplate.getTemplateValue(templateName);
+        }
+
+        return value;
     }
 
     private void readArtifactTemplateInputs() throws IOException{
@@ -223,5 +224,24 @@ public class ArtifactWebController extends CommonHandler {
         for (String templateName : inputs.keySet()) {
             templateData.add(inputs.get(templateName));
         }
+    }
+
+    private void buyArtifacts() {
+        String owner = String.valueOf(user.getID());
+
+        for (String templateName : templateData) {
+            sqlArtifact.addArtifact(templateName, owner);
+        }
+    }
+
+    private void getFailureResponse() {
+
+        response = "Ni mosz hajsu";
+    }
+
+    private void useArtifact(String object) throws IOException {
+
+        sqlArtifact.updateReturnDate(String.valueOf(user.getID()), object);
+        send302("/artifacts/");
     }
 }
