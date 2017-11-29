@@ -200,7 +200,7 @@ public abstract class CommonHandler implements HttpHandler {
             String url = "/" + parseURIstring(getRequestURI()).get("controller");
             if (option.equals("Add") || option.equals("Acquire")) {
                 url += "/new";
-            } else if (option.equals("Edit") || option.equals("Remove")) {
+            } else if (option.equals("Edit") || option.equals("Remove") || option.equals("LoginInfo")) {
                 url += "/" + parseURIstring(getRequestURI()).get("object");
             }
             url += "/" + option.toLowerCase();

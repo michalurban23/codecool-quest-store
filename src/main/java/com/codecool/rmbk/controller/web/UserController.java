@@ -1,5 +1,6 @@
 package com.codecool.rmbk.controller.web;
 
+import com.codecool.rmbk.dao.SQLLoginDAO;
 import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.model.usr.User;
 import com.sun.net.httpserver.HttpExchange;
@@ -48,6 +49,8 @@ public class UserController extends CommonHandler {
         if (editable && action.equals("edit")) {
             object = userDAO.getUserByID(id);
             editUserData(object);
+        } else if (isRequestedBySelf() && action.equals("logininfo")) {
+            editLoginData();
         } else if (isRequestedBySupervisor()) {
             if (action.equals("add")) {
                 addUser();
@@ -102,6 +105,24 @@ public class UserController extends CommonHandler {
         }
     }
 
+    private void editLoginData() throws IOException {
+
+        String method = httpExchange.getRequestMethod();
+        SQLLoginDAO loginDao = new SQLLoginDAO();
+
+        if (method.equals("GET")) {
+            response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
+                    prepareContextMenu(getAllowedActions()),
+                    loginDao.getCredentialsMap(),
+                    "templates/edit_login.twig");
+            send200(response);
+        } else if (method.equals("POST")) {
+            Map<String,String> inputs = readInputs();
+            loginDao.updateCredentials(user, inputs);
+            send302("/");
+        }
+    }
+
     private void showDetails(User object) throws IOException {
         if (isRequestedBySupervisor() || isRequestedBySelf()) {
             response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
@@ -133,6 +154,7 @@ public class UserController extends CommonHandler {
             options.add("Remove");
         } else if (isRequestedBySelf()) {
             options.add("Edit");
+            options.add("LoginInfo");
         }
         return options.toArray(new String[options.size()]);
     }

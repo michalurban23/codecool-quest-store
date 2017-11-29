@@ -1,9 +1,12 @@
 package com.codecool.rmbk.dao;
 
 import com.codecool.rmbk.helper.PasswordHash;
+import com.codecool.rmbk.model.usr.User;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class SQLLoginDAO extends SqlDAO {
 
@@ -30,4 +33,15 @@ public class SQLLoginDAO extends SqlDAO {
         File file = new File("src/main/resources/queststore.db");
         return file.setWritable(true, false);
     }
+
+    public Map<String, String> getCredentialsMap() {
+
+        return new TreeMap<>();// TODO
+    }
+
+    public void updateCredentials(User user, Map<String, String> data) {
+
+        // TODO
+    }
+
 }
