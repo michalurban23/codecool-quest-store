@@ -1,4 +1,6 @@
-<div class="login">
+{% extends "login.twig" %}
+{% block loggin %}
+    <div class="login">
     {{ message }}
     <form method="post">
         <div class="row">
@@ -13,5 +15,4 @@
             <input type="submit" value="Log in">
         </div>
     </form>
-</div>
-{% block loggin %}{% endblock %}
+    </div>{% endblock %}
