@@ -59,6 +59,38 @@ public class WebDisplay {
         return response.toString();
     }
 
+    //this methods is for test to display messages in backlog properly
+    public String getSiteContentMap(String userName,
+                                 Map<String, String> mainMenu,
+                                 Map<String, String> contextMenu,
+                                 Map<String, String> messages,
+                                 Map<String, String> mainData,
+                                 String mainContentUrl) {
+
+        StringBuilder response = new StringBuilder();
+        response.append(getHeaderContent(userName));
+        response.append(getTopMenuContent(mainMenu));
+        response.append(getContextMenu(contextMenu));
+        response.append(getMainContentMap(messages, mainData, mainContentUrl));
+        response.append(getFooterContent());
+
+        return response.toString();
+    }
+
+    private String getMainContentMap(Map<String, String> messages, Map<String, String> data, String url) {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(url);
+        JtwigModel model = JtwigModel.newModel();
+        model.with("messages", messages);
+        model.with("data", data);
+
+        return template.render(model);
+    }
+    //end methods
+
+
+
+
     public String getSiteContent(String userName,
                                  Map<String, String> mainMenu,
                                  Map<String, String> contextMenu,
