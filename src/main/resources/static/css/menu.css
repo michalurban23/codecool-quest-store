@@ -69,6 +69,7 @@
     display: table;
     width: 55%;
     padding: 0 22.5%;
+    margin-top: 0;
 }
 
 #footer li:hover {
