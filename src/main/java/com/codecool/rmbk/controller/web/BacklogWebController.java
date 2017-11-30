@@ -4,6 +4,9 @@ import com.codecool.rmbk.dao.*;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BacklogWebController extends CommonHandler {
@@ -65,12 +68,13 @@ public class BacklogWebController extends CommonHandler {
         String levelName = experienceDao.getExperienceInfo(totalCoinsEver);
         String missing = experienceDao.getMissingExp(totalCoinsEver);
 
-        String[] summary = {String.format("You have %s coins available", coinsAvailable),
-                            String.format("Overall, you have earned a total of %s coins", totalCoinsEver),
-                            String.format("That puts you at the experience level: %s", levelName),
-                            String.format("You need to earn %s more coins for next level", missing)};
+        Map<String, String> summary = new LinkedHashMap<>();
+        summary.put("Available coins: ", coinsAvailable);
+        summary.put("Totally ever earned coins: ", totalCoinsEver);
+        summary.put("Actual experience level: ", levelName);
+        summary.put("Coins remaining to get next level: ", missing);
 
-        response = webDisplay.getSiteContent(name, mainMenu, null, summary, backlog, urlJustList);
+        response = webDisplay.getSiteContentMap(name, mainMenu, null, summary, backlog, "templates/backlog.twig");
     }
 
     private void showTemplate(String object) {
