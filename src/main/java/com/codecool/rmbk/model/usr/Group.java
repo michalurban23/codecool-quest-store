@@ -1,6 +1,7 @@
 package com.codecool.rmbk.model.usr;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,23 +11,24 @@ public abstract class Group implements Holder {
     Integer id;
     ArrayList<Student> members;
 
-    public Group(ArrayList<Student> usersList) {
+    public ArrayList<Student> getMembers() {
 
-        this.members = usersList;
-        name = "";
+        return members;
     }
 
-    public Group() {
-
-        this.members = new ArrayList<>();
-        name = "";
-    }
 
     public Group(Integer id, String name) {
 
         this.id = id;
         this.name = name;
         this.members = new ArrayList<>();
+    }
+
+    public Group(Integer id, String name, ArrayList<Student> members) {
+
+        this.id = id;
+        this.name = name;
+        this.members = members;
     }
 
     public String getName() {
@@ -46,6 +48,7 @@ public abstract class Group implements Holder {
     }
 
     public void addMember(Student student) {
+
         for (Student member : members) {
             if (member.getID() == student.getID()) {
                 return;
@@ -54,8 +57,13 @@ public abstract class Group implements Holder {
         members.add(student);
     }
 
-    public ArrayList<Student> getMembers() {
-        return members;
+    public Map<String, String> getFullInfoMap() {
+
+        Map<String, String> fullInfo = new LinkedHashMap<>();
+
+        fullInfo.put("name", getName());
+
+        return fullInfo;
     }
 
     public void clearMembersList() {
@@ -66,6 +74,27 @@ public abstract class Group implements Holder {
         List<String> labels = new ArrayList<>();
         labels.add("name");
         return labels;
+    }
+
+    public void setMembers(ArrayList<Student> members) {
+
+        this.members = members;
+    }
+
+    public Map<String,String> getMembersURIMap() {
+
+        Map<String,String> membersURI = new LinkedHashMap<>();
+
+        for (User student : members) {
+            membersURI.put(student.getURI(), student.getFullName());
+        }
+
+        return membersURI;
+    }
+
+    public String getURI() {
+
+        return String.format("/%s/%s", this.getClass().getSimpleName().toLowerCase(), id);
     }
 
 }

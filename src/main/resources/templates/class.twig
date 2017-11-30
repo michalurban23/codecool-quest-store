@@ -1,3 +1,10 @@
-    <div class="main">
-        classes
-    </div>
+<div class="class">
+    <p>{{ class_name }}</p>
+    <p>Mentor: {{ mentor }}</p>
+    <ol>
+    {% for student_id, student_name in data %}
+        <li><a href="{{ student_id }}">{{ student_name }}</a></li>
+    {% endfor %}
+
+    </ol>
+</div>

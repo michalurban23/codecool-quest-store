@@ -2,6 +2,8 @@ package com.codecool.rmbk.model.usr;
 
 public class Admin extends User {
 
+    static Class<? extends User> supervisor = null;
+
     public Admin(String firstName, String lastName, String email, String address, Integer id) {
 
         super(firstName, lastName, email, address, id);

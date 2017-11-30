@@ -1,0 +1,8 @@
+<div class="team">
+    <p>{{ team_name }}</p>
+    <ol>
+        {% for student_id, student_name in data %}
+        <li><a href="{{ student_id }}">{{ student_name }}</a></li>
+        {% endfor %}
+    </ol>
+</div>

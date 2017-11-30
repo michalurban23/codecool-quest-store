@@ -16,4 +16,6 @@ public interface UserInfoDAO {
     Boolean removeUser(User user); // returns true if successfully finished
     Boolean updateUser(User user); // returns true if successfully finished
     User addUser(String userType);
+    Map<String,String> getUserMap(String userType);
+
 }
