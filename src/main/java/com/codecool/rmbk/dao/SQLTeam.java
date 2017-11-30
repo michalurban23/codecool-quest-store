@@ -10,11 +10,13 @@ public class SQLTeam extends SqlDAO {
 
         String query = "SELECT group_id FROM user_groups WHERE user_id = ?;";
         ArrayList<Team> result = new ArrayList<>();
-        ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {String.valueOf(user.getID())});
 
+        processQuery(query, new String[] {String.valueOf(user.getID())});
 
-        for(ArrayList<String> arr : queryResult.subList(1, queryResult.size())) {
-            Team team = getTeamById(Integer.parseInt(arr.get(0)));
+        ArrayList<ArrayList<String>> results = (ArrayList) getResults().clone();
+        for (int i = 1 ; i < results.size() ; i++) {
+            String id = results.get(i).get(0);
+            Team team = getTeamById(Integer.parseInt(id));
             result.add(team);
         }
         return result;
@@ -24,11 +26,13 @@ public class SQLTeam extends SqlDAO {
 
         String query = "SELECT id FROM groups;";
         ArrayList<Team> result = new ArrayList<>();
-        ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
 
+        processQuery(query, null);
 
-        for(ArrayList<String> arr : queryResult.subList(1, queryResult.size())) {
-            Team team = getTeamById(Integer.parseInt(arr.get(0)));
+        ArrayList<ArrayList<String>> results = (ArrayList) getResults().clone();
+        for (int i = 1 ; i < results.size() ; i++) {
+            String id = results.get(i).get(0);
+            Team team = getTeamById(Integer.parseInt(id));
             result.add(team);
         }
         return result;

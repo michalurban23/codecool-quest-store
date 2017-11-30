@@ -10,24 +10,27 @@ public class SQLKlass extends SqlDAO {
 
         String query = "SELECT id FROM class_name;";
         ArrayList<Klass> result = new ArrayList<>();
-        ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
 
+        processQuery(query, null);
 
-        for (ArrayList<String> arr : queryResult.subList(1, queryResult.size())) {
-            Klass klass = getKlassById(Integer.parseInt(arr.get(0)));
+        ArrayList<ArrayList<String>> results = (ArrayList) getResults().clone();
+        for (int i = 1 ; i < results.size() ; i++) {
+            String id = results.get(i).get(0);
+            Klass klass = getKlassById(Integer.parseInt(id));
             result.add(klass);
         }
+        System.out.println("result: " + result.size());
         return result;
     }
 
     public Klass getKlassById(Integer id) {
 
         Klass klass = null;
-        String query = "SELECT * FROM class_name WHERE id = ?;";
-        ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[]{"" + id});
+        String query = "SELECT name FROM class_name WHERE id = ?;";
+        ArrayList<ArrayList<String>> queryResult = (ArrayList) processQuery(query, new String[]{"" + id}).clone();
 
         if (queryResult.size() > 1) {
-            klass = new Klass(id, queryResult.get(1).get(1));
+            klass = new Klass(id, queryResult.get(1).get(0));
             klass.setMentor(getMentor(klass));
             klass.setMembers(getStudentsList(klass));
         }
@@ -39,6 +42,7 @@ public class SQLKlass extends SqlDAO {
         Map<String, String> groupsMap = new HashMap<>();
 
         for (Klass klass : getKlassList()) {
+            System.out.println("try");
             groupsMap.put(String.format("/class/%s", String.valueOf(klass.getID())), klass.getName());
         }
         return groupsMap;

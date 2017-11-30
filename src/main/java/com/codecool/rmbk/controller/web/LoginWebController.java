@@ -34,12 +34,10 @@ public class LoginWebController extends CommonHandler {
     private void logUserIn() throws IOException {
 
         String sessionID = cookieHandler.setNewSessionId();
-
-        loggedUser = userDao.getUserByLogin(loginUserName);
+        loggedUser = userDao.getUserByID(loginID);
 
         session = Session.addSession(sessionID, loggedUser);
-        sessionDao.addSession(session, loginUserName);
-
+        sessionDao.addSession(session, loginID.toString());
 
         send302("/");
     }
