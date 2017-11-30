@@ -1,10 +1,14 @@
-<div class="list">
+<div class="listing">
     {#{% for message in messages %}#}
     {#<p>{{ message }}</p>#}
     {#{% endfor %}#}
-    <ol>
-        {% for key, value in data %}
-            <li><a href="{{ key }}"><p>{{ value }}</p></a></li>
-        {% endfor %}
-    </ol>
+    <form method="get">
+        <ol>
+            {% for key, value in data %}
+                    <div class="row">
+                        <li><label><a href="{{ key }}">{{ value }}</a></label></li>
+                    </div>
+            {% endfor %}
+        </ol>
+    </form>
 </div>

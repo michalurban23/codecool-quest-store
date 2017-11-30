@@ -1,0 +1,46 @@
+.listing ol {
+    justify-content: flex-start;
+    display: block;
+}
+
+.listing li {
+    font-family: 'Oswald', serif;
+}
+
+.listing ol div.row {
+    width: 70%;
+    margin: auto;
+    display: table;
+}
+
+.listing label {
+    animation: leftAnimation 1s;
+    position: relative;
+    width: 70%;
+    text-align: left;
+    margin: auto;
+    font-size: large;
+    padding-left: .5rem;
+
+}
+
+.listing a {
+    font-family: 'Oswald', serif;
+    text-decoration: none;
+    color: #e3e3e3;
+}
+
+.listing a:hover {
+    color: black;
+    background-color: white;
+    transition: .2s background-color;
+}
+
+.listing a:active {
+    color: red;
+}
+
+.listing a:visited {
+    color: #000000;
+}
+

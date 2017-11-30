@@ -1,7 +1,9 @@
 <div class="context-menu">
+    {% if (data) %}
     <ul class="context-menu">
         {% for key, value in data %}
             <li><a href="{{ value }}">{{ key }}</a></li>
         {% endfor %}
     </ul>
+    {% endif %}
 </div>
