@@ -10,7 +10,7 @@ public interface GroupDAO {
     Group getGroupById(Integer id);
     Boolean removeGroup(Group group);
     Boolean renameGroup(Group group, String newName);
-    Boolean removeStudentFromGroup(Group group, Student student);
+    Boolean removeUserFromGroup(Group group, User student);
     ArrayList<Group> getGroupList(User user);
     ArrayList<User> getStudentsList(Group group);
     Boolean isInGroup(User user, Group group);

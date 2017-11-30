@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class SQLGroups extends SqlDAO implements GroupDAO{
+public abstract class SQLGroups extends SqlDAO implements GroupDAO {
 
     String tableName;
 

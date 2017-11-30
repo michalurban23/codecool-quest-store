@@ -7,10 +7,10 @@ import java.util.Map;
 
 public abstract class User implements Holder {
 
-    protected String firstName;
-    protected String lastName;
-    protected String email;
-    protected String address;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String address;
     protected Integer id;
 
     public User(String firstName, String lastName, String email, String address, Integer id) {
@@ -97,14 +97,14 @@ public abstract class User implements Holder {
     }
 
     public static List<String> getFieldLabels() {
+
         List<String> labels = new ArrayList<>();
         labels.add("name");
         labels.add("surname");
         labels.add("email");
         labels.add("address");
+
         return labels;
     }
-
-
 
 }

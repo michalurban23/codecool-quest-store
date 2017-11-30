@@ -11,16 +11,18 @@ import java.util.Map;
 
 public class UserController extends CommonHandler {
 
-    private SQLUsers userDAO = new SQLUsers();
-    private SQLUsers sqlUsers = new SQLUsers();
+    private SQLUsers userDao = new SQLUsers();
     private String response;
     private String accessLevel;
+    private User object;
+    private int id;
 
     public void handle(HttpExchange httpExchange) throws IOException {
 
         setConnectionData(httpExchange);
         parseURIstring(getRequestURI());
         accessLevel = validateRequest();
+        setObject();
 
         String controller = parsedURI.get("controller");
         String object = parsedURI.get("object");
@@ -30,8 +32,8 @@ public class UserController extends CommonHandler {
             showList();
         } else if (isObjectInstanceOfController(controller, object)) {
             if (action == null) {
-                User user = userDAO.getUserByID(Integer.parseInt(object));
-                showDetails(user);
+                User user = userDao.getUserByID(Integer.parseInt(object));
+                showDetails();
             } else {
                 performAction();
             }
@@ -43,23 +45,16 @@ public class UserController extends CommonHandler {
     private void performAction() throws IOException {
 
         String action = parsedURI.get("action");
-        Integer id;
         Boolean editable = isRequestedBySelf() || isRequestedBySupervisor();
-        User object;
 
         if (editable && action.equals("edit")) {
-            id = Integer.parseInt(parsedURI.get("object"));
-            object = userDAO.getUserByID(id);
-            editUserData(object);
+            editUserData();
         } else if (isRequestedBySelf() && action.equals("logininfo")) {
             editLoginData();
         } else if (isRequestedBySupervisor()) {
             if (action.equals("add")) {
                 addUser();
             } else if (action.equals("remove")) {
-                id = Integer.parseInt(parsedURI.get("object"));
-                object = userDAO.getUserByID(id);
-                userDAO.removeUser(object);
                 send302(String.format("/%s", parsedURI.get("controller")));
             }
         } else {
@@ -78,18 +73,18 @@ public class UserController extends CommonHandler {
                                                  urlAdd);
             send200(response);
         } else if (method.equals("POST")) {
-            User newUser = userDAO.addUser(parsedURI.get("controller"));
+            User newUser = userDao.addUser(parsedURI.get("controller"));
             Map<String,String> inputs = readInputs();
             newUser.setFirstName(inputs.get("name"));
             newUser.setLastName(inputs.get("surname"));
             newUser.setEmail(inputs.get("email"));
             newUser.setAddress(inputs.get("address"));
-            userDAO.updateUser(newUser);
+            userDao.updateUser(newUser);
             send302(String.format("/%s/%s", parsedURI.get("controller"), String.valueOf(newUser.getID())));
         }
     }
 
-    private void editUserData(User object) throws IOException {
+    private void editUserData() throws IOException {
         String method = httpExchange.getRequestMethod();
         if (method.equals("GET")) {
             response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
@@ -103,7 +98,7 @@ public class UserController extends CommonHandler {
             object.setLastName(inputs.get("surname"));
             object.setEmail(inputs.get("email"));
             object.setAddress(inputs.get("address"));
-            userDAO.updateUser(object);
+            userDao.updateUser(object);
             send302(String.format("/%s/%s", parsedURI.get("controller"), String.valueOf(object.getID())));
         }
     }
@@ -144,7 +139,7 @@ public class UserController extends CommonHandler {
         send200(response);
     }
 
-    private void showDetails(User object) throws IOException {
+    private void showDetails() throws IOException {
         if (isRequestedBySupervisor() || isRequestedBySelf()) {
             response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
                     prepareContextMenu(getAllowedActions()), object.getFullInfoMap(),
@@ -161,7 +156,7 @@ public class UserController extends CommonHandler {
 
             response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
                     prepareContextMenu(new String[] {"Add"}),
-                    sqlUsers.getUserMap(parsedURI.get("controller")), urlList);
+                    userDao.getUserMap(parsedURI.get("controller")), urlList);
             send200(response);
         } else {
             send403();
@@ -202,61 +197,41 @@ public class UserController extends CommonHandler {
 
     private boolean isNewPassword(Map<String, String> inputs) {
 
-        boolean isNewPassword;
-        if (inputs.get("newpass1").equals("") && inputs.get("newpass2").equals("")) {
-            isNewPassword = false;
-        } else {
-            isNewPassword = true;
-        }
-
-        return isNewPassword;
+        return !inputs.get("newpass1").equals("") || !inputs.get("newpass2").equals("");
     }
 
     private boolean isPasswordCorrect(Map<String, String> credentials, Map<String, String> inputs) {
 
-        boolean correct;
-
         String password = credentials.get("password");
         String passwordInput = PasswordHash.hash(inputs.get("password"), credentials.get("salt"));
 
-        if (password.equals(passwordInput)) {
-            correct = true;
-        } else {
-            correct = false;
-        }
-
-
-        return correct;
+        return password.equals(passwordInput);
     }
 
     private boolean arePasswordsCompatible(Map<String, String> credentials, Map<String, String> inputs) {
 
-        boolean compatible;
         String oldPassword = credentials.get("password");
         String oldPasswordInput = PasswordHash.hash(inputs.get("password"), credentials.get("salt"));
         String newPassword = inputs.get("newpass1");
         String newPasswordConfirm = inputs.get("newpass2");
 
-        if (oldPassword.equals(oldPasswordInput) && newPassword.equals(newPasswordConfirm)) {
-            compatible = true;
-        } else {
-            compatible = false;
-        }
-        return compatible;
+        return oldPassword.equals(oldPasswordInput) && newPassword.equals(newPasswordConfirm);
     }
 
     private boolean isLoginAvailable(String login) {
 
-        boolean isAvailable;
-        List<String> logins = userDAO.getLoginList();
+        List<String> logins = userDao.getLoginList();
 
-        if (logins.contains(login)) {
-            isAvailable = false;
+        return !logins.contains(login);
+    }
+
+    private void setObject() {
+
+        if (parsedURI.get("object") != null) {
+            object = userDao.getUserByID(Integer.parseInt(parsedURI.get("object")));
         } else {
-            isAvailable = true;
+            object = null;
         }
-
-        return isAvailable;
     }
 
 }

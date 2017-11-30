@@ -11,7 +11,8 @@ public class Student extends User implements Holder {
     private Klass myClass;
     private Cart myCart = new Cart();
     private SQLBacklog backlogDao = new SQLBacklog();
-    private static ArrayList<Student> objects = new ArrayList<Student>();
+
+    private static ArrayList<Student> objects = new ArrayList<>();
 
     public Student(String firstName, String lastName, String email, String address, Integer id) {
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Mentor extends User {
 
-    private static ArrayList<Mentor> objects = new ArrayList<Mentor>();
+    private static ArrayList<Mentor> objects = new ArrayList<>();
 
     public Mentor(String firstName, String lastName, String email, String address, Integer id) {
 
