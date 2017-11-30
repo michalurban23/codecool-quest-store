@@ -1,0 +1,123 @@
+.menu-bar {
+    width: 100%;
+    background: #444;
+}
+
+.menu-bar ul {
+    display: table;
+    width: 70%;
+    padding: .2rem 15%;
+}
+
+.menu-bar li {
+    display: table-cell;
+    font-family: 'Oswald', serif;
+    padding: .1rem .1rem;
+}
+
+.menu-bar a {
+    display: block;
+    border: none;
+    text-align: center;
+    margin: .25rem .5rem;
+    font-size: 1.3rem;
+    color: white;
+    text-decoration: none;
+    background-color: inherit;
+}
+
+.menu-bar li:hover {
+    background-color: #ee0000;
+    transition: .3s background-color;
+}
+
+.context-menu {
+    width: 100%;
+    background: #777;
+    padding: 0;
+}
+
+.context-menu ul {
+    display: table;
+    width: 40%;
+    padding: .2rem 30%;
+}
+
+.context-menu li {
+    display: table-cell;
+    font-family: 'Oswald', serif;
+    padding: .1rem .1rem;
+}
+
+.context-menu a {
+    display: block;
+    border: none;
+    text-align: center;
+    margin: .25rem .5rem;
+    font-size: 1rem;
+    color: white;
+    text-decoration: none;
+    background-color: inherit;
+}
+
+.context-menu li:hover {
+    background-color: #dd0000;
+    transition: .3s background-color;
+}
+
+#footer {
+    display: table;
+    width: 55%;
+    padding: 0 22.5%;
+    margin-top: 0;
+}
+
+#footer li:hover {
+    background-color: white;
+    transition: .2s background-color;
+}
+
+#footer li:hover a {
+    color: black;
+}
+
+/*
+footer.context-menu#footer li {
+    display: table-cell;
+    font-family: 'Oswald', serif;
+    padding: 0 .5rem;
+}
+
+footer.context-menu#footer a {
+    display: block;
+    border: none;
+    text-align: center;
+    margin: 0 .5rem;
+    font-size: 1rem;
+    color: white;
+    text-decoration: none;
+    background-color: inherit;
+}
+*/
+
+/*
+@media screen and (min-width: 800px) {
+    .menu-bar li {
+        width: 15%;
+        border-bottom: none;
+        height: 3rem;
+        line-height: 3rem;
+        font-size: 1.3em;
+        float: left;
+    }
+
+    .menu-bar ul {
+        overflow: auto;
+        width: 800px;
+        margin: auto;
+    }
+
+    .menu-bar {
+        background-color: #444;
+    }
+}*/

@@ -1,0 +1,18 @@
+{% extends "login.twig" %}
+{% block loggin %}
+    <div class="login">
+    {{ message }}
+    <form method="post">
+        <div class="row">
+            <label for="name">Name: </label>
+            <input type="text" name="name" id="name" placeholder="Enter your name" required>
+        </div>
+        <div class="row">
+            <label for="password">Password: </label>
+            <input type="password" name="password" id="password" required>
+        </div>
+        <div class="row">
+            <input type="submit" value="Log in">
+        </div>
+    </form>
+    </div>{% endblock %}

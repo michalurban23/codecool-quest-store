@@ -1,9 +1,15 @@
-<div>
+<div class="personal-info">
     <form method="get">
         {% for key, value in data %}
             <div class="row">
                 <label>{{ key }}</label>
-                <p>{{ value }}</p>
+                <p>
+                    {% if (value) %}
+                    {{ value }}
+                    {% else %}
+                    -
+                    {% endif %}
+                </p>
             </div>
         {% endfor %}
     </form>

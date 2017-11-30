@@ -1,0 +1,114 @@
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #888;
+    overflow: auto;
+    position: relative;
+    min-height: 100%;
+    margin: 0;
+}
+
+header {
+    height: 3.5rem;
+    overflow: auto;
+    color: black;
+    border: none;
+    font-size: larger;
+    padding: 2% 1%;
+    margin: auto;
+    background-color: dimgrey;
+}
+
+header ul {
+    display: table;
+    width: 100%;
+    padding: 0;
+    margin: auto;
+    margin-bottom: -1rem;
+    vertical-align: middle;
+}
+
+header li {
+    display: table-cell;
+    padding: -1rem .1rem;
+    width: 43%;
+    margin: auto;
+}
+
+header li a {
+    text-decoration: none;
+    color: white;
+}
+
+header li p {
+    font-family: 'Oswald', serif;
+    font-size: 1.25rem;
+}
+
+#backbutton {
+    padding-bottom: 2rem;
+}
+
+div.date {
+    float: right;
+    color: white;
+    font-size: larger;
+    margin-top: -1.7rem;
+}
+
+div.currentTime {
+    float: right;
+    color: white;
+    font-size: larger;
+    margin-top: -0.5rem;
+    margin-right: 1.2%;
+}
+
+body > div {
+    padding-bottom: 3rem;
+    padding-top: 0;
+}
+
+footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+input {
+    background-color: white;
+    color: black;
+    font-size: larger;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1pt solid black;
+    margin: 0 auto -20px auto;
+}
+
+input[type=submit], input[type=button]{
+    background-color: #555555;
+    color: white;
+    font-size: large;
+    text-decoration: none;
+    justify-content: center;
+    border: 1pt solid black;
+    display: table;
+    /*padding: 4px 2px;*/
+    /*margin: 0 auto;*/
+}
+
+input[value=Logout] {
+    float: left;
+}
+
+input[type=submit]:hover, input[type=button]:hover {
+    background-color: #666666
+}
+
+input[type=submit]:active, input[type=button]:hover {
+    background-color: #777777
+}

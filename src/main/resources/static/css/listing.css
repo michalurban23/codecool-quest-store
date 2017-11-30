@@ -1,0 +1,90 @@
+.listing ol {
+    justify-content: flex-start;
+    display: block;
+    padding-top: 2rem;
+}
+
+.listing li {
+    font-family: 'Oswald', serif;
+}
+
+.listing ol div.row {
+    width: 70%;
+    margin: auto;
+    display: table;
+}
+
+.listing label {
+    animation: leftAnimation .5s;
+    position: relative;
+    width: 70%;
+    text-align: left;
+    margin: auto;
+    font-size: large;
+    padding-left: .5rem;
+}
+
+.listing a {
+    font-family: 'Oswald', serif;
+    text-decoration: none;
+    color: #e3e3e3;
+}
+
+.listing a:hover {
+    color: black;
+    background-color: white;
+    transition: .2s background-color;
+}
+
+.listing a:active {
+    color: red;
+}
+
+.listing a:visited {
+    color: #000000;
+}
+
+.listing > p {
+    animation: bottomAnimation .5s;
+    position: relative;
+    font-family: 'Oswald', serif;
+    font-size: larger;
+    text-align: center;
+}
+
+.row button {
+    display: none;
+    float: right;
+    padding: .25rem .5rem;
+    background-color: #333;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    font-family: 'Oswald', serif;
+    margin: 0 2px;
+}
+
+.row li:hover button {
+    animation: rightAnimation .5s;
+    position: relative;
+    display: inline-block;
+}
+
+.row li button:hover {
+    background-color: white;
+    color: black;
+    transition: .3s background-color;
+}
+
+#hidden-buttons {
+    width: 35%;
+    margin: -2px auto;
+    padding: .4rem;
+    vertical-align: middle;
+}
+
+
+
+

@@ -14,6 +14,7 @@ public class LoginWebController extends CommonHandler {
 
     private String loginUserName;
     private String loginPassword;
+    private Integer loginID;
     private SQLLoginDAO dataAccess = new SQLLoginDAO();
     private SQLUsers userDao = new SQLUsers();
 
@@ -33,10 +34,10 @@ public class LoginWebController extends CommonHandler {
     private void logUserIn() throws IOException {
 
         String sessionID = cookieHandler.setNewSessionId();
-        user = userDao.getUserByLogin(loginUserName);
+        loggedUser = userDao.getUserByID(loginID);
 
-        session = Session.addSession(sessionID, user);
-        sessionDao.addSession(session, loginUserName);
+        session = Session.addSession(sessionID, loggedUser);
+        sessionDao.addSession(session, loginID.toString());
 
         send302("/");
     }
@@ -48,9 +49,9 @@ public class LoginWebController extends CommonHandler {
                     "utf-8");
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
-
             Map<String, String> inputs = parseFormData(formData);
             loginUserName = inputs.get("name");
+            loginID = userDao.getUserByLogin(loginUserName).getID();
             loginPassword = inputs.get("password");
         } catch (IOException e) {
             e.printStackTrace();

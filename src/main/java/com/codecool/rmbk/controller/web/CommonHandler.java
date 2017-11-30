@@ -15,20 +15,18 @@ import java.io.*;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public abstract class CommonHandler implements HttpHandler {
 
     private SQLMenuDAO menuDao = new SQLMenuDAO();
-    String response;
     HttpExchange httpExchange;
     CookieHandler cookieHandler;
     Map<String,String> parsedURI;
     Map<String, String> mainMenu;
     Session session;
-    User user;
+    User loggedUser;
+    String response;
     WebDisplay webDisplay = new WebDisplay();
     SQLSession sessionDao = new SQLSession();
     String urlList = "templates/list_content.twig";
@@ -106,7 +104,7 @@ public abstract class CommonHandler implements HttpHandler {
 
         if (sessionExists) {
             if (active) {
-                requestStatus = user.getAccessLevel();
+                requestStatus = loggedUser.getAccessLevel();
             } else {
                 Session.removeSession(cookieHandler.getSessionId());
                 sessionDao.removeSession(session);
@@ -161,21 +159,29 @@ public abstract class CommonHandler implements HttpHandler {
         session = Session.getSessionById(cookieHandler.getSessionId());
 
         if (session != null) {
-            user = session.getUser();
-            mainMenu = menuDao.getSideMenu(user);
+            loggedUser = session.getUser();
+            mainMenu = menuDao.getSideMenu(loggedUser);
         }
     }
 
     Map<String, String> parseFormData(String formData) throws IOException {
 
         Map<String, String> map = new LinkedHashMap<>();
-        String[] pairs = formData.split("&");
 
-        for (String pair : pairs) {
-            String[] keyValue = pair.split("=");
-            String key = URLDecoder.decode(keyValue[0], "UTF-8");
-            String value = URLDecoder.decode(keyValue[1], "UTF-8");
-            map.put(key, value);
+        if (formData != null) {
+            String[] pairs = formData.split("&");
+
+            for (String pair : pairs) {
+                String[] keyValue = pair.split("=");
+                String key = URLDecoder.decode(keyValue[0], "UTF-8");
+                String value;
+                if (keyValue.length == 1) {
+                    value = "";
+                } else {
+                    value = URLDecoder.decode(keyValue[1], "UTF-8");
+                }
+                map.put(key, value);
+            }
         }
         return map;
     }
@@ -195,12 +201,14 @@ public abstract class CommonHandler implements HttpHandler {
     Map<String, String> prepareContextMenu(String[] options) {
 
         Map<String, String> menu = new HashMap<>();
+        List<String> objectActions = Arrays.asList("Edit", "Remove", "LoginInfo",
+                "AddStudents", "RemoveStudents", "RemoveMentor", "AssignMentor");
 
         for (String option : options) {
             String url = "/" + parseURIstring(getRequestURI()).get("controller");
             if (option.equals("Add") || option.equals("Acquire")) {
                 url += "/new";
-            } else if (option.equals("Edit") || option.equals("Remove")) {
+            } else if (objectActions.contains(option)) {
                 url += "/" + parseURIstring(getRequestURI()).get("object");
             }
             url += "/" + option.toLowerCase();
@@ -227,11 +235,14 @@ public abstract class CommonHandler implements HttpHandler {
                 "utf-8");
         BufferedReader br = new BufferedReader(isr);
         String formData = br.readLine();
-
         return parseFormData(formData);
     }
 
     Boolean isObjectInstanceOfController(String controller, String object) {
+
+        if (object.equals("new")) {
+            return true;
+        }
 
         SQLUsers usersDao = new SQLUsers();
 
@@ -239,4 +250,10 @@ public abstract class CommonHandler implements HttpHandler {
 
         return objectType.toLowerCase().equals(controller);
     }
+
+    void showFailureMessage() throws IOException {
+
+        send302("/static/fail.html");
+    }
+
 }

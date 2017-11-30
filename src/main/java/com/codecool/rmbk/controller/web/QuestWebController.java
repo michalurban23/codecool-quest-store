@@ -38,7 +38,7 @@ public class QuestWebController extends CommonHandler {
 
     private void handleAccessRights() throws IOException {
 
-        name = user.getFirstName();
+        name = loggedUser.getFirstName();
 
         switch (accessLevel) {
             case "Student":
@@ -64,7 +64,7 @@ public class QuestWebController extends CommonHandler {
             addQuestTemplate();
         } else if (object.equals("grade")) {
             showQuestsToAccept();
-        }else {
+        } else {
             if (action == null) {
                 showItem(object);
             } else if (action.equals("remove")) {
@@ -208,17 +208,12 @@ public class QuestWebController extends CommonHandler {
         }
     }
 
-    private void showFailureMessage() throws IOException {
-
-        send302("/quests/"); // TODO
-    }
-
     private void handleStudentQuest() throws IOException {
 
         String object = request.get("object");
         String action = request.get("action");
 
-        if(object == null) {
+        if (object == null) {
             showMyQuests();
         } else if (object.equals("new")) {
             acquireNewQuest();
@@ -240,7 +235,7 @@ public class QuestWebController extends CommonHandler {
         String title = "My submitted quests";
         String[] options = {"Acquire"};
         Map<String, String> contextMenu = prepareContextMenu(options);
-        Map<String, String> submittedQuests = sqlQuest.getSubmittedQuestMapBy(user);
+        Map<String, String> submittedQuests = sqlQuest.getSubmittedQuestMapBy(loggedUser);
 
         response = webDisplay.getSiteContent(name, mainMenu, contextMenu, title, submittedQuests, urlJustList);
     }
@@ -250,7 +245,7 @@ public class QuestWebController extends CommonHandler {
         String title = "My pending quests";
         String[] options = {"Acquire", "Submitted"};
         Map<String, String> contextMenu = prepareContextMenu(options);
-        Map<String, String> myQuests = sqlQuest.getQuestMapBy(user);
+        Map<String, String> myQuests = sqlQuest.getQuestMapBy(loggedUser);
 
         response = webDisplay.getSiteContent(name, mainMenu, contextMenu, title, myQuests, urlListQuests);
     }
@@ -258,7 +253,7 @@ public class QuestWebController extends CommonHandler {
     private void acquireNewQuest() throws IOException {
 
         String method = httpExchange.getRequestMethod();
-        Map<String, String> availableQuests = sqlQuest.getAvailableQuests(user);
+        Map<String, String> availableQuests = sqlQuest.getAvailableQuests(loggedUser);
 
         if (method.equals("GET")) {
             response = webDisplay.getSiteContent(name, mainMenu, null, availableQuests, urlBuy);
@@ -288,7 +283,7 @@ public class QuestWebController extends CommonHandler {
             String questValue = templateData.get(i+1);
 
             List<String> questData = Arrays.asList(questName, questValue);
-            Quest quest = new Quest(questData, user);
+            Quest quest = new Quest(questData, loggedUser);
 
             sqlQuest.getNewQuest(quest);
         }
@@ -299,7 +294,7 @@ public class QuestWebController extends CommonHandler {
         Map<String, String> questInfo = sqlQuest.getQuestInfo(object);
         List<String> data = Arrays.asList(questInfo.get("template_name"), questInfo.get("value"));
 
-        Quest quest = new Quest(data, user);
+        Quest quest = new Quest(data, loggedUser);
         sqlQuest.submitQuest(quest);
     }
 

@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 public class SQLSession extends SqlDAO {
 
-    public void addSession(Session session, String login) {
+    public void addSession(Session session, String id) {
 
         String query = "INSERT INTO `session` " +
                 "VALUES(?, ?, ?, ?, ?);";
         String[] data = {session.getSessionId(),
-                login,
+                id,
                 session.getCreateTime().toString(),
                 session.getLastAccessTime().toString(),
                 session.getExpireTime().toString()};
@@ -69,9 +69,9 @@ public class SQLSession extends SqlDAO {
             for (ArrayList<String> session : getResults().subList(1, getResults().size())) {
 
                 String sessionID = session.get(0);
-                String userLogin = session.get(1);
+                String userID = session.get(1);
                 LocalDateTime createTime = LocalDateTime.parse(session.get(2));
-                User user = userDao.getUserByLogin(userLogin);
+                User user = userDao.getUserByID(Integer.parseInt(userID));
 
                 Session.addSession(sessionID, user, createTime);
             }

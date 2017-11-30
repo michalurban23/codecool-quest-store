@@ -1,5 +1,21 @@
-<div class="backlog">
-    {% for row in data %}
-    <p>{{ row }}</p>
-    {% endfor %}
+<div class="listing">
+    <div class="personal-info">
+        <form method="get">
+            {% for key, value in messages %}
+                <div class="row">
+                    <label>{{ key }}</label>
+                    <p id="backlog">{{ value }}</p>
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+    <form method="get">
+        <ol>
+            {% for key, value in data %}
+                <div class="row">
+                    <li><label><a href="{{ key }}">{{ value }}</a></label></li>
+                </div>
+            {% endfor %}
+        </ol>
+    </form>
 </div>

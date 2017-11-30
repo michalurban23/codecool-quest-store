@@ -1,0 +1,11 @@
+<div class="choice_form">
+    <p>{{ title }}</p>
+    <form method="post">
+        <select title="{{ title }}" multiple >
+        {% for key, value in data %}
+            <option name="{{ key }}" value= {{ key }} >{{ value }}</option>
+        {% endfor %}
+        </select>
+        <input type="submit" value="Add" />
+    </form>
+</div>

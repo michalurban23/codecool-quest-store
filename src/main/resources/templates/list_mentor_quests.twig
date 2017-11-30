@@ -1,10 +1,13 @@
-<div>
+<div class="listing">
     <p>{{ title }}</p>
     <ol>
         {% for key, value in data %}
-            <li><a href="{{ key }}">{{ value }}</a>
-                <button value="accept" onclick="window.open('{{ key }}/accept', '_parent')">Accept</button>
-            </li>
+            <div class="row">
+                <li id="hidden-buttons"><label><a href="{{ key }}">{{ value }}</a></label>
+                    <button value="accept" onclick="window.open('{{ key }}/accept', '_parent')">Accept</button>
+                </li>
+
+            </div>
         {% endfor %}
     </ol>
 </div>

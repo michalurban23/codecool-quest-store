@@ -143,16 +143,42 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
         return new ArrayList<>(queryResult.subList(1, queryResult.size()));
     }
 
+    public List<String> getLoginList() {
+
+        String query = "SELECT login FROM login_info;";
+        processQuery(query, null);
+        ArrayList<ArrayList<String>> results = getResults();
+        List<String> logins = new ArrayList<>();
+
+        for (ArrayList<String> result : results.subList(1, results.size())) {
+            logins.add(result.get(0));
+        }
+
+        return logins;
+    }
+
     @Override
     public Boolean removeUser(User user) {
+
         boolean removedFromGroups = removeUserFromUserGroupsTable(user);
         boolean removedFromUsers = removeUserFromUsersTable(user);
+
+        removeUserFromLogin(user);
+
         return removedFromGroups && removedFromUsers;
     }
 
-    public Boolean removeUserFromUsersTable(User user) {
+    private Boolean removeUserFromUsersTable(User user) {
 
         String query = "DELETE FROM users WHERE id = ?;";
+        String[] param = new String[] {String.valueOf(user.getID())};
+
+        return handleQuery(query, param);
+    }
+
+    private Boolean removeUserFromLogin(User user) {
+
+        String query = "DELETE FROM login_info WHERE id = ?;";
         String[] param = new String[] {String.valueOf(user.getID())};
 
         return handleQuery(query, param);
@@ -202,11 +228,31 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     private void updateLoginDB(User user) {
 
         String name = user.getLastName();
+        List<String> logins = getLoginsList();
+        int counter = 1;
+
+        while (logins.contains(name)) {
+            name = user.getLastName() + counter++;
+        }
 
         String query = "UPDATE login_info SET login = ? WHERE login = 'new_user';";
         String[] data = {name};
 
         processQuery(query, data);
+    }
+
+    private List<String> getLoginsList() {
+
+        List<String> logins = new ArrayList<>();
+        String query = "SELECT login FROM login_info";
+
+        processQuery(query, null);
+
+        for(ArrayList<String> login: getResults().subList(1, getResults().size()-1)) {
+            logins.add(login.get(0));
+        }
+
+        return logins;
     }
 
     @Override
@@ -235,5 +281,5 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
         processQuery(loginQuery, data);
     }
-}
 
+}
