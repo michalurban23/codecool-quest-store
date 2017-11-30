@@ -2,8 +2,7 @@ package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.*;
 import com.codecool.rmbk.model.usr.*;
-import com.codecool.rmbk.view.TeamWebView;
-import com.codecool.rmbk.view.web.ClassWebView;
+import com.codecool.rmbk.view.web.TeamWebView;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
@@ -15,8 +14,6 @@ public class TeamWebController extends CommonHandler {
 
     private SQLTeam sqlTeam = new SQLTeam();
     private SQLUsers sqlUsers = new SQLUsers();
-
-    private MenuDAO menuDAO = new SQLMenuDAO();
 
     private Team object;
 

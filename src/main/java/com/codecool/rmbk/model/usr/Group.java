@@ -70,4 +70,8 @@ public abstract class Group implements Holder {
         return membersURI;
     }
 
+    public String getURI() {
+        return String.format("/%s/%s", this.getClass().getSimpleName().toLowerCase(), id);
+    }
+
 }
