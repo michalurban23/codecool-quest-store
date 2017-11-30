@@ -1,4 +1,4 @@
-package com.codecool.rmbk.controller;
+package com.codecool.rmbk.controller.console;
 
 import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
@@ -6,7 +6,7 @@ import com.codecool.rmbk.model.Shop;
 import com.codecool.rmbk.model.item.ItemTemplate;
 import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.User;
-import com.codecool.rmbk.view.ArtifactControllerView;
+import com.codecool.rmbk.view.console.ArtifactControllerView;
 import java.util.ArrayList;
 
 class ArtifactController {

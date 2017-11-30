@@ -8,6 +8,7 @@ public class Klass extends Group {
     private UUID groupID;
     private ArrayList<Student> usersList;
     private String name;
+    private Mentor mentor;
     private static ArrayList<Klass> objects = new ArrayList<>();
 
     public Klass(ArrayList<Student> usersList) {
@@ -30,6 +31,7 @@ public class Klass extends Group {
         this.name = name;
     }
 
+
     public ArrayList<Student> getUsersList() {
         return this.usersList;
     }
@@ -41,5 +43,13 @@ public class Klass extends Group {
     public static boolean remove(Klass cls) {
 
             return objects.remove(cls);
+    }
+
+    public void setMentor(Mentor mentor) {
+        this.mentor = mentor;
+    }
+
+    public Mentor getMentor() {
+        return mentor;
     }
 }

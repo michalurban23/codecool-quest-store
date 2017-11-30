@@ -1,4 +1,4 @@
-package com.codecool.rmbk.controller;
+package com.codecool.rmbk.controller.console;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -7,7 +7,7 @@ import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.dao.UserInfoDAO;
 import com.codecool.rmbk.model.usr.User;
-import com.codecool.rmbk.view.ConsoleUserView;
+import com.codecool.rmbk.view.console.ConsoleUserView;
 
 public abstract class UserController {
 

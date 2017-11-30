@@ -1,7 +1,7 @@
-package com.codecool.rmbk.controller;
+package com.codecool.rmbk.controller.console;
 
-import com.codecool.rmbk.view.LoginView;
-import com.codecool.rmbk.view.ConsoleLoginView;
+import com.codecool.rmbk.view.console.LoginView;
+import com.codecool.rmbk.view.console.ConsoleLoginView;
 import com.codecool.rmbk.dao.*;
 
 public class LoginController {

@@ -75,7 +75,7 @@ public class SQLTeam extends SQLGroups implements GroupDAO {
     }
 
     @Override
-    public Boolean removeStudentFromGroup(Group group, Student student) {
+    public Boolean removeUserFromGroup(Group group, User student) {
 
         String query = "DELETE FROM user_groups WHERE user_id = ? AND group_id = ?;";
         return handleQuery(query, new String[] {"" + student.getID(), "" + group.getID()});

@@ -1,8 +1,7 @@
-package com.codecool.rmbk.view;
+package com.codecool.rmbk.view.console;
 
 import com.codecool.rmbk.model.usr.Group;
 import com.codecool.rmbk.model.usr.Student;
-import com.codecool.rmbk.model.usr.Team;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

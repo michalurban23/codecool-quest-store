@@ -34,6 +34,7 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
 
         if(queryResult.size() > 1) {
             resultGroup = new Team(id, queryResult.get(1).get(1));
+            if (resultGroup)
         }
         return resultGroup;
     }
@@ -63,19 +64,7 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
         return handleQuery(query, new String[] {newName, "" + group.getID()});
     }
 
-    ArrayList<User> getUsers(Group group, String query) {
 
-        ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {"" + group.getID()});
-
-        ArrayList<User> result = new ArrayList<>();
-        SQLUsers sqlUsers = new SQLUsers();
-
-        for(ArrayList<String> ar : queryResult.subList(1, queryResult.size())) {
-            result.add(sqlUsers.getUserByID(Integer.parseInt(ar.get(0))));
-        }
-        return result;
-
-    }
 
     void updateUsers(Group group, String query) {
 
@@ -90,16 +79,7 @@ public abstract class SQLGroups extends SqlDAO implements GroupDAO{
 
     }
 
-    public Map<String,String> getGroupMap(String groupType) {
 
-        Map<String,String> groupsMap = new HashMap<>();
-
-        for(Group group : getAllGroups(groupType)) {
-            groupsMap.put(String.format("/%s/%s", groupType, String.valueOf(group.getID())),
-                    group.getName());
-        }
-        return groupsMap;
-    }
 
 
 }

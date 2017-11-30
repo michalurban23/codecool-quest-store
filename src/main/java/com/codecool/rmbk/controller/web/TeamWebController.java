@@ -16,8 +16,8 @@ public class TeamWebController extends CommonHandler {
         setConnectionData(httpExchange);
 
         String accessLevel = validateRequest();
-        String name = user.getFirstName();
-        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(user);
+        String name = loggedUser.getFirstName();
+        Map<String, String> sideMenu = sqlMenuDAO.getSideMenu(loggedUser);
 
         handleWebTeam(accessLevel, name, sideMenu);
     }

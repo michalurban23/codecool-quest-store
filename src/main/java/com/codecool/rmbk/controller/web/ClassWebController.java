@@ -1,12 +1,8 @@
 package com.codecool.rmbk.controller.web;
 
-import com.codecool.rmbk.dao.SQLClass;
-import com.codecool.rmbk.dao.SQLMenuDAO;
-import com.codecool.rmbk.dao.SQLUsers;
-import com.codecool.rmbk.model.usr.Group;
-import com.codecool.rmbk.model.usr.Klass;
-import com.codecool.rmbk.model.usr.Student;
-import com.codecool.rmbk.model.usr.User;
+import com.codecool.rmbk.dao.*;
+import com.codecool.rmbk.model.usr.*;
+import com.codecool.rmbk.view.web.ClassWebView;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
@@ -16,14 +12,27 @@ import java.util.Map;
 
 public class ClassWebController extends CommonHandler {
 
-    private SQLClass sqlClass = new SQLClass();
+    private SQLKlass sqlClass = new SQLKlass();
     private SQLUsers sqlUsers = new SQLUsers();
 
+    private MenuDAO menuDAO = new SQLMenuDAO();
+
+    private Group object;
+
+    private ClassWebView view;
+
     public void handle(HttpExchange httpExchange) throws IOException {
+
+        view = new ClassWebView();
 
         setConnectionData(httpExchange);
         parseURIstring(getRequestURI());
         validateRequest();
+        setObject();
+
+        view.setHeader(loggedUser);
+        view.setMainMenu(mainMenu);
+        view.setFooter();
 
         if (parsedURI.get("object") == null) {
             showList();
@@ -33,6 +42,9 @@ public class ClassWebController extends CommonHandler {
         } else {
             performAction();
         }
+    }
+
+    private void setObject() {
     }
 
     private void performAction() throws IOException {
@@ -55,26 +67,63 @@ public class ClassWebController extends CommonHandler {
                 send302(String.format("/%s", parsedURI.get("controller")));
                 break;
             case "addStudents":
-//                addStudents(object);
+                addStudents(object);
                 break;
             case "removeStudent":
                 subject = sqlUsers.getUserByID(Integer.parseInt(parsedURI.get("subject")));
-                sqlClass.removeStudentFromGroup(object, (Student) subject);
+                sqlClass.removeUserFromGroup(object, subject);
                 send302(String.format("/%s/%s", parsedURI.get("controller"), objectId));
                 break;
+            case "assignMentor":
+                if (parsedURI.get("controller").equals("class")) {
+                    assignMentor((Klass) object);
+                } else {
+                    send404();
+                }
+                break;
+            case "removeMentor":
+                subject = sqlUsers.getUserByID(Integer.parseInt(parsedURI.get("subject")));
+                sqlClass.removeUserFromGroup(object, subject);
+                send302(String.format("/%s/%s", parsedURI.get("controller"), objectId));
+                break;
+            default:
+                send404();
+                break;
         }
+    }
+
+    private void addStudents(Group object) throws IOException {
+        String method = httpExchange.getRequestMethod();
+        if (method.equals("GET")) {
+            view.setAddUserView(sqlUsers.getUserMap("Student"));
+        } else if (method.equals("POST")) {
+            Map<String,String> inputs = readInputs();
+            for (String url : inputs.keySet()) {
+                sqlClass.addUserToGroup(object, sqlUsers.getUserByID(Integer.parseInt(url.split("student/", 2)[1])));
+            }
+            send302(String.format("/%s/%s", parsedURI.get("controller"), String.valueOf(object.getID())));
+        }
+    }
+
+    private void assignMentor(Klass object) throws IOException {
+        String method = httpExchange.getRequestMethod();
+        if (method.equals("GET")) {
+            view.
+        } else if (method.equals("POST")) {
+            Map<String,String> inputs = readInputs();
+            User mentorToAssign = sqlUsers.getUserByID(Integer.parseInt(inputs.get("mentor_id")));
+            object.setMentor((Mentor) mentorToAssign);
+            sqlClass.addUserToGroup(object, mentorToAssign);
+            send302(String.format("/%s/%s", parsedURI.get("controller"), String.valueOf(object.getID())));
+        }
+
     }
 
     private void addClass() throws IOException {
         String method = httpExchange.getRequestMethod();
         if (method.equals("GET")) {
-            response = webDisplay.getSiteContent(user.getFullName(),
-                    mainMenu,
-                    null,
-                    String.format("Add new %s", parsedURI.get("controller")),
-                    Group.getFieldLabels(),
-                    urlAdd);
-            send200(response);
+            view.setAddClassView();
+            send200(view.getResponse());
         } else if (method.equals("POST")) {
             Group newGroup = sqlClass.createGroup();
             Map<String,String> inputs = readInputs();
@@ -87,13 +136,8 @@ public class ClassWebController extends CommonHandler {
     private void editClassData(Group object) throws IOException {
         String method = httpExchange.getRequestMethod();
         if (method.equals("GET")) {
-            response = webDisplay.getSiteContent(user.getFullName(),
-                    mainMenu,
-                    prepareContextMenu(getAllowedDetailsActions(user)),
-                    String.format("Rename %s:", object.getClass().getSimpleName()),
-                    Group.getFieldLabels(),
-                    urlEdit);
-            send200(response);
+            view.setEditClassDataView(object.getFullInfoMap());
+            send200(view.getResponse());
         } else if (method.equals("POST")) {
             Map<String,String> inputs = readInputs();
             object.setName(inputs.get("name"));
@@ -104,55 +148,50 @@ public class ClassWebController extends CommonHandler {
 
     private void showDetails(Group object) throws IOException {
 
-        String userStatus = user.getClass().getSimpleName();
-
-        if (userStatus.equals("Student")) {
+        if (loggedUser.getClass().getSimpleName().equals("Student")) {
             send403();
         } else {
-            response = webDisplay.getSiteContent(user.getFullName(), mainMenu,
-                    prepareContextMenu(getAllowedDetailsActions(user)), object.getName(),
-                    sqlClass.getMembersMap(object),
-                    urlItem);
-            send200(response);
+            view.setContextMenu(prepareContextMenu(getContextOptions()));
+            view.setClassDetailsView(object);
+            send200(view.getResponse());
         }
     }
 
     private void showList() throws IOException {
-        
-        String userStatus = user.getClass().getSimpleName();
-        List<String> contextMenuOptions = new ArrayList<>();
 
-        switch (userStatus) {
-            case "Admin":
-                contextMenuOptions.add("Add");
-                response = webDisplay.getSiteContent(user.getFullName(), mainMenu,
-                        prepareContextMenu(contextMenuOptions.toArray(new String[contextMenuOptions.size()])),
-                        sqlClass.getGroupMap(parsedURI.get("controller")), urlList);
-                send200(response);
-                break;
-            case "Mentor":
-                response = webDisplay.getSiteContent(user.getFullName(), mainMenu,
-                        prepareContextMenu(contextMenuOptions.toArray(new String[contextMenuOptions.size()])),
-                        sqlClass.getGroupMap(parsedURI.get("controller")), urlList);
-                send200(response);
-                break;
-            default:
-                send403();
-                break;
+        if (loggedUser.getClass().getSimpleName().equals("Student")) {
+            send403();
+        } else {
+            view.setContextMenu(prepareContextMenu(getContextOptions()));
+            view.setClassListView(sqlClass.getGroupMap(parsedURI.get("controller")));
+            send200(view.getResponse());
         }
+
     }
 
-    private String[] getAllowedDetailsActions(User user) {
+    private String[] getContextOptions () {
 
         List<String> options = new ArrayList<>();
-        switch (user.getClass().getSimpleName()) {
-            case "Admin" :
-                options.add("Edit");
-                options.add("Remove");
-                break;
-            case "Mentor" :
-                options.add("Add student");
-                break;
+
+        if (object == null) {
+            if (loggedUser.getClass().getSimpleName().equals("Admin")) {
+                options.add("Add");
+            }
+        } else {
+            switch (loggedUser.getClass().getSimpleName()) {
+                case "Admin" :
+                    options.add("Edit");
+                    options.add("Remove");
+                    if (sqlClass.getMentorsList(object).isEmpty()) {
+                        options.add("Assign mentor");
+                    } else {
+                        options.add("Remove mentor");
+                    }
+                    break;
+                case "Mentor" :
+                    options.add("Add student");
+                    break;
+            }
         }
         return options.toArray(new String[options.size()]);
     }

@@ -6,7 +6,6 @@ import com.codecool.rmbk.helper.CookieHandler;
 import com.codecool.rmbk.helper.MimeTypeResolver;
 import com.codecool.rmbk.model.Session;
 import com.codecool.rmbk.model.usr.User;
-import com.codecool.rmbk.view.WebDisplay;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -21,14 +20,12 @@ import java.util.Map;
 public abstract class CommonHandler implements HttpHandler {
 
     private SQLMenuDAO menuDao = new SQLMenuDAO();
-    String response;
     HttpExchange httpExchange;
     CookieHandler cookieHandler;
     Map<String,String> parsedURI;
     Map<String, String> mainMenu;
     Session session;
-    User user;
-    WebDisplay webDisplay = new WebDisplay();
+    User loggedUser;
     SQLSession sessionDao = new SQLSession();
     String urlList = "templates/list_content.twig";
     String urlItem = "templates/item.twig";
@@ -105,7 +102,7 @@ public abstract class CommonHandler implements HttpHandler {
 
         if (sessionExists) {
             if (active) {
-                requestStatus = user.getAccessLevel();
+                requestStatus = loggedUser.getAccessLevel();
             } else {
                 Session.removeSession(cookieHandler.getSessionId());
                 sessionDao.removeSession(session);
@@ -160,8 +157,8 @@ public abstract class CommonHandler implements HttpHandler {
         session = Session.getSessionById(cookieHandler.getSessionId());
 
         if (session != null) {
-            user = session.getUser();
-            mainMenu = menuDao.getSideMenu(user);
+            loggedUser = session.getUser();
+            mainMenu = menuDao.getSideMenu(loggedUser);
         }
     }
 

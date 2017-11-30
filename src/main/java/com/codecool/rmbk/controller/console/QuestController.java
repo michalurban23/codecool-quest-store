@@ -1,4 +1,4 @@
-package com.codecool.rmbk.controller;
+package com.codecool.rmbk.controller.console;
 
 import com.codecool.rmbk.dao.SQLQuest;
 import com.codecool.rmbk.dao.SQLQuestTemplate;
@@ -7,8 +7,8 @@ import com.codecool.rmbk.model.quest.Quest;
 import com.codecool.rmbk.model.quest.QuestTemplate;
 import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
-import com.codecool.rmbk.view.ConsoleQuestView;
-import com.codecool.rmbk.view.ConsoleView;
+import com.codecool.rmbk.view.console.ConsoleQuestView;
+import com.codecool.rmbk.view.console.ConsoleView;
 import java.util.ArrayList;
 import java.util.TreeMap;
 

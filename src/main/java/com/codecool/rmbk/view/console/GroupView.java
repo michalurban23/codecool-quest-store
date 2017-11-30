@@ -1,4 +1,4 @@
-package com.codecool.rmbk.view;
+package com.codecool.rmbk.view.console;
 
 import com.codecool.rmbk.model.usr.Group;
 import com.codecool.rmbk.model.usr.Student;

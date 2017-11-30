@@ -1,8 +1,6 @@
-package com.codecool.rmbk.controller;
+package com.codecool.rmbk.controller.console;
 
-import com.codecool.rmbk.dao.SQLClass;
-import com.codecool.rmbk.dao.SQLTeam;
-import com.codecool.rmbk.dao.SQLUsers;
+import com.codecool.rmbk.dao.SQLKlass;
 import com.codecool.rmbk.model.usr.*;
 
 import java.util.ArrayList;
@@ -12,7 +10,7 @@ public class ClassController extends GroupController {
 
     public ClassController() {
         super();
-        groupDAO = new SQLClass();
+        groupDAO = new SQLKlass();
     }
 
     public void start (User user) {

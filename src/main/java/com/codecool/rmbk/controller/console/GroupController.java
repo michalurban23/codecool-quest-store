@@ -1,11 +1,10 @@
-package com.codecool.rmbk.controller;
+package com.codecool.rmbk.controller.console;
 
 import com.codecool.rmbk.dao.*;
 import com.codecool.rmbk.model.usr.Group;
 import com.codecool.rmbk.model.usr.Student;
-import com.codecool.rmbk.model.usr.Team;
 import com.codecool.rmbk.model.usr.User;
-import com.codecool.rmbk.view.ConsoleGroupView;
+import com.codecool.rmbk.view.console.ConsoleGroupView;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

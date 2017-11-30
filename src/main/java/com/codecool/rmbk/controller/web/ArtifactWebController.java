@@ -7,11 +7,8 @@ import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.helper.StringParser;
 import com.sun.net.httpserver.HttpExchange;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -44,8 +41,8 @@ public class ArtifactWebController extends CommonHandler {
 
     private void handleAccessRights() throws IOException {
 
-        name = user.getFirstName();
-        mainMenu = sqlMenuDAO.getSideMenu(user);
+        name = loggedUser.getFirstName();
+        mainMenu = sqlMenuDAO.getSideMenu(loggedUser);
 
         switch (accessLevel) {
             case "Mentor":
@@ -110,7 +107,7 @@ public class ArtifactWebController extends CommonHandler {
     private void viewArtifacts() {
         String[] options = {"Acquire"};
         Map<String, String> contextMenu = prepareContextMenu(options);
-        Map<String, String> mainData = sqlArtifact.getArtifactMapBy(user);
+        Map<String, String> mainData = sqlArtifact.getArtifactMapBy(loggedUser);
 
         response = webDisplay.getSiteContent(name, mainMenu, contextMenu, mainData, urlList);
     }
@@ -190,7 +187,7 @@ public class ArtifactWebController extends CommonHandler {
     private Boolean checkIfBuyable(String object) {
 
         Boolean buyable;
-        Integer coins = sqlBacklog.getCurrentCoins(user.getID());
+        Integer coins = sqlBacklog.getCurrentCoins(loggedUser.getID());
         System.out.println(object);
         Integer value = sqlArtifactTemplate.getTemplateValue(object);
 

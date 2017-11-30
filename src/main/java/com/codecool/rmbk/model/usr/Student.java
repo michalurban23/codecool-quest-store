@@ -7,6 +7,8 @@ import com.codecool.rmbk.model.Cart;
 
 public class Student extends User implements Holder {
 
+    static Class<? extends User> supervisor = Mentor.class;
+
     private ArrayList<Team> myGroups;
     private Klass myClass;
     private Cart myCart = new Cart();

@@ -1,11 +1,11 @@
-package com.codecool.rmbk.controller;
+package com.codecool.rmbk.controller.console;
 
 import com.codecool.rmbk.dao.SQLBacklog;
 import com.codecool.rmbk.dao.SQLExperience;
 import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.User;
-import com.codecool.rmbk.view.ConsoleBacklogView;
-import com.codecool.rmbk.view.ConsoleView;
+import com.codecool.rmbk.view.console.ConsoleBacklogView;
+import com.codecool.rmbk.view.console.ConsoleView;
 import java.util.ArrayList;
 import java.util.TreeMap;
 

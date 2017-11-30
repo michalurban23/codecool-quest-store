@@ -1,14 +1,12 @@
-package com.codecool.rmbk.controller;
+package com.codecool.rmbk.controller.console;
 
 import java.util.ArrayList;
 import com.codecool.rmbk.dao.SQLArtifact;
 import com.codecool.rmbk.dao.SQLArtifactTemplate;
-import com.codecool.rmbk.dao.SQLTeam;
 import com.codecool.rmbk.model.Shop;
 import com.codecool.rmbk.model.item.Item;
 import com.codecool.rmbk.model.item.ItemTemplate;
-import com.codecool.rmbk.model.usr.User;
-import com.codecool.rmbk.view.ShoppingControllerView;
+import com.codecool.rmbk.view.console.ShoppingControllerView;
 
 class ShoppingController {
 

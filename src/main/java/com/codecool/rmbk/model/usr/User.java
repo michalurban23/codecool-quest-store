@@ -7,6 +7,8 @@ import java.util.Map;
 
 public abstract class User implements Holder {
 
+    static Class<? extends User> supervisor;
+
     protected String firstName;
     protected String lastName;
     protected String email;
@@ -105,6 +107,8 @@ public abstract class User implements Holder {
         return labels;
     }
 
-
+    public static Class getSupervisor() {
+        return supervisor;
+    }
 
 }

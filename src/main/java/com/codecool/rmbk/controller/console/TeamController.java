@@ -1,4 +1,4 @@
-package com.codecool.rmbk.controller;
+package com.codecool.rmbk.controller.console;
 
 import com.codecool.rmbk.dao.*;
 import com.codecool.rmbk.model.usr.*;

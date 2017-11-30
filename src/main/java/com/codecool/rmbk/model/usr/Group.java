@@ -1,16 +1,14 @@
 package com.codecool.rmbk.model.usr;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class Group implements Holder {
 
     String name;
     Integer id;
-    ArrayList<Student> members;
+    ArrayList<User> members;
 
-    public Group(ArrayList<Student> usersList) {
+    public Group(ArrayList<User> usersList) {
 
         this.members = usersList;
         name = "";
@@ -29,6 +27,13 @@ public abstract class Group implements Holder {
         this.members = new ArrayList<>();
     }
 
+    public Group(Integer id, String name, ArrayList<User> members) {
+
+        this.id = id;
+        this.name = name;
+        this.members = members;
+    }
+
     public String getName() {
         return name;
     }
@@ -45,8 +50,8 @@ public abstract class Group implements Holder {
         this.id = id;
     }
 
-    public void addMember(Student student) {
-        for (Student member : members) {
+    public void addMember(User student) {
+        for (User  member : members) {
             if (member.getID() == student.getID()) {
                 return;
             }
@@ -54,8 +59,10 @@ public abstract class Group implements Holder {
         members.add(student);
     }
 
-    public ArrayList<Student> getMembers() {
-        return members;
+    public Map<String, String> getFullInfoMap() {
+        Map<String, String> fullInfo = new LinkedHashMap<>();
+        fullInfo.put("name", getName());
+        return fullInfo;
     }
 
     public void clearMembersList() {
