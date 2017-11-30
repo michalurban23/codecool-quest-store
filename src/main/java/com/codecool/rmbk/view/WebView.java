@@ -3,6 +3,7 @@ package com.codecool.rmbk.view;
 import com.codecool.rmbk.model.usr.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
+
 import java.util.Map;
 
 public abstract class WebView {
@@ -13,17 +14,18 @@ public abstract class WebView {
     private String contextMenu;
     String mainContent;
 
+
     public void setHeader(User user) {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/header.twig");
         JtwigModel model = JtwigModel.newModel();
 
-        if (user != null) {
+        if (user != null)
             model.with("name", user.getFullName());
-        }
 
         header = template.render(model);
     }
+
 
     public void setFooter() {
 
@@ -45,7 +47,6 @@ public abstract class WebView {
     }
 
     public void setContextMenu(Map<String,String> optionMap) {
-
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/context_menu.twig");
         JtwigModel model = JtwigModel.newModel();
 
@@ -66,5 +67,4 @@ public abstract class WebView {
 
         return response.toString();
     }
-
 }

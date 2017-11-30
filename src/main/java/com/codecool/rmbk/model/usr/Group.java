@@ -9,19 +9,13 @@ public abstract class Group implements Holder {
 
     String name;
     Integer id;
-    ArrayList<User> members;
+    ArrayList<Student> members;
 
-    public Group(ArrayList<User> usersList) {
+    public ArrayList<Student> getMembers() {
 
-        this.members = usersList;
-        name = "";
+        return members;
     }
 
-    public Group() {
-
-        this.members = new ArrayList<>();
-        name = "";
-    }
 
     public Group(Integer id, String name) {
 
@@ -30,7 +24,7 @@ public abstract class Group implements Holder {
         this.members = new ArrayList<>();
     }
 
-    public Group(Integer id, String name, ArrayList<User> members) {
+    public Group(Integer id, String name, ArrayList<Student> members) {
 
         this.id = id;
         this.name = name;
@@ -53,9 +47,9 @@ public abstract class Group implements Holder {
         this.id = id;
     }
 
-    public void addMember(User student) {
+    public void addMember(Student student) {
 
-        for (User member : members) {
+        for (Student member : members) {
             if (member.getID() == student.getID()) {
                 return;
             }
@@ -80,6 +74,22 @@ public abstract class Group implements Holder {
         List<String> labels = new ArrayList<>();
         labels.add("name");
         return labels;
+    }
+
+    public void setMembers(ArrayList<Student> members) {
+
+        this.members = members;
+    }
+
+    public Map<String,String> getMembersURIMap() {
+
+        Map<String,String> membersURI = new LinkedHashMap<>();
+
+        for (User student : members) {
+            membersURI.put(student.getURI(), student.getFullName());
+        }
+
+        return membersURI;
     }
 
     public String getURI() {

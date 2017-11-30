@@ -2,7 +2,6 @@ package com.codecool.rmbk.view;
 
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-
 import java.util.List;
 import java.util.Map;
 

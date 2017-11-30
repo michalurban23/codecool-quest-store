@@ -8,29 +8,8 @@ public class Team extends Group implements Holder {
 
     private Cart ourCart;
 
-    public Team(ArrayList<User> usersList) {
-
-        super(usersList);
-    }
-
-    public Team() {
-        super();
-    }
-
     public Team(Integer id, String name) {
         super(id, name);
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getID() {
-        return this.id;
     }
 
     public Cart getCart() {

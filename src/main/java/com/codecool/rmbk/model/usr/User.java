@@ -111,4 +111,5 @@ public abstract class User implements Holder {
 
         return String.format("/%s/%s", this.getClass().getSimpleName().toLowerCase(), this.getID());
     }
+
 }

@@ -58,7 +58,6 @@ public class TeamWebView extends WebView {
         JtwigModel model = JtwigModel.newModel();
         model.with("title", "Edit team info");
         model.with("data", infoMap);
-
         mainContent = (template.render(model));
     }
 }

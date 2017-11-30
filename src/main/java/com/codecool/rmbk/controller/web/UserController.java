@@ -3,10 +3,14 @@ package com.codecool.rmbk.controller.web;
 import com.codecool.rmbk.dao.SQLLoginDAO;
 import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.helper.PasswordHash;
+import com.codecool.rmbk.dao.MenuDAO;
+import com.codecool.rmbk.dao.SQLMenuDAO;
+import com.codecool.rmbk.dao.UserInfoDAO;
 import com.codecool.rmbk.model.usr.User;
+import com.codecool.rmbk.view.UserWebView;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
 import java.util.Map;
 
 public class UserController extends CommonHandler {
@@ -16,13 +20,23 @@ public class UserController extends CommonHandler {
     private String accessLevel;
     private User object;
     private int id;
+    private UserInfoDAO userDAO = new SQLUsers();
+    private MenuDAO menuDAO = new SQLMenuDAO();
+
+    private UserWebView view;
 
     public void handle(HttpExchange httpExchange) throws IOException {
+
+        view = new UserWebView();
 
         setConnectionData(httpExchange);
         parseURIstring(getRequestURI());
         accessLevel = validateRequest();
         setObject();
+
+        view.setHeader(loggedUser);
+        view.setMainMenu(mainMenu);
+        view.setFooter();
 
         String controller = parsedURI.get("controller");
         String object = parsedURI.get("object");
@@ -32,7 +46,6 @@ public class UserController extends CommonHandler {
             showList();
         } else if (isObjectInstanceOfController(controller, object)) {
             if (action == null) {
-                User user = userDao.getUserByID(Integer.parseInt(object));
                 showDetails();
             } else {
                 performAction();
@@ -63,15 +76,12 @@ public class UserController extends CommonHandler {
     }
 
     private void addUser() throws IOException {
+
         String method = httpExchange.getRequestMethod();
+
         if (method.equals("GET")) {
-            response = webDisplay.getSiteContent(user.getFullName(),
-                                                 mainMenu,
-                                                 null,
-                                                 String.format("Add new %s", parsedURI.get("controller")),
-                                                 User.getFieldLabels(),
-                                                 urlAdd);
-            send200(response);
+            view.setAddUserView(parsedURI.get("controller"));
+            send200(view.getResponse());
         } else if (method.equals("POST")) {
             User newUser = userDao.addUser(parsedURI.get("controller"));
             Map<String,String> inputs = readInputs();
@@ -85,13 +95,12 @@ public class UserController extends CommonHandler {
     }
 
     private void editUserData() throws IOException {
+
         String method = httpExchange.getRequestMethod();
+
         if (method.equals("GET")) {
-            response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
-                                                 prepareContextMenu(getAllowedActions()),
-                                                 object.getFullInfoMap(),
-                                                 urlEdit);
-            send200(response);
+            view.setEditUserDataView(object.getFullInfoMap());
+            send200(view.getResponse());
         } else if (method.equals("POST")) {
             Map<String,String> inputs = readInputs();
             object.setFirstName(inputs.get("name"));
@@ -109,24 +118,24 @@ public class UserController extends CommonHandler {
         SQLLoginDAO loginDao = new SQLLoginDAO();
 
         if (method.equals("GET")) {
-            response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
-                    prepareContextMenu(getAllowedActions()),
-                    loginDao.getCredentialsMap(user.getID()),
+            response = webDisplay.getSiteContent(loggedUser.getFirstName(), mainMenu,
+                    prepareContextMenu(getContextOptions()),
+                    loginDao.getCredentialsMap(loggedUser.getID()),
                     "templates/edit_login.twig");
         } else if (method.equals("POST")) {
 
             Map<String,String> inputs = readInputs();
-            Map<String, String> credentials = loginDao.getCredentialsMap(user.getID());
+            Map<String, String> credentials = loginDao.getCredentialsMap(loggedUser.getID());
 
             if (isNewPassword(inputs)) {
 
                 if (arePasswordsCompatible(credentials, inputs)){
-                    loginDao.updateCredentials(user, inputs);
+                    loginDao.updateCredentials(loggedUser, inputs);
                     send302("/");
                 }
             } else if (isPasswordCorrect(credentials, inputs)) {
                 if (isLoginAvailable(inputs.get("login"))) {
-                    loginDao.updateLogin(user, inputs);
+                    loginDao.updateLogin(loggedUser, inputs);
                     send302("/");
                 } else {
                     send302("/static/fail.html");
@@ -140,11 +149,11 @@ public class UserController extends CommonHandler {
     }
 
     private void showDetails() throws IOException {
+
         if (isRequestedBySupervisor() || isRequestedBySelf()) {
-            response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
-                    prepareContextMenu(getAllowedActions()), object.getFullInfoMap(),
-                    urlItem);
-            send200(response);
+            view.setContextMenu(prepareContextMenu(getContextOptions()));
+            view.setUserDetailsView(object);
+            send200(view.getResponse());
         } else {
             send403();
         }
@@ -153,36 +162,37 @@ public class UserController extends CommonHandler {
     private void showList() throws IOException {
 
         if (isRequestedBySupervisor()) {
-
-            response = webDisplay.getSiteContent(user.getFirstName(), mainMenu,
-                    prepareContextMenu(new String[] {"Add"}),
-                    userDao.getUserMap(parsedURI.get("controller")), urlList);
-            send200(response);
+            view.setContextMenu(prepareContextMenu(getContextOptions()));
+            view.setUsersListView(userDAO.getUserMap(parsedURI.get("controller")));
+            send200(view.getResponse());
         } else {
             send403();
         }
     }
 
-    private String[] getAllowedActions() {
-        List<String> options = new ArrayList<>();
-        if (isRequestedBySupervisor()) {
-            options.add("Edit");
-            options.add("Remove");
+    private String[] getContextOptions() {
+
+        String[] options = null;
+
+        if (object == null && isRequestedBySupervisor()) {
+            options = new String[] {String.format("Add %s", parsedURI.get("controller"))};
         } else if (isRequestedBySelf()) {
-            options.add("Edit");
-            options.add("LoginInfo");
+            options = new String[] {"Edit data", "Remove"};
+        } else if (isRequestedBySupervisor()) {
+            options = new String[] {"Edit data"};
         }
-        return options.toArray(new String[options.size()]);
+        return options;
     }
 
     private boolean isRequestedBySelf() {
 
-        return String.valueOf(user.getID()).equals(parsedURI.get("object"));
+        return String.valueOf(loggedUser.getID()).equals(parsedURI.get("object"));
     }
 
     private boolean isRequestedBySupervisor() {
 
         boolean answer;
+
         String requestedUserType = parsedURI.get("controller");
 
         if (accessLevel.equals("Mentor") && requestedUserType.equals("student")) {
@@ -228,7 +238,8 @@ public class UserController extends CommonHandler {
     private void setObject() {
 
         if (parsedURI.get("object") != null) {
-            object = userDao.getUserByID(Integer.parseInt(parsedURI.get("object")));
+            object = userDAO.getUserByID(Integer.parseInt(parsedURI.get("object")));
+
         } else {
             object = null;
         }

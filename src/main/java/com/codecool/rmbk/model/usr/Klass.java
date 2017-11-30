@@ -1,5 +1,8 @@
 package com.codecool.rmbk.model.usr;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -23,10 +26,8 @@ public class Klass extends Group {
     }
 
     public Mentor getMentor() {
+
         return mentor;
     }
 
-    public void setMembers(ArrayList<Student> studentsList) {
-        // TODO
-    }
 }

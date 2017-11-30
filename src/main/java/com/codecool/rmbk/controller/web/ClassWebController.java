@@ -30,7 +30,7 @@ public class ClassWebController extends CommonHandler {
         validateRequest();
         setObject();
 
-        view.setHeader(user);
+        view.setHeader(loggedUser);
         view.setMainMenu(mainMenu);
         view.setFooter();
 
@@ -148,7 +148,7 @@ public class ClassWebController extends CommonHandler {
         String method = httpExchange.getRequestMethod();
 
         if (method.equals("GET")) {
-            // view.setEditClassDataView(object); // TODO
+            view.setEditClassDataView(object);
             send200(view.getResponse());
 
         } else if (method.equals("POST")) {
@@ -161,23 +161,22 @@ public class ClassWebController extends CommonHandler {
 
     private void showDetails() throws IOException {
 
-        if (user.getClass().getSimpleName().equals("Student")) {
+        if (loggedUser.getClass().getSimpleName().equals("Student")) {
             send403();
         } else {
             view.setContextMenu(prepareContextMenu(getContextOptions()));
-            // view.setClassDetailsView(object); TODO
+            view.setClassDetailsView(object);
             send200(view.getResponse());
         }
     }
 
     private void showList() throws IOException {
 
-        if (user.getClass().getSimpleName().equals("Student")) {
+        if (loggedUser.getClass().getSimpleName().equals("Student")) {
             send403();
         } else {
             view.setContextMenu(prepareContextMenu(getContextOptions()));
             view.setClassListView(sqlClass.getKlassURLMap());
-            System.out.println("2");
             send200(view.getResponse());
         }
 
@@ -188,11 +187,11 @@ public class ClassWebController extends CommonHandler {
         List<String> options = new ArrayList<>();
 
         if (object == null) {
-            if (user.getClass().getSimpleName().equals("Admin")) {
+            if (loggedUser.getClass().getSimpleName().equals("Admin")) {
                 options.add("Add");
             }
         } else {
-            switch (user.getClass().getSimpleName()) {
+            switch (loggedUser.getClass().getSimpleName()) {
                 case "Admin" :
                     options.add("Edit");
                     options.add("Remove");

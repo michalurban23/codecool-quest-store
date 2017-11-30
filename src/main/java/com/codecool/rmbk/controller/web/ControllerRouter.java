@@ -12,8 +12,8 @@ public class ControllerRouter extends CommonHandler {
         validateRequest();
         parseURIstring(getRequestURI());
 
-        String controller = user.getClass().getSimpleName().toLowerCase();
-        String object = String.valueOf(user.getID());
+        String controller = loggedUser.getClass().getSimpleName().toLowerCase();
+        String object = String.valueOf(loggedUser.getID());
 
         if (isObjectInstanceOfController(controller, object)) {
             send302(String.format("/%s/%s", controller, object));
