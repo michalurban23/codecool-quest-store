@@ -19,7 +19,6 @@ public class SQLKlass extends SqlDAO {
             Klass klass = getKlassById(Integer.parseInt(id));
             result.add(klass);
         }
-        System.out.println("result: " + result.size());
         return result;
     }
 
