@@ -68,7 +68,7 @@ public class TeamWebController extends CommonHandler {
             case "addStudents":
                 addStudents();
                 break;
-            case "removeStudent":
+            case "removeStudents":
                 subject = (Student) sqlUsers.getUserByID(Integer.parseInt(parsedURI.get("subject")));
                 sqlTeam.removeUserFromTeam(object, subject);
                 send302(String.format("/%s/%s", parsedURI.get("controller"), object.getID()));
@@ -148,7 +148,7 @@ public class TeamWebController extends CommonHandler {
 
         if (object == null) {
             if (loggedUser.getClass().getSimpleName().equals("Mentor")) {
-                options.add("Add team");
+                options.add("Add");
             }
         } else {
             switch (loggedUser.getClass().getSimpleName()) {
@@ -158,9 +158,9 @@ public class TeamWebController extends CommonHandler {
                     }
                     break;
                 case "Mentor" :
-                    options.add("Add student");
+                    options.add("AddStudents");
                     options.add("Edit");
-                    options.add("Remove team");
+                    options.add("RemoveStudents");
                     break;
             }
         }

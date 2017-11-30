@@ -71,19 +71,19 @@ public class ClassWebController extends CommonHandler {
             case "addStudents":
                 addStudents();
                 break;
-            case "removeStudent":
+            case "removestudents":
                 subject = sqlUsers.getUserByID(Integer.parseInt(parsedURI.get("subject")));
                 sqlClass.removeUserFromKlass(object, subject);
                 send302(String.format("/%s/%s", parsedURI.get("controller"), object.getID()));
                 break;
-            case "assignMentor":
+            case "assignmentor":
                 if (parsedURI.get("controller").equals("class")) {
                     assignMentor(object);
                 } else {
                     send404();
                 }
                 break;
-            case "removeMentor":
+            case "removementor":
                 subject = sqlUsers.getUserByID(Integer.parseInt(parsedURI.get("subject")));
                 sqlClass.removeUserFromKlass(object, subject);
                 send302(String.format("/%s/%s", parsedURI.get("controller"), object.getID()));
@@ -196,13 +196,13 @@ public class ClassWebController extends CommonHandler {
                     options.add("Edit");
                     options.add("Remove");
                     if (object.getMentor() == null) {
-                        options.add("Assign mentor");
+                        options.add("AssignMentor");
                     } else {
-                        options.add("Remove mentor");
+                        options.add("RemoveMentor");
                     }
                     break;
                 case "Mentor" :
-                    options.add("Add student");
+                    options.add("AddStudents");
                     break;
             }
         }

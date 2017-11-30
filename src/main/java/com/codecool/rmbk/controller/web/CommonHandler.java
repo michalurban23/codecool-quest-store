@@ -15,9 +15,7 @@ import java.io.*;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public abstract class CommonHandler implements HttpHandler {
 
@@ -203,12 +201,14 @@ public abstract class CommonHandler implements HttpHandler {
     Map<String, String> prepareContextMenu(String[] options) {
 
         Map<String, String> menu = new HashMap<>();
+        List<String> objectActions = Arrays.asList("Edit", "Remove", "LoginInfo",
+                "AddStudents", "RemoveStudents", "RemoveMentor", "AssignMentor");
 
         for (String option : options) {
             String url = "/" + parseURIstring(getRequestURI()).get("controller");
             if (option.equals("Add") || option.equals("Acquire")) {
                 url += "/new";
-            } else if (option.equals("Edit") || option.equals("Remove") || option.equals("LoginInfo")) {
+            } else if (objectActions.contains(option)) {
                 url += "/" + parseURIstring(getRequestURI()).get("object");
             }
             url += "/" + option.toLowerCase();
