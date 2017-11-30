@@ -43,11 +43,12 @@ public class UserController extends CommonHandler {
     private void performAction() throws IOException {
 
         String action = parsedURI.get("action");
-        Integer id = Integer.parseInt(parsedURI.get("object"));
+        Integer id;
         Boolean editable = isRequestedBySelf() || isRequestedBySupervisor();
         User object;
 
         if (editable && action.equals("edit")) {
+            id = Integer.parseInt(parsedURI.get("object"));
             object = userDAO.getUserByID(id);
             editUserData(object);
         } else if (isRequestedBySelf() && action.equals("logininfo")) {
@@ -56,6 +57,7 @@ public class UserController extends CommonHandler {
             if (action.equals("add")) {
                 addUser();
             } else if (action.equals("remove")) {
+                id = Integer.parseInt(parsedURI.get("object"));
                 object = userDAO.getUserByID(id);
                 userDAO.removeUser(object);
                 send302(String.format("/%s", parsedURI.get("controller")));

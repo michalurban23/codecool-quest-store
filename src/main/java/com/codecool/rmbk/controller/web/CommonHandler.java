@@ -240,6 +240,10 @@ public abstract class CommonHandler implements HttpHandler {
 
     Boolean isObjectInstanceOfController(String controller, String object) {
 
+        if (object.equals("new")) {
+            return true;
+        }
+
         SQLUsers usersDao = new SQLUsers();
 
         String objectType = usersDao.getUserTypeByID(object);
