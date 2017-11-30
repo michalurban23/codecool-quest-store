@@ -8,7 +8,7 @@ public class Team extends Group implements Holder {
 
     private Cart ourCart;
 
-    public Team(ArrayList<Student> usersList) {
+    public Team(ArrayList<User> usersList) {
 
         super(usersList);
     }
