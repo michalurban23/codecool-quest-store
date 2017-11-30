@@ -14,17 +14,17 @@
 }
 
 div.login label, div.personal-info label{
-    animation: leftAnimation 1s;
+    animation: leftAnimation .5s;
     position: relative;
 }
 
 div.login input, div.personal-info p {
-    animation: rightAnimation 1s;
+    animation: rightAnimation .5s;
     position: relative;
 }
 
 div.login input[type=submit] {
-    animation: bottomAnimation 1s;
+    animation: bottomAnimation .5s;
     position: relative;
 }
 
@@ -37,7 +37,10 @@ div.personal-info p {
 }
 
 div.login p {
+    animation: bottomAnimation .5s;
+    position: relative;
     text-align: center;
+    font-family: 'Oswald', serif;
 }
 
 form div.row {
@@ -88,4 +91,9 @@ form > input[type="submit"] {
     border: none;
     color: #fff;
     cursor: pointer;
+}
+
+.row p#backlog {
+    margin-bottom: -.9rem;
+    padding: 3px;
 }
