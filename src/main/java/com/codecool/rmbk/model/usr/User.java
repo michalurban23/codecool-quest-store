@@ -107,6 +107,10 @@ public abstract class User implements Holder {
         return labels;
     }
 
+    public String getURI() {
+        return String.format("/%s/%s", this.getClass().getSimpleName(), this.getID());
+    }
+
     public static Class getSupervisor() {
         return supervisor;
     }

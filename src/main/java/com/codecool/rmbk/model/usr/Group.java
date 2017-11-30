@@ -6,32 +6,18 @@ public abstract class Group implements Holder {
 
     String name;
     Integer id;
-    ArrayList<User> members;
 
-    public Group(ArrayList<User> usersList) {
-
-        this.members = usersList;
-        name = "";
+    public ArrayList<Student> getMembers() {
+        return members;
     }
 
-    public Group() {
-
-        this.members = new ArrayList<>();
-        name = "";
-    }
+    ArrayList<Student> members;
 
     public Group(Integer id, String name) {
 
         this.id = id;
         this.name = name;
         this.members = new ArrayList<>();
-    }
-
-    public Group(Integer id, String name, ArrayList<User> members) {
-
-        this.id = id;
-        this.name = name;
-        this.members = members;
     }
 
     public String getName() {
@@ -50,19 +36,13 @@ public abstract class Group implements Holder {
         this.id = id;
     }
 
-    public void addMember(User student) {
-        for (User  member : members) {
+    public void addMember(Student student) {
+        for (Student  member : members) {
             if (member.getID() == student.getID()) {
                 return;
             }
         }
         members.add(student);
-    }
-
-    public Map<String, String> getFullInfoMap() {
-        Map<String, String> fullInfo = new LinkedHashMap<>();
-        fullInfo.put("name", getName());
-        return fullInfo;
     }
 
     public void clearMembersList() {
@@ -73,6 +53,21 @@ public abstract class Group implements Holder {
         List<String> labels = new ArrayList<>();
         labels.add("name");
         return labels;
+    }
+
+    public void setMembers(ArrayList<Student> members) {
+        this.members = members;
+    }
+
+    public Map<String,String> getMembersURIMap() {
+
+        Map<String,String> membersURI = new LinkedHashMap<>();
+
+        for (Student student : members) {
+            membersURI.put(student.getURI(), student.getFullName());
+        }
+
+        return membersURI;
     }
 
 }

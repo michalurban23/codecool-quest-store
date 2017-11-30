@@ -9,23 +9,31 @@ public class SQLKlass extends SqlDAO {
     public ArrayList<Klass> getKlassList() {
 
         String query = "SELECT id FROM class_name;";
-        ArrayList<Group> result = new ArrayList<>();
+        ArrayList<Klass> result = new ArrayList<>();
         ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
 
 
         for(ArrayList<String> arr : queryResult.subList(1, queryResult.size())) {
             Klass klass = getKlassById(Integer.parseInt(arr.get(0)));
-            klass.setMentor(getMentor(klass));
-            klass.setMembers(getStudentsList(klass))
+            result.add(klass);
         }
         return result;
     }
 
-    private Klass getKlassById(int i) {
+    public Klass getKlassById(Integer id) {
+        Klass klass = null;
+        String query = "SELECT * FROM class_name WHERE id = ?;";
+        ArrayList<ArrayList<String>> queryResult = processQuery(query, new String[] {"" + id});
+
+        if(queryResult.size() > 1) {
+            klass = new Klass (id, queryResult.get(1).get(1));
+            klass.setMentor(getMentor(klass));
+            klass.setMembers(getStudentsList(klass));
+        }
+        return klass;
     }
 
-
-    public Map<String,String> getKlassMap() {
+    public Map<String,String> getKlassURLMap() {
 
         Map<String,String> groupsMap = new HashMap<>();
 
@@ -77,7 +85,7 @@ public class SQLKlass extends SqlDAO {
 //        super.updateUsers(group, query);
 //    }
     
-    public Boolean removeUserFromClass(Klass group, User student) {
+    public Boolean removeUserFromKlass(Klass group, User student) {
 
         String query = "UPDATE users SET class_name = null WHERE id = ?;";
         return handleQuery(query, new String[] {"" + student.getID()});
@@ -89,15 +97,28 @@ public class SQLKlass extends SqlDAO {
         handleQuery(query, new String[] {group.getName(), "" + user.getID()});
     }
 
-    public Map<String,String> getMembersMap (Group group) {
+    public Klass createKlass() {
 
-        Map<String,String> usersMap = new LinkedHashMap<>();
-        ArrayList<User> members = getStudentsList(group);
-        for (User member : members) {
-            usersMap.put("/student/" + String.valueOf(member.getID()), member.getFullName());
-        }
-        return usersMap;
+        String query = "INSERT INTO class_name (name) VALUES (null);";
+        handleQuery(query, null);
+
+        query = "SELECT * FROM class_name ORDER BY id DESC LIMIT 1;";
+        ArrayList<ArrayList<String>> queryResult = processQuery(query, null);
+
+        return getKlassById(Integer.parseInt(queryResult.get(1).get(0)));
     }
 
+    public Boolean removeGroup(Group group) {
 
+        String query = "DELETE FROM class_name WHERE id = ?;";
+
+        return handleQuery(query, new String[] {"" + group.getID()});
+    }
+
+    public Boolean renameGroup(Group group, String newName) {
+
+        String query = "UPDATE class_name SET name = ? WHERE id = ?;";
+
+        return handleQuery(query, new String[] {newName, String.valueOf(group.getID())});
+    }
 }

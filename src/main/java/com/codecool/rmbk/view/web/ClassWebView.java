@@ -6,17 +6,19 @@ import com.codecool.rmbk.model.usr.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ClassWebView extends WebDisplay {
 
-    public void setClassDetailsView (Group object, Map<String,String> members) {
+    public void setClassDetailsView (Klass object) {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/class.twig");
         JtwigModel model = JtwigModel.newModel();
         model.with("class_name", object.getName());
-        model.with("mentor", ((Klass) object).getMentor());
-        model.with("data", members);
+        model.with("mentor", object.getMentor().getFullName());
+        model.with("mentor_link", object.getMentor().getURI());
+        model.with("data", object.getMembersURIMap());
         mainContent = (template.render(model));
     }
 
@@ -51,11 +53,15 @@ public class ClassWebView extends WebDisplay {
         mainContent = (template.render(model));
     }
 
-    public void setEditClassDataView (Map<String,String> valuesMap) {
+    public void setEditClassDataView (Klass object) {
+
+        Map<String,String> infoMap = new LinkedHashMap<>();
+        infoMap.put("name", object.getName());
+
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/edit.twig");
         JtwigModel model = JtwigModel.newModel();
         model.with("title", "Edit class info");
-        model.with("data", valuesMap);
+        model.with("data", infoMap);
         mainContent = (template.render(model));
     }
 }
