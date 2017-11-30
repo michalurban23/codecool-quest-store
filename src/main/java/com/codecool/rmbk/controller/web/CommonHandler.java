@@ -169,13 +169,21 @@ public abstract class CommonHandler implements HttpHandler {
     Map<String, String> parseFormData(String formData) throws IOException {
 
         Map<String, String> map = new LinkedHashMap<>();
-        String[] pairs = formData.split("&");
 
-        for (String pair : pairs) {
-            String[] keyValue = pair.split("=");
-            String key = URLDecoder.decode(keyValue[0], "UTF-8");
-            String value = URLDecoder.decode(keyValue[1], "UTF-8");
-            map.put(key, value);
+        if (formData != null) {
+            String[] pairs = formData.split("&");
+
+            for (String pair : pairs) {
+                String[] keyValue = pair.split("=");
+                String key = URLDecoder.decode(keyValue[0], "UTF-8");
+                String value;
+                if (keyValue.length == 1) {
+                    value = "";
+                } else {
+                    value = URLDecoder.decode(keyValue[1], "UTF-8");
+                }
+                map.put(key, value);
+            }
         }
         return map;
     }
@@ -200,7 +208,7 @@ public abstract class CommonHandler implements HttpHandler {
             String url = "/" + parseURIstring(getRequestURI()).get("controller");
             if (option.equals("Add") || option.equals("Acquire")) {
                 url += "/new";
-            } else if (option.equals("Edit") || option.equals("Remove")) {
+            } else if (option.equals("Edit") || option.equals("Remove") || option.equals("LoginInfo")) {
                 url += "/" + parseURIstring(getRequestURI()).get("object");
             }
             url += "/" + option.toLowerCase();
@@ -227,7 +235,6 @@ public abstract class CommonHandler implements HttpHandler {
                 "utf-8");
         BufferedReader br = new BufferedReader(isr);
         String formData = br.readLine();
-
         return parseFormData(formData);
     }
 
@@ -239,4 +246,10 @@ public abstract class CommonHandler implements HttpHandler {
 
         return objectType.toLowerCase().equals(controller);
     }
+
+    void showFailureMessage() throws IOException {
+
+        send302("/static/fail.html");
+    }
+
 }

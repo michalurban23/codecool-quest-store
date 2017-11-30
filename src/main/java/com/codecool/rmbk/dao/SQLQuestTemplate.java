@@ -7,15 +7,6 @@ import java.util.*;
 
 public class SQLQuestTemplate extends SqlDAO {
 
-    public ArrayList<ArrayList<String>> getAllQuestTemplates() {
-
-        String query = "SELECT * FROM quest_template " +
-                "ORDER BY name ASC";
-        processQuery(query, null);
-
-        return getResults();
-    }
-
     public List<String> getTemplateLabels() {
 
         List<String> result = new ArrayList<>();
@@ -66,16 +57,6 @@ public class SQLQuestTemplate extends SqlDAO {
             result.put(key, value);
         }
         return result;
-    }
-
-    public void addQuestTemplate(String name, String desc, Integer value, Boolean isSpecial) {
-
-        String special = isSpecial ? "1" : "0";
-        name = StringUtils.capitalize(StringParser.addWhitespaces(name));
-        String query = "INSERT INTO quest_template (name, description, value, special) " +
-                "VALUES (?, ?, ?, ?)";
-
-        processQuery(query, new String[] {name, desc, "" + value, special});
     }
 
     public void addQuestTemplate(List<String> data) {
