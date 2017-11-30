@@ -7,7 +7,6 @@ import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.helper.StringParser;
 import com.codecool.rmbk.model.item.Item;
 import com.sun.net.httpserver.HttpExchange;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,8 +43,8 @@ public class ArtifactWebController extends CommonHandler {
 
     private void handleAccessRights() throws IOException {
 
-        name = user.getFirstName();
-        mainMenu = sqlMenuDAO.getSideMenu(user);
+        name = loggedUser.getFirstName();
+        mainMenu = sqlMenuDAO.getSideMenu(loggedUser);
 
         switch (accessLevel) {
             case "Mentor":
@@ -122,7 +121,7 @@ public class ArtifactWebController extends CommonHandler {
         String title = "My bought artifacts";
         String[] options = {"Acquire", "Bought"};
         Map<String, String> contextMenu = prepareContextMenu(options);
-        Map<String, String> myQuests = sqlArtifact.getArtifactMapBy(user);
+        Map<String, String> myQuests = sqlArtifact.getArtifactMapBy(loggedUser);
 
         response = webDisplay.getSiteContent(name, mainMenu, contextMenu, title, myQuests, urlListArtifacts);
     }
@@ -132,7 +131,7 @@ public class ArtifactWebController extends CommonHandler {
         String title = "My requested artifacts";
         String[] options = {"Acquire"};
         Map<String, String> contextMenu = prepareContextMenu(options);
-        Map<String, String> boughtArtifacts = sqlArtifact.getBoughtArtifactsMapBy(user);
+        Map<String, String> boughtArtifacts = sqlArtifact.getBoughtArtifactsMapBy(loggedUser);
 
         response = webDisplay.getSiteContent(name, mainMenu, contextMenu, title, boughtArtifacts, urlJustList);
     }
@@ -149,7 +148,7 @@ public class ArtifactWebController extends CommonHandler {
     private void acquireNewArtifact() throws IOException {
 
         String method = httpExchange.getRequestMethod();
-        Map<String, String> templates = sqlArtifactTemplate.getAvailableArtifacts(user);
+        Map<String, String> templates = sqlArtifactTemplate.getAvailableArtifacts(loggedUser);
 
         if (method.equals("GET")) {
             response = webDisplay.getSiteContent(name, mainMenu, null , templates,
@@ -247,7 +246,7 @@ public class ArtifactWebController extends CommonHandler {
 
     private Boolean checkIfBuyable() {
 
-        Integer coins = sqlBacklog.getCurrentCoins(user.getID());
+        Integer coins = sqlBacklog.getCurrentCoins(loggedUser.getID());
         Integer value = calculateArtifactsValue();
 
         return coins > value;
@@ -313,7 +312,7 @@ public class ArtifactWebController extends CommonHandler {
             String questValue = templateData.get(i+1);
 
             List<String> questData = Arrays.asList(questName, questValue);
-            Item artifact = new Item(questData, user);
+            Item artifact = new Item(questData, loggedUser);
 
             sqlArtifact.getNewArtifact(artifact);
         }
@@ -324,7 +323,7 @@ public class ArtifactWebController extends CommonHandler {
         Map<String, String> artifactInfo = sqlArtifact.getArtifactInfo(object);
         List<String> data = Arrays.asList(artifactInfo.get("template_name"), artifactInfo.get("value"));
 
-        Item artifact = new Item(data, user);
+        Item artifact = new Item(data, loggedUser);
         sqlArtifact.buyArtifact(artifact);
     }
 

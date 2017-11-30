@@ -1,28 +1,19 @@
 package com.codecool.rmbk.model.usr;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Klass extends Group {
 
     private UUID groupID;
-    private ArrayList<Student> usersList;
     private String name;
+    private Mentor mentor;
     private static ArrayList<Klass> objects = new ArrayList<>();
 
-    public Klass(ArrayList<Student> usersList) {
-
-        this.groupID = UUID.randomUUID();
-        this.usersList = usersList;
-    }
-
-    public Klass() {
-
-        this(new ArrayList<Student>());
-    }
-
     public Klass(Integer id, String name) {
-
         super(id, name);
     }
 
@@ -30,16 +21,13 @@ public class Klass extends Group {
         this.name = name;
     }
 
-    public ArrayList<Student> getUsersList() {
-        return this.usersList;
+    public void setMentor(Mentor mentor) {
+        this.mentor = mentor;
     }
 
-    public static ArrayList<Klass> getObjects() {
-        return objects;
+    public Mentor getMentor() {
+
+        return mentor;
     }
 
-    public static boolean remove(Klass cls) {
-
-            return objects.remove(cls);
-    }
 }

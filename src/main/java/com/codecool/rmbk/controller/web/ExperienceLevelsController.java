@@ -34,7 +34,7 @@ public class ExperienceLevelsController extends CommonHandler {
 
     private void handleAccessRights() throws IOException {
 
-        name = user.getFirstName();
+        name = loggedUser.getFirstName();
 
         switch (accessLevel) {
             case "Admin":

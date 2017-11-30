@@ -1,7 +1,6 @@
 package com.codecool.rmbk.controller.web;
 
 import com.codecool.rmbk.dao.*;
-import com.codecool.rmbk.model.usr.Student;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
@@ -33,7 +32,7 @@ public class BacklogWebController extends CommonHandler {
 
     private void handleAccessRights() throws IOException {
 
-        name = user.getFirstName();
+        name = loggedUser.getFirstName();
 
         switch (accessLevel) {
             case "Student":
@@ -62,10 +61,10 @@ public class BacklogWebController extends CommonHandler {
 
     private void showAll() {
 
-        Map <String, String> backlog = backlogDao.getBacklogMap(user);
+        Map <String, String> backlog = backlogDao.getBacklogMap(loggedUser);
 
-        String totalCoinsEver = backlogDao.getExperience(user.getID());
-        String coinsAvailable = backlogDao.getCurrentCoins(user.getID()).toString();
+        String totalCoinsEver = backlogDao.getExperience(loggedUser.getID());
+        String coinsAvailable = backlogDao.getCurrentCoins(loggedUser.getID()).toString();
         String levelName = experienceDao.getExperienceInfo(totalCoinsEver);
         String missing = experienceDao.getMissingExp(totalCoinsEver);
 

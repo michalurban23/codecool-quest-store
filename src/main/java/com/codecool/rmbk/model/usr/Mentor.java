@@ -1,15 +1,10 @@
 package com.codecool.rmbk.model.usr;
 
-import java.util.ArrayList;
-
 public class Mentor extends User {
-
-    private static ArrayList<Mentor> objects = new ArrayList<Mentor>();
 
     public Mentor(String firstName, String lastName, String email, String address, Integer id) {
 
         super(firstName, lastName, email, address, id);
-        objects.add(this);
     }
 
     public Mentor(String[] userInfo){

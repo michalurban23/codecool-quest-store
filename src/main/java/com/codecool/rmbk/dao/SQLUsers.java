@@ -228,11 +228,31 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
     private void updateLoginDB(User user) {
 
         String name = user.getLastName();
+        List<String> logins = getLoginsList();
+        int counter = 1;
+
+        while (logins.contains(name)) {
+            name = user.getLastName() + counter++;
+        }
 
         String query = "UPDATE login_info SET login = ? WHERE login = 'new_user';";
         String[] data = {name};
 
         processQuery(query, data);
+    }
+
+    private List<String> getLoginsList() {
+
+        List<String> logins = new ArrayList<>();
+        String query = "SELECT login FROM login_info";
+
+        processQuery(query, null);
+
+        for(ArrayList<String> login: getResults().subList(1, getResults().size()-1)) {
+            logins.add(login.get(0));
+        }
+
+        return logins;
     }
 
     @Override
@@ -261,5 +281,5 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
 
         processQuery(loginQuery, data);
     }
-}
 
+}
