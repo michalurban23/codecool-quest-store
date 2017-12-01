@@ -19,7 +19,7 @@ public class UserWebView extends WebView {
 
     public void setUsersListView(Map<String,String> usersMap) {
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/list.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/list_content.twig");
         JtwigModel model = JtwigModel.newModel();
 
         model.with("data", usersMap);

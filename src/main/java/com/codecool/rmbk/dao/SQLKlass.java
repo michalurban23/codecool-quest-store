@@ -41,7 +41,6 @@ public class SQLKlass extends SqlDAO {
         Map<String, String> groupsMap = new HashMap<>();
 
         for (Klass klass : getKlassList()) {
-            System.out.println("try");
             groupsMap.put(String.format("/class/%s", String.valueOf(klass.getID())), klass.getName());
         }
         return groupsMap;

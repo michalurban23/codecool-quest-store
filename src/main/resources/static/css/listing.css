@@ -1,4 +1,4 @@
-.listing ol {
+.listing ol, .listing ul {
     justify-content: flex-start;
     display: block;
     padding-top: 2rem;
@@ -8,20 +8,41 @@
     font-family: 'Oswald', serif;
 }
 
-.listing ol div.row {
+.listing form {
+    padding-top: 1rem;
     width: 70%;
+    margin: auto;
+}
+
+.listing * div.row {
+    width: 100%;
     margin: auto;
     display: table;
 }
 
-.listing label {
+/*.listing form ul div.row {*/
+    /*width: 70%;*/
+    /*margin: auto;*/
+    /*padding: .2rem;*/
+/*}*/
+
+.listing label, .row label#backlogLabel {
     animation: leftAnimation .5s;
     position: relative;
-    width: 70%;
     text-align: left;
     margin: auto;
     font-size: large;
     padding-left: .5rem;
+    width: 50%;
+}
+.row p#backlog {
+    margin-bottom: -.9rem;
+    /*padding: -10px;*/
+}
+
+.row label#backlogLabel {
+    padding-top: 1.25rem;
+    margin: 0;
 }
 
 .listing a {
