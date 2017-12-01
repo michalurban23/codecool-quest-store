@@ -65,10 +65,10 @@ public class TeamWebController extends CommonHandler {
                 sqlTeam.removeTeam(object) ;
                 send302(String.format("/%s", parsedURI.get("controller")));
                 break;
-            case "addStudents":
+            case "addstudents":
                 addStudents();
                 break;
-            case "removeStudents":
+            case "removestudents":
                 subject = (Student) sqlUsers.getUserByID(Integer.parseInt(parsedURI.get("subject")));
                 sqlTeam.removeUserFromTeam(object, subject);
                 send302(String.format("/%s/%s", parsedURI.get("controller"), object.getID()));
@@ -120,25 +120,23 @@ public class TeamWebController extends CommonHandler {
     private void showDetails() throws IOException {
 
         if (loggedUser.getClass().getSimpleName().equals("Student")) {
-            send403();
+            view.setContextMenu(null);
         } else {
             view.setContextMenu(prepareContextMenu(getContextOptions()));
-            view.setTeamDetailsView(object);
-            send200(view.getResponse());
         }
+        view.setTeamDetailsView(object);
+        send200(view.getResponse());
     }
 
     private void showList() throws IOException {
-
         if (loggedUser.getClass().getSimpleName().equals("Student")) {
-            view.setContextMenu(prepareContextMenu(getContextOptions()));
-            view.setTeamListView(sqlTeam.getMyTeams((Student) loggedUser));
-            send200(view.getResponse());
+            view.setContextMenu(null);
+            view.setTeamListStudentView(sqlTeam.getMyTeams((Student) loggedUser));
         } else {
             view.setContextMenu(prepareContextMenu(getContextOptions()));
             view.setTeamListView(sqlTeam.getAllTeams());
-            send200(view.getResponse());
         }
+        send200(view.getResponse());
 
     }
 
@@ -151,18 +149,9 @@ public class TeamWebController extends CommonHandler {
                 options.add("Add");
             }
         } else {
-            switch (loggedUser.getClass().getSimpleName()) {
-                case "Student" :
-                    if (sqlTeam.isInGroup(loggedUser, object)) {
-                        options.add("Edit");
-                    }
-                    break;
-                case "Mentor" :
-                    options.add("AddStudents");
-                    options.add("Edit");
-                    options.add("RemoveStudents");
-                    break;
-            }
+            options.add("AddStudents");
+            options.add("Edit");
+            options.add("RemoveStudents");
         }
         return options.toArray(new String[options.size()]);
     }

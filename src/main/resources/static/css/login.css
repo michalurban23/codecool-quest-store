@@ -1,18 +1,3 @@
-@keyframes leftAnimation {
-    from { opacity: 0; left: -5rem; }
-    to { opacity: 1; left: 0; }
-}
-
-@keyframes bottomAnimation {
-    from { opacity: 0; top: 5rem; }
-    to { opacity: 1; top: 0; }
-}
-
-@keyframes rightAnimation {
-    from { opacity: 0; left: 5rem; }
-    to { opacity: 1; left: 0; }
-}
-
 div.login label, div.personal-info label{
     animation: leftAnimation .5s;
     position: relative;
@@ -28,6 +13,10 @@ div.login input[type=submit] {
     position: relative;
 }
 
+div.login {
+    margin-top: 2rem;
+}
+
 div.login form {
     padding: 15px;
 }
@@ -41,6 +30,10 @@ div.login p {
     position: relative;
     text-align: center;
     font-family: 'Oswald', serif;
+}
+
+.login form {
+    margin-bottom: 2rem;
 }
 
 form div.row {
@@ -70,12 +63,13 @@ form label {
     float: left;
     margin-right: 10px;
     width: 30%;
-    padding: 5px;
+    /*padding: 5px;*/
 }
 
 form input {
     padding: 5px;
-    border-radius: 5px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
     width: 200px;
 }
 
@@ -93,7 +87,7 @@ form > input[type="submit"] {
     cursor: pointer;
 }
 
-.row p#backlog {
-    margin-bottom: -.9rem;
-    padding: 3px;
+.row > input[type=submit], .row > label {
+    font-family: 'Oswald', serif;
 }
+

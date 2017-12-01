@@ -1,9 +1,11 @@
 <div class="context-menu">
-    {% if (data) %}
     <ul class="context-menu">
-        {% for key, value in data %}
-            <li><a href="{{ value }}">{{ key }}</a></li>
-        {% endfor %}
+        {% if (data) %}
+            {% for key, value in data %}
+                <li><a href="{{ value }}">{{ key }}</a></li>
+            {% endfor %}
+        {% else %}
+            <li><a onclick="history.back(1);">Back</a></li>
+        {% endif %}
     </ul>
-    {% endif %}
 </div>

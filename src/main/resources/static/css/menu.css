@@ -1,6 +1,7 @@
 .menu-bar {
     width: 100%;
-    background: #444;
+    background: url("../img/menu_bar.jpg");
+    margin-bottom: -1rem;
 }
 
 .menu-bar ul {
@@ -19,7 +20,7 @@
     display: block;
     border: none;
     text-align: center;
-    margin: .25rem .5rem;
+    padding: .25rem .5rem;
     font-size: 1.3rem;
     color: white;
     text-decoration: none;
@@ -33,7 +34,7 @@
 
 .context-menu {
     width: 100%;
-    background: #777;
+    background: url("../img/context_menu.jpg");
     padding: 0;
 }
 
@@ -44,24 +45,30 @@
 }
 
 .context-menu li {
+    animation: topAnimation .5s;
+    position: relative;
     display: table-cell;
     font-family: 'Oswald', serif;
     padding: .1rem .1rem;
+}
+
+footer div.context-menu li {
+    animation: none;
 }
 
 .context-menu a {
     display: block;
     border: none;
     text-align: center;
-    margin: .25rem .5rem;
+    padding: .25rem .5rem;
     font-size: 1rem;
-    color: white;
+    color: black;
     text-decoration: none;
     background-color: inherit;
 }
 
 .context-menu li:hover {
-    background-color: #dd0000;
+    background-color: white;
     transition: .3s background-color;
 }
 
@@ -80,25 +87,6 @@
 #footer li:hover a {
     color: black;
 }
-
-/*
-footer.context-menu#footer li {
-    display: table-cell;
-    font-family: 'Oswald', serif;
-    padding: 0 .5rem;
-}
-
-footer.context-menu#footer a {
-    display: block;
-    border: none;
-    text-align: center;
-    margin: 0 .5rem;
-    font-size: 1rem;
-    color: white;
-    text-decoration: none;
-    background-color: inherit;
-}
-*/
 
 /*
 @media screen and (min-width: 800px) {

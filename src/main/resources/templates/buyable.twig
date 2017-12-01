@@ -1,8 +1,10 @@
-<div>
+<div class="choice_form">
     <form method="post">
         {% for key, value in data %}
-            <p>{{ key }}<br />value: {{ value }} <input type="checkbox" name="{{ key }}" value="{{ value }}"></p>
+            <div class="row">
+                <p>{{ key }}<br>value: {{ value }} <input type="checkbox" name="{{ key }}" value="{{ value }}"></p>
+            </div>
         {% endfor %}
-        <input type="submit" value="Acquire">
+            <input type="submit" value="Acquire">
     </form>
 </div>

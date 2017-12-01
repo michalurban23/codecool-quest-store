@@ -2,13 +2,13 @@
     {% for message in messages %}
     <p>{{ message }}</p>
     {% endfor %}
-    <form method="get">
+    {#<form method="get">#}
         <ul>
             {% for key, value in data %}
                 <div class="row">
-                    <li><label><a href="{{ key }}">{{ value }}</a></label></li>
+                    <li id="hidden-buttons"><label><a href="{{ key }}">{{ value }}</a></label></li>
                 </div>
             {% endfor %}
         </ul>
-    </form>
+    {#</form>#}
 </div>

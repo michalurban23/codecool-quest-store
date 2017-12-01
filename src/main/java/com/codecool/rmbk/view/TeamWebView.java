@@ -27,6 +27,19 @@ public class TeamWebView extends WebView {
             teams.put(team.getURI(), team.getName());
         }
 
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/list_content.twig");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("data", teams);
+        mainContent = (template.render(model));
+    }
+
+    public void setTeamListStudentView(ArrayList<Team> teamlist) {
+
+        Map<String, String> teams = new LinkedHashMap<>();
+        for (Team team :teamlist) {
+            teams.put(team.getURI(), team.getName());
+        }
+
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/list.twig");
         JtwigModel model = JtwigModel.newModel();
         model.with("data", teams);
@@ -34,7 +47,7 @@ public class TeamWebView extends WebView {
     }
 
     public void setAddUserView (Map<String,String> usersMap) {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/multiple_choose_from_list.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/buyable.twig");
         JtwigModel model = JtwigModel.newModel();
         model.with("title", "Choose students to add");
         model.with("data", usersMap);

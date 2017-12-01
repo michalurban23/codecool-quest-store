@@ -1,10 +1,32 @@
+@keyframes leftAnimation {
+    from { opacity: 0; left: -5rem; }
+    to { opacity: 1; left: 0; }
+}
+
+@keyframes bottomAnimation {
+    from { opacity: 0; top: 5rem; }
+    to { opacity: 1; top: 0; }
+}
+
+@keyframes rightAnimation {
+    from { opacity: 0; left: 5rem; }
+    to { opacity: 1; left: 0; }
+}
+
+@keyframes topAnimation {
+    from { opacity: 0; top: -2rem; }
+    to { opacity: 1; top: 0; }
+}
+
 html {
     height: 100%;
     box-sizing: border-box;
 }
 
 body {
-    background-color: #888;
+    background: url("../img/background.jpg");
+    background-size: 100%;
+    background-attachment: fixed;
     overflow: auto;
     position: relative;
     min-height: 100%;
@@ -12,6 +34,9 @@ body {
 }
 
 header {
+    background: url("../img/header.jpg");
+    background-size: 100%;
+    background-position: center;
     height: 3.5rem;
     overflow: auto;
     color: black;
@@ -19,7 +44,7 @@ header {
     font-size: larger;
     padding: 2% 1%;
     margin: auto;
-    background-color: dimgrey;
+    margin-bottom: -1rem;
 }
 
 header ul {
@@ -52,17 +77,20 @@ header li p {
     padding-bottom: 2rem;
 }
 
-div.date {
+#backbutton input {
+    font-family: 'Oswald', serif;
+}
+
+div.date, div.currentTime {
     float: right;
     color: white;
     font-size: larger;
+}
+div.date {
     margin-top: -1.7rem;
 }
 
 div.currentTime {
-    float: right;
-    color: white;
-    font-size: larger;
     margin-top: -0.5rem;
     margin-right: 1.2%;
 }
@@ -80,23 +108,26 @@ footer {
 }
 
 input {
-    background-color: white;
+    background: url("../img/input.jpeg");
+    background-position: center;
     color: black;
     font-size: larger;
+    font-family: 'Oswald', Serif;
     text-decoration: none;
     cursor: pointer;
-    border: 1pt solid black;
     margin: 0 auto -20px auto;
 }
 
 input[type=submit], input[type=button]{
-    background-color: #555555;
+    background: url("../img/button.jpeg");
+    background-position: right bottom;
     color: white;
     font-size: large;
     text-decoration: none;
     justify-content: center;
-    border: 1pt solid black;
     display: table;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
     /*padding: 4px 2px;*/
     /*margin: 0 auto;*/
 }
@@ -106,9 +137,137 @@ input[value=Logout] {
 }
 
 input[type=submit]:hover, input[type=button]:hover {
-    background-color: #666666
+    background-color: #666666;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    transition: .3s background-color;
 }
 
-input[type=submit]:active, input[type=button]:hover {
-    background-color: #777777
+input[type=submit]:active, input[type=button]:active {
+    background-color: #777777;
+    border: none;
+}
+
+.info-container {
+    overflow: auto;
+}
+
+.main div.profile-pic {
+    animation: leftAnimation .5s;
+    position: relative;
+    width: 30%;
+    float: left;
+}
+
+.main div.personal-info {
+    width: 60%;
+    float: left;
+    padding-top: 2rem;
+}
+
+
+.info p {
+    font-family: 'Oswald', serif;
+    font-size: 1.5rem;
+    margin: auto;
+    padding-bottom: -1rem;
+}
+
+.slider {
+    margin-top: 2rem;
+}
+
+.slider form {
+    padding: 1rem;
+}
+
+.slider p {
+    text-align: center;
+    font-family: 'Oswald', serif;
+}
+/*
+
+form input {
+    padding: 5px;
+    border-radius: 5px;
+    width: 200px;
+}
+
+form p {
+    font-family: 'Oswald', serif;
+    padding: 1.2rem 5px;
+    width: auto;
+}
+
+form > input[type="submit"] {
+    width: 100px;
+    background: rgba(0, 0, 0, .5);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}*/
+
+.slider label{
+    animation: leftAnimation .5s;
+    position: relative;
+}
+
+.slider input[type=text], .slider span, .slider input[type=range] {
+    animation: rightAnimation .5s;
+    position: relative;
+}
+
+.slider input[type=submit], .slider p {
+    animation: bottomAnimation .5s;
+    position: relative;
+}
+
+.choice_form p {
+    animation: leftAnimation .5s;
+    position: relative;
+    margin-left: 5rem;
+}
+
+.choice_form  > p {
+    animation: bottomAnimation .5s;
+    position: relative;
+    font-family: 'Oswald', serif;
+    font-size: larger;
+    text-align: center;
+}
+
+.choice_form {
+    margin-top: 2rem;
+}
+
+.choice_form form {
+    padding: 1rem;
+}
+
+.choice_form div.row {
+    width: 40%;
+    margin: auto;
+    margin-bottom: -2rem;
+    padding: 0 30%;
+}
+
+.choice_form div.row:last-of-type {
+    margin-bottom: 2rem;
+}
+
+.choice_form div.row input {
+    float: right;
+    margin-right: 5rem;
+}
+
+.choice_form div.row input {
+    animation: rightAnimation .5s;
+    position: relative;
+}
+
+.choice_form input[type=submit] {
+    font-family: 'Oswald', serif;
+    animation: bottomAnimation .5s;
+    position: relative;
+    margin-bottom: 2rem;
 }
