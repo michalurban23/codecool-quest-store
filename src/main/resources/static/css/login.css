@@ -1,18 +1,3 @@
-@keyframes leftAnimation {
-    from { opacity: 0; left: -5rem; }
-    to { opacity: 1; left: 0; }
-}
-
-@keyframes bottomAnimation {
-    from { opacity: 0; top: 5rem; }
-    to { opacity: 1; top: 0; }
-}
-
-@keyframes rightAnimation {
-    from { opacity: 0; left: 5rem; }
-    to { opacity: 1; left: 0; }
-}
-
 div.login label, div.personal-info label{
     animation: leftAnimation .5s;
     position: relative;
@@ -26,6 +11,10 @@ div.login input, div.personal-info p {
 div.login input[type=submit] {
     animation: bottomAnimation .5s;
     position: relative;
+}
+
+div.login {
+    margin-top: 2rem;
 }
 
 div.login form {
