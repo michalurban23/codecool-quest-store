@@ -179,7 +179,7 @@ public class UserController extends CommonHandler {
         if (object == null && isRequestedBySupervisor()) {
             options = new String[] {"Add"};
         } else if (isRequestedBySelf()) {
-            options = new String[] {"Edit", "Remove"};
+            options = new String[] {"Edit", "LoginInfo"};
         } else if (isRequestedBySupervisor()) {
             options = new String[] {"Edit"};
         }
