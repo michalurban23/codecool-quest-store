@@ -73,17 +73,20 @@ header li p {
     padding-bottom: 2rem;
 }
 
-div.date {
+#backbutton input {
+    font-family: 'Oswald', serif;
+}
+
+div.date, div.currentTime {
     float: right;
     color: white;
     font-size: larger;
+}
+div.date {
     margin-top: -1.7rem;
 }
 
 div.currentTime {
-    float: right;
-    color: white;
-    font-size: larger;
     margin-top: -0.5rem;
     margin-right: 1.2%;
 }
@@ -106,7 +109,6 @@ input {
     font-size: larger;
     text-decoration: none;
     cursor: pointer;
-    border: 1pt solid black;
     margin: 0 auto -20px auto;
 }
 
@@ -116,8 +118,9 @@ input[type=submit], input[type=button]{
     font-size: large;
     text-decoration: none;
     justify-content: center;
-    border: 1pt solid black;
     display: table;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
     /*padding: 4px 2px;*/
     /*margin: 0 auto;*/
 }
@@ -127,11 +130,15 @@ input[value=Logout] {
 }
 
 input[type=submit]:hover, input[type=button]:hover {
-    background-color: #666666
+    background-color: #666666;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    transition: .3s background-color;
 }
 
-input[type=submit]:active, input[type=button]:hover {
-    background-color: #777777
+input[type=submit]:active, input[type=button]:active {
+    background-color: #777777;
+    border: none;
 }
 
 .info-container {
@@ -202,11 +209,6 @@ form > input[type="submit"] {
     animation: rightAnimation .5s;
     position: relative;
 }
-/*
-.slider p {
-    animation: rightAnimation .5s;
-    position: relative;
-}*/
 
 .slider input[type=submit], .slider p {
     animation: bottomAnimation .5s;

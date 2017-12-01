@@ -3,7 +3,7 @@
         <form method="get">
             {% for key, value in messages %}
                 <div class="row">
-                    <label>{{ key }}</label>
+                    <label id="backlogLabel">{{ key }}</label>
                     <p id="backlog">{{ value }}</p>
                 </div>
             {% endfor %}

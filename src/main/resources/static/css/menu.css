@@ -89,25 +89,6 @@ footer div.context-menu li {
 }
 
 /*
-footer.context-menu#footer li {
-    display: table-cell;
-    font-family: 'Oswald', serif;
-    padding: 0 .5rem;
-}
-
-footer.context-menu#footer a {
-    display: block;
-    border: none;
-    text-align: center;
-    margin: 0 .5rem;
-    font-size: 1rem;
-    color: white;
-    text-decoration: none;
-    background-color: inherit;
-}
-*/
-
-/*
 @media screen and (min-width: 800px) {
     .menu-bar li {
         width: 15%;

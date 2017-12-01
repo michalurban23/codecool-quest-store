@@ -8,11 +8,11 @@
     font-family: 'Oswald', serif;
 }
 
-/*.listing form {*/
-    /*padding-top: 1rem;*/
-    /*width: 70%;*/
-    /*margin: auto;*/
-/*}*/
+.listing form {
+    padding-top: 1rem;
+    width: 70%;
+    margin: auto;
+}
 
 .listing * div.row {
     width: 100%;
@@ -26,14 +26,23 @@
     /*padding: .2rem;*/
 /*}*/
 
-.listing label {
+.listing label, .row label#backlogLabel {
     animation: leftAnimation .5s;
     position: relative;
-    width: 70%;
     text-align: left;
     margin: auto;
     font-size: large;
     padding-left: .5rem;
+    width: 50%;
+}
+.row p#backlog {
+    margin-bottom: -.9rem;
+    /*padding: -10px;*/
+}
+
+.row label#backlogLabel {
+    padding-top: 1.25rem;
+    margin: 0;
 }
 
 .listing a {

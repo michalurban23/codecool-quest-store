@@ -59,12 +59,13 @@ form label {
     float: left;
     margin-right: 10px;
     width: 30%;
-    padding: 5px;
+    /*padding: 5px;*/
 }
 
 form input {
     padding: 5px;
-    border-radius: 5px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
     width: 200px;
 }
 
@@ -82,7 +83,7 @@ form > input[type="submit"] {
     cursor: pointer;
 }
 
-.row p#backlog {
-    margin-bottom: -.9rem;
-    padding: 3px;
+.row > input[type=submit], .row > label {
+    font-family: 'Oswald', serif;
 }
+
