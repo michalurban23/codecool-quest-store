@@ -1,6 +1,7 @@
 .menu-bar {
     width: 100%;
     background: #444;
+    margin-bottom: -1rem;
 }
 
 .menu-bar ul {
@@ -19,7 +20,7 @@
     display: block;
     border: none;
     text-align: center;
-    margin: .25rem .5rem;
+    padding: .25rem .5rem;
     font-size: 1.3rem;
     color: white;
     text-decoration: none;
@@ -44,16 +45,22 @@
 }
 
 .context-menu li {
+    animation: topAnimation .5s;
+    position: relative;
     display: table-cell;
     font-family: 'Oswald', serif;
     padding: .1rem .1rem;
+}
+
+footer div.context-menu li {
+    animation: none;
 }
 
 .context-menu a {
     display: block;
     border: none;
     text-align: center;
-    margin: .25rem .5rem;
+    padding: .25rem .5rem;
     font-size: 1rem;
     color: white;
     text-decoration: none;
