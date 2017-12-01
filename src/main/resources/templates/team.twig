@@ -1,8 +1,10 @@
-<div class="team">
+<div class="listing">
     <p>{{ team_name }}</p>
     <ol>
         {% for student_id, student_name in data %}
-        <li><a href="{{ student_id }}">{{ student_name }}</a></li>
+            <div class="row">
+                <li><label><a href="{{ student_id }}">{{ student_name }}</a></label></li>
+            </div>
         {% endfor %}
     </ol>
 </div>

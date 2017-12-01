@@ -1,4 +1,4 @@
-.listing ol {
+.listing ol, .listing ul {
     justify-content: flex-start;
     display: block;
     padding-top: 2rem;
@@ -8,11 +8,23 @@
     font-family: 'Oswald', serif;
 }
 
-.listing ol div.row {
-    width: 70%;
+/*.listing form {*/
+    /*padding-top: 1rem;*/
+    /*width: 70%;*/
+    /*margin: auto;*/
+/*}*/
+
+.listing * div.row {
+    width: 100%;
     margin: auto;
     display: table;
 }
+
+/*.listing form ul div.row {*/
+    /*width: 70%;*/
+    /*margin: auto;*/
+    /*padding: .2rem;*/
+/*}*/
 
 .listing label {
     animation: leftAnimation .5s;
