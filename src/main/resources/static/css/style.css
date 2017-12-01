@@ -108,16 +108,19 @@ footer {
 }
 
 input {
-    background-color: white;
+    background: url("../img/input.jpeg");
+    background-position: center;
     color: black;
     font-size: larger;
+    font-family: 'Oswald', Serif;
     text-decoration: none;
     cursor: pointer;
     margin: 0 auto -20px auto;
 }
 
 input[type=submit], input[type=button]{
-    background-color: #555555;
+    background: url("../img/button.jpeg");
+    background-position: right bottom;
     color: white;
     font-size: large;
     text-decoration: none;
