@@ -1,12 +1,23 @@
-<div>
+<div class="slider">
     <form method="post">
-        <label for="Level Name">New Name</label>
-        <input type="text" name="Level Name" value="{{ data[3] }}" id="Level Name" />
-        <label for="Minimum Required Exp">Minimum Experience Level Required: </label>
-        <span>{{ data[2]+1 }}</span><input type="range" min="{{ data[2]+1 }}" max="{{ data[0]-1 }}" value="{{ data[1] }}"
-               class="slider" name="Minimum Required Exp" id="Minimum Required Exp"><span>{{ data[0]-1 }}</span>
-        <p>Current value: <span id="value"></span></p>
-        <input type="submit" value="Save!" />
+        <div class="row">
+            <label for="Level Name">New Name</label>
+            <input type="text" name="Level Name" value="{{ data[3] }}" id="Level Name" />
+        </div>
+        <div class="row">
+
+        </div>
+        <div class="row">
+            <label for="Minimum Required Exp">Minimum Experience Level Required: </label>
+            <span>{{ data[2]+1 }}</span><input type="range" min="{{ data[2]+1 }}" max="{{ data[0]-1 }}" value="{{ data[1] }}"
+                                               class="slider" name="Minimum Required Exp" id="Minimum Required Exp"><span>{{ data[0]-1 }}</span>
+        </div>
+        <div class="row">
+            <p>Current value: <span id="value"></span></p>
+        </div>
+        <div class="row">
+            <input type="submit" value="Save!" />
+        </div>
     </form>
     <script>
         var slider = document.getElementById("Minimum Required Exp");
