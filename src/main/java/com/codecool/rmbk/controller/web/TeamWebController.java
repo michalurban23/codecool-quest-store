@@ -119,17 +119,16 @@ public class TeamWebController extends CommonHandler {
 
     private void showDetails() throws IOException {
 
-        if (loggedUser.getClass().getSimpleName().equals("Student")) {
-            send403();
-        } else {
-            view.setContextMenu(prepareContextMenu(getContextOptions()));
-            view.setTeamDetailsView(object);
-            send200(view.getResponse());
-        }
+//        if (loggedUser.getClass().getSimpleName().equals("Student")) {
+//            send403();
+//        } else {
+        view.setContextMenu(prepareContextMenu(getContextOptions()));
+        view.setTeamDetailsView(object);
+        send200(view.getResponse());
+//        }
     }
 
     private void showList() throws IOException {
-
         if (loggedUser.getClass().getSimpleName().equals("Student")) {
             view.setContextMenu(prepareContextMenu(getContextOptions()));
             view.setTeamListView(sqlTeam.getMyTeams((Student) loggedUser));
@@ -151,18 +150,9 @@ public class TeamWebController extends CommonHandler {
                 options.add("Add");
             }
         } else {
-            switch (loggedUser.getClass().getSimpleName()) {
-                case "Student" :
-                    if (sqlTeam.isInGroup(loggedUser, object)) {
-                        options.add("Edit");
-                    }
-                    break;
-                case "Mentor" :
-                    options.add("AddStudents");
-                    options.add("Edit");
-                    options.add("RemoveStudents");
-                    break;
-            }
+            options.add("AddStudents");
+            options.add("Edit");
+            options.add("RemoveStudents");
         }
         return options.toArray(new String[options.size()]);
     }

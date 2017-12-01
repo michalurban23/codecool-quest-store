@@ -164,6 +164,7 @@ public class ClassWebController extends CommonHandler {
         if (loggedUser.getClass().getSimpleName().equals("Student")) {
             send403();
         } else if (loggedUser.getClass().getSimpleName().equals("Mentor")) {
+            view.setContextMenu(null);
             view.setClassDetailsView(object);
             send200(view.getResponse());
         } else {
@@ -178,9 +179,11 @@ public class ClassWebController extends CommonHandler {
         if (loggedUser.getClass().getSimpleName().equals("Student")) {
             send403();
         } else if (loggedUser.getClass().getSimpleName().equals("Mentor")) {
+            view.setContextMenu(null);
             view.setClassListMentorView(sqlClass.getKlassURLMap());
             send200(view.getResponse());
         } else {
+            view.setContextMenu(prepareContextMenu(getContextOptions()));
             view.setClassListView(sqlClass.getKlassURLMap());
             send200(view.getResponse());
         }
