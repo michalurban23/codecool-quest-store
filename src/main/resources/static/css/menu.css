@@ -1,6 +1,6 @@
 .menu-bar {
     width: 100%;
-    background: #444;
+    background: url("../img/menu_bar.jpg");
     margin-bottom: -1rem;
 }
 
@@ -34,7 +34,7 @@
 
 .context-menu {
     width: 100%;
-    background: #777;
+    background: url("../img/context_menu.jpg");
     padding: 0;
 }
 
@@ -62,13 +62,13 @@ footer div.context-menu li {
     text-align: center;
     padding: .25rem .5rem;
     font-size: 1rem;
-    color: white;
+    color: black;
     text-decoration: none;
     background-color: inherit;
 }
 
 .context-menu li:hover {
-    background-color: #dd0000;
+    background-color: white;
     transition: .3s background-color;
 }
 
