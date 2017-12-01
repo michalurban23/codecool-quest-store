@@ -24,7 +24,9 @@ html {
 }
 
 body {
-    background-color: #888;
+    background: url("../img/background.jpg");
+    background-size: 100%;
+    background-attachment: fixed;
     overflow: auto;
     position: relative;
     min-height: 100%;
@@ -32,6 +34,9 @@ body {
 }
 
 header {
+    background: url("../img/header.jpg");
+    background-size: 100%;
+    background-position: center;
     height: 3.5rem;
     overflow: auto;
     color: black;
@@ -39,7 +44,6 @@ header {
     font-size: larger;
     padding: 2% 1%;
     margin: auto;
-    background-color: dimgrey;
     margin-bottom: -1rem;
 }
 
@@ -213,4 +217,54 @@ form > input[type="submit"] {
 .slider input[type=submit], .slider p {
     animation: bottomAnimation .5s;
     position: relative;
+}
+
+.choice_form p {
+    animation: leftAnimation .5s;
+    position: relative;
+    margin-left: 5rem;
+}
+
+.choice_form  > p {
+    animation: bottomAnimation .5s;
+    position: relative;
+    font-family: 'Oswald', serif;
+    font-size: larger;
+    text-align: center;
+}
+
+.choice_form {
+    margin-top: 2rem;
+}
+
+.choice_form form {
+    padding: 1rem;
+}
+
+.choice_form div.row {
+    width: 40%;
+    margin: auto;
+    margin-bottom: -2rem;
+    padding: 0 30%;
+}
+
+.choice_form div.row:last-of-type {
+    margin-bottom: 2rem;
+}
+
+.choice_form div.row input {
+    float: right;
+    margin-right: 5rem;
+}
+
+.choice_form div.row input {
+    animation: rightAnimation .5s;
+    position: relative;
+}
+
+.choice_form input[type=submit] {
+    font-family: 'Oswald', serif;
+    animation: bottomAnimation .5s;
+    position: relative;
+    margin-bottom: 2rem;
 }

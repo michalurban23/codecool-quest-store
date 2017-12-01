@@ -3,7 +3,9 @@
     <form method="post">
         <select title="{{ title }}">
         {% for key, value in data %}
-            <option name="{{ key }}" value= {{ key }} >{{ value }}</option>
+            <div class="row">
+                <option name="{{ key }}" value= {{ key }} >{{ value }}</option>
+            </div>
         {% endfor %}
         </select>
         <input type="submit" value="Add" />
