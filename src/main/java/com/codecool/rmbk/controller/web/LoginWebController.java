@@ -3,6 +3,7 @@ package com.codecool.rmbk.controller.web;
 import com.codecool.rmbk.dao.SQLLoginDAO;
 import com.codecool.rmbk.dao.SQLUsers;
 import com.codecool.rmbk.model.Session;
+import com.codecool.rmbk.model.usr.User;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.BufferedReader;
@@ -51,7 +52,12 @@ public class LoginWebController extends CommonHandler {
             String formData = br.readLine();
             Map<String, String> inputs = parseFormData(formData);
             loginUserName = inputs.get("name");
-            loginID = userDao.getUserByLogin(loginUserName).getID();
+            User user = userDao.getUserByLogin(loginUserName);
+            if (user != null) {
+                loginID = userDao.getUserByLogin(loginUserName).getID();
+            } else {
+                response = webDisplay.getLoginScreen("Invalid username or password!");
+            }
             loginPassword = inputs.get("password");
         } catch (IOException e) {
             e.printStackTrace();

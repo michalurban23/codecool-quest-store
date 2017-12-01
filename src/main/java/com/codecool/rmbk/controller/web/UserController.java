@@ -6,6 +6,7 @@ import com.codecool.rmbk.helper.PasswordHash;
 import com.codecool.rmbk.dao.MenuDAO;
 import com.codecool.rmbk.dao.SQLMenuDAO;
 import com.codecool.rmbk.dao.UserInfoDAO;
+import com.codecool.rmbk.model.usr.Student;
 import com.codecool.rmbk.model.usr.User;
 import com.codecool.rmbk.view.UserWebView;
 import com.sun.net.httpserver.HttpExchange;
@@ -19,6 +20,7 @@ public class UserController extends CommonHandler {
     private String response;
     private String accessLevel;
     private User object;
+    private Map<String, String> request;
     private int id;
     private UserInfoDAO userDAO = new SQLUsers();
     private MenuDAO menuDAO = new SQLMenuDAO();
@@ -30,21 +32,21 @@ public class UserController extends CommonHandler {
         view = new UserWebView();
 
         setConnectionData(httpExchange);
-        parseURIstring(getRequestURI());
         accessLevel = validateRequest();
+        request = parseURIstring(getRequestURI());
         setObject();
 
         view.setHeader(loggedUser);
         view.setMainMenu(mainMenu);
         view.setFooter();
 
-        String controller = parsedURI.get("controller");
-        String object = parsedURI.get("object");
-        String action = parsedURI.get("action");
+        String controller = request.get("controller");
+        String o = request.get("object");
+        String action = request.get("action");
 
-        if (object == null) {
+        if (o == null) {
             showList();
-        } else if (isObjectInstanceOfController(controller, object)) {
+        } else if (isObjectInstanceOfController(controller, o)) {
             if (action == null) {
                 showDetails();
             } else {
@@ -175,7 +177,7 @@ public class UserController extends CommonHandler {
         String[] options = null;
 
         if (object == null && isRequestedBySupervisor()) {
-            options = new String[] {String.format("Add %s", parsedURI.get("controller"))};
+            options = new String[] {"Add"};
         } else if (isRequestedBySelf()) {
             options = new String[] {"Edit", "Remove"};
         } else if (isRequestedBySupervisor()) {
@@ -238,8 +240,11 @@ public class UserController extends CommonHandler {
     private void setObject() {
 
         if (parsedURI.get("object") != null) {
-            object = userDAO.getUserByID(Integer.parseInt(parsedURI.get("object")));
-
+            try {
+                object = userDAO.getUserByID(Integer.parseInt(parsedURI.get("object")));
+            } catch (NumberFormatException e) {
+                object = null;
+            }
         } else {
             object = null;
         }

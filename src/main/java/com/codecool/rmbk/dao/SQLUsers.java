@@ -27,9 +27,13 @@ public class SQLUsers extends SqlDAO implements UserInfoDAO {
                        "JOIN login_info " +
                        "ON login_info.id == users.id " +
                        "WHERE login = ?;";
-        ArrayList<ArrayList<String>> rw = processQuery(query, new String[] {login});
+        processQuery(query, new String[] {login});
 
-        return getUserFromArray(rw.get(1).get(5), rw.get(1).subList(0, 5));
+        if (getResults().size() > 1) {
+            return getUserFromArray(getResults().get(1).get(5), getResults().get(1).subList(0, 5));
+        } else {
+            return null;
+        }
     }
 
     private User getUserFromArray(String type, List<String> array) {

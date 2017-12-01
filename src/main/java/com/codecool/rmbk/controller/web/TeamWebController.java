@@ -65,10 +65,10 @@ public class TeamWebController extends CommonHandler {
                 sqlTeam.removeTeam(object) ;
                 send302(String.format("/%s", parsedURI.get("controller")));
                 break;
-            case "addStudents":
+            case "addstudents":
                 addStudents();
                 break;
-            case "removeStudents":
+            case "removestudents":
                 subject = (Student) sqlUsers.getUserByID(Integer.parseInt(parsedURI.get("subject")));
                 sqlTeam.removeUserFromTeam(object, subject);
                 send302(String.format("/%s/%s", parsedURI.get("controller"), object.getID()));
