@@ -27,6 +27,19 @@ public class TeamWebView extends WebView {
             teams.put(team.getURI(), team.getName());
         }
 
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/list_content.twig");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("data", teams);
+        mainContent = (template.render(model));
+    }
+
+    public void setTeamListStudentView(ArrayList<Team> teamlist) {
+
+        Map<String, String> teams = new LinkedHashMap<>();
+        for (Team team :teamlist) {
+            teams.put(team.getURI(), team.getName());
+        }
+
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/list.twig");
         JtwigModel model = JtwigModel.newModel();
         model.with("data", teams);

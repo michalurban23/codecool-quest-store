@@ -119,25 +119,24 @@ public class TeamWebController extends CommonHandler {
 
     private void showDetails() throws IOException {
 
-//        if (loggedUser.getClass().getSimpleName().equals("Student")) {
-//            send403();
-//        } else {
-        view.setContextMenu(prepareContextMenu(getContextOptions()));
+        if (loggedUser.getClass().getSimpleName().equals("Student")) {
+            view.setContextMenu(null);
+        } else {
+            view.setContextMenu(prepareContextMenu(getContextOptions()));
+        }
         view.setTeamDetailsView(object);
         send200(view.getResponse());
-//        }
     }
 
     private void showList() throws IOException {
         if (loggedUser.getClass().getSimpleName().equals("Student")) {
-            view.setContextMenu(prepareContextMenu(getContextOptions()));
-            view.setTeamListView(sqlTeam.getMyTeams((Student) loggedUser));
-            send200(view.getResponse());
+            view.setContextMenu(null);
+            view.setTeamListStudentView(sqlTeam.getMyTeams((Student) loggedUser));
         } else {
             view.setContextMenu(prepareContextMenu(getContextOptions()));
             view.setTeamListView(sqlTeam.getAllTeams());
-            send200(view.getResponse());
         }
+        send200(view.getResponse());
 
     }
 

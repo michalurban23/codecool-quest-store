@@ -32,6 +32,10 @@ div.login p {
     font-family: 'Oswald', serif;
 }
 
+.login form {
+    margin-bottom: 2rem;
+}
+
 form div.row {
     width: 50%;
     margin: auto;
