@@ -190,6 +190,7 @@ public abstract class CommonHandler implements HttpHandler {
 
         String[] controlLevels = new String[] {"controller", "object", "action", "subject"};
         String[] uriElements = uriString.split("[/]");
+
         Map<String,String> resultMap = new HashMap<>();
         for (int i=0; i<uriElements.length; i++) {
             resultMap.put(controlLevels[i], uriElements[i]);
@@ -220,6 +221,7 @@ public abstract class CommonHandler implements HttpHandler {
     String getRequestURI() {
 
         String uriString = httpExchange.getRequestURI().toString();
+
         if (uriString.startsWith("/")) {
             uriString = uriString.substring(1);
         }
