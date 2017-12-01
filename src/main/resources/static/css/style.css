@@ -1,21 +1,25 @@
 @keyframes leftAnimation {
-    from { opacity: 0; left: -5rem; }
-    to { opacity: 1; left: 0; }
+    0% { opacity: 0; left: -5rem; }
+    50% { opacity: .5; left: 2rem; }
+    100% { opacity: 1; left: 0; }
 }
 
 @keyframes bottomAnimation {
-    from { opacity: 0; top: 5rem; }
-    to { opacity: 1; top: 0; }
+    0% { opacity: 0; top: 5rem; }
+    50% { opacity: .5; top: -2rem; }
+    100% { opacity: 1; top: 0; }
 }
 
 @keyframes rightAnimation {
-    from { opacity: 0; left: 5rem; }
-    to { opacity: 1; left: 0; }
+    0% { opacity: 0; left: 5rem; }
+    50% { opacity: .5; left: -2rem; }
+    100% { opacity: 1; left: 0; }
 }
 
 @keyframes topAnimation {
-    from { opacity: 0; top: -2rem; }
-    to { opacity: 1; top: 0; }
+    0% { opacity: 0; top: -2rem; }
+    50% { opacity: 0.5; top: 1rem; }
+    100% { opacity: 1; top: 0; }
 }
 
 html {
